@@ -6,8 +6,6 @@
   import { eventDateRange } from '$lib/utils';
   import type { CalendarEvent } from '$lib/types';
 
-  export const ssr = false;
-
   let { data }: { data: PageData } = $props();
   let { events } = $derived(data);
 
