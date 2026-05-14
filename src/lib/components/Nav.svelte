@@ -3,11 +3,11 @@
 
   let { onSearchOpen }: { onSearchOpen: () => void } = $props();
 
-  let dark = $state(browser && document.documentElement.getAttribute('data-theme') === 'dim');
+  let dark = $state(browser && document.documentElement.getAttribute('data-theme') === 'ecn-dark');
 
   function toggleTheme() {
     dark = !dark;
-    const theme = dark ? 'dim' : 'silk';
+    const theme = dark ? 'ecn-dark' : 'ecn';
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
     document.cookie = `theme=${theme}; max-age=${60 * 60 * 24 * 365}; path=/; SameSite=Lax`;
