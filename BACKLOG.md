@@ -1,16 +1,13 @@
-# BACKLOG
+# ecnordic.ski Backlog
 
-> Project issue tracker. Managed by `/log-issue`.
+## Known Issues
 
-## High
+- `svelte.config.js` has all prerender options set to `'warn'` (handleUnseenRoutes, handleHttpError, handleMissingId) to allow building with no content. Flip back to `'fail'` once the site has real content to catch broken links in CI.
 
-## Medium
+## Future Work
 
-- **#1** Deploy Pass 9 — verify dark mode on live site `#ops` `#907-life`
-  Pass 9 landed dark mode + CSS token system. Not yet verified on
-  the live site (907.life). Push to main and confirm dark mode toggle
-  works, no flash of wrong theme.
-
-## Low
-
-## Closed
+- [ ] Full visual design pass (Pass 3 — run /frontend-design)
+- [ ] Real Turnstile site key after domain is live
+- [ ] Sveltia CMS config for web-based editing by coaches/volunteers
+- [ ] Replace @schedule-x with custom Svelte calendar component when migrating to cairn-cms
+- [ ] Replace placeholder page content (about, talkeetna-camp, resources)
