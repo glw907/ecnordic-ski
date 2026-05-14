@@ -1,9 +1,8 @@
 <script lang="ts">
-  import type { PageData } from './$types';
   import { SITE_TITLE } from '$lib/config';
   import ContactForm from '$lib/components/ContactForm.svelte';
 
-  let { data, form } = $props();
+  let { form } = $props();
 </script>
 
 <svelte:head>
