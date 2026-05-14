@@ -1,6 +1,6 @@
 import matter from 'gray-matter';
 import type { CalendarEvent, EventType } from './types.js';
-import { isoFromValue } from './utils.js';
+import { isoFromValue, getThisWeekRange } from './utils.js';
 
 const rawFiles = import.meta.glob<string>('/src/content/events/*.md', {
   query: '?raw',
@@ -21,6 +21,8 @@ export function parseEventFrontmatter(id: string, data: Record<string, unknown>)
     location: data.location as string | undefined,
     type: (data.type as EventType) ?? 'training',
     description: data.description as string | undefined,
+    start_time: data.start_time as string | undefined,
+    end_time: data.end_time as string | undefined,
   };
 }
 
@@ -49,4 +51,9 @@ export function getAllEvents(): CalendarEvent[] {
 export function getUpcomingEvents(): CalendarEvent[] {
   const today = new Date().toISOString().slice(0, 10);
   return filterUpcoming(getAllEvents(), today);
+}
+
+export function getThisWeekEvents(): CalendarEvent[] {
+  const { start, end } = getThisWeekRange();
+  return getAllEvents().filter((e) => e.start >= start && e.start <= end);
 }

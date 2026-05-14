@@ -26,6 +26,10 @@ export interface CalendarEvent {
   location?: string;
   type: EventType;
   description?: string;
+  /** Human-readable time string, e.g. "4:00 PM" */
+  start_time?: string;
+  /** Human-readable time string, e.g. "5:30 PM" */
+  end_time?: string;
 }
 
 export interface StaticPage {

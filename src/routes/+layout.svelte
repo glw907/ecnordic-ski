@@ -52,7 +52,7 @@
       <span class="footer-label">email</span>
     </a>
   </div>
-  <p class="footer-name">{SITE_TITLE}</p>
+  <p class="footer-name">© {new Date().getFullYear()} East Community Nordic</p>
 </footer>
 
 <style>
@@ -79,7 +79,8 @@
 
   .footer-label {
     font-family: var(--font-display);
-    font-size: 0.8rem;
+    font-size: 0.75rem;
+    font-weight: 600;
     letter-spacing: 0.05em;
     text-transform: lowercase;
   }

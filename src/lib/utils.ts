@@ -62,3 +62,45 @@ export function eventDateRange(event: CalendarEvent): string {
   if (event.start === event.end) return formatDate(event.start);
   return `${formatDate(event.start)} – ${formatDate(event.end)}`;
 }
+
+/** Returns the day-of-week name for an ISO date, e.g. "Monday". */
+export function formatDayOfWeek(iso: string): string {
+  return parseUtcDate(iso).toLocaleDateString(SITE_LOCALE, {
+    weekday: 'long',
+    timeZone: 'UTC',
+  });
+}
+
+/** Returns a short M/D date string, e.g. "5/16". */
+export function formatMonthDay(iso: string): string {
+  const d = parseUtcDate(iso);
+  return `${d.getUTCMonth() + 1}/${d.getUTCDate()}`;
+}
+
+/** Formats a start/end time pair, e.g. "4:00–5:30 PM" or "4:00 PM". */
+export function formatTimeRange(start?: string, end?: string): string {
+  if (!start) return '';
+  if (!end) return start;
+  // Strip AM/PM from start if end has the same suffix
+  const startSuffix = start.match(/(AM|PM)$/i)?.[1];
+  const endSuffix = end.match(/(AM|PM)$/i)?.[1];
+  const startBase = startSuffix && endSuffix && startSuffix.toUpperCase() === endSuffix.toUpperCase()
+    ? start.replace(/\s*(AM|PM)$/i, '').trim()
+    : start;
+  return `${startBase}–${end}`;
+}
+
+/** Returns the Mon–Sun ISO date range of the calendar week containing today. */
+export function getThisWeekRange(): { start: string; end: string } {
+  const now = new Date();
+  const day = now.getUTCDay(); // 0=Sun, 1=Mon … 6=Sat
+  const diffToMonday = day === 0 ? -6 : 1 - day;
+  const monday = new Date(now);
+  monday.setUTCDate(now.getUTCDate() + diffToMonday);
+  const sunday = new Date(monday);
+  sunday.setUTCDate(monday.getUTCDate() + 6);
+  return {
+    start: monday.toISOString().slice(0, 10),
+    end: sunday.toISOString().slice(0, 10),
+  };
+}
