@@ -71,7 +71,7 @@
 
       <div
         class="cf-turnstile"
-        data-sitekey={import.meta.env.VITE_TURNSTILE_SITE_KEY ?? '1x00000000000000000000AA'}
+        data-sitekey="0x4AAAAAADPWAhVwEJvGQqhh"
       ></div>
 
       <button type="submit" class="submit-btn" disabled={submitting}>
