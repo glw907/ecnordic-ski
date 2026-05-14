@@ -28,6 +28,8 @@
     "vitest": "^4.1.6"
   },
   "dependencies": {
+    "@schedule-x/svelte": "^3.0.0",
+    "@schedule-x/theme-default": "^4.6.0",
     "gray-matter": "^4",
     "mimetext": "^3",
     "remark": "^15",
