@@ -1,14 +1,17 @@
 <script lang="ts">
+  import type { PageData } from './$types';
   import { SITE_TITLE } from '$lib/config';
   import { formatDate } from '$lib/utils';
 
-  let { data } = $props();
+  let { data }: { data: PageData } = $props();
   let { post } = $derived(data);
 </script>
 
 <svelte:head>
   <title>{post.title} — {SITE_TITLE}</title>
-  <meta name="description" content={post.description} />
+  {#if post.description}
+    <meta name="description" content={post.description} />
+  {/if}
 </svelte:head>
 
 <article>
@@ -30,4 +33,4 @@
   {/if}
 </article>
 
-<p class="back-link"><a href="/">← Home</a></p>
+<a href="/" class="back-link">← Home</a>
