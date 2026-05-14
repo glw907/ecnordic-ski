@@ -12,6 +12,7 @@ function addOneDay(iso: string): string {
 
 function escapeICS(value: string): string {
   return value
+    .replace(/\r/g, '')
     .replace(/\\/g, '\\\\')
     .replace(/,/g, '\\,')
     .replace(/;/g, '\\;')

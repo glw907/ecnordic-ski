@@ -8,6 +8,7 @@ describe('generateICS', () => {
     expect(output).toContain('BEGIN:VCALENDAR');
     expect(output).toContain('END:VCALENDAR');
     expect(output).toContain('VERSION:2.0');
+    expect(output).toContain('BEGIN:VCALENDAR\r\n');
   });
 
   it('includes a VEVENT for each event', () => {
