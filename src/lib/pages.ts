@@ -1,8 +1,6 @@
 import matter from 'gray-matter';
-import { remark } from 'remark';
-import remarkGfm from 'remark-gfm';
-import remarkHtml from 'remark-html';
 import type { StaticPage } from './types.js';
+import { markdownToHtml } from './utils.js';
 
 const rawFiles = import.meta.glob<string>('/src/content/pages/*.md', {
   query: '?raw',
@@ -10,17 +8,21 @@ const rawFiles = import.meta.glob<string>('/src/content/pages/*.md', {
   eager: true
 });
 
+const _cachedPages = new Map<string, StaticPage>();
+
 export async function getPage(slug: string): Promise<StaticPage | null> {
+  if (_cachedPages.has(slug)) return _cachedPages.get(slug)!;
+
   const filepath = `/src/content/pages/${slug}.md`;
   const raw = rawFiles[filepath];
   if (!raw) return null;
 
   const { data, content } = matter(raw);
-  const processed = await remark().use(remarkGfm).use(remarkHtml).process(content);
-
-  return {
+  const page: StaticPage = {
     slug,
     title: String(data.title ?? slug),
-    html: processed.toString(),
+    html: await markdownToHtml(content),
   };
+  _cachedPages.set(slug, page);
+  return page;
 }

@@ -1,13 +1,14 @@
 import type { CalendarEvent } from './types.js';
+import { parseUtcDate } from './utils.js';
 
 function icsDate(iso: string): string {
   return iso.replace(/-/g, '');
 }
 
 function addOneDay(iso: string): string {
-  const d = new Date(iso + 'T00:00:00Z');
+  const d = parseUtcDate(iso);
   d.setUTCDate(d.getUTCDate() + 1);
-  return d.toISOString().slice(0, 10).replace(/-/g, '');
+  return icsDate(d.toISOString().slice(0, 10));
 }
 
 function escapeICS(value: string): string {

@@ -1,8 +1,23 @@
+import { remark } from 'remark';
+import remarkGfm from 'remark-gfm';
+import remarkHtml from 'remark-html';
 import { SITE_LOCALE } from '$lib/config';
 import type { PostSummary, CalendarEvent } from '$lib/types';
 
+export async function markdownToHtml(content: string): Promise<string> {
+  const result = await remark().use(remarkGfm).use(remarkHtml).process(content);
+  return result.toString();
+}
+
+export function isoFromValue(value: unknown, fallback?: string): string {
+  // gray-matter parses bare YAML dates as UTC midnight Date objects
+  if (value instanceof Date) return value.toISOString().slice(0, 10);
+  if (typeof value === 'string' && value) return value.slice(0, 10);
+  return fallback ?? '';
+}
+
 // Parses YYYY-MM-DD as UTC — avoids timezone shift from bare date string parsing.
-function parseUtcDate(iso: string): Date {
+export function parseUtcDate(iso: string): Date {
   const [year, month, day] = iso.split('-').map(Number);
   return new Date(Date.UTC(year, month - 1, day));
 }

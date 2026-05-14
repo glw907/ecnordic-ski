@@ -1,10 +1,10 @@
-export const prerender = false;
-
-import type { PageServerLoad, Actions } from './$types';
+import type { Actions } from './$types';
 import { fail } from '@sveltejs/kit';
 import { createMimeMessage } from 'mimetext';
 
-export const load: PageServerLoad = () => ({});
+export const prerender = false;
+
+const SENDER = 'noreply@ecnordic.ski';
 
 async function verifyTurnstile(token: string, ip: string, secret: string): Promise<boolean> {
   const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
@@ -50,13 +50,13 @@ export const actions: Actions = {
     }
 
     const msg = createMimeMessage();
-    msg.setSender({ name: 'ECN Nordic Contact', addr: 'noreply@ecnordic.ski' });
+    msg.setSender({ name: 'ECN Nordic Contact', addr: SENDER });
     msg.setRecipient(contactEmail);
     msg.setSubject(`Contact from ${name}`);
     msg.addMessage({ contentType: 'text/plain', data: `From: ${name} <${email}>\n\n${message}` });
 
     const { EmailMessage } = await import('cloudflare:email');
-    await sendEmail.send(new EmailMessage('noreply@ecnordic.ski', contactEmail, msg.asRaw()));
+    await sendEmail.send(new EmailMessage(SENDER, contactEmail, msg.asRaw()));
 
     return { success: true };
   },

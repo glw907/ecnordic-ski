@@ -1,5 +1,6 @@
 import matter from 'gray-matter';
 import type { CalendarEvent, EventType } from './types.js';
+import { isoFromValue } from './utils.js';
 
 const rawFiles = import.meta.glob<string>('/src/content/events/*.md', {
   query: '?raw',
@@ -8,13 +9,6 @@ const rawFiles = import.meta.glob<string>('/src/content/events/*.md', {
 });
 
 let _cachedEvents: CalendarEvent[] | null = null;
-
-function isoFromValue(value: unknown, fallback?: string): string {
-  // gray-matter parses bare YAML dates as UTC midnight Date objects
-  if (value instanceof Date) return value.toISOString().slice(0, 10);
-  if (typeof value === 'string' && value) return value.slice(0, 10);
-  return fallback ?? '';
-}
 
 export function parseEventFrontmatter(id: string, data: Record<string, unknown>): CalendarEvent {
   const start = isoFromValue(data.date);

@@ -2,9 +2,11 @@ import { getAllEvents } from '$lib/events';
 import { generateICS } from '$lib/ics';
 import type { RequestHandler } from './$types';
 
+let _cachedICS: string | null = null;
+
 export const GET: RequestHandler = () => {
-  const ics = generateICS(getAllEvents());
-  return new Response(ics, {
+  _cachedICS ??= generateICS(getAllEvents());
+  return new Response(_cachedICS, {
     headers: {
       'Content-Type': 'text/calendar; charset=utf-8',
       'Content-Disposition': 'attachment; filename="ecnordic.ics"',

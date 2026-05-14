@@ -1,8 +1,6 @@
 import matter from 'gray-matter';
-import { remark } from 'remark';
-import remarkGfm from 'remark-gfm';
-import remarkHtml from 'remark-html';
 import type { PostDetail, PostSummary } from './types.js';
+import { markdownToHtml, isoFromValue } from './utils.js';
 
 // Bundled at build time — no runtime filesystem access needed.
 // Keys are absolute paths like "/src/content/posts/2026-03-early-march.md"
@@ -27,9 +25,7 @@ function buildSummary(
   return {
     ...coords,
     title: data.title as string ?? '',
-    date: data.date instanceof Date
-      ? data.date.toISOString().slice(0, 10)
-      : String(data.date ?? ''),
+    date: isoFromValue(data.date),
     draft: data.draft as boolean ?? false,
     description: data.description as string ?? '',
     tags: data.tags as string[] ?? []
@@ -47,7 +43,7 @@ export function getAllPosts(includeDrafts = false): PostSummary[] {
     if (!includeDrafts && data.draft) continue;
     posts.push(buildSummary(coords, data));
   }
-  const sorted = posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const sorted = posts.sort((a, b) => b.date.localeCompare(a.date));
 
   if (!includeDrafts) _cachedPosts = sorted;
   return sorted;
@@ -82,10 +78,9 @@ export async function getPost(
   if (!raw) return null;
 
   const { data, content } = matter(raw);
-  const processed = await remark().use(remarkGfm).use(remarkHtml).process(content);
 
   return {
     ...buildSummary({ year, month, slug }, data),
-    html: processed.toString()
+    html: await markdownToHtml(content)
   };
 }

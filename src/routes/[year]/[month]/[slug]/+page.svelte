@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PageData } from './$types';
   import { SITE_TITLE } from '$lib/config';
-  import { formatDate } from '$lib/utils';
+  import { formatDate, tagUrl } from '$lib/utils';
 
   let { data }: { data: PageData } = $props();
   let { post } = $derived(data);
@@ -27,7 +27,7 @@
   {#if post.tags.length}
     <ul class="post-tags">
       {#each post.tags as tag}
-        <li class="post-tag"><a href="/tags/{tag}">#{tag}</a></li>
+        <li class="post-tag"><a href={tagUrl(tag)}>#{tag}</a></li>
       {/each}
     </ul>
   {/if}

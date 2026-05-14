@@ -4,7 +4,6 @@
   import type { PageData } from './$types';
   import { SITE_TITLE } from '$lib/config';
   import { eventDateRange } from '$lib/utils';
-  import type { CalendarEvent } from '$lib/types';
 
   let { data }: { data: PageData } = $props();
   let { events } = $derived(data);
@@ -21,7 +20,7 @@
       calendarApp = createCalendar({
         views: [viewMonthGrid],
         defaultView: viewMonthGrid.name,
-        events: events.map((e: CalendarEvent) => ({
+        events: events.map((e) => ({
           id: e.id,
           title: e.title,
           start: e.start,
