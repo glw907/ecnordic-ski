@@ -42,7 +42,7 @@
       </Icon>
       <span class="footer-label">json</span>
     </a>
-    <a href="/about#contact" aria-label="Contact" class="footer-icon-link">
+    <a href="/contact" aria-label="Contact" class="footer-icon-link">
       <Icon label="Contact">
         {#snippet children()}
           <rect width="20" height="16" x="2" y="4" rx="2"/>

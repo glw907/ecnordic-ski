@@ -17,12 +17,14 @@
 <header class="sticky top-0 z-30 bg-base-100 border-b border-base-200">
   <nav class="container mx-auto px-4 h-14 flex items-center justify-between max-w-3xl">
     <a href="/" class="site-logo">
-      <span class="logo-primary">907</span><span class="logo-secondary">.life</span>
+      <span class="logo-primary">ECN</span><span class="logo-secondary"> Nordic</span>
     </a>
     <div class="nav-links">
-      <a href="/archives" class="nav-link">Archives</a>
+      <a href="/calendar" class="nav-link">Calendar</a>
       <a href="/about" class="nav-link">About</a>
-      <a href="/about#contact" class="nav-link">Contact</a>
+      <a href="/talkeetna-camp" class="nav-link">Talkeetna Camp</a>
+      <a href="/resources" class="nav-link">Resources</a>
+      <a href="/contact" class="nav-link">Contact</a>
       <div class="nav-icons">
         <button
           onclick={onSearchOpen}
