@@ -27,7 +27,7 @@ export async function getFeedItems(): Promise<FeedItem[]> {
 
   _cachedFeed = await Promise.all(
     posts.map(async (post) => {
-      const detail = await getPost(post.year, post.month, post.day, post.slug);
+      const detail = await getPost(post.year, post.month, post.slug);
       return {
         title: post.title,
         url: SITE_URL + postUrl(post),

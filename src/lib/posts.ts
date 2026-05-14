@@ -5,7 +5,7 @@ import remarkHtml from 'remark-html';
 import type { PostDetail, PostSummary } from './types.js';
 
 // Bundled at build time — no runtime filesystem access needed.
-// Keys are absolute paths like "/src/content/posts/2026-03-06-early-march.md"
+// Keys are absolute paths like "/src/content/posts/2026-03-early-march.md"
 const rawFiles = import.meta.glob<string>('/src/content/posts/*.md', {
   query: '?raw',
   import: 'default',
@@ -14,14 +14,14 @@ const rawFiles = import.meta.glob<string>('/src/content/posts/*.md', {
 
 let _cachedPosts: PostSummary[] | null = null;
 
-function parseFilepath(filepath: string): Pick<PostSummary, 'year' | 'month' | 'day' | 'slug'> {
+function parseFilepath(filepath: string): Pick<PostSummary, 'year' | 'month' | 'slug'> {
   const filename = filepath.split('/').pop()!.replace('.md', '');
-  const [year, month, day, ...slugParts] = filename.split('-');
-  return { year, month, day, slug: slugParts.join('-') };
+  const [year, month, ...slugParts] = filename.split('-');
+  return { year, month, slug: slugParts.join('-') };
 }
 
 function buildSummary(
-  coords: Pick<PostSummary, 'year' | 'month' | 'day' | 'slug'>,
+  coords: Pick<PostSummary, 'year' | 'month' | 'slug'>,
   data: Record<string, unknown>
 ): PostSummary {
   return {
@@ -75,10 +75,9 @@ export function getPostsByTag(tag: string): PostSummary[] {
 export async function getPost(
   year: string,
   month: string,
-  day: string,
   slug: string
 ): Promise<PostDetail | null> {
-  const filepath = `/src/content/posts/${year}-${month}-${day}-${slug}.md`;
+  const filepath = `/src/content/posts/${year}-${month}-${slug}.md`;
   const raw = rawFiles[filepath];
   if (!raw) return null;
 
@@ -86,7 +85,7 @@ export async function getPost(
   const processed = await remark().use(remarkGfm).use(remarkHtml).process(content);
 
   return {
-    ...buildSummary({ year, month, day, slug }, data),
+    ...buildSummary({ year, month, slug }, data),
     html: processed.toString()
   };
 }
