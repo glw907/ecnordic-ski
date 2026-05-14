@@ -27,8 +27,8 @@ tokens in the `@theme` block in `src/app.css` and reference via
 
 ## DaisyUI themes
 
-- Light: `silk` (default)
-- Dark: `dim` (prefers-dark)
+- Light: `ecn` (default)
+- Dark: `ecn-dark` (prefers-dark)
 
 Theme names are referenced in `@plugin "daisyui"` in `src/app.css`.
 Overrides use `@plugin "daisyui/theme"`, not raw `[data-theme]` blocks.
@@ -37,9 +37,9 @@ Overrides use `@plugin "daisyui/theme"`, not raw `[data-theme]` blocks.
 
 | Role | Font | Usage |
 |---|---|---|
-| Body | Spectral 400/700 | Prose, post content |
-| Display | Karla 400–700 | Nav logo only |
-| Mono | Monaspace Neon | Code blocks |
+| Body | Alegreya Sans 400/500/700 | Prose, post content |
+| Display | iA Writer Quattro S 400/700 | Headings |
+| Mono | iA Writer Mono S 400/700 | Code blocks |
 
 Self-hosted woff2 in `static/fonts/`. Font faces declared in
 `src/app.css`.
