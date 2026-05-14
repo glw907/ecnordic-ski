@@ -1,9 +1,10 @@
 import { SITE_LOCALE } from '$lib/config';
 import type { PostSummary, CalendarEvent } from '$lib/types';
 
+// Parses YYYY-MM-DD as UTC — avoids timezone shift from bare date string parsing.
 function parseUtcDate(iso: string): Date {
   const [year, month, day] = iso.split('-').map(Number);
-  return new Date(Date.UTC(year, month - 1, day ?? 1));
+  return new Date(Date.UTC(year, month - 1, day));
 }
 
 export function formatDate(iso: string): string {
