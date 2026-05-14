@@ -1,12 +1,13 @@
 <script lang="ts">
   import type { PageData } from './$types';
   import ArchiveList from '$lib/components/ArchiveList.svelte';
+  import { SITE_TITLE } from '$lib/config';
 
   let { data }: { data: PageData } = $props();
 </script>
 
 <svelte:head>
-  <title>{data.tag} — 907.life</title>
+  <title>{data.tag} — {SITE_TITLE}</title>
   <meta name="description" content={`Posts tagged "${data.tag}".`} />
 </svelte:head>
 

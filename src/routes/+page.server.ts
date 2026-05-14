@@ -5,7 +5,7 @@ export const load: PageServerLoad = async () => {
   const posts = getAllPosts();
   const first = posts[0];
   const featured = first
-    ? await getPost(first.year, first.month, first.day, first.slug)
+    ? await getPost(first.year, first.month, first.slug)
     : null;
   return { posts, featured };
 };
