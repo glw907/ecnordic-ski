@@ -261,6 +261,57 @@ Thanks to Coach Wright and the parent volunteers who made the Talkeetna camp hap
 
 ---
 
+# Avoiding AI Rhythm
+
+The goal isn't to ban specific constructions — em dashes, parallel lists, and "X is Y" sentences are all legitimate. The problem is **autopilot deployment**: using them at a fixed rate regardless of whether they serve the sentence. AI-generated prose is detectable not by any single pattern but by the rhythm underneath — uniform sentence length, predictable paragraph size, structural reflexes that trigger on every other line.
+
+## The Core Problem: Low Burstiness
+
+Human writers naturally vary sentence length and paragraph size. A short sentence after a long one signals emphasis. A one-sentence paragraph makes a point land. AI prose tends toward uniform block sizes throughout — every paragraph 3–4 sentences, every sentence 12–18 words. This rhythm is the tell.
+
+**Fix:** Vary deliberately. Write a one-sentence paragraph when the point deserves isolation. Write a long sentence when the thought genuinely needs room. Don't let every paragraph come out the same size.
+
+## Specific Patterns to Avoid on Autopilot
+
+These aren't forbidden — they become tells when they appear at a fixed rate regardless of whether they're the right choice.
+
+**Em dash as generic connector.** The most common AI tell in contemporary prose. Any sentence where an em dash connects two clauses should be tested: would a period, comma, colon, or parenthesis work better? If yes, use that. Maximum one em dash per paragraph, and only when it genuinely earns its place as an interruption or pivot.
+
+**The rule of three where the third item doesn't surprise.** "Running, roller-skiing, and strength work" is fine. Three consecutive tricolons in the same page is an AI rhythm. Vary list length. Sometimes two items is correct. Sometimes four.
+
+**Uniform paragraph architecture.** AI paragraphs follow: topic sentence → supporting detail → summary restatement. Human paragraphs don't announce themselves. They start mid-thought, end on substance, and never recap what they just said. Drop the summary restatement at the end of paragraphs.
+
+**Sweeping contextual openers.** Starting a page, section, or paragraph with a wide-angle setup ("Nordic skiing requires year-round dedication...") before getting to the point. Start close to the point. Let context arrive when needed, not before.
+
+**Participial phrase endings.** The construction "main clause, [verb]-ing at the end" — "We train three days a week, building the aerobic base you'll rely on all winter." Legitimate occasionally; a tell when it appears in every other paragraph.
+
+**Fabricated social proof.** "Most athletes say the camp does more for team cohesion than the entire rest of the summer." If it's not a real quote from a real person, cut it. It reads as AI padding.
+
+**Inanimate agency.** "The program provides," "Training offers," "The camp builds." Prefer "We" for program actions. Inanimate subjects distance the reader from the actual people running the program.
+
+**Binary "not X, but Y" constructions.** "We're not a high-budget elite program. What we are: a group of athletes who work hard together." One of these is fine. As a recurring pattern it sounds like a sales deck.
+
+## Banned Words and Phrases
+
+These appear in EC Nordic content at above-normal frequency and register as AI-generated. Avoid:
+
+*Words:* seamless, transformative, robust, pivotal, foster, leverage (figurative), elevate (figurative), comprehensive, thriving, curated, tailored, dedicated, meticulous, nuanced
+
+*Phrases:* "it's worth noting," "when it comes to," "at the end of the day," "in today's world," "not only X but also Y," "let's explore," "dive into," "look no further," "game-changer," "state-of-the-art"
+
+## Self-Critique Pass for Longer Pieces
+
+When drafting a full page, do a second pass before finishing. Flag any sentence that:
+- Uses an em dash where a period or comma would work
+- Ends with a participial phrase ("-ing at the end")
+- Starts with a formal connector (Moreover, Additionally, Furthermore)
+- Ends a paragraph by restating what the paragraph just said
+- Uses any word from the banned list above
+
+Rewrite the flagged sentences. This catches autopilot patterns that survive even strong initial instructions.
+
+---
+
 # Quick Reference
 
 ## Pages
