@@ -17,11 +17,11 @@
 <Nav onSearchOpen={() => { searchOpen = true; }} />
 <SearchModal bind:open={searchOpen} />
 
-<main class="container mx-auto px-4 max-w-3xl py-8">
+<main class="container mx-auto px-4 max-w-5xl py-8">
   {@render children()}
 </main>
 
-<footer class="container mx-auto px-4 max-w-3xl py-8 mt-8 border-t border-base-200 text-center">
+<footer class="container mx-auto px-4 max-w-5xl py-8 mt-8 border-t border-base-200 text-center">
   <div class="footer-links">
     <a href="/feed.xml" aria-label="RSS feed" class="footer-icon-link">
       <Icon label="RSS feed">

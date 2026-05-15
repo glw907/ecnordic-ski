@@ -172,7 +172,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-width: 48rem;
+    max-width: 64rem;
     margin-inline: auto;
     padding-inline: 1rem;
     height: 3.5rem;
@@ -270,7 +270,7 @@
     background: var(--color-base-100);
     border-top: 1px solid var(--color-border-subtle);
     padding: 0.5rem 1rem 1rem;
-    max-width: 48rem;
+    max-width: 64rem;
     margin-inline: auto;
   }
 

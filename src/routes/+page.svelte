@@ -117,7 +117,7 @@
   /* ─── Hero grid ─────────────────────────────────────────── */
   .hero-grid {
     display: grid;
-    grid-template-columns: 3fr 2fr;
+    grid-template-columns: 1fr 280px;
     gap: 1rem;
     margin-block: 2rem 1.75rem;
     align-items: stretch;
