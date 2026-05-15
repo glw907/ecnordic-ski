@@ -26,8 +26,9 @@
   }
 
   const navLinks = [
-    { href: '/calendar', label: 'Calendar' },
     { href: '/about', label: 'About' },
+    { href: '/calendar', label: 'Calendar' },
+    { href: '/summer-training', label: 'Summer Training' },
     { href: '/talkeetna-camp', label: 'Talkeetna Camp' },
     { href: '/resources', label: 'Resources' },
     { href: '/contact', label: 'Contact' },
