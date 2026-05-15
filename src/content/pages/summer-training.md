@@ -2,48 +2,46 @@
 title: "Summer Training"
 ---
 
-**[PLACEHOLDER — replace with final program description before publishing.]**
-
-East Community Nordic runs a summer dryland training program for high school athletes from late May through early August. The program is free, volunteer-run, and open to all experience levels.
+ECN's summer dryland program runs from late May through early August. It's free, open to all experience levels, and built around the same physical foundation as competitive Nordic skiing.
 
 ## Schedule
 
-**[PLACEHOLDER — confirm days, times, and start/end dates.]**
+We train Monday, Wednesday, and Friday, roughly 4:00–6:00 PM. Locations rotate — Kincaid Park, Hillside, the Coastal Trail, and a few others — and are posted to the [calendar](/calendar) each week.
 
-We train three days per week — typically Monday, Wednesday, and Friday — from approximately 4:00–6:00 PM. Specific times and locations are posted to the calendar each week.
+[PLACEHOLDER — confirm exact start and end dates for this season.]
 
-## Activities
+## What We Do
 
-Summer training includes a mix of:
+- **Running.** Trail and road runs across Anchorage. Most sessions are at Kincaid or Hillside.
+- **Roller-skiing.** Paved paths and parking lots. Roller skis and poles required; helmets mandatory.
+- **Mountain biking.** Singletrack and gravel at various locations. Helmet mandatory.
+- **Strength and dryland.** Bounding, plyometrics, core work. No gym required.
 
-- **Running** — trail and road runs at Kincaid Park, Hillside, and the Coastal Trail
-- **Roller-skiing** — paved paths and parking lots; poles and roller skis recommended
-- **Mountain biking** — singletrack and gravel at various Anchorage locations
-- **Strength & dryland** — plyometrics, bounding, and bodyweight work
+Most sessions mix two or three of these. You won't do the same thing every day.
 
-## Who Can Participate
+## Who Can Join
 
-**[PLACEHOLDER — clarify age range, affiliation requirements, etc.]**
+High school athletes in the Anchorage area. No cross-country skiing experience needed. If you show up consistently and work hard, you belong here.
 
-The program is open to high school athletes in the Anchorage area. No prior cross-country skiing experience is required — if you're willing to work hard and show up consistently, you belong here.
+[PLACEHOLDER — confirm age range and whether junior high athletes may participate.]
 
 ## What to Bring
 
-**[PLACEHOLDER — finalize gear list.]**
-
-- Water bottle and snacks
+- Water and snacks
 - Trail running shoes
-- Helmet (required for roller-skiing and mountain biking)
-- Weather-appropriate layers — Anchorage summers are variable
+- Helmet (required for roller-skiing and mountain biking — no exceptions)
+- Layers. Anchorage summer weather is variable.
+
+Roller skis and poles aren't provided. [PLACEHOLDER — add any loaner equipment details.]
 
 ## Talkeetna Camp
 
-The summer program concludes with a multi-day training camp in Talkeetna. See the [Talkeetna Camp](/talkeetna-camp) page for details.
+The summer program ends with a multi-day training camp in Talkeetna. See the [Talkeetna Camp](/talkeetna-camp) page for details.
 
 ## Sign Up
 
-A signed waiver is required before your first day. Visit the [Resources](/resources) page to access the form.
-
-**[PLACEHOLDER — add contact/signup instructions once finalized.]**
+A signed waiver is required before your first session. Get it on the [Resources](/resources) page.
 
 <a href="[CREWLAB_URL]" class="download-link" target="_blank" rel="noopener">Sign Up for Summer Training →</a>
+
+Questions? [Contact us](/contact).
