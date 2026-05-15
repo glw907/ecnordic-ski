@@ -10,7 +10,7 @@
   <div class="page">
     <div class="doc-header">
       <div class="doc-header-left">
-        <div class="doc-logo"><span class="ecn">EC</span><span class="nordic"> Nordic</span></div>
+        <div class="doc-logo"><span class="ecn">EC</span><span class="nordic">Nordic</span></div>
         <div class="doc-subtitle">ecnordic.ski · Summer Training Program · Anchorage, Alaska</div>
       </div>
       <div class="doc-title-block">
@@ -107,7 +107,7 @@
   <div class="page pb">
     <div class="doc-header">
       <div class="doc-header-left">
-        <div class="doc-logo"><span class="ecn">EC</span><span class="nordic"> Nordic</span></div>
+        <div class="doc-logo"><span class="ecn">EC</span><span class="nordic">Nordic</span></div>
         <div class="doc-subtitle">Waiver, Release &amp; Medical Authorization</div>
       </div>
       <div class="doc-title-block">
@@ -182,7 +182,7 @@
   <div class="page pb">
     <div class="doc-header">
       <div class="doc-header-left">
-        <div class="doc-logo"><span class="ecn">EC</span><span class="nordic"> Nordic</span></div>
+        <div class="doc-logo"><span class="ecn">EC</span><span class="nordic">Nordic</span></div>
         <div class="doc-subtitle">Waiver, Release &amp; Medical Authorization</div>
       </div>
       <div class="doc-title-block">
@@ -344,6 +344,9 @@
     margin-bottom: 1rem;
   }
   .doc-logo {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
     font-family: 'Nunito', sans-serif;
     font-size: 18pt;
     font-weight: 800;
@@ -351,7 +354,7 @@
     margin-bottom: 2px;
   }
   .ecn { color: var(--w-red); }
-  .nordic { color: var(--w-blue); font-size: 12pt; font-weight: 700; margin-left: 2px; }
+  .nordic { color: var(--w-blue); font-size: 12pt; font-weight: 700; }
   .doc-subtitle {
     font-size: 7.5pt;
     color: var(--w-muted);
