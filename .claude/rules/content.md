@@ -8,8 +8,8 @@ Before writing or editing any website content — pages, posts, or form copy —
 
 - **Voice:** Friendly, competent coach. Not corporate, not cheerleader.
 - **Audience:** High school athletes and their parents — write to both at once.
-- **Person:** "you" for reader, "we" for ECN.
-- **ECN:** Write out "East Community Nordic" on first reference, then "ECN."
+- **Person:** "you" for reader, "we" for EC Nordic.
+- **Short form:** "East Community Nordic" on first reference, then "EC Nordic." Never "ECN."
 - **Cost:** Always state clearly — training is free, donations optional.
 - **Benefit restatement:** State the fact. Trust the reader. Don't follow up with a sentence explaining why the fact is good.
 

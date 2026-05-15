@@ -2,11 +2,11 @@
 title: "Resources"
 ---
 
-Forms, guides, and links for ECN athletes and families.
+Forms, guides, and links for EC Nordic athletes and families.
 
 ## Forms
 
-**Waiver and Release of Liability** — required before the first day of participation in any ECN activity, including the summer training program and Talkeetna camp.
+**Waiver and Release of Liability** — required before the first day of participation in any EC Nordic activity, including the summer training program and Talkeetna camp.
 
 <a href="/waiver" class="download-link" target="_blank" rel="noopener">View Waiver Form →</a>
 

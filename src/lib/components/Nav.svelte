@@ -38,7 +38,7 @@
 <header class="site-header">
   <nav class="nav-inner">
     <a href="/" class="site-logo" onclick={closeMobile}>
-      <span class="logo-ecn">EC</span><span class="logo-nordic"> Nordic</span>
+      <span class="logo-ecn">EC</span> <span class="logo-nordic">Nordic</span>
     </a>
 
     <!-- Desktop links -->
@@ -182,6 +182,7 @@
   .site-logo {
     display: flex;
     align-items: baseline;
+    gap: 0.35rem;
     text-decoration: none;
     transition: opacity 0.2s ease;
   }
@@ -190,17 +191,17 @@
   .logo-ecn {
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: 1.55rem;
+    font-size: 1.75rem;
     letter-spacing: -0.02em;
     color: var(--color-primary);
   }
   .logo-nordic {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 1.15rem;
     letter-spacing: 0.01em;
     color: var(--color-secondary);
-    margin-left: 0.1em;
+    margin-left: 0;
   }
 
   /* Desktop nav */

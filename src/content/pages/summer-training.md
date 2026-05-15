@@ -2,7 +2,7 @@
 title: "Summer Training"
 ---
 
-ECN's summer dryland program runs from late May through early August. It's free, open to all experience levels, and built around the same physical foundation as competitive Nordic skiing.
+EC Nordic's summer dryland program runs from late May through early August. It's free, open to all experience levels, and built around the same physical foundation as competitive Nordic skiing.
 
 ## Schedule
 

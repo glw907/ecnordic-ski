@@ -1,8 +1,8 @@
 ---
-title: "About ECN Nordic"
+title: "About EC Nordic"
 ---
 
-East Community Nordic (ECN) is a free, volunteer-run Nordic ski program for high school athletes in Anchorage. We train year-round — dryland in the summer, skis on snow in the winter — and compete as a team throughout the season.
+East Community Nordic — EC Nordic — is a free, volunteer-run Nordic ski program for high school athletes in Anchorage. We train year-round — dryland in the summer, skis on snow in the winter — and compete as a team throughout the season.
 
 ## Who We Are
 

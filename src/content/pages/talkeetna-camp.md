@@ -2,7 +2,7 @@
 title: "Talkeetna Camp"
 ---
 
-The Talkeetna camp is the highlight of the ECN summer season. We spend [PLACEHOLDER — N] days training in Southcentral Alaska's best Nordic terrain, camping together as a team.
+The Talkeetna camp is the highlight of the EC Nordic summer season. We spend [PLACEHOLDER — N] days training in Southcentral Alaska's best Nordic terrain, camping together as a team.
 
 [PLACEHOLDER — confirm dates, exact location, and number of days for this season.]
 

@@ -1,4 +1,4 @@
-# ECN Website Content Guide
+# EC Nordic Website Content Guide
 
 Editorial standards for ecnordic.ski. These guidelines ensure consistency and quality while maintaining the voice of a friendly, competent coach writing to high school athletes and their parents.
 
@@ -84,7 +84,7 @@ One page serves both — write the main content for athletes, include the practi
 
 ## Word Choices
 
-**"ECN" on second reference:** First mention writes out "East Community Nordic," then use "ECN" after that.
+**"EC Nordic" as the short form:** Write "East Community Nordic" on first reference, then "EC Nordic" after that. Never abbreviate to "ECN."
 
 **Define any acronyms on first use:** "roller-skiing (roller skis with poles on pavement)" — explain the activity when the audience might not know it.
 
