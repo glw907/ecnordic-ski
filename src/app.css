@@ -208,6 +208,28 @@ body {
   color: var(--color-body);
 }
 
+/* ─── Download link ──────────────────────────────────────── */
+.download-link,
+.post-body a.download-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-block: 0.75rem 1rem;
+  padding: 0.5rem 1.1rem;
+  background: var(--color-primary);
+  color: oklch(99% 0.003 60);
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  text-decoration-color: transparent;
+  border-radius: 7px;
+  transition: opacity 0.15s ease;
+}
+.download-link:hover,
+.post-body a.download-link:hover { opacity: 0.85; color: oklch(99% 0.003 60); text-decoration-color: transparent; }
+
 /* ─── Post body (rendered markdown HTML) ─────────────────── */
 .post-body {
   font-size: 1.03rem;

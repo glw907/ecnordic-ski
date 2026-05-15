@@ -5,7 +5,7 @@ import { SITE_LOCALE } from '$lib/config';
 import type { PostSummary, CalendarEvent } from '$lib/types';
 
 export async function markdownToHtml(content: string): Promise<string> {
-  const result = await remark().use(remarkGfm).use(remarkHtml).process(content);
+  const result = await remark().use(remarkGfm).use(remarkHtml, { sanitize: false }).process(content);
   return result.toString();
 }
 

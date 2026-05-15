@@ -60,7 +60,7 @@
     display: flex;
     justify-content: center;
     gap: 2rem;
-    margin-block-end: 0.75rem;
+    margin-block-end: 1.5rem;
   }
 
   .footer-icon-link :global(svg) {

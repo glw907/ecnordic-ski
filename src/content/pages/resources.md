@@ -2,6 +2,12 @@
 title: "Resources"
 ---
 
-Training plans, gear recommendations, and links for ECN athletes and families.
+Forms, guides, and links for ECN athletes and families.
 
-Content coming soon.
+## Forms
+
+**Waiver and Release of Liability** — required before the first day of participation in any ECN activity, including the summer training program and Talkeetna camp.
+
+<a href="/waiver" class="download-link" target="_blank" rel="noopener">View Waiver Form →</a>
+
+Print the form and return a signed copy to Geoffrey Wright, or use a free e-signature service such as [SignWell](https://www.signwell.com).
