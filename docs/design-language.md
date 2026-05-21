@@ -146,11 +146,15 @@ Today only `.ec-alert-caution` (amber) exists. Add `.ec-alert-info` (azure),
 `.ec-alert-success` (pine), etc. by setting those two properties — the role
 table governs which. Amber as an alert color appears nowhere else.
 
-### Values — `.ec-values`
-A set of short, titled points (e.g. convictions, options). A **compact
-two-column grid, unnumbered**: these are *parallel*, not a sequence, so a
-number would assert an order that doesn't exist, and a single column runs the
-page too long. Each item leads with a bold display-font term.
+### Grid card — `.ec-grid`
+A card body of short, titled points that are **peers, not a sequence** (e.g.
+convictions, activity types, ways to help). A two-column grid, **unnumbered**:
+a number would assert an order that doesn't exist, and a single column runs the
+page too long. Each cell is a `base-200` tile (the same surface as the split
+panels) leading with a bold display-font term. The **last cell of an odd-count
+grid spans the full width** — both an orphan fix and a *featured* slot for the
+longest or most important point, placed last. Colour stays in the card-head
+icon; cells carry no per-cell icon or accent. Global in `app.css`.
 
 ### Paired info — split panels
 Two equal-weight, related items side by side, each in a `base-200` panel that
@@ -249,7 +253,7 @@ the primitive that fits its job, choosing the role color by meaning:
 | What we do | Module card | `path` (bare glyph) | primary |
 | Risks | Subtle alert card (`.ec-alert.ec-alert-caution`) | `warning` (chrome only) | warning |
 | Who can join | Module card | `users-three` (bare glyph) | **secondary** (people) |
-| Program philosophy | Module + values grid | `compass` (bare glyph) | primary |
+| Program philosophy | Grid card (`.ec-grid`) | `compass` (bare glyph) | primary |
 | Costs & volunteers | Module + split | head: none (panels carry it); panels `hand-coins` / `handshake` (bare) | primary / **secondary** |
 | Getting started | Centered CTA card | `flag` (**`.ec-chip` tile** — the one focal accent) | primary + `btn btn-primary` |
 
