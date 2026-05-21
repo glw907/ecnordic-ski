@@ -184,9 +184,19 @@ per page), `.ec-alert` (subtle alert card; role set by a modifier like
 `.ec-alert-caution`), and `.ec-grid` (card body of parallel titled points on
 `base-200` tiles; the last cell of an odd-count grid spans full width as an orphan
 fix and featured slot). Role colours needing a contrast-safe, theme-flipping variant get a
-derived token, e.g. `--color-caution-accent`. The About page (`decorateAbout` in
-`src/routes/[slug]/+page.svelte`) is the worked example; icon use is governed by a
-meaning matrix + usage checklist in the design-language doc.
+derived token, e.g. `--color-caution-accent`. Icon use is governed by a meaning matrix
++ usage checklist in the design-language doc.
+
+**Markdown-page decoration:** Body pages rendered via `{@html}` are decorated in
+`src/routes/[slug]/+page.svelte`. A shared `decoratePage(html, iconFor, mapSection)`
+skeleton parses the HTML into H2-led sections and, for each, builds the `rise` (entrance
+delay), `icon`, and `head` strings before handing off to a per-page `mapSection` callback
+that expresses only that page's meaning→primitive branches. `decorateAbout` (the worked
+example) and `decorateTraining` are thin callbacks over it; the `ecCta` / `ecCard` helpers
+emit the shared markup. Pages without a decorator fall back to `wrapSections`. The
+per-page module CSS (entrance cascade, `.ec-head`, `.ec-cta`, reduced-motion) is scoped
+with `:is([data-page="about"], [data-page="training"])` — a new decorated page adds its
+slug to those selectors.
 
 ---
 
