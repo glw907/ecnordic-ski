@@ -2,11 +2,6 @@
 
 > Project issue tracker. Managed by `/log-issue`.
 
-## High
-
-- [ ] **#3** Set real Turnstile site key after domain is live `#improvement` `#ecnordic` *(2026-05-20)*
-  Placeholder key in `src/routes/contact/+page.svelte` must be replaced once `ecnordic.ski` is registered.
-
 ## Medium
 
 - [ ] **#6** Replace placeholder page content (about, resources) `#improvement` `#ecnordic` *(2026-05-20)*
@@ -25,4 +20,5 @@
 
 ## Done
 
+- [x] **#3** Set real Turnstile site key after domain is live `#improvement` `#ecnordic` *(2026-05-20 → 2026-05-20)*
 - [x] **#2** Full visual design pass (Pass 3: Nunito font, crimson/cobalt palette, hero grid, nav, news cards) `#improvement` `#ecnordic` *(2026-05-20)*
