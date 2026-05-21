@@ -15,7 +15,7 @@
       <img src="/images/ec-nordic-hero.webp" alt="EC Nordic athletes training" />
     </div>
     <div class="welcome-body">
-      <h2 class="welcome-heading">Welcome to East Community Nordic</h2>
+      <h2 class="welcome-heading">Welcome</h2>
       <p class="welcome-blurb">{WELCOME_BLURB}</p>
       <a href="/about" class="welcome-link">Learn more →</a>
     </div>
@@ -149,19 +149,21 @@
 
   .welcome-heading {
     font-family: var(--font-display);
-    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-    font-weight: 800;
+    font-size: 0.8rem;
+    font-weight: 700;
     line-height: 1.2;
-    letter-spacing: -0.02em;
-    color: var(--color-heading);
-    margin: 0 0 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin: 0 0 0.7rem;
   }
 
   .welcome-blurb {
-    font-size: 0.9rem;
-    line-height: 1.55;
-    color: var(--color-muted);
-    margin: 0 0 1rem;
+    font-size: 1.02rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--color-heading);
+    margin: 0 0 1.1rem;
   }
 
   .welcome-link {

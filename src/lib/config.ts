@@ -7,5 +7,7 @@ export const FEED_MAX_ITEMS        = 20;
 export const HOMEPAGE_FEATURED_COUNT = 1;
 
 export const WELCOME_BLURB =
-  'A volunteer-run junior Nordic ski program in Anchorage. ' +
-  'We train year-round and race hard — everyone welcome, no experience needed.';
+  'East Community Nordic is a free, volunteer-run summer training group for ' +
+  'Anchorage high school Nordic skiers and cross-country runners. We build the ' +
+  'fitness, skills, and outdoor habits that carry kids through the ski season ' +
+  'and past graduation.';

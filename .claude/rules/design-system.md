@@ -38,11 +38,13 @@ Overrides use `@plugin "daisyui/theme"`, not raw `[data-theme]` blocks.
 | Role | Font | Usage |
 |---|---|---|
 | Body | Alegreya Sans 400/500/700 | Prose, post content |
-| Display | iA Writer Quattro S 400/700 | Headings |
+| Display | Nunito 600/700/800 | Headings, nav, labels |
 | Mono | iA Writer Mono S 400/700 | Code blocks |
 
-Self-hosted woff2 in `static/fonts/`. Font faces declared in
-`src/app.css`.
+Body and mono are self-hosted woff2 in `static/fonts/`, declared in
+`src/app.css`. Display (Nunito) is loaded from Google Fonts in
+`src/app.html`. Font roles are referenced via `--font-body`,
+`--font-display`, `--font-mono` — never hardcode family names.
 
 ## Shared CSS classes
 

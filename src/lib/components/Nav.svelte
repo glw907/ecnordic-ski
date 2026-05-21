@@ -28,8 +28,8 @@
   const navLinks = [
     { href: '/about', label: 'About' },
     { href: '/calendar', label: 'Calendar' },
-    { href: '/summer-training', label: 'Summer Training' },
-    { href: '/talkeetna-camp', label: 'Talkeetna Camp' },
+    { href: '/training', label: 'Training' },
+    { href: '/volunteers', label: 'Volunteers' },
     { href: '/resources', label: 'Resources' },
     { href: '/contact', label: 'Contact' },
   ];
