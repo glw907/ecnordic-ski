@@ -45,7 +45,7 @@
 
 Before going live — complete these one-time manual steps if not yet done:
 
-1. Register `ecnordic.ski` via Cloudflare Registrar
+1. ~~Register `ecnordic.ski` via Cloudflare Registrar~~ ✓ done
 2. Register Turnstile widget for ecnordic.ski → update site key in `src/routes/contact/+page.svelte`
 3. Add GitHub Actions secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`
 4. Set Worker secrets: `npx wrangler secret put TURNSTILE_SECRET_KEY` and `npx wrangler secret put CONTACT_EMAIL`
