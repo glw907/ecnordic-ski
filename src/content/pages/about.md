@@ -30,11 +30,11 @@ Athletes train at their own pace. The spread across the group can be wide, parti
 
 How we train follows from a few convictions about what the work is for.
 
-- **Total person first.** A strong sleep schedule, good nutrition, and family and community support aren't tradeoffs against athletic ambition — they're required for it. We teach sleep, fueling, and time management as part of training, and how hard we push depends on what an athlete is carrying that week.
-- **Open to any dedicated athlete.** The program is free and donation-based. Anyone who needs help affording camp, gear, or transportation can ask, no questions about family finances. We ask for consistency and hard work in return.
+- **Total person first.** A solid sleep schedule, good food, and family support aren't tradeoffs against athletic ambition. They make it possible, so we teach sleep, fueling, and time management alongside the workouts.
+- **Open to any dedicated athlete.** The program is free and donation-based. Anyone who needs help affording camp, gear, or a ride can ask, no questions about family finances.
 - **What athletics is for.** Training is a way to develop better, more engaged, healthier people. We design workouts and respond to setbacks with that in mind.
-- **A lasting relationship with Nordic skiing.** Most high school athletes won't race competitively after college. We want them to keep skiing for its own sake, on skills and habits that hold up past the racing years.
-- **Support the community that supports you.** Athletes do community service — trail work, helping at events and races — and we organize it so they don't have to find their own. We expect athletes to support their teammates too, at EC Nordic and on their high school ski teams.
+- **A lasting bond with skiing.** Most high school athletes won't race after college. We want them to keep skiing for its own sake, on habits that hold up past the racing years.
+- **Support the community that supports you.** Athletes do community service: trail work, and helping at events and races, organized so they don't have to find their own. We expect athletes to back up their teammates too, at EC Nordic and on their high school ski teams.
 
 ## Costs & volunteers
 
