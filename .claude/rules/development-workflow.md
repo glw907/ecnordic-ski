@@ -4,3 +4,14 @@ of ecnordic-ski work, invoke the `cairn-pass` skill. It handles both
 pass start (read STATUS, read plan, execute) and pass end (the
 consolidation ritual: code-simplifier, svelte-check, STATUS update, plan
 archival, commit + push).
+
+## Keep the backlog current
+
+`BACKLOG.md` uses the `/log-issue` structured format (numbered `**#N**`
+items, `#type`/`#ecnordic` tags, dates, grouped under High/Medium/Low/Done).
+Use that format for new items — never plain bullets.
+
+When work completes something tracked in the backlog, close it in the same
+pass: mark `[x]`, move it to `## Done` with a completion date, and verify it's
+actually done (check real state, don't assume) before closing. Don't leave
+resolved items sitting open.
