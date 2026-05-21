@@ -10,6 +10,8 @@
 
 ## Low
 
+- [ ] **#9** Remove unused font files from `static/fonts/` `#improvement` `#ecnordic` *(2026-05-20)*
+  ~1.6 MB across ~20 woff2 files (Cormorant, ETBook, iA Quattro, Iosevka, Karla, Lora, Monaspace, Spectral) — leftovers from an earlier font exploration, referenced by no `@font-face`. Only Alegreya Sans, Nunito (Google), and iA Writer Mono S are loaded. They ship to the Worker as static assets for no reason. Delete; keep only the declared families.
 - [ ] **#8** Replace regex-based HTML rewriting with a remark plugin `#improvement` `#ecnordic` *(2026-05-20)*
   `decorateAbout`/`wrapSections` in `src/routes/[slug]/+page.svelte` mutate rendered HTML with regexes (`<li>`/`<ul>` class injection, `<p>` panel splitting, `class="download-link"` surgery), which silently no-op if remark's output changes. A remark plugin operates on the AST and is far less fragile.
 - [ ] **#7** Move the static-page HTML transform into the load/build layer `#improvement` `#ecnordic` *(2026-05-20)*
