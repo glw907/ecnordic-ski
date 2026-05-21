@@ -169,9 +169,24 @@
     );
   }
 
+  // Promote a run of bold-led paragraphs (`<p><strong>Term:</strong> body</p>`)
+  // under an <h3> into a grid of parallel titled points — the same primitive as
+  // a `<ul>`-based grid, for prose written as labelled paragraphs rather than a
+  // list. The trailing colon is dropped so the term reads as a block title.
+  function boldParasToGrid(html: string, heading: string): string {
+    const block = new RegExp(`(<h3>${heading}</h3>\\s*)([\\s\\S]*?)((?:\\s*<h3|\\s*$))`);
+    return html.replace(block, (_full, h3, body, tail) => {
+      const cells = body.replace(
+        /<p><strong>([^<:]+):<\/strong>\s*([\s\S]*?)<\/p>\s*/g,
+        (_p: string, term: string, text: string) => `<li><strong>${term}</strong> ${text}</li>`,
+      );
+      return `${h3}<ul class="ec-grid">${cells}</ul>${tail}`;
+    });
+  }
+
   // Training applies the same kit as About. Most sections are plain module
-  // cards (schedule, who-can-join, what-to-bring, the camp); the parallel
-  // activity list becomes a grid, and sign-up is the page's one CTA.
+  // cards (schedule, who-can-join, what-to-bring); the parallel activity list
+  // and the camp's logistics become grids, and sign-up is the page's one CTA.
   function decorateTraining(html: string): string {
     return decoratePage(
       html,
@@ -183,6 +198,13 @@
         if (slug === 'what-we-do') {
           const body = rest.replace('<ul>', '<ul class="ec-grid">');
           return ecCard('what-we-do', head, body, rise);
+        }
+
+        // The camp's Logistics (Travel / Lodging / Meals / Cost) are parallel
+        // titled points → the same grid. The intro, "What to Expect" prose, and
+        // the packing checklist stay as written.
+        if (slug === 'talkeetna-camp') {
+          return ecCard('talkeetna-camp', head, boldParasToGrid(rest, 'Logistics'), rise);
         }
 
         // Single call to act → centered CTA, flag tile as the one focal accent.
