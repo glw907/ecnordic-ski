@@ -1,10 +1,4 @@
-<script lang="ts">
-  import type { PageData } from './$types';
-  import { SITE_TITLE } from '$lib/config';
-
-  let { data }: { data: PageData } = $props();
-  let { page } = $derived(data);
-
+<script module lang="ts">
   function slugify(s: string): string {
     return s
       .replace(/<[^>]*>/g, '')      // strip tags
@@ -14,30 +8,45 @@
       .replace(/^-+|-+$/g, '');
   }
 
-  // Wrap each H2-led run of content into its own <section> card, with the body
-  // (everything after the heading) in a .section-body wrapper. Anything before
-  // the first H2 (lede, intro, page-toc) stays outside the cards.
-  function wrapSections(html: string): string {
+  type Section = { h2: string; title: string; slug: string; rest: string };
+
+  // Split rendered HTML on H2 boundaries: `intro` is everything before the
+  // first H2 (lede, page-toc); each section carries its heading tag, the
+  // heading text, its slug, and the body after the heading. Sections with no
+  // parseable H2 keep the raw chunk in `rest` (h2 empty) so callers can pass
+  // it through unchanged.
+  function parseSections(html: string): { intro: string; sections: Section[] } {
     const parts = html.split(/(?=<h2)/);
-    if (parts.length <= 1) return html;
-    const intro = parts[0];
-    const sections = parts
-      .slice(1)
-      .map((chunk) => {
-        const split = chunk.match(/^(<h2[^>]*>[\s\S]*?<\/h2>)([\s\S]*)$/);
-        if (!split) return `<section class="page-section">${chunk}</section>`;
-        const [, h2, rest] = split;
-        const text = h2.match(/<h2[^>]*>([\s\S]*?)<\/h2>/);
-        const slug = text ? slugify(text[1]) : '';
+    const intro = parts[0] ?? '';
+    const sections = parts.slice(1).map((chunk): Section => {
+      const m = chunk.match(/^(<h2[^>]*>([\s\S]*?)<\/h2>)([\s\S]*)$/);
+      if (!m) return { h2: '', title: '', slug: '', rest: chunk };
+      const [, h2, title, rest] = m;
+      return { h2, title, slug: slugify(title), rest };
+    });
+    return { intro, sections };
+  }
+
+  // Wrap each H2-led run of content into its own <section> card, with the body
+  // in a .section-body wrapper. Anything before the first H2 stays outside.
+  function wrapSections(html: string): string {
+    const { intro, sections } = parseSections(html);
+    if (!sections.length) return html;
+    const body = sections
+      .map(({ h2, slug, rest }) => {
+        if (!h2) return `<section class="page-section">${rest}</section>`;
         const attr = slug ? ` data-section="${slug}"` : '';
         return `<section class="page-section"${attr}>${h2}<div class="section-body">${rest}</div></section>`;
       })
       .join('');
-    return intro + sections;
+    return intro + body;
   }
 
-  // ── Phosphor icons (regular weight, inlined so there's no runtime font) ──
-  // Each section's icon carries its meaning at a glance; see decorateAbout.
+  // ── Phosphor icons (regular weight, inlined as SVG so there's no icon-font
+  // request). Each section's icon carries its meaning at a glance; see
+  // decorateAbout. The cost/volunteer section header reuses the hand-heart glyph.
+  const HAND_HEART =
+    '<svg class="ec-glyph" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M230.33,141.06a24.34,24.34,0,0,0-18.61-4.77C230.5,117.33,240,98.48,240,80c0-26.47-21.29-48-47.46-48A47.58,47.58,0,0,0,156,48.75,47.58,47.58,0,0,0,119.46,32C93.29,32,72,53.53,72,80c0,11,3.24,21.69,10.06,33a31.87,31.87,0,0,0-14.75,8.4L44.69,144H16A16,16,0,0,0,0,160v40a16,16,0,0,0,16,16H120a7.93,7.93,0,0,0,1.94-.24l64-16a6.94,6.94,0,0,0,1.19-.4L226,182.82l.44-.2a24.6,24.6,0,0,0,3.93-41.56ZM119.46,48A31.15,31.15,0,0,1,148.6,67a8,8,0,0,0,14.8,0,31.15,31.15,0,0,1,29.14-19C209.59,48,224,62.65,224,80c0,19.51-15.79,41.58-45.66,63.9l-11.09,2.55A28,28,0,0,0,140,112H100.68C92.05,100.36,88,90.12,88,80,88,62.65,102.41,48,119.46,48ZM16,160H40v40H16Zm203.43,8.21-38,16.18L119,200H56V155.31l22.63-22.62A15.86,15.86,0,0,1,89.94,128H140a12,12,0,0,1,0,24H112a8,8,0,0,0,0,16h32a8.32,8.32,0,0,0,1.79-.2l67-15.41.31-.08a8.6,8.6,0,0,1,6.3,15.9Z"/></svg>';
   const ICON: Record<string, string> = {
     'what-we-do':
       '<svg class="ec-glyph" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M200,168a32.06,32.06,0,0,0-31,24H72a32,32,0,0,1,0-64h96a40,40,0,0,0,0-80H72a8,8,0,0,0,0,16h96a24,24,0,0,1,0,48H72a48,48,0,0,0,0,96h97a32,32,0,1,0,31-40Zm0,48a16,16,0,1,1,16-16A16,16,0,0,1,200,216Z"/></svg>',
@@ -47,21 +56,19 @@
       '<svg class="ec-glyph" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M244.8,150.4a8,8,0,0,1-11.2-1.6A51.6,51.6,0,0,0,192,128a8,8,0,0,1-7.37-4.89,8,8,0,0,1,0-6.22A8,8,0,0,1,192,112a24,24,0,1,0-23.24-30,8,8,0,1,1-15.5-4A40,40,0,1,1,219,117.51a67.94,67.94,0,0,1,27.43,21.68A8,8,0,0,1,244.8,150.4ZM190.92,212a8,8,0,1,1-13.84,8,57,57,0,0,0-98.16,0,8,8,0,1,1-13.84-8,72.06,72.06,0,0,1,33.74-29.92,48,48,0,1,1,58.36,0A72.06,72.06,0,0,1,190.92,212ZM128,176a32,32,0,1,0-32-32A32,32,0,0,0,128,176ZM72,120a8,8,0,0,0-8-8A24,24,0,1,1,87.24,82a8,8,0,1,0,15.5-4A40,40,0,1,0,37,117.51,67.94,67.94,0,0,0,9.6,139.19a8,8,0,1,0,12.8,9.61A51.6,51.6,0,0,1,64,128,8,8,0,0,0,72,120Z"/></svg>',
     'program-philosophy':
       '<svg class="ec-glyph" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM172.42,72.84l-64,32a8.05,8.05,0,0,0-3.58,3.58l-32,64A8,8,0,0,0,80,184a8.1,8.1,0,0,0,3.58-.84l64-32a8.05,8.05,0,0,0,3.58-3.58l32-64a8,8,0,0,0-10.74-10.74ZM138,138,97.89,158.11,118,118l40.15-20.07Z"/></svg>',
-    'costs-volunteers':
-      '<svg class="ec-glyph" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M230.33,141.06a24.34,24.34,0,0,0-18.61-4.77C230.5,117.33,240,98.48,240,80c0-26.47-21.29-48-47.46-48A47.58,47.58,0,0,0,156,48.75,47.58,47.58,0,0,0,119.46,32C93.29,32,72,53.53,72,80c0,11,3.24,21.69,10.06,33a31.87,31.87,0,0,0-14.75,8.4L44.69,144H16A16,16,0,0,0,0,160v40a16,16,0,0,0,16,16H120a7.93,7.93,0,0,0,1.94-.24l64-16a6.94,6.94,0,0,0,1.19-.4L226,182.82l.44-.2a24.6,24.6,0,0,0,3.93-41.56ZM119.46,48A31.15,31.15,0,0,1,148.6,67a8,8,0,0,0,14.8,0,31.15,31.15,0,0,1,29.14-19C209.59,48,224,62.65,224,80c0,19.51-15.79,41.58-45.66,63.9l-11.09,2.55A28,28,0,0,0,140,112H100.68C92.05,100.36,88,90.12,88,80,88,62.65,102.41,48,119.46,48ZM16,160H40v40H16Zm203.43,8.21-38,16.18L119,200H56V155.31l22.63-22.62A15.86,15.86,0,0,1,89.94,128H140a12,12,0,0,1,0,24H112a8,8,0,0,0,0,16h32a8.32,8.32,0,0,0,1.79-.2l67-15.41.31-.08a8.6,8.6,0,0,1,6.3,15.9Z"/></svg>',
+    'costs-volunteers': HAND_HEART,
     'getting-started':
       '<svg class="ec-glyph" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M42.76,50A8,8,0,0,0,40,56V224a8,8,0,0,0,16,0V179.77c26.79-21.16,49.87-9.75,76.45,3.41,16.4,8.11,34.06,16.85,53,16.85,13.93,0,28.54-4.75,43.82-18a8,8,0,0,0,2.76-6V56A8,8,0,0,0,218.76,50c-28,24.23-51.72,12.49-79.21-1.12C111.07,34.76,78.78,18.79,42.76,50ZM216,172.25c-26.79,21.16-49.87,9.74-76.45-3.41-25-12.35-52.81-26.13-83.55-8.4V59.79c26.79-21.16,49.87-9.75,76.45,3.4,25,12.35,52.82,26.13,83.55,8.4Z"/></svg>',
     gift:
       '<svg class="ec-glyph" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M216,72H180.92c.39-.33.79-.65,1.17-1A29.53,29.53,0,0,0,192,49.57,32.62,32.62,0,0,0,158.44,16,29.53,29.53,0,0,0,137,25.91a54.94,54.94,0,0,0-9,14.48,54.94,54.94,0,0,0-9-14.48A29.53,29.53,0,0,0,97.56,16,32.62,32.62,0,0,0,64,49.57,29.53,29.53,0,0,0,73.91,71c.38.33.78.65,1.17,1H40A16,16,0,0,0,24,88v32a16,16,0,0,0,16,16v64a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V136a16,16,0,0,0,16-16V88A16,16,0,0,0,216,72ZM149,36.51a13.69,13.69,0,0,1,10-4.5h.49A16.62,16.62,0,0,1,176,49.08a13.69,13.69,0,0,1-4.5,10c-9.49,8.4-25.24,11.36-35,12.4C137.7,60.89,141,45.5,149,36.51Zm-64.09.36A16.63,16.63,0,0,1,96.59,32h.49a13.69,13.69,0,0,1,10,4.5c8.39,9.48,11.35,25.2,12.39,34.92-9.72-1-25.44-4-34.92-12.39a13.69,13.69,0,0,1-4.5-10A16.6,16.6,0,0,1,84.87,36.87ZM40,88h80v32H40Zm16,48h64v64H56Zm144,64H136V136h64Zm16-80H136V88h80v32Z"/></svg>',
-    'hand-heart':
-      '<svg class="ec-glyph" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M230.33,141.06a24.34,24.34,0,0,0-18.61-4.77C230.5,117.33,240,98.48,240,80c0-26.47-21.29-48-47.46-48A47.58,47.58,0,0,0,156,48.75,47.58,47.58,0,0,0,119.46,32C93.29,32,72,53.53,72,80c0,11,3.24,21.69,10.06,33a31.87,31.87,0,0,0-14.75,8.4L44.69,144H16A16,16,0,0,0,0,160v40a16,16,0,0,0,16,16H120a7.93,7.93,0,0,0,1.94-.24l64-16a6.94,6.94,0,0,0,1.19-.4L226,182.82l.44-.2a24.6,24.6,0,0,0,3.93-41.56ZM119.46,48A31.15,31.15,0,0,1,148.6,67a8,8,0,0,0,14.8,0,31.15,31.15,0,0,1,29.14-19C209.59,48,224,62.65,224,80c0,19.51-15.79,41.58-45.66,63.9l-11.09,2.55A28,28,0,0,0,140,112H100.68C92.05,100.36,88,90.12,88,80,88,62.65,102.41,48,119.46,48ZM16,160H40v40H16Zm203.43,8.21-38,16.18L119,200H56V155.31l22.63-22.62A15.86,15.86,0,0,1,89.94,128H140a12,12,0,0,1,0,24H112a8,8,0,0,0,0,16h32a8.32,8.32,0,0,0,1.79-.2l67-15.41.31-.08a8.6,8.6,0,0,1,6.3,15.9Z"/></svg>',
+    'hand-heart': HAND_HEART,
   };
 
   // Cobalt (people) for the community sections; crimson (program) elsewhere.
   const SECONDARY_SECTIONS = new Set(['who-can-join']);
 
-  function ecCard(slug: string, head: string, body: string, extra = ''): string {
-    return `<section class="card ec-card bg-base-100 border border-base-300 shadow-sm${extra}" data-section="${slug}">`
+  function ecCard(slug: string, head: string, body: string): string {
+    return `<section class="card ec-card bg-base-100 border border-base-300 shadow-sm" data-section="${slug}">`
       + `<div class="card-body">${head}<div class="section-body">${body}</div></div></section>`;
   }
 
@@ -69,16 +76,10 @@
   // becomes a DaisyUI module whose treatment fits its job, with a Phosphor
   // icon carrying the meaning and color carrying the role.
   function decorateAbout(html: string): string {
-    const parts = html.split(/(?=<h2)/);
-    if (parts.length <= 1) return html;
-    const intro = parts[0];
-    const sections = parts.slice(1).map((chunk) => {
-      const m = chunk.match(/^(<h2[^>]*>[\s\S]*?<\/h2>)([\s\S]*)$/);
-      if (!m) return chunk;
-      const [, h2, rest] = m;
-      const inner = h2.match(/<h2[^>]*>([\s\S]*?)<\/h2>/);
-      const title = inner ? inner[1] : '';
-      const slug = slugify(title);
+    const { intro, sections } = parseSections(html);
+    if (!sections.length) return html;
+    const decorated = sections.map(({ h2, title, slug, rest }) => {
+      if (!h2) return rest;
       const icon = ICON[slug] ?? '';
       const tone = SECONDARY_SECTIONS.has(slug) ? ' ec-chip-secondary' : '';
       const chip = icon ? `<span class="ec-chip${tone}">${icon}</span>` : '';
@@ -125,8 +126,16 @@
 
       return ecCard(slug, head, rest);
     }).join('');
-    return intro + sections;
+    return intro + decorated;
   }
+</script>
+
+<script lang="ts">
+  import type { PageData } from './$types';
+  import { SITE_TITLE } from '$lib/config';
+
+  let { data }: { data: PageData } = $props();
+  let { page } = $derived(data);
 
   let bodyHtml = $derived(page.slug === 'about' ? decorateAbout(page.html) : wrapSections(page.html));
 </script>
