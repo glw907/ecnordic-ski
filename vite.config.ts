@@ -9,7 +9,10 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ['cloudflare:email']
+      // Pagefind's UI bundle is generated after the build by `npx pagefind`,
+      // so it doesn't exist at bundle time. Keep the runtime import external
+      // (Vite 8's Rolldown bundler resolves it eagerly otherwise).
+      external: ['cloudflare:email', '/pagefind/pagefind-ui.js']
     }
   }
 });

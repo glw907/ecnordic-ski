@@ -2,6 +2,11 @@
 
 **Current state:** Pass 4 in progress. Design *language* defined and proven on the About page — a reusable DaisyUI-based component kit (card module, subtle alert card, `.ec-grid` card of parallel titled points, button action), bare Phosphor icons (tile reserved for one focal accent) with a meaning matrix and usage rules, and a meaning-driven warm/cool palette built from the two brand colors. The About-only `.ec-values` list is now the global `.ec-grid` primitive. A full type system is now documented — reasoned scale (size+weight+colour per level), an uppercase-label tracking ramp, the `--color-body-soft` supporting-prose token, a real Alegreya Sans italic face, and a ~1.5× vertical-rhythm scale; About also gains a staggered entrance. Documented in `docs/design-language.md`. Remaining pages not yet migrated.
 
+**Toolchain (2026-05-21):** dependencies modernized — Node 24 (pinned via `.nvmrc` +
+`engines`), Vite 8/Rolldown, TypeScript 6, adapter-cloudflare 7, wrangler 4.93, plus
+security patches. Calendar migrated to schedule-x v3 Temporal dates. See `docs/architecture.md`
+→ *Build Toolchain & Version Notes*.
+
 ---
 
 ## Passes

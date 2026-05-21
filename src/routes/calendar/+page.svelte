@@ -1,5 +1,10 @@
 <script lang="ts">
   import '@schedule-x/theme-default/dist/index.css';
+  // schedule-x validates event dates with `instanceof globalThis.Temporal.*`.
+  // Construct our dates from that same global so the instanceof check passes;
+  // this side-effect import installs the polyfill only where Temporal is absent.
+  import 'temporal-polyfill/global';
+  import type { CalendarEvent } from '@schedule-x/calendar';
   import { onMount } from 'svelte';
   import type { PageData } from './$types';
   import { SITE_TITLE } from '$lib/config';
@@ -20,12 +25,16 @@
       calendarApp = createCalendar({
         views: [viewMonthGrid],
         defaultView: viewMonthGrid.name,
+        // schedule-x v3 requires Temporal date objects; our events are all-day,
+        // so map the YYYY-MM-DD strings to Temporal.PlainDate. Cast bridges the
+        // type-package skew between temporal-polyfill and the temporal spec that
+        // schedule-x's .d.ts references — same runtime type, divergent packages.
         events: events.map((e) => ({
           id: e.id,
           title: e.title,
-          start: e.start,
-          end: e.end,
-        })),
+          start: Temporal.PlainDate.from(e.start),
+          end: Temporal.PlainDate.from(e.end),
+        })) as CalendarEvent[],
       });
 
       calendarApp.render(calendarEl);

@@ -190,6 +190,24 @@ meaning matrix + usage checklist in the design-language doc.
 
 ---
 
+## Build Toolchain & Version Notes
+
+- **Node 24** is the build runtime, pinned via `.nvmrc` (`24`) and `engines.node`
+  (`>=22`); CI (`deploy.yml`) runs Node 24. wrangler ≥4.93 requires Node ≥22, so
+  Node 20 is no longer supported here.
+- **Vite 8 uses the Rolldown bundler**, which resolves absolute dynamic imports
+  eagerly. Pagefind's UI bundle (`/pagefind/pagefind-ui.js`) is generated *after*
+  the build by `npx pagefind`, so it must be listed in `build.rollupOptions.external`
+  in `vite.config.ts` (alongside `cloudflare:email`) or the build fails with
+  `UNRESOLVED_IMPORT`.
+- **schedule-x v3 (calendar)** requires `Temporal` date objects and validates them
+  with `instanceof globalThis.Temporal.*`. The calendar route imports
+  `temporal-polyfill/global` and constructs `Temporal.PlainDate` from the global so
+  the instanceof check passes regardless of native-Temporal availability. See the
+  comment in `src/routes/calendar/+page.svelte`.
+
+---
+
 ## What Replaced What
 
 | Hugo | SvelteKit |

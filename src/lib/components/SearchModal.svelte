@@ -27,7 +27,9 @@
     }
 
     try {
-      const { PagefindUI } = await import('/pagefind/pagefind-ui' + '.js') as any;
+      // pagefind UI bundle is generated post-build by `npx pagefind`; no module or types exist at compile time
+      // @ts-ignore
+      const { PagefindUI } = await import(/* @vite-ignore */ '/pagefind/pagefind-ui.js') as any;
       new PagefindUI({
         element: '#pagefind-search',
         showSubResults: true,

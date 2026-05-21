@@ -2,6 +2,9 @@
   "name": "ecnordic-ski",
   "version": "0.0.1",
   "private": true,
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
@@ -15,18 +18,20 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260405.1",
     "@phosphor-icons/core": "^2.1.1",
-    "@sveltejs/adapter-cloudflare": "^5",
+    "@sveltejs/adapter-cloudflare": "^7.2.8",
     "@sveltejs/kit": "^2",
-    "@sveltejs/vite-plugin-svelte": "^5",
+    "@sveltejs/vite-plugin-svelte": "^7",
     "@tailwindcss/vite": "^4",
     "daisyui": "^5",
-    "mdsvex": "^0.11",
+    "mdsvex": "^0.12.7",
     "svelte": "^5",
     "svelte-check": "^4",
     "tailwindcss": "^4",
-    "typescript": "^5",
-    "vite": "^6",
-    "vitest": "^4.1.6"
+    "temporal-polyfill": "^0.3.0",
+    "typescript": "^6.0.3",
+    "vite": "^8",
+    "vitest": "^4.1.6",
+    "wrangler": "^4.93.1"
   },
   "dependencies": {
     "@schedule-x/svelte": "^3.0.0",
