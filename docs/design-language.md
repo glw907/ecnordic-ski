@@ -3,7 +3,7 @@
 Living reference for the EC Nordic component kit, palette, and icon system.
 Keep it current as the language evolves.
 
-**Last updated:** 2026-05-20 — typography scale, label ramp, and vertical rhythm documented.
+**Last updated:** 2026-05-20 — typography scale, label ramp, vertical rhythm, motion, and the page-refinement process documented.
 **Builds on:** `docs/superpowers/specs/2026-05-14-ecnordic-design.md` (color tokens, type scale, nav).
 
 ---
@@ -357,3 +357,60 @@ why we do it → what it costs → how to start.
 - **Don't** invent a new section look when a primitive already fits — sameness
   is the point.
 - **Don't** hardcode `oklch()` or DaisyUI v4 short vars; use `var(--color-*)`.
+
+---
+
+## Refining a page — process
+
+The ordered procedure for taking a page from raw to polished. About is the
+worked example (`src/routes/[slug]/+page.svelte` → `decorateAbout`); each step
+links to the rule that governs it. Work top to bottom — the early steps are
+structure, the later ones are finish.
+
+**Before you start.** Read this whole doc, the relevant rule in
+`.claude/rules/` (content for copy, design-system for tokens), and skim the
+target page's current markup/content. Confirm scope against the active starter
+prompt in `docs/STATUS.md` (what's in / out). If the page needs *new* content,
+that's a content task first — see `docs/content-guide.md`.
+
+1. **Map each section to a primitive by *meaning*** — module `card`, subtle
+   `.ec-alert`, `.ec-grid`, split panels, or the single CTA (`btn btn-primary`).
+   Pick the one whose job fits; never invent a new section look when one fits
+   (→ *The component kit*, *Reuse do/don't*). Most pages are markdown rendered
+   via `{@html}`, so this is a `decorate<Page>()` function mirroring
+   `decorateAbout`.
+
+2. **Assign role colour and icons.** Colour follows the role table (primary =
+   program/action, secondary = people, warning = caution; if no role fits, use
+   none). One wayfinding icon per section *only if* it clears the icon checklist;
+   register any new glyph in the icon matrix (→ *Color system*, *Icon system*).
+
+3. **Apply the type scale.** Every text level separated on size + weight +
+   colour together, never size alone. Lede → body → supporting prose
+   (`--color-body-soft` for elaboration under a heading); uppercase labels use
+   Nunito 700 + the tracking ramp; `muted` only for genuinely secondary text
+   (→ *Typography → the scale*).
+
+4. **Set the vertical rhythm** to the ~1.5× scale: 0.5rem (heading → body),
+   0.9rem (sibling tiles), 1.4rem (module-to-module / lede → first section)
+   (→ *Vertical rhythm*).
+
+5. **Wire the entrance cascade.** Emit a per-module `--rise` (the `riseStyle`
+   helper) and add the `module-rise` rule scoped to the page; disable the
+   page-level rise on that page; honour `prefers-reduced-motion`
+   (→ *Motion — page entrance*).
+
+6. **Verify, before claiming done.** `npx svelte-check` clean; `npm run build`;
+   then a headless screenshot of the **built** page on `:8787` (wrangler serves
+   the build, so rebuild first). Check, with the screenshot — not by assertion:
+   **desktop + mobile** layout, **dark mode**, the **vertical rhythm**, and that
+   colour stays in chrome (no accent-coloured running text). Crop in at 2× to
+   judge type and spacing.
+
+7. **Pass-end ritual** — `code-simplifier` over the changed code, svelte-check,
+   update `docs/STATUS.md` (+ this doc if the language itself changed), commit
+   and push. This is the `cairn-pass` skill; invoke it to start and to close.
+
+**Done means:** the page is indistinguishable in craft from About — a casual
+visitor feels the coherence without noticing any single choice, and a designer
+would find every value reasoned.
