@@ -28,13 +28,13 @@ Athletes train at their own pace. The spread across the group can be wide, parti
 
 ## Program philosophy
 
-How we train follows from a few convictions about what the work is for.
+Five core principles guide our program design and coaching decisions for every athlete:
 
-- **Total person first.** A solid sleep schedule, good food, and family support aren't tradeoffs against athletic ambition. They make it possible, so we teach sleep, fueling, and time management alongside the workouts.
-- **Open to any dedicated athlete.** The program is free and donation-based. Anyone who needs help affording camp, gear, or a ride can ask, no questions about family finances.
-- **What athletics is for.** Training is a way to develop better, more engaged, healthier people. We design workouts and respond to setbacks with that in mind.
-- **A lasting bond with skiing.** Most high school athletes won't race after college. We want them to keep skiing for its own sake, on habits that hold up past the racing years.
-- **Support the community that supports you.** Athletes do community service: trail work, and helping at events and races, organized so they don't have to find their own. We expect athletes to back up their teammates too, at EC Nordic and on their high school ski teams.
+- **Total person first.** A solid sleep schedule, good food, academic success, and community engagement aren't tradeoffs against athletic ambition. They're core ingredients for both athletic success and a healthy, meaningful life. Toward that end, we help athletes build the habits that let them succeed in sport and in the rest of their lives.
+- **Open to any committed athlete.** The program is free and donation-based. Anyone who needs help affording camp, gear, or a ride can ask, with no questions about family finances. All we ask in return is a strong commitment to training and a willingness to give back to the community.
+- **High school sports matter.** Being on a high school team is a once-in-a-lifetime opportunity that sets the stage for a better, healthier life. EC Nordic aims to complement that opportunity. We provide training, knowledge, and support to help students succeed and thrive on their high school teams.
+- **A lasting bond with trails and skiing.** We want to help athletes find competitive success in high school and beyond, but our larger mission is to help teens develop a lifelong love for skiing, trails, and the outdoors. We work hard in training, and we also strive to find joy and community every day.
+- **Support the community that supports you.** Our athletes are expected to perform community service as part of their membership in EC Nordic, including trail work and helping at community events and races. Our volunteers organize structured opportunities to give back as a team, and we encourage athletes to find ways to give back that are meaningful to them.
 
 ## Costs & volunteers
 
