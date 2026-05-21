@@ -55,6 +55,13 @@
     'who-can-join': svg('M244.8,150.4a8,8,0,0,1-11.2-1.6A51.6,51.6,0,0,0,192,128a8,8,0,0,1-7.37-4.89,8,8,0,0,1,0-6.22A8,8,0,0,1,192,112a24,24,0,1,0-23.24-30,8,8,0,1,1-15.5-4A40,40,0,1,1,219,117.51a67.94,67.94,0,0,1,27.43,21.68A8,8,0,0,1,244.8,150.4ZM190.92,212a8,8,0,1,1-13.84,8,57,57,0,0,0-98.16,0,8,8,0,1,1-13.84-8,72.06,72.06,0,0,1,33.74-29.92,48,48,0,1,1,58.36,0A72.06,72.06,0,0,1,190.92,212ZM128,176a32,32,0,1,0-32-32A32,32,0,0,0,128,176ZM72,120a8,8,0,0,0-8-8A24,24,0,1,1,87.24,82a8,8,0,1,0,15.5-4A40,40,0,1,0,37,117.51,67.94,67.94,0,0,0,9.6,139.19a8,8,0,1,0,12.8,9.61A51.6,51.6,0,0,1,64,128,8,8,0,0,0,72,120Z'),
     'program-philosophy': svg('M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM172.42,72.84l-64,32a8.05,8.05,0,0,0-3.58,3.58l-32,64A8,8,0,0,0,80,184a8.1,8.1,0,0,0,3.58-.84l64-32a8.05,8.05,0,0,0,3.58-3.58l32-64a8,8,0,0,0-10.74-10.74ZM138,138,97.89,158.11,118,118l40.15-20.07Z'),
     'getting-started': svg('M42.76,50A8,8,0,0,0,40,56V224a8,8,0,0,0,16,0V179.77c26.79-21.16,49.87-9.75,76.45,3.41,16.4,8.11,34.06,16.85,53,16.85,13.93,0,28.54-4.75,43.82-18a8,8,0,0,0,2.76-6V56A8,8,0,0,0,218.76,50c-28,24.23-51.72,12.49-79.21-1.12C111.07,34.76,78.78,18.79,42.76,50ZM216,172.25c-26.79,21.16-49.87,9.74-76.45-3.41-25-12.35-52.81-26.13-83.55-8.4V59.79c26.79-21.16,49.87-9.75,76.45,3.4,25,12.35,52.82,26.13,83.55,8.4Z'),
+
+    // ── Training-page sections. `what-we-do` and `who-can-join` reuse the
+    // shared meanings above (the work / people); `sign-up` reuses the flag
+    // (start) glyph keyed under `getting-started`.
+    schedule: svg('M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Z'),
+    'what-to-bring': svg('M168,40.58V32A24,24,0,0,0,144,8H112A24,24,0,0,0,88,32v8.58A56.09,56.09,0,0,0,40,96V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V96A56.09,56.09,0,0,0,168,40.58ZM112,24h32a8,8,0,0,1,8,8v8H104V32A8,8,0,0,1,112,24Zm56,136H88v-8a8,8,0,0,1,8-8h64a8,8,0,0,1,8,8ZM88,176h48v8a8,8,0,0,0,16,0v-8h16v40H88Zm112,40H184V152a24,24,0,0,0-24-24H96a24,24,0,0,0-24,24v64H56V96A40,40,0,0,1,96,56h64a40,40,0,0,1,40,40V216ZM152,88a8,8,0,0,1-8,8H112a8,8,0,0,1,0-16h32A8,8,0,0,1,152,88Z'),
+    'talkeetna-camp': svg('M255.31,188.75l-64-144A8,8,0,0,0,184,40H72a8,8,0,0,0-7.27,4.69.21.21,0,0,0,0,.06l0,.12,0,0L.69,188.75A8,8,0,0,0,8,200H248a8,8,0,0,0,7.31-11.25ZM64,184H20.31L64,85.7Zm16,0V85.7L123.69,184Zm61.2,0L84.31,56H178.8l56.89,128Z'),
   };
 
   // Distinct icons for the two cost/volunteer panels: hand-coins (give money)
@@ -80,68 +87,112 @@
     return ` style="--rise:${(0.16 + idx * 0.04).toFixed(2)}s"`;
   }
 
+  // Single call to act → centered card; the icon earns a tinted tile here
+  // as the page's one focal accent, and the action link becomes a button.
+  function ecCta(slug: string, icon: string, title: string, rest: string, rise: string): string {
+    const body = rest.replace('class="download-link"', 'class="download-link btn btn-primary"');
+    return `<section class="card ec-card ec-cta bg-base-100 border border-primary/30 shadow-sm" data-section="${slug}"${rise}>`
+      + `<div class="card-body items-center text-center"><span class="ec-chip">${icon}</span><h2 class="card-title">${title}</h2>`
+      + `<div class="section-body">${body}</div></div></section>`;
+  }
+
+  // Shared skeleton for decorated pages: parse into sections, run each through
+  // a per-page mapper, and reassemble. The mapper receives the parsed section
+  // plus pre-built `rise`, `icon`, `headIcon`, and `head` strings so each page
+  // function only needs to express its meaningful branch conditions.
+  function decoratePage(
+    html: string,
+    iconFor: (slug: string) => string,
+    mapSection: (s: Section, idx: number, rise: string, icon: string, head: string) => string,
+  ): string {
+    const { intro, sections } = parseSections(html);
+    if (!sections.length) return html;
+    const decorated = sections.map((section, idx) => {
+      const { h2, title, slug, rest } = section;
+      if (!h2) return rest;
+      const rise = riseStyle(idx);
+      const icon = iconFor(slug);
+      const tone = SECONDARY_SECTIONS.has(slug) ? ' ec-icon-secondary' : '';
+      const headIcon = icon ? `<span class="ec-icon${tone}">${icon}</span>` : '';
+      const head = `<div class="ec-head">${headIcon}<h2 class="card-title">${title}</h2></div>`;
+      return mapSection(section, idx, rise, icon, head);
+    }).join('');
+    return intro + decorated;
+  }
+
   // About is the worked example of the design language: each H2 section
   // becomes a DaisyUI module whose treatment fits its job, with a Phosphor
   // icon carrying the meaning and color carrying the role.
   function decorateAbout(html: string): string {
-    const { intro, sections } = parseSections(html);
-    if (!sections.length) return html;
-    const decorated = sections.map(({ h2, title, slug, rest }, idx) => {
-      if (!h2) return rest;
-      const rise = riseStyle(idx);
-      const icon = ICON[slug] ?? '';
-      // Section icons are bare role-coloured glyphs, not tiles — a tinted
-      // tile repeated down the page is heavy; the tile is reserved for the
-      // single focal accent (the CTA).
-      const tone = SECONDARY_SECTIONS.has(slug) ? ' ec-icon-secondary' : '';
-      const headIcon = icon ? `<span class="ec-icon${tone}">${icon}</span>` : '';
-      const head = `<div class="ec-head">${headIcon}<h2 class="card-title">${title}</h2></div>`;
+    return decoratePage(
+      html,
+      (slug) => ICON[slug] ?? '',
+      ({ title, slug, rest }, _idx, rise, icon, head) => {
+        // Caution → the subtle alert card: an aside that still matters. Amber
+        // lives in the chrome (edge/icon/label); text stays full-contrast.
+        if (slug === 'risks') {
+          return `<div role="alert" class="ec-alert ec-alert-caution" data-section="risks"${rise}>`
+            + `<div class="ec-alert-body"><h2>${icon}${title}</h2>${rest}</div></div>`;
+        }
 
-      // Caution → the subtle alert card: an aside that still matters. Amber
-      // lives in the chrome (edge/icon/label); text stays full-contrast. See
-      // .ec-alert.
-      if (slug === 'risks') {
-        return `<div role="alert" class="ec-alert ec-alert-caution" data-section="risks"${rise}>`
-          + `<div class="ec-alert-body"><h2>${icon}${title}</h2>${rest}</div></div>`;
-      }
+        // Values → a compact two-column set. These are parallel convictions,
+        // not a sequence, so no numbering; the grid keeps them from running down.
+        if (slug === 'program-philosophy') {
+          const body = rest.replace('<ul>', '<ul class="ec-grid">');
+          return ecCard('program-philosophy', head, body, rise);
+        }
 
-      // Values → a compact two-column set. These are parallel convictions,
-      // not a sequence, so no numbering; the grid keeps them from running
-      // down the page.
-      if (slug === 'program-philosophy') {
-        const body = rest.replace('<ul>', '<ul class="ec-grid">');
-        return ecCard('program-philosophy', head, body, rise);
-      }
+        // Paired info → two labelled panels, each with its own distinct icon.
+        // No section-header icon: the panels already lead with parallel-choice
+        // icons, and a third hand-* glyph at the head would echo them.
+        if (slug === 'costs-volunteers') {
+          const plainHead = `<div class="ec-head"><h2 class="card-title">${title}</h2></div>`;
+          let i = 0;
+          const body = '<div class="ec-split">'
+            + rest.replace(/<p>([\s\S]*?)<\/p>/g, (_full, p) => {
+                const ic = PANEL_ICONS[i] ?? '';
+                const toneClass = i === 1 ? ' ec-icon-secondary' : '';
+                i += 1;
+                return `<div class="ec-panel"><span class="ec-icon${toneClass}">${ic}</span><p>${p}</p></div>`;
+              })
+            + '</div>';
+          return ecCard('costs-volunteers', plainHead, body, rise);
+        }
 
-      // Paired info → two labelled panels, each with its own distinct icon.
-      // No section-header icon here: the panels already lead with parallel-
-      // choice icons, and a third hand-* glyph at the head would echo them.
-      if (slug === 'costs-volunteers') {
-        const plainHead = `<div class="ec-head"><h2 class="card-title">${title}</h2></div>`;
-        let i = 0;
-        const body = '<div class="ec-split">'
-          + rest.replace(/<p>([\s\S]*?)<\/p>/g, (_full, p) => {
-              const ic = PANEL_ICONS[i] ?? '';
-              const toneClass = i === 1 ? ' ec-icon-secondary' : '';
-              i += 1;
-              return `<div class="ec-panel"><span class="ec-icon${toneClass}">${ic}</span><p>${p}</p></div>`;
-            })
-          + '</div>';
-        return ecCard('costs-volunteers', plainHead, body, rise);
-      }
+        // Single call to act → centered CTA card; icon tile is the one focal accent.
+        if (slug === 'getting-started') {
+          return ecCta('getting-started', icon, title, rest, rise);
+        }
 
-      // Single call to act → centered card; the icon earns a tinted tile here
-      // as the page's one focal accent, and the waiver link becomes a button.
-      if (slug === 'getting-started') {
-        const body = rest.replace('class="download-link"', 'class="download-link btn btn-primary"');
-        return `<section class="card ec-card ec-cta bg-base-100 border border-primary/30 shadow-sm" data-section="getting-started"${rise}>`
-          + `<div class="card-body items-center text-center"><span class="ec-chip">${icon}</span><h2 class="card-title">${title}</h2>`
-          + `<div class="section-body">${body}</div></div></section>`;
-      }
+        return ecCard(slug, head, rest, rise);
+      },
+    );
+  }
 
-      return ecCard(slug, head, rest, rise);
-    }).join('');
-    return intro + decorated;
+  // Training applies the same kit as About. Most sections are plain module
+  // cards (schedule, who-can-join, what-to-bring, the camp); the parallel
+  // activity list becomes a grid, and sign-up is the page's one CTA.
+  function decorateTraining(html: string): string {
+    return decoratePage(
+      html,
+      // sign-up reuses the flag (start) glyph; all other slugs look up directly.
+      (slug) => slug === 'sign-up' ? (ICON['getting-started'] ?? '') : (ICON[slug] ?? ''),
+      ({ title, slug, rest }, _idx, rise, icon, head) => {
+        // The training activities are parallel peers (each a bold term + note),
+        // not a sequence → the grid card, same as About's philosophy values.
+        if (slug === 'what-we-do') {
+          const body = rest.replace('<ul>', '<ul class="ec-grid">');
+          return ecCard('what-we-do', head, body, rise);
+        }
+
+        // Single call to act → centered CTA, flag tile as the one focal accent.
+        if (slug === 'sign-up') {
+          return ecCta('sign-up', icon, title, rest, rise);
+        }
+
+        return ecCard(slug, head, rest, rise);
+      },
+    );
   }
 </script>
 
@@ -152,7 +203,11 @@
   let { data }: { data: PageData } = $props();
   let { page } = $derived(data);
 
-  let bodyHtml = $derived(page.slug === 'about' ? decorateAbout(page.html) : wrapSections(page.html));
+  let bodyHtml = $derived.by(() => {
+    if (page.slug === 'about') return decorateAbout(page.html);
+    if (page.slug === 'training') return decorateTraining(page.html);
+    return wrapSections(page.html);
+  });
 </script>
 
 <svelte:head>
@@ -256,16 +311,17 @@
     color: var(--color-body-soft);
   }
 
-  /* About orchestrates its own entrance per module (below), so the shared
-     whole-page rise would double the transform — let the cascade carry it. */
-  .static-page[data-page="about"] {
+  /* A decorated page orchestrates its own entrance per module (below), so the
+     shared whole-page rise would double the transform — let the cascade carry
+     it. (About and training both decorate; plain pages keep the page rise.) */
+  .static-page:is([data-page="about"], [data-page="training"]) {
     animation: none;
   }
 
   /* Rhythm between modules, and the staggered entrance: each module rises in
      on its own --rise delay so the page resolves as one top-to-bottom cascade
      continuing the title (0s) and lede (0.06s) above it. */
-  .static-page[data-page="about"] :global(.ec-card),
+  .static-page:is([data-page="about"], [data-page="training"]) :global(.ec-card),
   .static-page[data-page="about"] :global(.ec-alert) {
     margin-block-start: 1.4rem;
     animation: module-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -277,7 +333,7 @@
   }
 
   /* Heading row: icon chip + title (DaisyUI .card-title), margins reset */
-  .static-page[data-page="about"] :global(.ec-head) {
+  .static-page:is([data-page="about"], [data-page="training"]) :global(.ec-head) {
     display: flex;
     align-items: center;
     gap: 0.7rem;
@@ -285,17 +341,17 @@
        vertical rhythm (0.5 → 0.9 → 1.4rem, each ~1.5× the last) */
     margin-block-end: 0.5rem;
   }
-  .static-page[data-page="about"] :global(.ec-head h2),
-  .static-page[data-page="about"] :global(.ec-cta h2) {
+  .static-page:is([data-page="about"], [data-page="training"]) :global(.ec-head h2),
+  .static-page:is([data-page="about"], [data-page="training"]) :global(.ec-cta h2) {
     margin: 0;
     font-size: 1.3rem;
   }
   /* Bare header glyph: a touch larger than inline so it anchors the title */
-  .static-page[data-page="about"] :global(.ec-head .ec-glyph) {
+  .static-page:is([data-page="about"], [data-page="training"]) :global(.ec-head .ec-glyph) {
     inline-size: 1.6rem;
     block-size: 1.6rem;
   }
-  .static-page[data-page="about"] :global(.section-body > :first-child) {
+  .static-page:is([data-page="about"], [data-page="training"]) :global(.section-body > :first-child) {
     margin-block-start: 0;
   }
 
@@ -336,7 +392,7 @@
   }
 
   /* Single call to act */
-  .static-page[data-page="about"] :global(.ec-cta .btn) {
+  .static-page:is([data-page="about"], [data-page="training"]) :global(.ec-cta .btn) {
     margin-block-start: 0.5rem;
   }
 
@@ -356,7 +412,7 @@
     .static-page,
     .static-page :global(.page-title),
     .static-page :global(.post-body > p:first-child),
-    .static-page[data-page="about"] :global(.ec-card),
+    .static-page:is([data-page="about"], [data-page="training"]) :global(.ec-card),
     .static-page[data-page="about"] :global(.ec-alert) {
       animation: none;
     }

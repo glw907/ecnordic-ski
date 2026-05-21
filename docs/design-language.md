@@ -296,13 +296,16 @@ overloading an existing glyph.
 
 | Phosphor glyph | Meaning / role | Where used | Color |
 |----------------|----------------|------------|-------|
-| `path` | the training path / the work | About → What we do | primary |
+| `path` | the training path / the work | About → What we do; Training → What we do | primary |
 | `warning` | caution | About → Risks (caution callout) | warning (amber) |
-| `users-three` | people / who belongs | About → Who can join | secondary |
+| `users-three` | people / who belongs | About → Who can join; Training → Who can join | secondary |
 | `compass` | direction, what guides us | About → Program philosophy | primary |
 | `hand-coins` | giving money / donations | About → "Free to join" panel | primary |
 | `handshake` | giving time / volunteering | About → "Lend a hand" panel | secondary |
-| `flag` | start / the goal | About → Getting started (CTA) | primary |
+| `flag` | start / the goal | About → Getting started (CTA); Training → Sign up (CTA) | primary |
+| `calendar-blank` | schedule / when we meet | Training → Schedule | primary |
+| `backpack` | what to bring / gear | Training → What to bring | primary |
+| `tent` | camp / multi-day trip | Training → Talkeetna camp | primary |
 
 ### Implementation
 
