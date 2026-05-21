@@ -1,6 +1,6 @@
 # ecnordic.ski — Project Status
 
-**Current state:** Pass 3 complete. Visual design shipped — Nunito, crimson/cobalt palette, hero grid, schedule card, news cards.
+**Current state:** Pass 4 in progress. Design *language* defined and proven on the About page — a reusable DaisyUI-based component kit (card module, soft warning alert, numbered list, button action), a custom icon-chip primitive, Phosphor icons, and a meaning-driven warm/cool palette built from the two brand colors. Documented in `docs/superpowers/specs/2026-05-21-ecnordic-design-language.md`. Remaining pages not yet migrated.
 
 ---
 
@@ -11,28 +11,33 @@
 | 1 | Scaffold: repo creation, ECN config, Claude infrastructure | ✓ Done |
 | 2 | Build: 3-segment posts, events pipeline, calendar, static pages, contact, deploy | ✓ Done |
 | 3 | Design: Nunito font, crimson/cobalt palette, hero grid, nav, news cards | ✓ Done |
-| 4 | Polish: remaining page styles (about, resources, contact, tags, post detail) | planned |
+| 4 | Design language + rollout: reusable DaisyUI kit, prove on About, migrate remaining pages | in progress — kit + About done |
 
 ---
 
-### Next starter prompt (Pass 4)
+### Next starter prompt (Pass 4 — rollout)
 
-> **Goal.** Apply consistent visual polish to all remaining pages: about, resources,
-> talkeetna-camp, contact, tag pages, and individual post detail view.
+> **Goal.** Roll the EC Nordic design language out to the remaining content pages:
+> training, resources, volunteers, contact, tag pages, and individual post detail.
+> About is the worked example — match it.
 >
-> **Scope.** In: page-level styles, post body typography, contact form styling,
-> tag page layout, mobile responsiveness audit. Out: new features, new content,
-> infrastructure changes.
+> **Read first:** `docs/superpowers/specs/2026-05-21-ecnordic-design-language.md`
+> (the kit, the palette, the color=role rule) and `src/routes/[slug]/+page.svelte`
+> (`decorateAbout` shows how markdown sections map to DaisyUI primitives + Phosphor
+> icon chips). The icon-chip primitive lives globally in `src/app.css`.
 >
-> **Settled (do not re-brainstorm):** Design system is locked — Nunito display,
-> Alegreya Sans body, crimson primary `oklch(54% 0.26 18)`, cobalt secondary
-> `oklch(48% 0.20 260)`, `ecn`/`ecn-dark` themes. Section labels: 0.8rem, weight
-> 700, uppercase, 0.1em tracking, `var(--color-muted)`. Cards use border-radius 10–12px,
-> subtle box-shadow, `var(--color-border-subtle)` borders.
+> **Scope.** In: apply the kit (card module, alert caution, list values, btn action,
+> icon chips) to each page; pick the primitive whose *meaning* fits each section;
+> let color follow the role table; mobile + dark-mode check. Out: new features,
+> palette changes, new content.
 >
-> **Still open — brainstorm these:** None. Extend the established system to unfinished pages.
+> **Settled (do not re-brainstorm):** Design language is locked — DaisyUI-first,
+> meaning-driven warm/cool palette from crimson + cobalt, Phosphor icons, no abstract
+> motifs (the "ski-track" idea was rejected as illegible). See the spec.
 >
 > **Approach.** Invoke cairn-pass to start. Standard pass-end checklist applies.
+> Verify visually with a headless screenshot (chrome `--headless --screenshot`) —
+> the wrangler dev server serves built assets, so rebuild before checking.
 
 ---
 
