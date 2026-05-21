@@ -77,7 +77,7 @@
   // than appearing all at once. The cascade continues the title/lede timing;
   // CSS turns it off under prefers-reduced-motion.
   function riseStyle(idx: number): string {
-    return ` style="--rise:${(0.16 + idx * 0.08).toFixed(2)}s"`;
+    return ` style="--rise:${(0.16 + idx * 0.04).toFixed(2)}s"`;
   }
 
   // About is the worked example of the design language: each H2 section

@@ -121,6 +121,38 @@ The page title takes a little extra (1.6rem) as the top-of-page anchor.
 
 ---
 
+## Motion — page entrance
+
+A body page resolves as **one top-to-bottom cascade**: the title fades up first
+(0s), then the lede (0.06s), then each module in document order. It walks the
+eye down the page in reading order and makes the stack feel like it *settles*
+rather than blinking in. Keep it subtle — it should be felt, not watched.
+
+**Keyframes.** `page-rise` (title + lede) and `module-rise` (each module) both
+fade from `opacity:0` + `translateY` up to rest, `0.5–0.55s`,
+`cubic-bezier(0.22, 1, 0.36, 1)`, `both`.
+
+**The stagger.** Each module gets a delay via an inline `--rise` custom property;
+the CSS reads `animation-delay: var(--rise, 0s)`. The delay is
+**`0.16 + index × 0.04s`** — a *tight* step, so the modules read as a single
+wave, not section-by-section (a larger step makes the individual fades
+noticeable, which we don't want).
+
+**Two rules:**
+1. **Disable the page-level rise on a page that staggers its modules**
+   (`.static-page[data-page="…"] { animation: none }`) — otherwise the container
+   transform and the module transforms compound and the motion looks doubled.
+2. **Always honour `prefers-reduced-motion`** — set `animation: none` on the
+   page, title, lede, and modules in the reduce block. Non-negotiable.
+
+**Applying to a new page.** Emit the per-module `--rise` (the `riseStyle(idx)`
+helper in `[slug]/+page.svelte` is the reference: `style="--rise:${(0.16 + idx *
+0.04).toFixed(2)}s"`), then add the `module-rise` rule + delay scoped to that
+page's module wrapper. The mechanism is page-agnostic; only the scoping selector
+changes. About is the worked example.
+
+---
+
 ## The component kit
 
 Each primitive: its **meaning**, the **DaisyUI** it maps to, and **when** to
