@@ -67,9 +67,17 @@
   // Cobalt (people) for the community sections; crimson (program) elsewhere.
   const SECONDARY_SECTIONS = new Set(['who-can-join']);
 
-  function ecCard(slug: string, head: string, body: string): string {
-    return `<section class="card ec-card bg-base-100 border border-base-300 shadow-sm" data-section="${slug}">`
+  function ecCard(slug: string, head: string, body: string, style = ''): string {
+    return `<section class="card ec-card bg-base-100 border border-base-300 shadow-sm" data-section="${slug}"${style}>`
       + `<div class="card-body">${head}<div class="section-body">${body}</div></div></section>`;
+  }
+
+  // Each module enters on a staggered delay so the page resolves as one
+  // top-to-bottom cascade (title → lede → modules in reading order) rather
+  // than appearing all at once. The cascade continues the title/lede timing;
+  // CSS turns it off under prefers-reduced-motion.
+  function riseStyle(idx: number): string {
+    return ` style="--rise:${(0.16 + idx * 0.08).toFixed(2)}s"`;
   }
 
   // About is the worked example of the design language: each H2 section
@@ -78,8 +86,9 @@
   function decorateAbout(html: string): string {
     const { intro, sections } = parseSections(html);
     if (!sections.length) return html;
-    const decorated = sections.map(({ h2, title, slug, rest }) => {
+    const decorated = sections.map(({ h2, title, slug, rest }, idx) => {
       if (!h2) return rest;
+      const rise = riseStyle(idx);
       const icon = ICON[slug] ?? '';
       // Section icons are bare role-coloured glyphs, not tiles — a tinted
       // tile repeated down the page is heavy; the tile is reserved for the
@@ -92,7 +101,7 @@
       // lives in the chrome (edge/icon/label); text stays full-contrast. See
       // .ec-alert.
       if (slug === 'risks') {
-        return `<div role="alert" class="ec-alert ec-alert-caution" data-section="risks">`
+        return `<div role="alert" class="ec-alert ec-alert-caution" data-section="risks"${rise}>`
           + `<div class="ec-alert-body"><h2>${icon}${title}</h2>${rest}</div></div>`;
       }
 
@@ -101,7 +110,7 @@
       // down the page.
       if (slug === 'program-philosophy') {
         const body = rest.replace('<ul>', '<ul class="ec-grid">');
-        return ecCard('program-philosophy', head, body);
+        return ecCard('program-philosophy', head, body, rise);
       }
 
       // Paired info → two labelled panels, each with its own distinct icon.
@@ -118,19 +127,19 @@
               return `<div class="ec-panel"><span class="ec-icon${toneClass}">${ic}</span><p>${p}</p></div>`;
             })
           + '</div>';
-        return ecCard('costs-volunteers', plainHead, body);
+        return ecCard('costs-volunteers', plainHead, body, rise);
       }
 
       // Single call to act → centered card; the icon earns a tinted tile here
       // as the page's one focal accent, and the waiver link becomes a button.
       if (slug === 'getting-started') {
         const body = rest.replace('class="download-link"', 'class="download-link btn btn-primary"');
-        return `<section class="card ec-card ec-cta bg-base-100 border border-primary/30 shadow-sm" data-section="getting-started">`
+        return `<section class="card ec-card ec-cta bg-base-100 border border-primary/30 shadow-sm" data-section="getting-started"${rise}>`
           + `<div class="card-body items-center text-center"><span class="ec-chip">${icon}</span><h2 class="card-title">${title}</h2>`
           + `<div class="section-body">${body}</div></div></section>`;
       }
 
-      return ecCard(slug, head, rest);
+      return ecCard(slug, head, rest, rise);
     }).join('');
     return intro + decorated;
   }
@@ -187,12 +196,15 @@
     background: var(--color-primary);
   }
 
+  /* Lede: the page thesis. A measured step above body — larger and a touch
+     heavier in heading colour — not a headline. Size + weight carry it, so it
+     doesn't need to shout. */
   .static-page :global(.post-body > p:first-child) {
-    font-size: 1.27rem;
-    line-height: 1.5;
+    font-size: 1.15rem;
+    line-height: 1.55;
     font-weight: 500;
     color: var(--color-heading);
-    margin-block-end: 1.6rem;
+    margin-block-end: 1.4rem;
     animation: page-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.06s both;
   }
 
@@ -235,16 +247,33 @@
        secondary(cobalt)  = people / community
        warning  (amber)   = caution  ─────────────────────────────────── */
 
-  /* Intro: lede stays bold; the clarifying paragraph reads quieter */
+  /* Intro context after the lede: preamble that bridges the thesis to the
+     section cards. A reasoned step down — slightly smaller, in supporting
+     colour — so it stays legible but doesn't compete with the cards below.
+     (Not muted: that read as caption-light for a substantive paragraph.) */
   .static-page[data-page="about"] :global(.post-body > p:not(:first-child)) {
-    color: var(--color-muted);
-    font-size: 0.97rem;
+    font-size: 0.95rem;
+    color: var(--color-body-soft);
   }
 
-  /* Rhythm between modules */
+  /* About orchestrates its own entrance per module (below), so the shared
+     whole-page rise would double the transform — let the cascade carry it. */
+  .static-page[data-page="about"] {
+    animation: none;
+  }
+
+  /* Rhythm between modules, and the staggered entrance: each module rises in
+     on its own --rise delay so the page resolves as one top-to-bottom cascade
+     continuing the title (0s) and lede (0.06s) above it. */
   .static-page[data-page="about"] :global(.ec-card),
   .static-page[data-page="about"] :global(.ec-alert) {
-    margin-block-start: 1.25rem;
+    margin-block-start: 1.4rem;
+    animation: module-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--rise, 0s);
+  }
+  @keyframes module-rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: none; }
   }
 
   /* Heading row: icon chip + title (DaisyUI .card-title), margins reset */
@@ -252,7 +281,9 @@
     display: flex;
     align-items: center;
     gap: 0.7rem;
-    margin-block-end: 0.25rem;
+    /* heading breathes from its body — the innermost step of the page's
+       vertical rhythm (0.5 → 0.9 → 1.4rem, each ~1.5× the last) */
+    margin-block-end: 0.5rem;
   }
   .static-page[data-page="about"] :global(.ec-head h2),
   .static-page[data-page="about"] :global(.ec-cta h2) {
@@ -275,7 +306,7 @@
   .static-page[data-page="about"] :global(.ec-split) {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 0.9rem;
     margin-block-start: 0.25rem;
   }
   .static-page[data-page="about"] :global(.ec-panel) {
@@ -324,7 +355,9 @@
   @media (prefers-reduced-motion: reduce) {
     .static-page,
     .static-page :global(.page-title),
-    .static-page :global(.post-body > p:first-child) {
+    .static-page :global(.post-body > p:first-child),
+    .static-page[data-page="about"] :global(.ec-card),
+    .static-page[data-page="about"] :global(.ec-alert) {
       animation: none;
     }
   }

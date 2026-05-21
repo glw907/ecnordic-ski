@@ -94,7 +94,7 @@
     font-family: var(--font-display);
     font-size: 0.68rem;
     font-weight: 700;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.11em;
     text-transform: uppercase;
     color: var(--color-muted);
     margin: 0 0 1rem;
@@ -122,7 +122,7 @@
     font-weight: 700;
     color: var(--color-primary);
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.095em;
     padding-top: 0.1em;
   }
 

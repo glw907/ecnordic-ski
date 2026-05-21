@@ -137,9 +137,10 @@
 
   .submit-btn {
     align-self: flex-start;
-    font-family: inherit;
+    font-family: var(--font-display);
+    font-weight: 700;
     font-size: 0.8rem;
-    letter-spacing: 0.07em;
+    letter-spacing: 0.09em;
     text-transform: uppercase;
     color: var(--color-surface);
     background: var(--color-body);

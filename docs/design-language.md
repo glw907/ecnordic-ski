@@ -3,7 +3,7 @@
 Living reference for the EC Nordic component kit, palette, and icon system.
 Keep it current as the language evolves.
 
-**Last updated:** 2026-05-21 — About page is the worked example.
+**Last updated:** 2026-05-20 — typography scale, label ramp, and vertical rhythm documented.
 **Builds on:** `docs/superpowers/specs/2026-05-14-ecnordic-design.md` (color tokens, type scale, nav).
 
 ---
@@ -68,9 +68,56 @@ one-mode `oklch()` in a component.
 
 ## Typography
 
-Unchanged from Pass 3. Nunito (display, 600/700/800) for headings, labels,
-numbers; Alegreya Sans (body, 400/500/700) for prose; iA Writer Mono S for
-code. Reference via `--font-display` / `--font-body` / `--font-mono`.
+Three families, each by role: **Nunito** (display — headings, labels, numbers,
+600/700/800), **Alegreya Sans** (body — prose, 400/400-italic/500/700),
+**iA Writer Mono S** (code). Reference via `--font-display` / `--font-body` /
+`--font-mono`; never hardcode family names.
+
+**Real italic.** Alegreya Sans ships a true italic face (`AlegreyaSans-Italic.woff2`,
+400). Every `<em>`, blockquote, and description gets the designed italic — never
+a browser-synthesised slant. Don't set `font-style: italic` on text expecting a
+weight/face that isn't loaded.
+
+### The scale — every level reasoned on more than one axis
+
+Hierarchy is carried by **size + weight + colour + leading/tracking together**,
+never by size alone. Each level states its job:
+
+| Role | Font · size | Weight | Colour | Leading | Tracking |
+|------|-------------|--------|--------|---------|----------|
+| Page title | Nunito · clamp→2.25rem | 800 | heading | 1.15 | −0.02em |
+| Section head (h2 / card) | Nunito · 1.25–1.3rem | 700 | heading | 1.25 | −0.01em |
+| Subhead (h3) | Nunito · 1.05rem | 700 | heading | 1.3 | 0 |
+| Lede | Alegreya · 1.15rem | 500 | heading | 1.55 | 0 |
+| Body | Alegreya · 1.03–1.05rem | 400 | body | 1.62 | 0 |
+| Supporting prose | Alegreya · 0.85–0.95rem | 400 | **body-soft** | 1.5 | 0 |
+| Term / mini-label | Nunito · 1.0rem | 700 | heading | 1.3 | 0 |
+| Eyebrow / label | Nunito · 0.68–0.8rem | 700 | muted (or role) | — | ramp ↓ |
+| Meta / caption | Alegreya · 0.72rem | 400 | muted / faint | 1.3 | 0 |
+
+Two governing rules behind the numbers:
+
+1. **Leading is inverse to size** — large display is tight (1.15); body is open
+   (1.62). List items run a touch tighter (1.55) since lines are short.
+2. **Uppercase tracking loosens as size shrinks** — the eyebrow ramp:
+   `0.80rem → 0.09em`, `0.78 → 0.09`, `0.75 → 0.095`, `0.72 → 0.10`,
+   `0.70 → 0.105`, `0.68 → 0.11em`. All uppercase labels are Nunito 700 so a
+   label (a date, a section eyebrow, a table header) reads with one voice
+   wherever it appears.
+
+**`--color-body-soft`** is the supporting-prose colour — one measured step from
+`body` toward `muted`, themed in both modes. It marks *elaboration that sits
+under a term or heading* (grid cells, alert body, the About intro context
+paragraph): quieter than body, but well clear of `muted`'s caption weight.
+`muted` stays reserved for genuinely secondary text (meta, captions) — never for
+a substantive paragraph.
+
+### Vertical rhythm
+
+Spacing steps on a consistent ~1.5× scale so the stack feels composed:
+**0.5rem** (heading → its body) → **0.9rem** (gap between sibling tiles: grid
+cells, split panels) → **1.4rem** (module-to-module, and lede → first section).
+The page title takes a little extra (1.6rem) as the top-of-page anchor.
 
 ---
 

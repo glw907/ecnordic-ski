@@ -108,7 +108,7 @@
     font-family: var(--font-display);
     font-size: 0.8rem;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.09em;
     text-transform: uppercase;
     color: var(--color-muted);
     margin: 0 0 0.9rem;
@@ -152,7 +152,7 @@
     font-size: 0.8rem;
     font-weight: 700;
     line-height: 1.2;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.09em;
     text-transform: uppercase;
     color: var(--color-muted);
     margin: 0 0 0.7rem;
@@ -227,7 +227,7 @@
     font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.10em;
     color: var(--color-primary);
     line-height: 1.3;
   }
@@ -306,7 +306,7 @@
     font-family: var(--font-display);
     font-size: 0.8rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.09em;
     text-transform: uppercase;
     color: var(--color-muted);
     margin: 0.5rem 0 0;
