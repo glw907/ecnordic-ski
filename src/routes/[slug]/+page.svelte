@@ -100,7 +100,7 @@
       // not a sequence, so no numbering; the grid keeps them from running
       // down the page.
       if (slug === 'program-philosophy') {
-        const body = rest.replace('<ul>', '<ul class="ec-values">');
+        const body = rest.replace('<ul>', '<ul class="ec-grid">');
         return ecCard('program-philosophy', head, body);
       }
 
@@ -226,7 +226,7 @@
 
        module   → DaisyUI .card (subtle: border + shadow-sm)
        caution  → .ec-alert.ec-alert-caution — subtle alert, amber chrome
-       values   → .ec-values — compact two-column set, unnumbered
+       grid     → .ec-grid (global) — card body of parallel titled points
        action   → DaisyUI .btn.btn-primary
        icon     → .ec-icon bare glyph (default); .ec-chip tile = one focal accent
 
@@ -270,26 +270,6 @@
 
   /* The icon primitives (.ec-icon bare glyph, .ec-chip tile) and the caution
      subtle alert (.ec-alert) live globally in app.css. Below: About-only tuning. */
-
-  /* Values: parallel convictions in a compact two-column set, no numbering */
-  .static-page[data-page="about"] :global(.ec-values) {
-    list-style: none;
-    padding: 0;
-    margin-block-start: 0.5rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.9rem 1.75rem;
-  }
-  .static-page[data-page="about"] :global(.ec-values li) {
-    margin: 0;
-    font-size: 0.95rem;
-  }
-  .static-page[data-page="about"] :global(.ec-values strong) {
-    display: block;
-    font-family: var(--font-display);
-    color: var(--color-heading);
-    margin-block-end: 0.1rem;
-  }
 
   /* Paired info: two labelled panels, each with its own icon */
   .static-page[data-page="about"] :global(.ec-split) {
@@ -336,8 +316,7 @@
 
   /* ─── Mobile ─────────────────────────────────────────────── */
   @media (max-width: 640px) {
-    .static-page[data-page="about"] :global(.ec-split),
-    .static-page[data-page="about"] :global(.ec-values) {
+    .static-page[data-page="about"] :global(.ec-split) {
       grid-template-columns: 1fr;
     }
   }
