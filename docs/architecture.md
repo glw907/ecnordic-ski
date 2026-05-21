@@ -177,6 +177,15 @@ practices.
 `platform.env.TURNSTILE_SECRET_KEY` is present. Always-pass test key
 (`1x00000000000000000000AA`) used for the widget in dev.
 
+**Design language:** Canonical living reference at `docs/design-language.md` (not a
+dated spec). Reusable primitives live globally in `src/app.css`: `.ec-icon` (bare
+role-coloured glyph, the default; the `.ec-chip` tile is reserved for one focal accent
+per page) and `.ec-alert` (subtle alert card; role set by a modifier like
+`.ec-alert-caution`). Role colours needing a contrast-safe, theme-flipping variant get a
+derived token, e.g. `--color-caution-accent`. The About page (`decorateAbout` in
+`src/routes/[slug]/+page.svelte`) is the worked example; icon use is governed by a
+meaning matrix + usage checklist in the design-language doc.
+
 ---
 
 ## What Replaced What

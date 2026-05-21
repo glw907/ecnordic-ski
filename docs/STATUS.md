@@ -1,6 +1,6 @@
 # ecnordic.ski — Project Status
 
-**Current state:** Pass 4 in progress. Design *language* defined and proven on the About page — a reusable DaisyUI-based component kit (card module, soft warning alert, numbered list, button action), a custom icon-chip primitive, Phosphor icons, and a meaning-driven warm/cool palette built from the two brand colors. Documented in `docs/superpowers/specs/2026-05-21-ecnordic-design-language.md`. Remaining pages not yet migrated.
+**Current state:** Pass 4 in progress. Design *language* defined and proven on the About page — a reusable DaisyUI-based component kit (card module, subtle alert card, compact values grid, button action), bare Phosphor icons (tile reserved for one focal accent) with a meaning matrix and usage rules, and a meaning-driven warm/cool palette built from the two brand colors. Documented in `docs/design-language.md`. Remaining pages not yet migrated.
 
 ---
 
@@ -21,7 +21,7 @@
 > training, resources, volunteers, contact, tag pages, and individual post detail.
 > About is the worked example — match it.
 >
-> **Read first:** `docs/superpowers/specs/2026-05-21-ecnordic-design-language.md`
+> **Read first:** `docs/design-language.md`
 > (the kit, the palette, the color=role rule) and `src/routes/[slug]/+page.svelte`
 > (`decorateAbout` shows how markdown sections map to DaisyUI primitives + Phosphor
 > icon chips). The icon-chip primitive lives globally in `src/app.css`.

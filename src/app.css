@@ -68,6 +68,9 @@
   --color-error-bg: oklch(97% 0.008 30);
   --color-error-border: oklch(88% 0.018 30);
   --color-highlight: oklch(80% 0.14 18 / 0.25);
+  /* Subtle-alert icon amber — clear amber that holds 3:1 on the faint caution
+     wash (icon only; the label is neutral). Flips brighter in dark mode. */
+  --color-caution-accent: oklch(58% 0.16 72);
 }
 
 @plugin "daisyui/theme" {
@@ -126,6 +129,7 @@
   --color-warning-content: oklch(18% 0.015 72);
   --color-error: oklch(68% 0.22 30);            /* vermilion — error */
   --color-error-content: oklch(13% 0.010 30);
+  --color-caution-accent: oklch(82% 0.15 72);   /* brighter amber for dark wash */
   --color-heading: oklch(94% 0.006 25);
   --color-body: oklch(82% 0.008 25);
   --color-muted: oklch(60% 0.008 25);
@@ -223,6 +227,90 @@ body {
 .ec-chip-sm .ec-glyph {
   inline-size: 1.1rem;
   block-size: 1.1rem;
+}
+
+/* Bare role-coloured glyph — the default icon treatment. A tinted .ec-chip
+   tile is heavy when repeated down a page, so most section icons are just
+   the glyph in its role colour; reserve the tile for a deliberate focal
+   accent. Colour states the role, same rule as the chip. */
+.ec-icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  color: var(--color-primary);
+}
+.ec-icon-secondary {
+  color: var(--color-secondary);
+}
+
+/* ─── Subtle alert card — `.ec-alert` ─────────────────────────
+   A reusable aside that still carries weight. A faint role-tinted wash
+   sets it apart from the calm card stack — no border, no shadow, so it
+   *recedes* as an aside rather than floating like a module. The amber
+   icon + a compact uppercase label give it identity; the prose is quiet
+   (smaller, muted-leaning) but readable. Colour lives only in the icon
+   (and the link underline), never the running text; links take heading
+   colour + an accent underline (high contrast, no clash). Role is a
+   modifier: caution today, add `.ec-alert-info` / `.ec-alert-success`
+   the same way via a sibling modifier class. */
+.ec-alert {
+  /* 1.5rem padding matches `.card-body`, so the label and prose line up with
+     the card text above/below — no jarring left-edge shift in the stack. */
+  padding: 1.4rem 1.5rem;
+  border-radius: 0.7rem;
+  background: color-mix(in oklch, var(--alert-edge) 5%, var(--color-base-100));
+}
+/* Role modifier — sets the two custom props the base `.ec-alert` reads.
+   Add `.ec-alert-info`, `.ec-alert-success`, etc. the same way. */
+.ec-alert-caution {
+  --alert-edge: var(--color-warning);
+  --alert-accent: var(--color-caution-accent);
+}
+/* Two-class prefix so these beat `.post-body h2/p/a` (equal specificity,
+   but those come later in the file). The heading is a compact uppercase
+   label with the alert icon inline at its head — so the body prose isn't
+   indented past it and stays aligned with the label's left edge. The label
+   is neutral (heading colour); amber lives only in the icon + edge. */
+.ec-alert .ec-alert-body :is(h2, h3) {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 0.45rem;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-heading);
+}
+.ec-alert .ec-alert-body :is(h2, h3) .ec-glyph {
+  flex: 0 0 auto;
+  inline-size: 1.05rem;
+  block-size: 1.05rem;
+  color: var(--alert-accent);
+}
+.ec-alert .ec-alert-body :is(p, li) {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  /* a step toward muted — quieter than body prose, still well above the
+     readability floor on the faint wash */
+  color: color-mix(in oklch, var(--color-body), var(--color-muted) 35%);
+}
+.ec-alert .ec-alert-body a {
+  color: var(--color-heading);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--alert-edge);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 2px;
+  transition: text-underline-offset 0.15s ease, text-decoration-color 0.15s ease;
+}
+.ec-alert .ec-alert-body a:hover {
+  text-decoration-color: var(--alert-accent);
+  text-underline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ec-alert .ec-alert-body a { transition: none; }
 }
 
 /* ─── Page-level headings ─────────────────────────────────── */
