@@ -63,10 +63,10 @@
   --color-tag: oklch(50% 0.22 18);
   --color-tag-hash: oklch(68% 0.006 20);
   --color-focus-ring: oklch(54% 0.26 18 / 0.15);
-  --color-success: oklch(50% 0.16 145);
-  --color-error: oklch(54% 0.22 20);
-  --color-error-bg: oklch(97% 0.008 20);
-  --color-error-border: oklch(88% 0.018 20);
+  --color-success: oklch(52% 0.13 155);
+  --color-error: oklch(55% 0.23 30);
+  --color-error-bg: oklch(97% 0.008 30);
+  --color-error-border: oklch(88% 0.018 30);
   --color-highlight: oklch(80% 0.14 18 / 0.25);
 }
 
@@ -78,22 +78,25 @@
   --color-base-200: oklch(95% 0.006 60);
   --color-base-300: oklch(90% 0.008 60);
   --color-base-content: oklch(16% 0.020 15);
-  --color-primary: oklch(54% 0.26 18);
+  /* Brand anchors — the warm↔cool axis the whole palette derives from */
+  --color-primary: oklch(54% 0.26 18);          /* crimson — the program & the one action */
   --color-primary-content: oklch(99% 0.003 18);
-  --color-secondary: oklch(48% 0.20 260);
+  --color-secondary: oklch(48% 0.20 260);       /* cobalt — people, community, wayfinding */
   --color-secondary-content: oklch(99% 0.003 260);
-  --color-accent: oklch(68% 0.18 260);
-  --color-accent-content: oklch(99% 0.003 260);
-  --color-neutral: oklch(30% 0.015 230);
+  /* Cool family (calm / affirm) — stepped off cobalt */
+  --color-accent: oklch(60% 0.13 195);          /* teal — highlights & interactive accents */
+  --color-accent-content: oklch(18% 0.020 195);
+  --color-neutral: oklch(30% 0.015 230);        /* slate — structural UI */
   --color-neutral-content: oklch(92% 0.006 230);
-  --color-info: oklch(58% 0.18 260);
-  --color-info-content: oklch(99% 0.003 260);
-  --color-success: oklch(50% 0.16 145);
-  --color-success-content: oklch(99% 0.003 145);
-  --color-warning: oklch(74% 0.18 65);
-  --color-warning-content: oklch(18% 0.015 65);
-  --color-error: oklch(54% 0.22 20);
-  --color-error-content: oklch(99% 0.003 20);
+  --color-info: oklch(58% 0.16 245);            /* azure — information */
+  --color-info-content: oklch(99% 0.003 245);
+  --color-success: oklch(52% 0.13 155);         /* pine — free / confirmed / go */
+  --color-success-content: oklch(99% 0.003 155);
+  /* Warm family (act / attention) — stepped off crimson */
+  --color-warning: oklch(74% 0.17 72);          /* amber — caution */
+  --color-warning-content: oklch(20% 0.015 72);
+  --color-error: oklch(55% 0.23 30);            /* vermilion — error / destructive */
+  --color-error-content: oklch(99% 0.003 30);
 }
 
 @plugin "daisyui/theme" {
@@ -104,22 +107,25 @@
   --color-base-200: oklch(20% 0.018 255);
   --color-base-300: oklch(25% 0.020 255);
   --color-base-content: oklch(92% 0.006 25);
-  --color-primary: oklch(65% 0.26 18);
+  /* Brand anchors (brighter for dark surfaces) */
+  --color-primary: oklch(65% 0.26 18);          /* crimson — program & action */
   --color-primary-content: oklch(12% 0.015 18);
-  --color-secondary: oklch(60% 0.20 260);
+  --color-secondary: oklch(62% 0.19 260);       /* cobalt — people */
   --color-secondary-content: oklch(12% 0.010 260);
-  --color-accent: oklch(72% 0.18 260);
-  --color-accent-content: oklch(12% 0.010 260);
-  --color-neutral: oklch(24% 0.018 255);
+  /* Cool family — stepped off cobalt */
+  --color-accent: oklch(70% 0.13 195);          /* teal — highlight */
+  --color-accent-content: oklch(14% 0.020 195);
+  --color-neutral: oklch(24% 0.018 255);        /* slate — structural UI */
   --color-neutral-content: oklch(82% 0.008 25);
-  --color-info: oklch(65% 0.18 260);
-  --color-info-content: oklch(12% 0.010 260);
-  --color-success: oklch(64% 0.16 145);
-  --color-success-content: oklch(12% 0.010 145);
-  --color-warning: oklch(80% 0.18 65);
-  --color-warning-content: oklch(18% 0.015 65);
-  --color-error: oklch(68% 0.22 20);
-  --color-error-content: oklch(12% 0.010 20);
+  --color-info: oklch(68% 0.15 245);            /* azure — information */
+  --color-info-content: oklch(13% 0.012 245);
+  --color-success: oklch(66% 0.14 155);         /* pine — free / go */
+  --color-success-content: oklch(13% 0.010 155);
+  /* Warm family — stepped off crimson */
+  --color-warning: oklch(80% 0.17 72);          /* amber — caution */
+  --color-warning-content: oklch(18% 0.015 72);
+  --color-error: oklch(68% 0.22 30);            /* vermilion — error */
+  --color-error-content: oklch(13% 0.010 30);
   --color-heading: oklch(94% 0.006 25);
   --color-body: oklch(82% 0.008 25);
   --color-muted: oklch(60% 0.008 25);
@@ -132,8 +138,8 @@
   --color-tag: oklch(65% 0.22 18);
   --color-tag-hash: oklch(44% 0.008 255);
   --color-focus-ring: oklch(65% 0.26 18 / 0.20);
-  --color-error-bg: oklch(20% 0.014 20);
-  --color-error-border: oklch(32% 0.020 20);
+  --color-error-bg: oklch(20% 0.014 30);
+  --color-error-border: oklch(32% 0.020 30);
   --color-highlight: oklch(55% 0.18 18 / 0.35);
 }
 
@@ -182,6 +188,41 @@ body {
 .post-tag:hover {
   color: var(--color-body);
   border-color: var(--color-muted);
+}
+
+/* ─── Design-language primitives (reusable site-wide) ─────────
+   The kit's components are DaisyUI (.card, .alert, .list, .btn, .badge);
+   the icon chip is the one custom atom. A Phosphor glyph in a tinted
+   square whose color states the section's role:
+     default            → primary (crimson) — the program / the action
+     .ec-chip-secondary → secondary (cobalt) — people / community  */
+.ec-chip {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 2.4rem;
+  block-size: 2.4rem;
+  border-radius: 0.75rem;
+  background: color-mix(in oklch, var(--color-primary) 12%, var(--color-base-100));
+  color: var(--color-primary);
+}
+.ec-chip-secondary {
+  background: color-mix(in oklch, var(--color-secondary) 14%, var(--color-base-100));
+  color: var(--color-secondary);
+}
+.ec-chip-sm {
+  inline-size: 1.95rem;
+  block-size: 1.95rem;
+  border-radius: 0.6rem;
+}
+.ec-glyph {
+  inline-size: 1.35rem;
+  block-size: 1.35rem;
+}
+.ec-chip-sm .ec-glyph {
+  inline-size: 1.1rem;
+  block-size: 1.1rem;
 }
 
 /* ─── Page-level headings ─────────────────────────────────── */
@@ -236,6 +277,27 @@ body {
   line-height: 1.6;
   color: var(--color-body);
 }
+
+/* In-page jump links (table of contents) for long content pages */
+.page-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.1rem;
+  margin-block: 1.5rem 2rem;
+  padding-block: 0.85rem;
+  border-block: 1px solid var(--color-border-subtle);
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.page-toc a {
+  color: var(--color-muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.page-toc a:hover { color: var(--color-primary); }
 
 .post-body p { margin-block: 1em; }
 .post-body p:first-child { margin-block-start: 0; }
