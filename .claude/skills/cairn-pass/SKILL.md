@@ -31,8 +31,10 @@ Every pass ends here. No pass is done until every step has run.
 
 ### 1. Simplify
 
-Dispatch Anthropic's `code-simplifier` agent over the code changed this
-pass. Docs-only passes skip this.
+Dispatch the code-simplifier agent over the code changed this pass —
+the `Agent` tool's `subagent_type` is **`code-simplifier:code-simplifier`**
+(the plugin-namespaced name; the bare `code-simplifier` is not a valid
+agent type and will error). Docs-only passes skip this.
 
 ### 2. /svelte-check
 
