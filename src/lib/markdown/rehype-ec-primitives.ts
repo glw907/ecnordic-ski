@@ -52,6 +52,19 @@ function buildPassage(node: Element, rise?: string): Element {
   return h('section', properties, [head, h('div', { className: ['section-body'] }, rest)]);
 }
 
+function buildAlert(node: Element, rise?: string): Element {
+  const children = node.children as ElementContent[];
+  const i = children.findIndex((c) => isElement(c) && c.tagName === 'h2');
+  const h2 = children[i] as Element;
+  const icon = node.properties?.dataIcon as string | undefined;
+  if (icon) (h2.children as ElementContent[]).unshift(glyph(icon)); // icon inline at the label head
+  const rest = children.filter((_, j) => j !== i);
+  const role = node.properties?.dataRole as string;
+  const properties: Record<string, unknown> = { role: 'alert', className: ['ec-alert', `ec-alert-${role}`] };
+  if (rise) properties.style = rise;
+  return h('div', properties, [h('div', { className: ['ec-alert-body'] }, [h2, ...rest])]);
+}
+
 // Recurse into a node's children, transforming any nested primitive sections
 // (a grid inside a card, panels inside a split) WITHOUT a rise stagger.
 function transformChildren(children: ElementContent[]): ElementContent[] {
@@ -67,6 +80,7 @@ function transform(node: Element, rise?: string): Element {
   switch (node.properties?.dataPrimitive as string) {
     case 'card': return buildCard(node, rise);
     case 'passage': return buildPassage(node, rise);
+    case 'alert': return buildAlert(node, rise);
     default: return node; // other primitives added in later tasks
   }
 }

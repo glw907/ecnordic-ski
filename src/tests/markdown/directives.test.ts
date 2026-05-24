@@ -51,3 +51,15 @@ describe('passage directive', () => {
     expect(html).not.toContain('ec-card');
   });
 });
+
+describe('alert directive', () => {
+  it('renders a subtle caution alert with the icon inline in the label', async () => {
+    const html = await renderMarkdown(':::alert{role=caution}\n## Risks\n\nFalls happen.\n:::\n');
+    expect(html).toContain('<div role="alert" class="ec-alert ec-alert-caution" style="--rise:0.16s">');
+    expect(html).toContain('<div class="ec-alert-body">');
+    expect(html).toContain('<h2 id="risks"><svg class="ec-glyph"');
+    expect(html).toContain('Risks</h2>');
+    expect(html).toContain('<p>Falls happen.</p>');
+    expect(html).not.toContain('card-title');
+  });
+});
