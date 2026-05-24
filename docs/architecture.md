@@ -43,8 +43,9 @@ Nav links live in `src/lib/components/Nav.svelte`.
 
 **Post URLs** derive from the filename. `parseFilepath` splits `posts/<name>.md` on
 `-`: first segment → year, second → month, the rest → slug. So the convention is
-`YYYY-MM-slug.md` → `/YYYY/MM/slug/`. A filename carrying a day (`2026-05-14-welcome.md`)
-folds the day into the slug (`/2026/05/14-welcome/`); name post files without a day.
+`YYYY-MM-slug.md` → `/YYYY/MM/slug/`. A filename carrying a day (e.g. `2026-05-14-welcome.md`)
+would fold the day into the slug (`/2026/05/14-welcome/`), so name post files without a
+day. The Sveltia CMS `slug` template in `static/admin/config.yml` matches this convention.
 
 ---
 
@@ -224,7 +225,7 @@ GitHub Actions secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
 
 ## Known cruft
 
-- `static/admin/config.yml` (Sveltia/Decap CMS) has `backend.repo: glw907/907-life` —
-  a leftover from the template; it points at the wrong GitHub repo. The CMS is not part
-  of the current editorial workflow (local editing + git push). Fix the repo or remove
-  the admin surface. Tracked in `BACKLOG.md`.
+- `static/admin/config.yml` (Sveltia/Decap CMS) now points at `glw907/ecnordic-ski` with a
+  matching `YYYY-MM-slug` post template, but the CMS is still not wired into the editorial
+  workflow (local editing + git push). Finish wiring it or remove the admin surface —
+  tracked as BACKLOG #4.

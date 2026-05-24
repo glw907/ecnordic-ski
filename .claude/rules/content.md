@@ -70,7 +70,8 @@ Do not invent new tags.
 
 ## New Posts
 
-Create at `src/content/posts/YYYY-MM-DD-slug.md`:
+Create at `src/content/posts/YYYY-MM-slug.md` (no day in the filename — the post
+route is `[year]/[month]/[slug]`, so a day folds into the slug):
 
 ```yaml
 ---

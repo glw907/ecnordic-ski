@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: glw907/907-life
+  repo: glw907/ecnordic-ski
   branch: main
 
 media_folder: static/images
@@ -11,7 +11,7 @@ collections:
     label: Posts
     folder: src/content/posts
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    slug: "{{year}}-{{month}}-{{slug}}"
     fields:
       - { label: Title, name: title, widget: string }
       - { label: Date, name: date, widget: datetime, format: YYYY-MM-DD, time_format: false }
