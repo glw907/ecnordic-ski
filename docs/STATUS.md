@@ -28,6 +28,16 @@ to match reality (it had described the 907.life template). Backlog #7/#8 closed
 (resolved by the directive pipeline); #10 (CMS config wrong repo) and #11 (welcome post
 URL carries a day) logged.
 
+**Claude infrastructure modernization (2026-05-24).** The official **Svelte MCP**
+(`mcp.svelte.dev`) is wired via project `.mcp.json` — live Svelte 5 / SvelteKit docs;
+**requires a session restart + approving the `svelte` server to activate.** Fixed the
+`content-cleanup` skill (was lowercase `skill.md` with no frontmatter → never loaded;
+now a proper `SKILL.md`). Added a SvelteKit-specific `/ship` skill (the global one is
+Go-only). Deleted dead Hugo-era infra (`css-rules.md`, `check-css-important.sh`) and
+corrected Hugo leftovers in `ai-operational-rules.md`; cleaned Hugo cruft from
+`settings.local.json`. The 11 hookify rules (Svelte 5 / Tailwind v4 / DaisyUI v5) are
+confirmed active.
+
 **Open follow-ups (not blocking):** CrewLAB / Training / volunteers `[PLACEHOLDER]`
 content (real specifics from EC Nordic); cross-page conflict (CrewLAB routes waivers
 + payment through the app vs. About / Training / waiver page's paper-waiver + free
@@ -45,25 +55,36 @@ model); posts at 0.92rem (tokenize `--text-body` if they want larger).
 | 4 | Design language: kit, About/Training/CrewLAB, sitewide type, content guard | ✓ Core (rollout deferred) |
 | 5 | Directive render pipeline: remark/rehype, all primitives, unit-tested (no site change) | ✓ Done |
 | 6 | Cut over + migrate all five pages to directives; delete `decorate*` | ✓ Done |
-| 7 | Kit rollout to Svelte components (contact / tags / post detail) | Next |
+| 7 | Conformance & hardening sweep (idiomatic Svelte 5 / Tailwind v4 / DaisyUI v5 / TS, MCP-verified, no visual change) | **Planned — ready to execute** |
+| 8 | Kit rollout to Svelte components (contact / tags / post detail) | After 7 |
+| 9 | Remote-functions spike (experimental — `form()`/`query()`) | Deferred |
+
+Passes 7–9 are the **Idiomatic 2026 Exemplar** initiative. Spec:
+`docs/superpowers/specs/2026-05-24-idiomatic-2026-exemplar-design.md`.
 
 ---
 
-### Next starter prompt (Pass 7 — Svelte-component kit rollout)
+### Next starter prompt (Pass 7 — Conformance & hardening sweep)
 
-> **Goal.** Bring the design-language kit to the parts of the site that are Svelte
-> components rather than markdown pages: the contact form/page, the tag pages, and
-> the post-detail layout — the three surfaces deferred since Pass 4.
+> **The plan is already written** —
+> `docs/superpowers/plans/2026-05-24-pass-7-conformance-sweep.md` (spec:
+> `docs/superpowers/specs/2026-05-24-idiomatic-2026-exemplar-design.md`). Execute it
+> task-by-task with `superpowers:subagent-driven-development` (or `executing-plans`).
 >
-> **Scope.** In: applying kit primitives/tokens to those components. Out: new content;
-> re-touching the five directive pages (done + frozen).
+> **Goal.** Make the codebase exemplar-idiomatic for stable 2026 Svelte 5 / SvelteKit /
+> Tailwind v4 / DaisyUI v5 / TypeScript — changing how the code reads, not a single
+> rendered pixel. Three tracks: type/structure hardening (concrete: `strProp` accessor
+> in `rehype-ec-primitives.ts`, typed Pagefind import in `SearchModal`), Tailwind/DaisyUI
+> audit, and MCP-verified Svelte 5 idiom check. The 31 tests + an all-surfaces AE=0
+> screenshot diff are the regression guard.
 >
-> **Still open — brainstorm these:** these are Svelte components, not markdown, so the
-> directive vocabulary doesn't apply directly — decide how the kit's look is expressed
-> in `.svelte` (shared components? CSS classes? a few Svelte equivalents of the
-> primitives?). Settle the per-surface treatment before coding.
+> **PREREQUISITE.** Approve the `svelte` MCP server (`/mcp`) before Task 4 — the idiom
+> verification depends on it. Tasks 1–3 don't.
 >
-> **Approach.** Invoke cairn-pass to start. Brainstorm the component approach, then
-> write a plan. Standard pass-end checklist applies.
+> **Scope.** In: the three tracks above, whole codebase. Out: kit rollout (that's Pass 8),
+> new content, the five frozen directive pages, remote functions (Pass 9, deferred).
+>
+> **Pass end.** code-simplifier over changed files, full gates, AE=0 on all 11 surfaces,
+> update STATUS/BACKLOG/ROADMAP. Do not push (push deploys) unless asked / via `/ship`.
 
 **Deploy:** Live at **https://ecnordic.ski** — push to `main` → GitHub Actions (build + pagefind + wrangler deploy). Secrets set.
