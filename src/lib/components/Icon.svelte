@@ -1,5 +1,7 @@
 <script lang="ts">
-  let { label, children } = $props();
+  import type { Snippet } from 'svelte';
+
+  let { label, children }: { label: string; children: Snippet } = $props();
 </script>
 
 <svg

@@ -4,8 +4,9 @@
   import SearchModal from '$lib/components/SearchModal.svelte';
   import Icon from '$lib/components/Icon.svelte';
   import { SITE_TITLE } from '$lib/config';
+  import type { Snippet } from 'svelte';
 
-  let { children } = $props();
+  let { children }: { children: Snippet } = $props();
   let searchOpen = $state(false);
 </script>
 
