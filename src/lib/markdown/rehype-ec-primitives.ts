@@ -86,6 +86,41 @@ function buildAlert(node: Element, rise?: string): Element {
   return h('div', properties, [h('div', { className: ['ec-alert-body'] }, [h2, ...rest])]);
 }
 
+// Append btn classes to the authored `a.download-link` (raw HTML, reparsed by
+// rehype-raw), wherever it sits in the body.
+function promoteDownloadLink(children: ElementContent[]): void {
+  for (const c of children) {
+    if (!isElement(c)) continue;
+    const cls = c.properties?.className;
+    if (c.tagName === 'a' && Array.isArray(cls) && cls.includes('download-link')) {
+      c.properties.className = [...cls, 'btn', 'btn-primary'];
+    } else {
+      promoteDownloadLink(c.children as ElementContent[]);
+    }
+  }
+}
+
+const CTA_CLASS = ['card', 'ec-card', 'ec-cta', 'bg-base-100', 'border', 'border-primary/30', 'shadow-sm'];
+
+function buildCta(node: Element, rise?: string): Element {
+  const children = node.children as ElementContent[];
+  const i = children.findIndex((c) => isElement(c) && c.tagName === 'h2');
+  const h2 = children[i] as Element;
+  h2.properties = { ...h2.properties, className: ['card-title'] };
+  const rest = children.filter((_, j) => j !== i);
+  promoteDownloadLink(rest);
+  const icon = node.properties?.dataIcon as string;
+  const properties: Record<string, unknown> = { className: CTA_CLASS };
+  if (rise) properties.style = rise;
+  return h('section', properties, [
+    h('div', { className: ['card-body', 'items-center', 'text-center'] }, [
+      h('span', { className: ['ec-chip'] }, [glyph(icon)]),
+      h2,
+      h('div', { className: ['section-body'] }, rest),
+    ]),
+  ]);
+}
+
 // Recurse into a node's children, transforming any nested primitive sections
 // (a grid inside a card, panels inside a split) WITHOUT a rise stagger.
 function transformChildren(children: ElementContent[]): ElementContent[] {
@@ -103,6 +138,7 @@ function transform(node: Element, rise?: string): Element {
     case 'passage': return buildPassage(node, rise);
     case 'alert': return buildAlert(node, rise);
     case 'grid': return buildGrid(node, rise);
+    case 'cta': return buildCta(node, rise);
     default: return node; // other primitives added in later tasks
   }
 }

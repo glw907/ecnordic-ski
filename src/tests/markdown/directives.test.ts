@@ -85,3 +85,16 @@ describe('grid directive', () => {
     expect(html.match(/ec-card/g)?.length).toBe(1); // the nested grid did not become its own card
   });
 });
+
+describe('cta directive', () => {
+  it('renders a centered CTA card, chip icon, and promotes the download link', async () => {
+    const html = await renderMarkdown(
+      ':::cta{icon=flag}\n## Getting started\n\nDo this.\n\n<a href="/waiver" class="download-link">Get it →</a>\n:::\n',
+    );
+    expect(html).toContain('<section class="card ec-card ec-cta bg-base-100 border border-primary/30 shadow-sm" style="--rise:0.16s">');
+    expect(html).toContain('<div class="card-body items-center text-center">');
+    expect(html).toContain('<span class="ec-chip"><svg class="ec-glyph"');
+    expect(html).toContain('<h2 class="card-title"');
+    expect(html).toContain('class="download-link btn btn-primary"');
+  });
+});
