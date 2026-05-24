@@ -119,6 +119,31 @@ pinned by tests in `src/tests/markdown/`.
 
 ---
 
+## Kit as CSS contract (markdown pages + Svelte component pages)
+
+The design-language kit is two layers, and only one is markdown-coupled: **style**
+lives once in `src/app.css` (`@theme` tokens + global classes like `.page-title`,
+`.post-body`, `.post-tags`, `.back-link`), and **markup** is built by whichever tool
+fits the surface. Markdown prose gets kit markup from `rehype-ec-primitives.ts`
+(`{@html}`, prerendered); the interactive/data-driven shells (contact form, tag cloud,
+archive list, post chrome) are Svelte components. The two markup builders are not
+unified — Svelte can't mount inside `{@html}`, and recompiling markdown→Svelte would add
+client JS for no gain. **The class-name contract is the shared interface**; Svelte pages
+consume the global CSS directly rather than re-implementing primitives as `<Card>`/etc.
+components (that path was rejected — it would create two definitions of one primitive
+and invite drift).
+
+**Shared entrance cascade.** The per-module rise delay is one function, `riseStyle(idx)`
+in `src/lib/motion.ts` (`0.16 + idx*0.04s`, two decimals), imported by both the rehype
+builder and every component page. Its keyframes (`page-rise`, `module-rise`) live
+globally in `app.css`. Each page scopes its own `.X` / `.X-module` animation rules and
+its own `prefers-reduced-motion` reset (no global animation-disabling rule, to avoid
+reaching into unrelated components); the duplication of that small per-surface block is
+intentional — only the scope selector differs. The frozen `[slug]` page keeps its older
+private copies of the keyframes (deferred dedup, `BACKLOG.md`).
+
+---
+
 ## Contact Form
 
 `/contact` (`+page.server.ts`, `prerender = false`). Flow: validate Turnstile → build a

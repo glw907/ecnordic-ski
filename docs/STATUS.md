@@ -3,23 +3,23 @@
 **Current state:** The directive render pipeline is **live**. `markdownToHtml`
 (`src/lib/utils.ts`) delegates to `renderMarkdown` (`src/lib/markdown/render.ts`). All
 five static pages (About, Training, CrewLAB, resources, volunteers) carry inline container
-directives (`card/grid/alert/cta/split+panel/passage`); 31 tests total. The **content
+directives (`card/grid/alert/cta/split+panel/passage`); 34 tests total. The **content
 style guard** (`.claude/hooks/content-style-guard.py`) blocks AI tells in
-`src/content/**/*.md`. Contact, tags, and post detail are Svelte components (kit rollout =
-Pass 8). See `docs/architecture.md` + `docs/design-language.md`.
+`src/content/**/*.md`. Contact, tags, and post detail are Svelte components that now
+consume the kit's CSS contract (Pass 8). See `docs/architecture.md` + `docs/design-language.md`.
 
-**Pass 7 — conformance & hardening sweep (done 2026-05-24).** Made the codebase
-exemplar-idiomatic for stable 2026 Svelte 5 / Tailwind v4 / DaisyUI v5 / TS, **zero
-output change**. Landed: typed `strProp` accessor replacing ~8 `as string` hast casts
-(`rehype-ec-primitives.ts`); a `PagefindUIModule` interface replacing `@ts-ignore`/`as any`
-(`SearchModal`); `Snippet`-typed `children` (`Icon`/`+layout`). Idiom verified vs. the
-Svelte MCP. Tailwind/DaisyUI audit clean except the waiver `--w-*` hardcoded palette
-(BACKLOG #12, deferred — oklch port would shift pixels). Regression proof: 18 exact-HTML
-tests + all 11 prerendered pages byte-identical pre/post-pass (screenshot AE gate dropped
-as `--rise` animation jitter).
+**Pass 8 — kit rollout to Svelte components (done 2026-05-24).** Brought contact, tags
+(`/tags` + `/tags/[tag]`), and post detail into one system with the directive pages via
+**kit-as-CSS-contract** (no parallel Svelte primitive library — see `docs/architecture.md`).
+Cascade math is now one util, `riseStyle` (`src/lib/motion.ts`), shared by the rehype
+builder and the component pages; `page-rise`/`module-rise` keyframes promoted to global
+`app.css`. Contact dropped its duplicate `<h2>` + bespoke `.submit-btn` for the kit
+`btn btn-primary` Action; tags/post pages gained the per-page entrance cascade +
+reduced-motion guard. No-regression: directive exact-HTML tests byte-identical; the shared
+CSS edit is additive. Frozen `[slug]` untouched (deferred keyframe dedup = BACKLOG #14).
 
 **Open follow-ups (not blocking):** CrewLAB / Training / volunteers `[PLACEHOLDER]`
-content; waiver/payment-model conflict (CrewLAB app-routed vs. paper-waiver + free); posts at 0.92rem (tokenize `--text-body` if larger wanted).
+content; waiver/payment-model conflict; posts at 0.92rem (tokenize `--text-body` if larger).
 
 ---
 
@@ -34,26 +34,26 @@ content; waiver/payment-model conflict (CrewLAB app-routed vs. paper-waiver + fr
 | 5 | Directive render pipeline: remark/rehype, all primitives, unit-tested | ✓ Done |
 | 6 | Cut over + migrate all five pages to directives; delete `decorate*` | ✓ Done |
 | 7 | Conformance & hardening sweep (idiomatic, MCP-verified, no visual change) | ✓ Done |
-| 8 | Kit rollout to Svelte components (contact / tags / post detail) | **Next** |
-| 9 | Remote-functions spike (experimental — `form()`/`query()`) | Deferred (BACKLOG #13) |
+| 8 | Kit rollout to Svelte components (contact / tags / post detail) | ✓ Done |
+| 9 | Remote-functions spike (experimental — `form()`/`query()`) | **Next** (BACKLOG #13) |
 
-Passes 7–9 are the **Idiomatic 2026 Exemplar** initiative (`ROADMAP.md`); specs archived under `docs/superpowers/archive/`.
-
+Passes 7–9 = the **Idiomatic 2026 Exemplar** initiative (`ROADMAP.md`); specs in `docs/superpowers/archive/`.
 ---
 
-### Next starter prompt (Pass 8 — kit rollout to Svelte components)
+### Next starter prompt (Pass 9 — remote-functions spike)
 
-> **Goal.** Bring the design-language kit (directive primitives / shared visual patterns)
-> to the three surfaces still hand-built as Svelte components — contact, tags (`/tags` +
-> `/tags/[tag]`), post detail (`[year]/[month]/[slug]`) — so they read as one system with
-> the five directive pages.
+> **Goal.** Evaluate SvelteKit experimental remote functions (`form()`/`query()`) on a
+> real surface — the contact form is the natural candidate — to see whether they improve
+> the data flow over the current `+page.server.ts` form action, without regressing the
+> Turnstile + Email Workers path.
 >
-> **Scope.** In: those three component surfaces. Out: the five frozen directive pages, new
-> content, the waiver page (BACKLOG #12 owns its colors), remote functions (Pass 9).
+> **Scope.** In: a spike on one surface, behind the experimental flag; a written verdict
+> (adopt / defer / reject). Out: a site-wide migration, the frozen directive pages, the
+> waiver page (BACKLOG #12).
 >
-> **Still open — brainstorm first:** these are Svelte components, not markdown, so the
-> pipeline doesn't apply directly — decide how the kit's patterns get expressed (shared
-> components? shared `app.css` classes? a hybrid?) and write a plan before coding.
+> **Still open — brainstorm first:** whether remote functions are stable enough on the
+> 2026 SvelteKit/adapter-cloudflare line; how they interact with `prerender`/Turnstile;
+> what "success" for the spike means. Write a plan before coding.
 >
 > **Approach.** "Invoke cairn-pass to start. Standard pass-end checklist applies."
 
