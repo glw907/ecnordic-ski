@@ -20,21 +20,31 @@ look: About / Training / CrewLAB must render **pixel-identical** to today
 
 **In:** a `remark-directive`-based AST pipeline; a custom remark "mark" step and
 a custom rehype "restructure" step that produce the existing HTML primitives from
-directives; migration of `about.md`, `training.md`, `crewlab.md` to directives;
-documentation of the vocabulary in `docs/design-language.md`.
+directives; migration of **all five static pages** (`about.md`, `training.md`,
+`crewlab.md`, `resources.md`, `volunteers.md`) to directives; deletion of the
+old `wrapSections` path entirely; documentation of the vocabulary in
+`docs/design-language.md`.
 
-**Out:** any visual change; new page content; the deferred rollout to
-`resources.md` / `volunteers.md` / contact / tags / post detail (those keep
-today's behavior via a transitional fallback — see *Transitional fallback*).
+**Out:** new page content; visual change to the three worked pages (About /
+Training / CrewLAB render identically); the rollout to contact / tags / post
+detail (those are Svelte components, not markdown pages — separate work).
+
+`resources.md` / `volunteers.md` are **migrated now** rather than deferred, so no
+transitional fallback is needed and the HTML-string machinery is deleted in full.
+Their migration is a small, deliberate visual change (from the generic legacy
+`.page-section` card to the proper kit) — see *Migrating the deferred pages*.
 
 ## Settled decisions (do not re-litigate)
 
 - Styling is selected by **inline container directives**, not frontmatter, not
   slugs. Unmarked content = plain prose.
-- Primitives and the type scale are **unchanged** — pages render identically.
+- Primitives and the type scale are **unchanged** — the three worked pages
+  (About / Training / CrewLAB) render pixel-identical; the directive plugins
+  emit the same classes the `decorate*` builders did.
 - Architecture is a **pure AST pipeline**. No regex/string-replacement on
   rendered HTML. `parseSections`, `wrapSections`, `boldParasToGrid`, and the
-  three `decorate*` functions are deleted (modulo the transitional fallback).
+  three `decorate*` functions are deleted outright — every page goes through the
+  directive pipeline, with no fallback path.
 - The work is substantial-refactor-welcome: the long-term win is deleting the
   HTML-string machinery, not minimizing the diff.
 
@@ -182,21 +192,36 @@ implementation).
 
 ---
 
-## Transitional fallback (deferred pages)
+## Migrating the deferred pages
 
-`resources.md` and `volunteers.md` use no directives and are out of scope this
-pass, but today render as `.page-section` cards via `wrapSections`. To keep them
-**unchanged** without migrating them, `wrapSections` is retained *only* as the
-zero-directive fallback: a page whose rendered tree contains no
-`data-primitive` markers passes through the legacy section-card wrap. This is the
-one piece of HTML-string handling that survives Pass 5; it is explicitly
-transitional and is deleted when those pages are migrated (post-Pass-5). All
-directive-using pages bypass it entirely.
+`resources.md` and `volunteers.md` move onto the kit now, so `wrapSections` is
+deleted with everything else. They render today via the legacy generic
+`.page-section` card; migrating them is a small, intentional change to the proper
+kit (prose-default + selective primitives), consistent with "new pages adopt
+directives from the start." Both pages are short and reuse already-registered
+icons, so no new glyphs are introduced.
 
-> Decision to confirm at plan time: implement the fallback as the existing
-> `wrapSections` (string-based, isolated, slated for deletion) vs. a small rehype
-> equivalent. Default: keep `wrapSections` as-is to avoid investing in
-> throwaway code.
+**`resources.md`** — lede stays unmarked prose. The single `## Forms` section
+becomes `:::card` (a self-contained forms unit), **no icon**: on a one-section
+page a wayfinding glyph would be near-decorative, and the icon checklist says
+skip it. The waiver `<a class="download-link">` stays a plain link inside the
+card (it is *not* the page's one CTA, so no `btn` promotion — authored raw HTML,
+handled by `rehype-raw`).
+
+**`volunteers.md`** — lede stays unmarked prose. `## This Summer's Volunteers`
+(roster TK) becomes `:::passage{icon=users-three role=secondary}` — prose, no
+card chrome, pending the roster; it becomes the *person/profile card* primitive
+(see design-language candidates) in a future pass when the roster is written.
+`## Help Out` becomes `:::grid{icon=handshake role=secondary}`: the three ways to
+help (Drive / Train alongside / Teach) are parallel titled points, the same grid
+primitive as About's philosophy; the surrounding intro/closing paragraphs stay
+as body prose around the grid. Both icons (`users-three`, `handshake`) and the
+secondary role are already in the matrix; no-icon-repeat is per-page, so reusing
+them here is fine. The manual `<h2 id>` tags drop (rehype-slug regenerates them).
+
+These two pages have **no pixel-identical target** (the legacy treatment is the
+thing being replaced); they are screenshot-checked for kit-correct rendering, not
+against the old look.
 
 ---
 
@@ -205,13 +230,14 @@ directive-using pages bypass it entirely.
 1. `npx svelte-check` clean.
 2. `npm run build` succeeds.
 3. Rebuild, serve the built site on `:8787` (wrangler), and headless-screenshot
-   About / Training / CrewLAB with `--force-prefers-reduced-motion`:
-   **desktop + mobile**, **light + dark**. Diff against the current live render;
-   reconcile every difference until identical.
+   with `--force-prefers-reduced-motion`, **desktop + mobile**, **light + dark**:
+   - About / Training / CrewLAB — diff against the current live render and
+     reconcile every difference until **identical**.
+   - Resources / Volunteers — check for **kit-correct** rendering (not against
+     the old `.page-section` look, which is being replaced).
 4. Confirm the Training `page-toc` anchors still scroll to the right sections
    (heading IDs via `rehype-slug`).
-5. Confirm posts (no directives) and the deferred pages (`resources`,
-   `volunteers`) are unchanged.
+5. Confirm posts (no directives) render unchanged.
 
 ---
 
@@ -231,12 +257,14 @@ real `hastscript` element trees in the restructure step (no raw nodes needed);
 - `src/lib/utils.ts` — rewrite `markdownToHtml` to the new pipeline.
 - `src/lib/` — new `remark-ec-directives` (mark), `rehype-ec-primitives`
   (restructure), and a Phosphor icon-map module (moved from the Svelte component).
-- `src/routes/[slug]/+page.svelte` — delete the `<script module>` decorate
-  machinery; keep the page shell, the scoped CSS (unchanged), and the
-  `bodyHtml` derivation (now just the rendered html, plus the fallback for
-  no-directive pages).
+- `src/routes/[slug]/+page.svelte` — delete the entire `<script module>`
+  decorate machinery; keep the page shell and the scoped CSS (unchanged).
+  `bodyHtml` collapses to `page.html` for every page (decoration now happens in
+  `markdownToHtml`, so the rendered html already carries the primitives).
 - `src/content/pages/{about,training,crewlab}.md` — add directives; convert
   Logistics paragraphs to a list; drop manual `<h2 id>`.
+- `src/content/pages/{resources,volunteers}.md` — add directives; drop manual
+  `<h2 id>` (see *Migrating the deferred pages*).
 - `package.json` — add `remark-directive`, `remark-rehype`, `rehype-raw`,
   `rehype-stringify`, `rehype-slug`, `hastscript`; remove `remark-html`.
 - `docs/design-language.md` — document the directive vocabulary (new section)
