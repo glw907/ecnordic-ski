@@ -1,6 +1,7 @@
 import type { Root, Element, ElementContent, Properties } from 'hast';
 import { h } from 'hastscript';
 import { glyph } from './icons';
+import { riseStyle } from '$lib/motion';
 
 function isElement(node: ElementContent | undefined): node is Element {
   return !!node && node.type === 'element';
@@ -12,10 +13,6 @@ function isElement(node: ElementContent | undefined): node is Element {
 function strProp(node: Element, name: string): string | undefined {
   const value = node.properties?.[name];
   return typeof value === 'string' ? value : undefined;
-}
-
-function riseStyle(idx: number): string {
-  return `--rise:${(0.16 + idx * 0.04).toFixed(2)}s`;
 }
 
 // Bare glyph span; secondary role adds the cobalt modifier.
