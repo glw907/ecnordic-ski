@@ -2,6 +2,7 @@
   import type { PageData } from './$types';
   import { tagUrl } from '$lib/utils';
   import { SITE_TITLE } from '$lib/config';
+  import { riseStyle } from '$lib/motion';
 
   let { data }: { data: PageData } = $props();
 </script>
@@ -13,7 +14,7 @@
 
 <div class="tags-page">
   <h1 class="page-title">Tags</h1>
-  <ul class="tags-list" aria-label="All tags">
+  <ul class="tags-list" aria-label="All tags" style={riseStyle(0)}>
     {#each data.tags as { tag, count }}
       <li>
         <a href={tagUrl(tag)} class="tag-entry">
@@ -27,16 +28,18 @@
 
 <style>
   .tags-page {
-    padding-block-start: 3rem;
+    animation: page-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
   .tags-list {
     list-style: none;
     padding: 0;
-    margin: 1.5rem 0 0;
+    margin: 0;
     display: flex;
     flex-wrap: wrap;
     gap: 0.35rem 1.25rem;
+    animation: module-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--rise, 0s);
   }
 
   .tag-entry {
@@ -58,5 +61,12 @@
     color: var(--color-muted);
     vertical-align: super;
     margin-inline-start: 0.1em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tags-page,
+    .tags-list {
+      animation: none;
+    }
   }
 </style>
