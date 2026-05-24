@@ -6,6 +6,14 @@ function isElement(node: ElementContent | undefined): node is Element {
   return !!node && node.type === 'element';
 }
 
+// hast Properties values are PropertyValue (string | number | boolean | array | null).
+// Directive markers (dataIcon/dataRole/dataPrimitive) are always stamped as strings;
+// this reads them back with that guarantee instead of casting at each call site.
+function strProp(node: Element, name: string): string | undefined {
+  const value = node.properties?.[name];
+  return typeof value === 'string' ? value : undefined;
+}
+
 function riseStyle(idx: number): string {
   return `--rise:${(0.16 + idx * 0.04).toFixed(2)}s`;
 }
@@ -24,8 +32,8 @@ function splitHead(node: Element, withIcon: boolean): { head: Element; rest: Ele
   const h2 = children[i] as Element;
   h2.properties = { ...h2.properties, className: ['card-title'] };
   const rest = children.filter((_, j) => j !== i);
-  const icon = node.properties?.dataIcon as string | undefined;
-  const role = node.properties?.dataRole as string | undefined;
+  const icon = strProp(node, 'dataIcon');
+  const role = strProp(node, 'dataRole');
   const headKids: ElementContent[] = [];
   if (withIcon && icon) headKids.push(iconSpan(icon, role));
   headKids.push(h2);
@@ -77,10 +85,10 @@ function buildAlert(node: Element, rise?: string): Element {
   const children = node.children as ElementContent[];
   const i = children.findIndex((c) => isElement(c) && c.tagName === 'h2');
   const h2 = children[i] as Element;
-  const icon = node.properties?.dataIcon as string | undefined;
+  const icon = strProp(node, 'dataIcon');
   if (icon) (h2.children as ElementContent[]).unshift(glyph(icon)); // icon inline at the label head
   const rest = children.filter((_, j) => j !== i);
-  const role = node.properties?.dataRole as string;
+  const role = strProp(node, 'dataRole');
   const properties: Properties = { role: 'alert', className: ['ec-alert', `ec-alert-${role}`] };
   if (rise) properties.style = rise;
   return h('div', properties, [h('div', { className: ['ec-alert-body'] }, [h2, ...rest])]);
@@ -109,12 +117,12 @@ function buildCta(node: Element, rise?: string): Element {
   h2.properties = { ...h2.properties, className: ['card-title'] };
   const rest = children.filter((_, j) => j !== i);
   promoteDownloadLink(rest);
-  const icon = node.properties?.dataIcon as string;
+  const icon = strProp(node, 'dataIcon');
   const properties: Properties = { className: CTA_CLASS };
   if (rise) properties.style = rise;
   return h('section', properties, [
     h('div', { className: ['card-body', 'items-center', 'text-center'] }, [
-      h('span', { className: ['ec-chip'] }, [glyph(icon)]),
+      h('span', { className: ['ec-chip'] }, [glyph(icon ?? '')]),
       h2,
       h('div', { className: ['section-body'] }, rest),
     ]),
@@ -122,8 +130,8 @@ function buildCta(node: Element, rise?: string): Element {
 }
 
 function buildPanel(node: Element): Element {
-  const icon = node.properties?.dataIcon as string | undefined;
-  const role = node.properties?.dataRole as string | undefined;
+  const icon = strProp(node, 'dataIcon');
+  const role = strProp(node, 'dataRole');
   const kids: ElementContent[] = [];
   if (icon) kids.push(iconSpan(icon, role));
   kids.push(...(node.children as ElementContent[]));
@@ -156,7 +164,7 @@ function transformChildren(children: ElementContent[]): ElementContent[] {
 
 function transform(node: Element, rise?: string): Element {
   node.children = transformChildren(node.children as ElementContent[]);
-  switch (node.properties?.dataPrimitive as string) {
+  switch (strProp(node, 'dataPrimitive')) {
     case 'card': return buildCard(node, rise);
     case 'passage': return buildPassage(node, rise);
     case 'alert': return buildAlert(node, rise);
