@@ -42,6 +42,7 @@
   .post {
     animation: page-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
+
   .post-module {
     animation: module-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
     animation-delay: var(--rise, 0s);
