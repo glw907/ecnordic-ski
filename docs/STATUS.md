@@ -16,6 +16,18 @@ The **content style guard** (`.claude/hooks/content-style-guard.py`) blocks AI t
 in `src/content/**/*.md`. Contact, tags, and post detail are Svelte components, not
 markdown pages — their kit rollout is still deferred.
 
+**Architecture cleanup (2026-05-24).** Three improvements outside the pass sequence:
+(1) **mdsvex removed** — it was configured but unused (content is read `?raw` and
+rendered by the directive pipeline), so the dep + preprocessor are gone, one markdown
+system remains. (2) **Frontmatter is now a build gate** — `src/lib/content-schema.ts`
+(`validatePostFrontmatter`/`validatePageFrontmatter`, tested) throws on malformed
+content; tags are checked against `POST_TAGS` in `config.ts`. (3) **Static pages
+prerender explicitly** — `[slug]` declares `prerender = true` + `entries()` from
+`getPageSlugs()` instead of relying on link-crawl. `docs/architecture.md` was rewritten
+to match reality (it had described the 907.life template). Backlog #7/#8 closed
+(resolved by the directive pipeline); #10 (CMS config wrong repo) and #11 (welcome post
+URL carries a day) logged.
+
 **Open follow-ups (not blocking):** CrewLAB / Training / volunteers `[PLACEHOLDER]`
 content (real specifics from EC Nordic); cross-page conflict (CrewLAB routes waivers
 + payment through the app vs. About / Training / waiver page's paper-waiver + free

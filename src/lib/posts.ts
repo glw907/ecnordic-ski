@@ -1,6 +1,7 @@
 import matter from 'gray-matter';
 import type { PostDetail, PostSummary } from './types.js';
-import { markdownToHtml, isoFromValue } from './utils.js';
+import { markdownToHtml } from './utils.js';
+import { validatePostFrontmatter } from './content-schema.js';
 
 // Bundled at build time — no runtime filesystem access needed.
 // Keys are absolute paths like "/src/content/posts/2026-03-early-march.md"
@@ -20,16 +21,10 @@ function parseFilepath(filepath: string): Pick<PostSummary, 'year' | 'month' | '
 
 function buildSummary(
   coords: Pick<PostSummary, 'year' | 'month' | 'slug'>,
-  data: Record<string, unknown>
+  data: Record<string, unknown>,
+  source: string
 ): PostSummary {
-  return {
-    ...coords,
-    title: data.title as string ?? '',
-    date: isoFromValue(data.date),
-    draft: data.draft as boolean ?? false,
-    description: data.description as string ?? '',
-    tags: data.tags as string[] ?? []
-  };
+  return { ...coords, ...validatePostFrontmatter(data, source) };
 }
 
 /** Returns all non-draft posts sorted newest-first. */
@@ -41,7 +36,7 @@ export function getAllPosts(includeDrafts = false): PostSummary[] {
     const coords = parseFilepath(filepath);
     const { data } = matter(raw);
     if (!includeDrafts && data.draft) continue;
-    posts.push(buildSummary(coords, data));
+    posts.push(buildSummary(coords, data, filepath));
   }
   const sorted = posts.sort((a, b) => b.date.localeCompare(a.date));
 
@@ -80,7 +75,7 @@ export async function getPost(
   const { data, content } = matter(raw);
 
   return {
-    ...buildSummary({ year, month, slug }, data),
+    ...buildSummary({ year, month, slug }, data, filepath),
     html: await markdownToHtml(content)
   };
 }

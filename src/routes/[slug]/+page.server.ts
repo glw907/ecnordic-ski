@@ -1,6 +1,10 @@
 import { error } from '@sveltejs/kit';
-import { getPage } from '$lib/pages';
-import type { PageServerLoad } from './$types';
+import { getPage, getPageSlugs } from '$lib/pages';
+import type { PageServerLoad, EntryGenerator } from './$types';
+
+export const prerender = true;
+
+export const entries: EntryGenerator = () => getPageSlugs().map((slug) => ({ slug }));
 
 export const load: PageServerLoad = async ({ params }) => {
   const page = await getPage(params.slug);

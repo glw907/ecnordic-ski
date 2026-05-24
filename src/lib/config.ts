@@ -6,6 +6,16 @@ export const SITE_LOCALE           = 'en-US';
 export const FEED_MAX_ITEMS        = 20;
 export const HOMEPAGE_FEATURED_COUNT = 1;
 
+/** Controlled tag vocabulary for posts. Frontmatter tags outside this set fail the build. */
+export const POST_TAGS = [
+  'training',
+  'racing',
+  'results',
+  'events',
+  'camp',
+  'announcements',
+] as const;
+
 export const WELCOME_BLURB =
   'East Community Nordic is a free, volunteer-run summer training group for ' +
   'Anchorage high school Nordic skiers and cross-country runners. We build the ' +
