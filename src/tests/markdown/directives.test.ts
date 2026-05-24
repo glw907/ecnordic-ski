@@ -98,3 +98,17 @@ describe('cta directive', () => {
     expect(html).toContain('class="download-link btn btn-primary"');
   });
 });
+
+describe('split + panel directives', () => {
+  it('renders a card with a heading and two iconned panels', async () => {
+    const html = await renderMarkdown(
+      '::::split\n## Costs\n\n:::panel{icon=hand-coins}\n**Free.** No fee.\n:::\n\n:::panel{icon=handshake role=secondary}\n**Help.** Pitch in.\n:::\n::::\n',
+    );
+    expect(html).toContain('<section class="card ec-card');
+    expect(html).toContain('<div class="ec-head"><h2 class="card-title"'); // head has no icon
+    expect(html).toContain('<div class="section-body"><div class="ec-split">');
+    expect(html).toContain('<div class="ec-panel"><span class="ec-icon"><svg');
+    expect(html).toContain('<div class="ec-panel"><span class="ec-icon ec-icon-secondary"><svg');
+    expect(html).toContain('<strong>Free.</strong> No fee.');
+  });
+});

@@ -1,4 +1,4 @@
-import type { Root, Element, ElementContent } from 'hast';
+import type { Root, Element, ElementContent, Properties } from 'hast';
 import { h } from 'hastscript';
 import { glyph } from './icons';
 
@@ -35,7 +35,7 @@ function splitHead(node: Element, withIcon: boolean): { head: Element; rest: Ele
 const CARD_CLASS = ['card', 'ec-card', 'bg-base-100', 'border', 'border-base-300', 'shadow-sm'];
 
 function cardShell(classes: string[], rise: string | undefined, body: ElementContent[]): Element {
-  const properties: Record<string, unknown> = { className: classes };
+  const properties: Properties = { className: classes };
   if (rise) properties.style = rise;
   return h('section', properties, [h('div', { className: ['card-body'] }, body)]);
 }
@@ -47,7 +47,7 @@ function buildCard(node: Element, rise?: string): Element {
 
 function buildPassage(node: Element, rise?: string): Element {
   const { head, rest } = splitHead(node, true);
-  const properties: Record<string, unknown> = { className: ['ec-passage'] };
+  const properties: Properties = { className: ['ec-passage'] };
   if (rise) properties.style = rise;
   return h('section', properties, [head, h('div', { className: ['section-body'] }, rest)]);
 }
@@ -81,7 +81,7 @@ function buildAlert(node: Element, rise?: string): Element {
   if (icon) (h2.children as ElementContent[]).unshift(glyph(icon)); // icon inline at the label head
   const rest = children.filter((_, j) => j !== i);
   const role = node.properties?.dataRole as string;
-  const properties: Record<string, unknown> = { role: 'alert', className: ['ec-alert', `ec-alert-${role}`] };
+  const properties: Properties = { role: 'alert', className: ['ec-alert', `ec-alert-${role}`] };
   if (rise) properties.style = rise;
   return h('div', properties, [h('div', { className: ['ec-alert-body'] }, [h2, ...rest])]);
 }
@@ -110,7 +110,7 @@ function buildCta(node: Element, rise?: string): Element {
   const rest = children.filter((_, j) => j !== i);
   promoteDownloadLink(rest);
   const icon = node.properties?.dataIcon as string;
-  const properties: Record<string, unknown> = { className: CTA_CLASS };
+  const properties: Properties = { className: CTA_CLASS };
   if (rise) properties.style = rise;
   return h('section', properties, [
     h('div', { className: ['card-body', 'items-center', 'text-center'] }, [
@@ -119,6 +119,29 @@ function buildCta(node: Element, rise?: string): Element {
       h('div', { className: ['section-body'] }, rest),
     ]),
   ]);
+}
+
+function buildPanel(node: Element): Element {
+  const icon = node.properties?.dataIcon as string | undefined;
+  const role = node.properties?.dataRole as string | undefined;
+  const kids: ElementContent[] = [];
+  if (icon) kids.push(iconSpan(icon, role));
+  kids.push(...(node.children as ElementContent[]));
+  return h('div', { className: ['ec-panel'] }, kids);
+}
+
+function buildSplit(node: Element, rise?: string): Element {
+  // Panels were already turned into .ec-panel divs by transformChildren.
+  const children = node.children as ElementContent[];
+  const i = children.findIndex((c) => isElement(c) && c.tagName === 'h2');
+  const h2 = children[i] as Element;
+  h2.properties = { ...h2.properties, className: ['card-title'] };
+  const panels = children.filter(
+    (c) => isElement(c) && Array.isArray(c.properties?.className) && c.properties.className.includes('ec-panel'),
+  );
+  const head = h('div', { className: ['ec-head'] }, [h2]); // no icon at the split head
+  const body = h('div', { className: ['section-body'] }, [h('div', { className: ['ec-split'] }, panels)]);
+  return cardShell(CARD_CLASS, rise, [head, body]);
 }
 
 // Recurse into a node's children, transforming any nested primitive sections
@@ -139,7 +162,9 @@ function transform(node: Element, rise?: string): Element {
     case 'alert': return buildAlert(node, rise);
     case 'grid': return buildGrid(node, rise);
     case 'cta': return buildCta(node, rise);
-    default: return node; // other primitives added in later tasks
+    case 'split': return buildSplit(node, rise);
+    case 'panel': return buildPanel(node);
+    default: return node;
   }
 }
 
