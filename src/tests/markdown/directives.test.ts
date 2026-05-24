@@ -1,0 +1,42 @@
+import { describe, it, expect } from 'vitest';
+import { renderMarkdown } from '$lib/markdown/render';
+
+describe('pipeline baseline', () => {
+  it('renders unmarked content as plain prose', async () => {
+    const html = await renderMarkdown('Just a paragraph.\n');
+    expect(html.trim()).toBe('<p>Just a paragraph.</p>');
+  });
+
+  it('adds slug ids to headings', async () => {
+    const html = await renderMarkdown(':::card{icon=path}\n## Sign Up\n\nx\n:::\n');
+    expect(html).toContain('id="sign-up"');
+  });
+});
+
+describe('card directive', () => {
+  it('renders a module card with icon + heading + body', async () => {
+    const html = await renderMarkdown(':::card{icon=path}\n## What we do\n\nBody text.\n:::\n');
+    expect(html).toContain('<section class="card ec-card bg-base-100 border border-base-300 shadow-sm"');
+    expect(html).toContain('<div class="card-body">');
+    expect(html).toContain('<div class="ec-head"><span class="ec-icon"><svg class="ec-glyph"');
+    expect(html).toContain('<h2 class="card-title"');
+    expect(html).toContain('What we do');
+    expect(html).toContain('<div class="section-body"><p>Body text.</p></div>');
+  });
+
+  it('applies the secondary role to the icon', async () => {
+    const html = await renderMarkdown(':::card{icon=users-three role=secondary}\n## Who\n\nx\n:::\n');
+    expect(html).toContain('<span class="ec-icon ec-icon-secondary">');
+  });
+
+  it('staggers the first primitive at --rise:0.16s', async () => {
+    const html = await renderMarkdown(':::card{icon=path}\n## A\n\nx\n:::\n');
+    expect(html).toContain('style="--rise:0.16s"');
+  });
+
+  it('leaves a non-grid card list as a plain list', async () => {
+    const html = await renderMarkdown(':::card{icon=path}\n## A\n\n- one\n- two\n:::\n');
+    expect(html).toContain('<ul>\n<li>one</li>');
+    expect(html).not.toContain('ec-grid');
+  });
+});
