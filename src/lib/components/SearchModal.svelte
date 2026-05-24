@@ -5,6 +5,16 @@
 
   let initialized = false;
 
+  // Subset — only the options used at this call site (Pagefind UI accepts more).
+  interface PagefindUIOptions {
+    element: string;
+    showSubResults?: boolean;
+    placeholder?: string;
+  }
+  interface PagefindUIModule {
+    PagefindUI: new (options: PagefindUIOptions) => unknown;
+  }
+
   onMount(() => {
     function handleGlobalKeydown(e: KeyboardEvent) {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -27,9 +37,11 @@
     }
 
     try {
-      // pagefind UI bundle is generated post-build by `npx pagefind`; no module or types exist at compile time
-      // @ts-ignore
-      const { PagefindUI } = await import(/* @vite-ignore */ '/pagefind/pagefind-ui.js') as any;
+      // pagefind UI bundle is generated post-build by `npx pagefind`; no module exists at compile time.
+      // TypeScript resolves string-literal import paths at compile time (TS2307 — "cannot find
+      // module"); a variable path defeats that check, and the cast below supplies the real type.
+      const pagefindUrl: string = '/pagefind/pagefind-ui.js';
+      const { PagefindUI } = (await import(/* @vite-ignore */ pagefindUrl)) as unknown as PagefindUIModule;
       new PagefindUI({
         element: '#pagefind-search',
         showSubResults: true,
