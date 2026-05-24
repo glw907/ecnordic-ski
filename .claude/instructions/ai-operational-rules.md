@@ -15,7 +15,6 @@ Always source manually before using any env var:
 ```bash
 # Correct
 CF_TOKEN=$(bash -c 'source ~/.bashrc && echo -n $CLOUDFLARE_API_TOKEN')
-RESEND_KEY=$(bash -c 'source ~/.bashrc && echo -n $RESEND_API_KEY')
 
 # Wrong — silently pipes empty string
 echo "$CLOUDFLARE_API_TOKEN" | npx wrangler secret put ...
@@ -34,11 +33,11 @@ interpretation issues. Write the script to a temp file with the Write tool, then
 **Normal deploy:** `git push origin main` → GitHub Actions builds and deploys.
 
 **Never run `npx wrangler deploy` from the project root during normal workflow.** It
-overwrites the Actions-managed deploy with a stale local `public/` build.
+overwrites the Actions-managed deploy with a stale local build.
 
 Manual deploy only for emergencies (Actions is broken):
 ```bash
-hugo --minify && npx wrangler deploy
+npm run build && npx pagefind --site .svelte-kit/cloudflare && npx wrangler deploy
 ```
 
 ---

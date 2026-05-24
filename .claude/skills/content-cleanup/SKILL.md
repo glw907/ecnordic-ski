@@ -1,3 +1,9 @@
+---
+name: content-cleanup
+description: "Final editorial pass on EC Nordic web content (src/content/**/*.md) before committing — flags the ten AI-rhythm patterns from docs/content-guide.md and proposes per-sentence fixes with reasons, applying nothing without approval. Use after drafting or editing any page or post, when the user says /content-cleanup, \"clean up this content\", \"check for AI tells\", or \"editorial pass\". Takes a file path as argument."
+user_invocable: true
+---
+
 # Content Cleanup
 
 Final editorial pass on EC Nordic web content before committing. Flags and proposes fixes for AI rhythm patterns. Does not rewrite silently — proposes each change with a reason, waits for approval.
