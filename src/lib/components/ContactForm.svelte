@@ -13,8 +13,6 @@
 </script>
 
 <section id="contact" class="contact-section">
-  <h2 class="contact-heading">Contact</h2>
-
   {#if form?.success}
     <p class="form-success">Message sent — I'll get back to you soon.</p>
   {:else}
@@ -74,7 +72,7 @@
         data-sitekey="0x4AAAAAADPWAhVwEJvGQqhh"
       ></div>
 
-      <button type="submit" class="submit-btn" disabled={submitting}>
+      <button type="submit" class="btn btn-primary" disabled={submitting}>
         {submitting ? 'Sending…' : 'Send message'}
       </button>
     </form>
@@ -85,17 +83,7 @@
 
 <style>
   .contact-section {
-    margin-block-start: 3.5rem;
-    padding-block-start: 3rem;
-    border-top: 1px solid var(--color-border-subtle);
-  }
-
-  .contact-heading {
-    font-size: clamp(1.15rem, 3vw, 1.35rem);
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    color: var(--color-heading);
-    margin: 0 0 1.75rem;
+    margin-block-start: 0;
   }
 
   .contact-form {
@@ -103,6 +91,10 @@
     flex-direction: column;
     gap: 1.25rem;
     max-width: 34rem;
+  }
+
+  .contact-form .btn {
+    align-self: flex-start;
   }
 
   .field {
@@ -133,31 +125,6 @@
     resize: vertical;
     min-height: 8rem;
     line-height: 1.55;
-  }
-
-  .submit-btn {
-    align-self: flex-start;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 0.8rem;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-    color: var(--color-surface);
-    background: var(--color-body);
-    border: none;
-    border-radius: 3px;
-    padding: 0.6em 1.4em;
-    cursor: pointer;
-    transition: background 0.15s ease;
-  }
-
-  .submit-btn:hover:not(:disabled) {
-    background: var(--color-heading);
-  }
-
-  .submit-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
   }
 
   .form-success {
