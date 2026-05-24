@@ -16,7 +16,7 @@ pipeline, and deployment.
 | Markdown | remark + rehype, custom unified pipeline | Inline container directives → kit HTML (see below) |
 | Search | Pagefind | Post-build static index, zero runtime JS cost |
 | Adapter | `@sveltejs/adapter-cloudflare` v7 | Workers output, form actions work natively |
-| Contact form | Cloudflare Email Workers (`send_email` binding) | Native Cloudflare, no third-party mailer |
+| Contact form | SvelteKit remote function (`form()`) + Cloudflare Email Workers (`send_email`) | Type-safe boundary, declarative validation; experimental (Pass 9) |
 | Spam protection | Cloudflare Turnstile | Server-verified on form submit |
 | Fonts | Alegreya Sans + iA Writer Mono S (woff2, self-hosted) | Set in `src/app.css` `@font-face` + `@theme` |
 
@@ -146,12 +146,40 @@ private copies of the keyframes (deferred dedup, `BACKLOG.md`).
 
 ## Contact Form
 
-`/contact` (`+page.server.ts`, `prerender = false`). Flow: validate Turnstile → build a
-message with `mimetext` → send via the Email Workers `send_email` binding to
-`contact@ecnordic.ski`. `verifyTurnstile` only runs when `platform.env.TURNSTILE_SECRET_KEY`
-is present, so dev skips it gracefully (the always-pass test key
-`1x00000000000000000000AA` drives the widget). Secrets: `TURNSTILE_SECRET_KEY`,
-`CONTACT_EMAIL`.
+`/contact` is the only non-prerendered route. As of Pass 9 the form is a **SvelteKit
+remote function** (`form()`), not a `+page.server.ts` action — see the verdict below.
+
+`src/lib/contact.remote.ts` exports `sendMessage = form(schema, handler)`. The Valibot
+schema validates `name`/`email`/`message` (plus `cf-turnstile-response`, injected by the
+widget); on a schema miss the handler never runs and `fields.allIssues()` carries the
+messages back. The handler uses `getRequestEvent()` for `platform.env` +
+`getClientAddress()`, then: validate Turnstile → build a message with `mimetext` → send
+via the Email Workers `send_email` binding to `contact@ecnordic.ski`. Turnstile/mail
+failures surface inline via `invalid(...)` (a form-level issue) rather than throwing to
+`+error.svelte`. `verifyTurnstile` only runs when `platform.env.TURNSTILE_SECRET_KEY` is
+present, so dev skips it gracefully. Secrets: `TURNSTILE_SECRET_KEY`, `CONTACT_EMAIL`.
+
+`ContactForm.svelte` spreads `{...sendMessage}` and reads `fields.*.as(...)`, `pending`,
+and `result` — no hand-written `use:enhance` or `FormState` interface. `prerender = false`
+lives in `src/routes/contact/+page.ts` and is **load-bearing**: a prerendered static page
+405s on the no-JS POST fallback.
+
+### Remote-functions verdict (Pass 9 spike) — **DEFER (adopt later)**
+
+The spike works end-to-end on adapter-cloudflare: build generates the
+`/_app/remote/<hash>/sendMessage` endpoint, CSRF origin-checks it, schema validation +
+inline issues + value repopulation work, and **both** the JS-enhanced path (single-flight
+result) and the no-JS full-reload fallback succeed (verified locally via `wrangler dev`).
+The ergonomics are a real win over the action: one source of truth for field
+types/validation, declarative Valibot schema replacing hand-rolled checks, and built-in
+progressive enhancement.
+
+**Why DEFER, not ADOPT site-wide:** the feature requires `kit.experimental.remoteFunctions`
+and is officially "subject to change without notice" (no stable date as of 2026-05). The
+core team frames it as *additive* — `load`/form actions are not deprecated. So: keep the
+contact form on remote functions as the live proving ground (low blast radius, degrades
+cleanly), but do **not** migrate other surfaces until the API stabilizes. Re-evaluate when
+SvelteKit ships the feature stable (tracked: BACKLOG #13).
 
 ---
 

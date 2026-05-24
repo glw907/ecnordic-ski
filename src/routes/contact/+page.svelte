@@ -2,8 +2,6 @@
   import { SITE_TITLE } from '$lib/config';
   import ContactForm from '$lib/components/ContactForm.svelte';
   import { riseStyle } from '$lib/motion';
-
-  let { form } = $props();
 </script>
 
 <svelte:head>
@@ -13,7 +11,7 @@
 <div class="contact-page">
   <h1 class="page-title">Contact</h1>
   <div class="contact-module" style={riseStyle(0)}>
-    <ContactForm {form} />
+    <ContactForm />
   </div>
 </div>
 

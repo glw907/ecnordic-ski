@@ -23,10 +23,10 @@
 - [ ] **#5** Replace @schedule-x with a custom Svelte calendar component `#improvement` `#ecnordic` *(2026-05-20)*
   Do this when migrating to cairn-cms.
 - [ ] **#4** Add Sveltia CMS config for web-based editing by volunteers `#feature` `#ecnordic` *(2026-05-20)*
-- [ ] **#13** Remote-functions spike (`form()`/`query()`) `#feature` `#ecnordic` *(2026-05-24)*
-  Pass 9 of the Idiomatic 2026 Exemplar initiative (deferred, experimental). Evaluate SvelteKit remote functions for the contact form / search, behind the experimental flag. Spec: `docs/superpowers/specs/2026-05-24-idiomatic-2026-exemplar-design.md` (archived). Do not start until SvelteKit marks the API stable or there's a concrete need.
-
 ## Done
+
+- [x] **#13** Remote-functions spike (`form()`) `#feature` `#ecnordic` *(2026-05-24 → 2026-05-24)*
+  Pass 9. Converted the contact form to a `form()` remote function (`src/lib/contact.remote.ts`, Valibot schema, Turnstile + Email Workers intact). Verified end-to-end on adapter-cloudflare (JS + no-JS paths) via `wrangler dev`. **Verdict: DEFER** — works and ergonomically wins, but the API is experimental ("subject to change", no stable date) and additive per the core team. Contact stays the proving ground; don't migrate other surfaces until stable. See `docs/architecture.md`.
 
 - [x] **#8** Replace regex-based HTML rewriting with a remark plugin `#improvement` `#ecnordic` *(2026-05-20 → 2026-05-24)*
   Resolved by the Pass 5/6 directive pipeline: the `decorateAbout`/`wrapSections` regex surgery is deleted; rendering is now a remark/rehype AST pipeline (`src/lib/markdown/`).

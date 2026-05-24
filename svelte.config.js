@@ -6,6 +6,10 @@ const config = {
   preprocess: [vitePreprocess()],
   kit: {
     adapter: adapter(),
+    experimental: {
+      // Pass 9 spike: opt into experimental remote functions for the contact form.
+      remoteFunctions: true
+    },
     prerender: {
       handleHttpError: 'warn',
       handleMissingId: 'warn',

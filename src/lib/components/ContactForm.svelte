@@ -1,46 +1,26 @@
 <script lang="ts">
-  import { enhance } from '$app/forms';
+  import { sendMessage } from '$lib/contact.remote';
 
-  interface FormState {
-    success?: boolean;
-    error?: string;
-    values?: { name: string; email: string; message: string };
-  }
-
-  let { form }: { form: FormState | null } = $props();
-
-  let submitting = $state(false);
+  const { name, email, message } = sendMessage.fields;
 </script>
 
 <section id="contact" class="contact-section">
-  {#if form?.success}
+  {#if sendMessage.result?.success}
     <p class="form-success">Message sent — I'll get back to you soon.</p>
   {:else}
-    <form
-      method="POST"
-      class="contact-form"
-      use:enhance={() => {
-        submitting = true;
-        return async ({ update }) => {
-          await update();
-          submitting = false;
-        };
-      }}
-    >
-      {#if form?.error}
-        <p class="form-error">{form.error}</p>
-      {/if}
+    <form {...sendMessage} class="contact-form">
+      {#each sendMessage.fields.allIssues() as issue}
+        <p class="form-error">{issue.message}</p>
+      {/each}
 
       <div class="field">
         <label class="post-date" for="name">Name</label>
         <input
           id="name"
-          name="name"
-          type="text"
           class="field-input"
-          required
           autocomplete="name"
-          value={form?.values?.name ?? ''}
+          required
+          {...name.as('text')}
         />
       </div>
 
@@ -48,12 +28,10 @@
         <label class="post-date" for="email">Email</label>
         <input
           id="email"
-          name="email"
-          type="email"
           class="field-input"
-          required
           autocomplete="email"
-          value={form?.values?.email ?? ''}
+          required
+          {...email.as('email')}
         />
       </div>
 
@@ -61,10 +39,10 @@
         <label class="post-date" for="message">Message</label>
         <textarea
           id="message"
-          name="message"
           class="field-input field-textarea"
           required
-        >{form?.values?.message ?? ''}</textarea>
+          {...message.as('text')}
+        ></textarea>
       </div>
 
       <div
@@ -72,8 +50,8 @@
         data-sitekey="0x4AAAAAADPWAhVwEJvGQqhh"
       ></div>
 
-      <button type="submit" class="btn btn-primary" disabled={submitting}>
-        {submitting ? 'Sending…' : 'Send message'}
+      <button type="submit" class="btn btn-primary" disabled={!!sendMessage.pending}>
+        {sendMessage.pending ? 'Sending…' : 'Send message'}
       </button>
     </form>
 
