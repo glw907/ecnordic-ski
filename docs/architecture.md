@@ -108,7 +108,9 @@ Pipeline order: `remark-parse → remark-gfm → remark-directive → remark-ec-
   otherwise collapse to empty `<div>`s.
 - **`rehype-ec-primitives.ts`** (hast) rewrites the marked elements into kit markup,
   dispatching on `data-primitive`. Nested directives convert before their parent builds.
-  Top-level primitives get a document-order `--rise` stagger; nested ones get none.
+  Top-level primitives get a document-order `--rise` stagger; nested ones get none. The
+  `data-*` markers are read back through a `strProp(node, name)` accessor that narrows
+  hast's `PropertyValue` to `string`, rather than casting at each call site.
 - **`icons.ts`** holds the Phosphor path data and `glyph(name)`, returning the inline
   SVG as a real `hastscript` node (no raw-string injection).
 
@@ -132,6 +134,9 @@ is present, so dev skips it gracefully (the always-pass test key
 
 `npx pagefind --site .svelte-kit/cloudflare` runs post-build, generating a static index
 under `.svelte-kit/cloudflare/pagefind/`. `SearchModal.svelte` wraps the Pagefind JS API.
+The bundle does not exist at compile time, so it is imported dynamically and kept external
+(listed in `vite.config.ts`); a local `PagefindUIModule` interface types the import without
+`@ts-ignore`.
 
 ---
 

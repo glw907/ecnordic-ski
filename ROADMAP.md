@@ -9,6 +9,14 @@ Build ecnordic.ski as a standalone SvelteKit site forked from 907.life, with a n
 theme, to get it live in the near term. Will be migrated into cairn-cms as a site
 package once the engine is battle-ready.
 
+### Idiomatic 2026 Exemplar `idiomatic-2026`
+Make ecnordic.ski an exemplar of stable 2026 Svelte 5 / SvelteKit / Tailwind v4 /
+DaisyUI v5 / TypeScript. Pass 7 (conformance & hardening sweep) — **done 2026-05-24**:
+`strProp` typed accessor, typed Pagefind import, `Snippet`-typed children, MCP-verified
+idiom, all surfaces output-identical. Pass 8 (kit rollout to contact / tags / post-detail
+components) — next. Pass 9 (remote-functions spike, BACKLOG #13) — deferred.
+Spec: `docs/superpowers/archive/specs/2026-05-24-idiomatic-2026-exemplar-design.md`
+
 ## Planned
 
 ### Cairn CMS platform `cairn-cms`

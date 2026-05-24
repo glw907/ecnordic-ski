@@ -4,6 +4,8 @@
 
 ## Medium
 
+- [ ] **#12** Tokenize the waiver page's hardcoded `--w-*` color palette `#improvement` `#ecnordic` *(2026-05-24)*
+  `src/routes/waiver/+page.svelte` defines a self-contained print/paper palette in raw hex + `rgba()` (`--w-red`, `--w-blue`, `--w-ink`, etc.) — a design-system violation (`rules/design-system.md`: oklch + `--color-*` tokens only). Surfaced by the Pass 7 Tailwind/DaisyUI audit. Deferred from Pass 7 because faithfully porting sRGB hex to `oklch()` shifts rendered pixels, and the pass's contract was zero visual change. Do it as a deliberate, visually-reviewed migration (adopt site tokens, or keep a distinct waiver palette expressed as oklch `@theme` tokens).
 - [ ] **#6** Replace placeholder page content (about, resources) `#improvement` `#ecnordic` *(2026-05-20)*
 - [ ] **#1** Flip prerender options back to `'fail'` once content is real `#improvement` `#ecnordic` *(2026-05-20)*
   `svelte.config.js` sets handleUnseenRoutes, handleHttpError, and handleMissingId to `'warn'` to allow building with no content. Flip to `'fail'` so CI catches broken links.
@@ -19,6 +21,8 @@
 - [ ] **#5** Replace @schedule-x with a custom Svelte calendar component `#improvement` `#ecnordic` *(2026-05-20)*
   Do this when migrating to cairn-cms.
 - [ ] **#4** Add Sveltia CMS config for web-based editing by volunteers `#feature` `#ecnordic` *(2026-05-20)*
+- [ ] **#13** Remote-functions spike (`form()`/`query()`) `#feature` `#ecnordic` *(2026-05-24)*
+  Pass 9 of the Idiomatic 2026 Exemplar initiative (deferred, experimental). Evaluate SvelteKit remote functions for the contact form / search, behind the experimental flag. Spec: `docs/superpowers/specs/2026-05-24-idiomatic-2026-exemplar-design.md` (archived). Do not start until SvelteKit marks the API stable or there's a concrete need.
 
 ## Done
 
