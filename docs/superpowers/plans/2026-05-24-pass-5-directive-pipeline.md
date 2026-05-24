@@ -1,16 +1,16 @@
-# Inline Container Directives Implementation Plan
+# Pass 5 — Directive Rendering Pipeline Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Replace the implicit slug→primitive mapping in `decorate*()` with explicit inline container directives in the markdown, rendered through a pure remark/rehype AST pipeline, so each page's styling is visible in the file and robust to heading renames.
+**Goal:** Build a remark/rehype AST pipeline that renders inline container directives (`:::card`, `:::grid`, `:::alert`, `:::cta`, `::::split`/`:::panel`, `:::passage`) into the exact HTML the current `decorate*()` builders emit — fully unit-tested, exported as `renderMarkdown`, but **not yet wired into the site**. The cutover and page migration are Pass 6.
 
-**Architecture:** `markdownToHtml` becomes a `unified` pipeline: `remark-parse → remark-gfm → remark-directive → remark-ec-directives (mark) → remark-rehype(allowDangerousHtml) → rehype-raw → rehype-slug → rehype-ec-primitives (restructure) → rehype-stringify`. The mark step stamps each known directive node with `data-*` markers; the restructure step rewrites those marked hast elements into the exact HTML the current `ecCard`/`ecCta`/alert/split builders emit (icons injected as real `hastscript` SVG nodes). All HTML-string regex (`parseSections`, `wrapSections`, `boldParasToGrid`, the three `decorate*` functions) is deleted. All five static pages migrate to directives.
+**Architecture:** A new `src/lib/markdown/render.ts` exposes `renderMarkdown(content)` running `remark-parse → remark-gfm → remark-directive → remark-ec-directives (mark) → remark-rehype(allowDangerousHtml) → rehype-raw → rehype-slug → rehype-ec-primitives (restructure) → rehype-stringify`. The mark step stamps each known directive node with `data-*` markers; the restructure step rewrites those marked hast elements into the kit's HTML, injecting icons as real `hastscript` SVG nodes. This pass adds code only — `markdownToHtml` and the pages are untouched, so the live site does not change. Pass 6 repoints `markdownToHtml` at `renderMarkdown`, deletes the `decorate*` machinery, and migrates the content.
 
-**Tech Stack:** SvelteKit · TypeScript · unified/remark/rehype (remark-directive@4, remark-rehype@11, rehype-raw@7, rehype-slug@6, rehype-stringify@10, hastscript@9) · Vitest · DaisyUI v5 / Tailwind v4 (CSS unchanged).
+**Tech Stack:** TypeScript · unified/remark/rehype (remark-directive@4, remark-rehype@11, rehype-raw@7, rehype-slug@6, rehype-stringify@10, hastscript@9) · Vitest.
 
 **Spec:** `docs/superpowers/specs/2026-05-24-inline-directives-design.md`
 
-**Render-identical contract:** About / Training / CrewLAB must render pixel-identical (screenshot-verified). Resources / Volunteers are a deliberate, small migration onto the kit (no identical target). The restructure plugin emits the same classes the builders did; `data-section` attributes are dropped (no CSS/JS consumes them — Task 14 verifies); headings now carry `rehype-slug` ids (invisible — does not affect pixels).
+**Render contract (target for the HTML this pipeline emits):** the same classes the `ecCard`/`ecCta`/alert/split builders produce. `data-section` attributes are intentionally dropped (no CSS/JS consumes them). Headings carry `rehype-slug` ids. Glyph path data is copied verbatim from the current `ICON`/`PANEL_ICONS` maps so glyphs are byte-identical.
 
 ---
 
@@ -24,11 +24,11 @@ Two optional attributes throughout: `icon=NAME` (a key in `ICON_PATHS`) and `rol
 | `:::grid{icon=NAME role=ROLE}` | with an `h2`: a grid card (as card, body list → `ul.ec-grid`); without an `h2` (nested): the bare `ul.ec-grid` lifted out |
 | `:::alert{role=caution}` | `<div role="alert" class="ec-alert ec-alert-caution">` → `.ec-alert-body` → `h2`(icon prepended inline) + body; `role` selects the variant + default icon (caution→warning) |
 | `:::cta{icon=NAME}` | `<section class="card ec-card ec-cta …">` → `.card-body.items-center.text-center` → `span.ec-chip`(icon) + `h2.card-title` + `.section-body` (contained `a.download-link` gains `btn btn-primary`) |
-| `::::split` ⊃ `:::panel{icon=NAME role=ROLE}` | card with `.ec-head`(title only, no icon) + `.section-body` → `.ec-split` of `.ec-panel`s (each: icon span + its content) |
+| `::::split` ⊃ `:::panel{icon=NAME role=ROLE}` | card with `.ec-head`(title only, no icon) + `.section-body` → `.ec-split` of `.ec-panel`s (each: icon span + content) |
 | `:::passage{icon=NAME}` | `<section class="ec-passage">` → `.ec-head`(icon + `h2.card-title`) + `.section-body` (no card chrome) |
 | *(no directive)* | rendered as-is |
 
-Nesting uses remark-directive's colon-count rule: a container that holds other directives opens with **four** colons (`::::split`, `::::card`), inner ones use three.
+Nesting uses remark-directive's colon-count rule: a container holding other directives opens with **four** colons (`::::split`, `::::card`), inner ones use three.
 
 `ICON_PATHS` keys (glyph name ← source in current `[slug]/+page.svelte`):
 `path`←`ICON['what-we-do']` · `warning`←`ICON['risks']` · `users-three`←`ICON['who-can-join']` · `compass`←`ICON['program-philosophy']` · `flag`←`ICON['getting-started']` · `calendar-blank`←`ICON['schedule']` · `backpack`←`ICON['what-to-bring']` · `tent`←`ICON['talkeetna-camp']` · `chat-circle`←`ICON['why-we-use-it']` · `person-simple-run`←`ICON['for-athletes']` · `hand-coins`←`PANEL_ICONS[0]` · `handshake`←`PANEL_ICONS[1]`.
@@ -40,16 +40,13 @@ Nesting uses remark-directive's colon-count rule: a container that holds other d
 - **Create** `src/lib/markdown/icons.ts` — `ICON_PATHS` map + `glyph(name)` returning a hast `svg` element.
 - **Create** `src/lib/markdown/remark-ec-directives.ts` — mark step (mdast).
 - **Create** `src/lib/markdown/rehype-ec-primitives.ts` — restructure step (hast).
-- **Modify** `src/lib/utils.ts` — rewrite `markdownToHtml` to the new pipeline.
-- **Modify** `src/routes/[slug]/+page.svelte` — delete the `<script module>` block; render `page.html` directly; `<style>` unchanged.
-- **Modify** `src/content/pages/{about,training,crewlab,resources,volunteers}.md` — add directives.
-- **Modify** `package.json` — add deps, remove `remark-html`.
-- **Modify** `docs/design-language.md` — document the vocabulary; register `chat-circle` / `person-simple-run`; update worked-example references.
-- **Create** `src/tests/markdown/directives.test.ts` — pipeline unit tests.
+- **Create** `src/lib/markdown/render.ts` — the `renderMarkdown(content)` pipeline.
+- **Create** `src/tests/markdown/icons.test.ts`, `src/tests/markdown/directives.test.ts`.
+- `src/lib/utils.ts`, `src/routes/[slug]/+page.svelte`, and content files are **NOT touched this pass.**
 
 ---
 
-## Task 1: Install dependencies
+## Task 1: Add dependencies
 
 **Files:** Modify `package.json` (+ lockfile).
 
@@ -58,11 +55,10 @@ Nesting uses remark-directive's colon-count rule: a container that holds other d
 Run:
 ```bash
 cd /home/glw907/Projects/ecnordic-ski
-npm install unified remark-parse remark-directive remark-rehype rehype-raw rehype-slug rehype-stringify hastscript
+npm install unified remark-parse remark-directive remark-rehype rehype-raw rehype-slug rehype-stringify hastscript hast-util-to-html
 npm install -D @types/mdast @types/hast mdast-util-directive
-npm uninstall remark-html
 ```
-Expected: installs succeed; `remark-html` removed from `package.json`. `remark` and `remark-gfm` stay.
+Expected: installs succeed. `remark`, `remark-gfm`, and `remark-html` stay (remark-html is removed in Pass 6).
 
 - [ ] **Step 2: Verify versions resolved to expected majors**
 
@@ -165,34 +161,34 @@ git commit -m "Add Phosphor icon map + hast glyph builder"
 
 ---
 
-## Task 3: Mark step + pipeline skeleton + restructure scaffolding
+## Task 3: Mark step + render pipeline + restructure scaffolding (card)
 
-This task wires the full pipeline end to end with the **card** primitive working, so every later primitive is just a new branch.
+Wires the full pipeline end to end with the **card** primitive working, so every later primitive is just a new branch. The pipeline is exported as `renderMarkdown` and exercised directly by tests; nothing in the running site calls it yet.
 
-**Files:** Create `src/lib/markdown/remark-ec-directives.ts`, `src/lib/markdown/rehype-ec-primitives.ts`; Modify `src/lib/utils.ts`; Test `src/tests/markdown/directives.test.ts`.
+**Files:** Create `src/lib/markdown/remark-ec-directives.ts`, `src/lib/markdown/rehype-ec-primitives.ts`, `src/lib/markdown/render.ts`; Test `src/tests/markdown/directives.test.ts`.
 
 - [ ] **Step 1: Write the failing tests**
 
 `src/tests/markdown/directives.test.ts`:
 ```ts
 import { describe, it, expect } from 'vitest';
-import { markdownToHtml } from '$lib/utils';
+import { renderMarkdown } from '$lib/markdown/render';
 
 describe('pipeline baseline', () => {
   it('renders unmarked content as plain prose', async () => {
-    const html = await markdownToHtml('Just a paragraph.\n');
+    const html = await renderMarkdown('Just a paragraph.\n');
     expect(html.trim()).toBe('<p>Just a paragraph.</p>');
   });
 
   it('adds slug ids to headings', async () => {
-    const html = await markdownToHtml(':::card{icon=path}\n## Sign Up\n\nx\n:::\n');
+    const html = await renderMarkdown(':::card{icon=path}\n## Sign Up\n\nx\n:::\n');
     expect(html).toContain('id="sign-up"');
   });
 });
 
 describe('card directive', () => {
   it('renders a module card with icon + heading + body', async () => {
-    const html = await markdownToHtml(':::card{icon=path}\n## What we do\n\nBody text.\n:::\n');
+    const html = await renderMarkdown(':::card{icon=path}\n## What we do\n\nBody text.\n:::\n');
     expect(html).toContain('<section class="card ec-card bg-base-100 border border-base-300 shadow-sm"');
     expect(html).toContain('<div class="card-body">');
     expect(html).toContain('<div class="ec-head"><span class="ec-icon"><svg class="ec-glyph"');
@@ -202,17 +198,17 @@ describe('card directive', () => {
   });
 
   it('applies the secondary role to the icon', async () => {
-    const html = await markdownToHtml(':::card{icon=users-three role=secondary}\n## Who\n\nx\n:::\n');
+    const html = await renderMarkdown(':::card{icon=users-three role=secondary}\n## Who\n\nx\n:::\n');
     expect(html).toContain('<span class="ec-icon ec-icon-secondary">');
   });
 
   it('staggers the first primitive at --rise:0.16s', async () => {
-    const html = await markdownToHtml(':::card{icon=path}\n## A\n\nx\n:::\n');
+    const html = await renderMarkdown(':::card{icon=path}\n## A\n\nx\n:::\n');
     expect(html).toContain('style="--rise:0.16s"');
   });
 
   it('leaves a non-grid card list as a plain list', async () => {
-    const html = await markdownToHtml(':::card{icon=path}\n## A\n\n- one\n- two\n:::\n');
+    const html = await renderMarkdown(':::card{icon=path}\n## A\n\n- one\n- two\n:::\n');
     expect(html).toContain('<ul>\n<li>one</li>');
     expect(html).not.toContain('ec-grid');
   });
@@ -222,7 +218,7 @@ describe('card directive', () => {
 - [ ] **Step 2: Run to verify they fail**
 
 Run: `npx vitest run src/tests/markdown/directives.test.ts`
-Expected: FAIL — `markdownToHtml` still uses `remark-html`; directives render as raw `:::` text.
+Expected: FAIL — cannot resolve `$lib/markdown/render`.
 
 - [ ] **Step 3: Create the mark step**
 
@@ -346,9 +342,9 @@ export default function rehypeEcPrimitives() {
 }
 ```
 
-- [ ] **Step 5: Rewrite `markdownToHtml`**
+- [ ] **Step 5: Create the pipeline**
 
-Replace the top of `src/lib/utils.ts` (the `remark`/`remark-html` imports and the `markdownToHtml` function) with:
+`src/lib/markdown/render.ts`:
 ```ts
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
@@ -358,8 +354,8 @@ import remarkRehype from 'remark-rehype';
 import rehypeRaw from 'rehype-raw';
 import rehypeSlug from 'rehype-slug';
 import rehypeStringify from 'rehype-stringify';
-import remarkEcDirectives from './markdown/remark-ec-directives';
-import rehypeEcPrimitives from './markdown/rehype-ec-primitives';
+import remarkEcDirectives from './remark-ec-directives';
+import rehypeEcPrimitives from './rehype-ec-primitives';
 
 const processor = unified()
   .use(remarkParse)
@@ -372,23 +368,22 @@ const processor = unified()
   .use(rehypeEcPrimitives)
   .use(rehypeStringify);
 
-export async function markdownToHtml(content: string): Promise<string> {
+export async function renderMarkdown(content: string): Promise<string> {
   const file = await processor.process(content);
   return String(file);
 }
 ```
-Leave the rest of `utils.ts` (date helpers, `postUrl`, `tagUrl`) unchanged.
 
 - [ ] **Step 6: Run to verify the tests pass**
 
 Run: `npx vitest run src/tests/markdown/directives.test.ts`
-Expected: PASS (all card + baseline tests).
+Expected: PASS (baseline + card).
 
 - [ ] **Step 7: Commit**
 
 ```bash
-git add src/lib/markdown/remark-ec-directives.ts src/lib/markdown/rehype-ec-primitives.ts src/lib/utils.ts src/tests/markdown/directives.test.ts
-git commit -m "Add directive pipeline with the card primitive"
+git add src/lib/markdown/remark-ec-directives.ts src/lib/markdown/rehype-ec-primitives.ts src/lib/markdown/render.ts src/tests/markdown/directives.test.ts
+git commit -m "Add directive render pipeline with the card primitive"
 ```
 
 ---
@@ -403,7 +398,7 @@ Append to `src/tests/markdown/directives.test.ts`:
 ```ts
 describe('passage directive', () => {
   it('renders a titled prose passage with no card chrome', async () => {
-    const html = await markdownToHtml(':::passage{icon=chat-circle}\n## Why we use it\n\nReasons.\n:::\n');
+    const html = await renderMarkdown(':::passage{icon=chat-circle}\n## Why we use it\n\nReasons.\n:::\n');
     expect(html).toContain('<section class="ec-passage" style="--rise:0.16s">');
     expect(html).toContain('<div class="ec-head"><span class="ec-icon"><svg');
     expect(html).toContain('<h2 class="card-title"');
@@ -416,7 +411,7 @@ describe('passage directive', () => {
 - [ ] **Step 2: Run to verify it fails**
 
 Run: `npx vitest run src/tests/markdown/directives.test.ts -t passage`
-Expected: FAIL — passage renders as a bare `<div>` (default branch).
+Expected: FAIL.
 
 - [ ] **Step 3: Implement `buildPassage` and register it**
 
@@ -458,7 +453,7 @@ Append:
 ```ts
 describe('alert directive', () => {
   it('renders a subtle caution alert with the icon inline in the label', async () => {
-    const html = await markdownToHtml(':::alert{role=caution}\n## Risks\n\nFalls happen.\n:::\n');
+    const html = await renderMarkdown(':::alert{role=caution}\n## Risks\n\nFalls happen.\n:::\n');
     expect(html).toContain('<div role="alert" class="ec-alert ec-alert-caution" style="--rise:0.16s">');
     expect(html).toContain('<div class="ec-alert-body">');
     expect(html).toContain('<h2 id="risks"><svg class="ec-glyph"');
@@ -520,7 +515,7 @@ Append:
 ```ts
 describe('grid directive', () => {
   it('renders a grid card: heading + body list becomes ec-grid', async () => {
-    const html = await markdownToHtml(
+    const html = await renderMarkdown(
       ':::grid{icon=compass}\n## Philosophy\n\nIntro.\n\n- **One** a\n- **Two** b\n:::\n',
     );
     expect(html).toContain('<section class="card ec-card');
@@ -531,13 +526,12 @@ describe('grid directive', () => {
   });
 
   it('lifts a nested grid (no heading) to a bare ec-grid list', async () => {
-    const html = await markdownToHtml(
+    const html = await renderMarkdown(
       '::::card{icon=tent}\n## Camp\n\n### Logistics\n\n:::grid\n- **Travel** by car\n:::\n::::\n',
     );
     expect(html).toContain('<h3 id="logistics">Logistics</h3>');
     expect(html).toContain('<ul class="ec-grid"><li><strong>Travel</strong> by car</li></ul>');
-    // the nested grid did not become its own card
-    expect(html.match(/ec-card/g)?.length).toBe(1);
+    expect(html.match(/ec-card/g)?.length).toBe(1); // the nested grid did not become its own card
   });
 });
 ```
@@ -571,7 +565,7 @@ Add the case:
     case 'grid': return buildGrid(node, rise);
 ```
 
-> Note: `splitHead` reuses the already-classed `ul`; `markFirstList` runs before `splitHead` so `rest` contains the `ul.ec-grid`.
+> `markFirstList` runs before `splitHead`, so the already-classed `ul.ec-grid` is what ends up in `rest`.
 
 - [ ] **Step 4: Run to verify they pass**
 
@@ -597,7 +591,7 @@ Append:
 ```ts
 describe('cta directive', () => {
   it('renders a centered CTA card, chip icon, and promotes the download link', async () => {
-    const html = await markdownToHtml(
+    const html = await renderMarkdown(
       ':::cta{icon=flag}\n## Getting started\n\nDo this.\n\n<a href="/waiver" class="download-link">Get it →</a>\n:::\n',
     );
     expect(html).toContain('<section class="card ec-card ec-cta bg-base-100 border border-primary/30 shadow-sm" style="--rise:0.16s">');
@@ -672,7 +666,7 @@ git commit -m "Add cta primitive"
 
 ---
 
-## Task 8: Split + panel primitives
+## Task 8: Split + panel primitives; pipeline complete
 
 **Files:** Modify `src/lib/markdown/rehype-ec-primitives.ts`; Modify `src/tests/markdown/directives.test.ts`.
 
@@ -682,7 +676,7 @@ Append:
 ```ts
 describe('split + panel directives', () => {
   it('renders a card with a heading and two iconned panels', async () => {
-    const html = await markdownToHtml(
+    const html = await renderMarkdown(
       '::::split\n## Costs\n\n:::panel{icon=hand-coins}\n**Free.** No fee.\n:::\n\n:::panel{icon=handshake role=secondary}\n**Help.** Pitch in.\n:::\n::::\n',
     );
     expect(html).toContain('<section class="card ec-card');
@@ -733,457 +727,27 @@ Add the cases:
     case 'panel': return buildPanel(node);
 ```
 
-- [ ] **Step 4: Run to verify it passes**
+- [ ] **Step 4: Run the full suite**
 
-Run: `npx vitest run src/tests/markdown/directives.test.ts`
-Expected: PASS (all primitives green).
+Run: `npm test`
+Expected: PASS — every directive suite + icons green.
 
-- [ ] **Step 5: Run type check**
+- [ ] **Step 5: Type check**
 
 Run: `npm run check`
-Expected: no errors in `src/lib/markdown/**`. (The unused `decorate*` code in `+page.svelte` still type-checks — gutted in Task 13.)
+Expected: no errors. (The `decorate*` code in `+page.svelte` is untouched and still type-checks; it is removed in Pass 6.)
 
 - [ ] **Step 6: Commit**
 
 ```bash
 git add src/lib/markdown/rehype-ec-primitives.ts src/tests/markdown/directives.test.ts
-git commit -m "Add split + panel primitives"
+git commit -m "Add split + panel primitives; directive pipeline complete"
 ```
-
----
-
-## Task 9: Migrate about.md
-
-**Files:** Modify `src/content/pages/about.md`.
-
-- [ ] **Step 1: Rewrite the body with directives**
-
-Keep the frontmatter and the two intro paragraphs (the lede + the "informal and volunteer-run" paragraph) exactly as-is, unmarked. Wrap the sections:
-```markdown
-:::card{icon=path}
-## What we do
-
-<the three existing paragraphs, unchanged>
-:::
-
-:::alert{role=caution}
-## Risks
-
-<the existing paragraph, unchanged>
-:::
-
-:::card{icon=users-three role=secondary}
-## Who can join
-
-<the three existing paragraphs, unchanged>
-:::
-
-:::grid{icon=compass}
-## Program philosophy
-
-Five core principles guide our program design and the decisions we make for every athlete:
-
-- **Total person first.** <unchanged>
-- **Open to any committed athlete.** <unchanged>
-- **High school sports matter.** <unchanged>
-- **A lasting bond with trails and skiing.** <unchanged>
-- **Support the community that supports you.** <unchanged>
-:::
-
-::::split
-## Costs & volunteers
-
-:::panel{icon=hand-coins}
-**Free to join.** <unchanged paragraph>
-:::
-
-:::panel{icon=handshake role=secondary}
-**Lend a hand.** <unchanged paragraph>
-:::
-::::
-
-:::cta{icon=flag}
-## Getting started
-
-Fill out the [waiver](/waiver) and bring it to your first session, or send it ahead through the [contact form](/contact). Questions are welcome there too.
-
-<a href="/waiver" class="download-link">Get the waiver →</a>
-:::
-```
-Preserve all inner prose, links, and bold leads verbatim — only the wrappers and heading markers change. (Replace each `<unchanged>` above with the real text from the current file.)
-
-- [ ] **Step 2: Type check + build**
-
-Run: `npm run check && npm run build`
-Expected: clean; build succeeds.
-
-- [ ] **Step 3: Screenshot-verify identical** (see *Verification protocol* at the end)
-
-Capture About at desktop + mobile, light + dark, and compare to the current live render. Reconcile any difference before committing.
-
-- [ ] **Step 4: Commit**
-
-```bash
-git add src/content/pages/about.md
-git commit -m "Migrate About to inline directives"
-```
-
----
-
-## Task 10: Migrate training.md
-
-**Files:** Modify `src/content/pages/training.md`.
-
-- [ ] **Step 1: Rewrite the body with directives**
-
-Keep the lede paragraph and the `<nav class="page-toc">…</nav>` block unchanged and unmarked (the nav stays authored raw HTML). Replace every `<h2 id="…">X</h2>` with a directive-wrapped `## X` (rehype-slug regenerates the same ids):
-```markdown
-:::card{icon=calendar-blank}
-## Schedule
-
-<the two existing paragraphs incl. the [PLACEHOLDER] line, unchanged>
-:::
-
-:::grid{icon=path}
-## What We Do
-
-- **Running.** <unchanged>
-- **Roller-skiing.** <unchanged>
-- **Mountain biking.** <unchanged>
-- **Strength and dryland.** <unchanged>
-
-Most sessions mix two or three of these. You won't do the same thing every day.
-:::
-
-:::card{icon=users-three role=secondary}
-## Who Can Join
-
-<the existing paragraph + [PLACEHOLDER] line, unchanged>
-:::
-
-:::card{icon=backpack}
-## What to Bring
-
-- Water and snacks
-- Trail running shoes
-- Helmet (required for roller-skiing and mountain biking — no exceptions)
-- Layers. Anchorage summer weather is variable.
-
-Roller skis and poles aren't provided. [PLACEHOLDER — add any loaner equipment details.]
-:::
-
-::::card{icon=tent}
-## Talkeetna Camp
-
-<the existing intro paragraph + [PLACEHOLDER] line, unchanged>
-
-### What to Expect
-
-<the two existing paragraphs, unchanged>
-
-### Logistics
-
-:::grid
-- **Travel** We drive up in private vehicles, driven by parent and adult volunteers. The drive is roughly [PLACEHOLDER — N hours].
-- **Lodging** [PLACEHOLDER — camping, cabin, or other lodging details.]
-- **Meals** Group meals, prepared together. [PLACEHOLDER — confirm meal logistics and whether athletes need to bring food.]
-- **Cost** The camp is free. We accept donations to offset gas and site fees. [PLACEHOLDER — confirm if there is any required contribution.]
-:::
-
-### Packing List
-
-[PLACEHOLDER — finalize packing list.]
-
-- All your training gear (running shoes, roller skis and poles, helmet, bike if applicable)
-- Sleeping bag and pad
-- Rain gear — Talkeetna weather is unpredictable
-- Water bottle and personal snacks
-- Medications you take daily
-::::
-
-:::cta{icon=flag}
-## Sign Up
-
-A signed waiver is required before your first session. Get it on the [Resources](/resources) page. Camp registration is included — you don't need to sign up for Talkeetna separately.
-
-<a href="https://crewlab.app.link/5g7vhhYEn3b" class="download-link" target="_blank" rel="noopener">Sign Up for Summer Training →</a>
-
-Questions? [Contact us](/contact).
-:::
-```
-The Logistics block converts the four `**Term:** …` paragraphs into a markdown list with the colon dropped (`**Travel** …`) — this reproduces `boldParasToGrid`'s exact output.
-
-- [ ] **Step 2: Type check + build**
-
-Run: `npm run check && npm run build`
-Expected: clean; build succeeds.
-
-- [ ] **Step 3: Verify toc anchors + screenshot-identical**
-
-Confirm the rendered ids are `schedule`, `what-we-do`, `who-can-join`, `what-to-bring`, `talkeetna-camp`, `sign-up` (so the page-toc links resolve) and the page renders identically (desktop/mobile/dark).
-
-- [ ] **Step 4: Commit**
-
-```bash
-git add src/content/pages/training.md
-git commit -m "Migrate Training to inline directives"
-```
-
----
-
-## Task 11: Migrate crewlab.md
-
-**Files:** Modify `src/content/pages/crewlab.md`.
-
-- [ ] **Step 1: Rewrite the body with directives**
-
-Keep the two intro paragraphs (lede + SafeSport paragraph) unmarked.
-```markdown
-:::passage{icon=chat-circle}
-## Why we use it
-
-<the existing paragraph, unchanged>
-:::
-
-:::grid{icon=person-simple-run}
-## For athletes
-
-<the existing intro paragraph, unchanged>
-
-- **Check the schedule and RSVP.** <unchanged>
-- **Use team chat.** <unchanged>
-- **Log your workouts.** <unchanged>
-- **Do the daily check-in.** <unchanged>
-- **Watch your video.** <unchanged>
-:::
-
-:::card{icon=users-three role=secondary}
-## For parents & supporters
-
-<the existing intro paragraph, unchanged>
-
-- **What you can see and do.** <unchanged, incl. the [PLACEHOLDER] line>
-- **Organize and pitch in.** <unchanged>
-- **What stays private.** <unchanged>
-- **Notifications and logistics.** <unchanged>
-:::
-
-:::cta{icon=flag}
-## Getting started
-
-<the existing paragraph, unchanged>
-
-<a href="https://crewlab.app.link/5g7vhhYEn3b" class="download-link" target="_blank" rel="noopener">Join EC Nordic on CrewLAB →</a>
-:::
-```
-Note: "For athletes" is a `:::grid` (its list becomes ec-grid); "For parents & supporters" is a plain `:::card` (its list stays a plain list) — matching the current `decorateCrewlab` behavior.
-
-- [ ] **Step 2: Type check + build**
-
-Run: `npm run check && npm run build`
-Expected: clean; build succeeds.
-
-- [ ] **Step 3: Screenshot-verify identical** (desktop/mobile/dark).
-
-- [ ] **Step 4: Commit**
-
-```bash
-git add src/content/pages/crewlab.md
-git commit -m "Migrate CrewLAB to inline directives"
-```
-
----
-
-## Task 12: Migrate resources.md + volunteers.md (the deferred pages)
-
-**Files:** Modify `src/content/pages/resources.md`, `src/content/pages/volunteers.md`.
-
-- [ ] **Step 1: Rewrite resources.md**
-
-Keep the lede ("Forms, guides, and links…") unmarked. Wrap the single section in a plain card (no icon; the waiver link stays a plain link — this page has no CTA):
-```markdown
-:::card
-## Forms
-
-**Waiver and Release of Liability** — required before the first day of participation in any EC Nordic activity, including the summer training program and Talkeetna camp.
-
-<a href="/waiver" class="download-link" target="_blank" rel="noopener">View Waiver Form →</a>
-
-Print the form and return a signed copy to Geoffrey Wright, or use a free e-signature service such as [SignWell](https://www.signwell.com).
-:::
-```
-
-- [ ] **Step 2: Rewrite volunteers.md**
-
-Keep the lede unmarked. Replace the manual `<h2 id="…">` tags with directives:
-```markdown
-:::passage{icon=users-three role=secondary}
-## This Summer's Volunteers
-
-> **TK — Add the volunteer roster: names, roles, and a sentence or two on each. Program leads first, then drivers and other adult helpers.**
-:::
-
-:::grid{icon=handshake role=secondary}
-## Help Out
-
-We always need more adults. The most useful things you can do:
-
-- **Drive.** Many sessions are at remote trailheads, and we carpool. A driver with room for a few athletes makes a session happen.
-- **Train alongside athletes.** Run, ride, or ski with the group at any pace. The spread on endurance days is wide, and we want adults with both the faster and the slower kids.
-- **Teach what you know.** Strength work, technique, nutrition, navigation — if you know it, we can use it.
-
-No certification or background required. We'll find a way to put you to work. [Reach out](/contact) if you'd like to help.
-:::
-```
-
-- [ ] **Step 3: Type check + build**
-
-Run: `npm run check && npm run build`
-Expected: clean; build succeeds.
-
-- [ ] **Step 4: Screenshot-verify kit-correct**
-
-Capture Resources + Volunteers (desktop/mobile/dark). Check they render as proper kit primitives (card / passage / grid) — there is no old render to match.
-
-- [ ] **Step 5: Commit**
-
-```bash
-git add src/content/pages/resources.md src/content/pages/volunteers.md
-git commit -m "Migrate Resources and Volunteers to inline directives"
-```
-
----
-
-## Task 13: Gut the decorate machinery in [slug]/+page.svelte
-
-**Files:** Modify `src/routes/[slug]/+page.svelte`.
-
-- [ ] **Step 1: Delete the `<script module>` block and simplify rendering**
-
-Remove the entire `<script module lang="ts">…</script>` block (lines 1–264: `slugify`, `parseSections`, `wrapSections`, the `svg`/`ICON`/`PANEL_ICONS` maps, `SECONDARY_SECTIONS`, `ecCard`, `riseStyle`, `ecCta`, `decoratePage`, `decorateAbout`, `boldParasToGrid`, `decorateTraining`, `decorateCrewlab`). Replace the instance `<script>`'s `bodyHtml` derivation: decoration now happens in `markdownToHtml`, so render `page.html` directly.
-
-New instance script:
-```svelte
-<script lang="ts">
-  import type { PageData } from './$types';
-  import { SITE_TITLE } from '$lib/config';
-
-  let { data }: { data: PageData } = $props();
-  let { page } = $derived(data);
-</script>
-```
-New markup body:
-```svelte
-<article class="static-page" data-page={page.slug}>
-  <h1 class="page-title">{page.title}</h1>
-
-  <div class="post-body">
-    {@html page.html}
-  </div>
-</article>
-```
-Leave the entire `<style>` block unchanged — every selector (`.ec-card`, `.ec-passage`, `.ec-alert`, `.ec-split`, `[data-page]`, the rise keyframes, reduced-motion) still applies to the pipeline output.
-
-- [ ] **Step 2: Type check**
-
-Run: `npm run check`
-Expected: no errors (the `decorate*`/`ICON` references are gone; `bodyHtml` no longer exists).
-
-- [ ] **Step 3: Build + screenshot spot-check**
-
-Run: `npm run build`
-Re-screenshot About to confirm the gutting did not change rendering (it shouldn't — `page.html` already carried the primitives in Task 9).
-
-- [ ] **Step 4: Commit**
-
-```bash
-git add src/routes/[slug]/+page.svelte
-git commit -m "Remove decorate* machinery; render directive output directly"
-```
-
----
-
-## Task 14: Verify data-section is unused; documentation
-
-**Files:** Modify `docs/design-language.md`.
-
-- [ ] **Step 1: Confirm nothing consumes `data-section`**
-
-Run: `grep -rn "data-section" src/ docs/`
-Expected: no matches in `src/` (the attribute is gone from output and no CSS/JS reads it). If a match appears in `src/`, stop and reconcile before continuing.
-
-- [ ] **Step 2: Add the directive vocabulary to the design language**
-
-In `docs/design-language.md`, update the "Last updated" line to `2026-05-24` with a note that page styling is now selected by inline container directives. Add a new section, **"Selecting a primitive — inline directives,"** documenting the vocabulary table from this plan's *Reference* section (the seven directives, the `icon`/`role` attributes, the four-colon nesting rule, "unmarked = prose"). Update the *Worked example — the About page* and *Refining a page — process* sections to reference the directive markup in `src/content/pages/about.md` and the `markdownToHtml` pipeline (`src/lib/markdown/*`), replacing the `decorate*()` references.
-
-- [ ] **Step 3: Register the two new glyphs in the icon matrix**
-
-Add rows to the icon matrix for the CrewLAB glyphs that were not previously listed:
-```markdown
-| `chat-circle` | the rationale / why | CrewLAB → Why we use it | primary |
-| `person-simple-run` | athletes / the how-to | CrewLAB → For athletes | primary |
-```
-Also add `handshake` (volunteering) and `users-three` (people) usage notes for the Volunteers page if not already covered.
-
-- [ ] **Step 4: Commit**
-
-```bash
-git add docs/design-language.md
-git commit -m "Document the inline-directive vocabulary"
-```
-
----
-
-## Task 15: Full verification
-
-**Files:** none (verification only).
-
-- [ ] **Step 1: Type check + unit tests + build**
-
-Run: `npm run check && npm test && npm run build`
-Expected: svelte-check clean; all vitest suites pass; build to `.svelte-kit/cloudflare/` succeeds.
-
-- [ ] **Step 2: Screenshot regression sweep** (see *Verification protocol*)
-
-For About / Training / CrewLAB: desktop (1280px) + mobile (390px), light + dark, `--force-prefers-reduced-motion`. Diff against the pre-Pass-5 live render; every difference must be reconciled to identical. For Resources / Volunteers: confirm kit-correct rendering.
-
-- [ ] **Step 3: Confirm posts are unchanged**
-
-Open a built post page (e.g. any `/YYYY/MM/slug/`) in the screenshot harness and confirm prose renders normally (posts contain no directives; the new pipeline must render them as before).
-
-- [ ] **Step 4: Confirm Training toc anchors work**
-
-Load the built Training page and click each page-toc link; confirm it scrolls to the matching section.
-
-- [ ] **Step 5: Final commit (if any reconciliation edits were made)**
-
-```bash
-git add -A
-git commit -m "Pass 5 verification fixes"
-```
-
-> The pass-end ritual (code-simplifier over the changed code, final svelte-check, STATUS.md update, plan archival, push) is handled by the `cairn-pass` skill at pass close — not part of this plan.
-
----
-
-## Verification protocol (screenshots)
-
-Per `docs/design-language.md` and project memory, the built site is served by wrangler on `:8787`; rebuild before checking. Backgrounded `wrangler dev` exits at EOF, so keep stdin open:
-
-```bash
-npm run build
-( sleep infinity | npx wrangler dev --port 8787 ) &
-# wait for "Ready", then capture with a headless chromium, e.g.:
-#   chromium --headless --force-prefers-reduced-motion \
-#     --window-size=1280,2000 --screenshot=/tmp/about-desktop.png http://localhost:8787/about
-# repeat at --window-size=390,2400 (mobile) and with the dark theme (emulate prefers-color-scheme: dark).
-```
-Compare each capture against the current production render (https://ecnordic.ski) at 2× crop. About / Training / CrewLAB must be pixel-identical; Resources / Volunteers are checked for kit-correctness only.
 
 ---
 
 ## Self-review notes
 
-- **Spec coverage:** pipeline (Tasks 1,3) · mark step (3) · all primitives card/passage/alert/grid/cta/split/panel (3–8) · grid-content-as-list incl. nested Logistics (6,10) · explicit split panels (8,9) · rehype-slug ids + toc (3,10,15) · five-page migration (9–12) · delete decorate*/wrapSections/boldParasToGrid (13) · data-section drop verified (14) · docs incl. new glyphs (14) · identical-render + posts + toc verification (15). No gaps.
-- **No placeholders:** the `<unchanged>` / `…` markers in migration and icon tasks are explicit instructions to copy verbatim from named source files, not vague TODOs.
-- **Type/name consistency:** `transform`/`transformChildren`/`splitHead`/`cardShell`/`iconSpan`/`riseStyle`/`markFirstList`/`promoteDownloadLink`/`buildCard`/`buildGrid`/`buildAlert`/`buildCta`/`buildSplit`/`buildPanel`/`buildPassage` are defined once (Tasks 3–8) and referenced consistently; `ICON_PATHS`/`glyph` (Task 2) used by the rehype plugin; `markdownToHtml` signature unchanged.
+- **Spec coverage (this pass = the mechanism):** deps (1) · icon module byte-identical glyphs (2) · mark step (3) · `renderMarkdown` pipeline incl. rehype-raw/rehype-slug ordering (3) · all primitives card/passage/alert/grid/cta/split/panel (3–8) · nested bare grid for the Logistics case (6) · explicit split panels (8) · `--rise` stagger in document order (3) · `data-section` omitted by construction. The cutover, content migration, `decorate*`/`wrapSections`/`boldParasToGrid` deletion, docs, and screenshot regression are **Pass 6** (`2026-05-24-pass-6-directive-cutover.md`).
+- **No placeholders:** the `…` in the icon map are explicit "copy verbatim from the named source" instructions, not vague TODOs.
+- **Type/name consistency:** `transform`/`transformChildren`/`splitHead`/`cardShell`/`iconSpan`/`riseStyle`/`markFirstList`/`promoteDownloadLink`/`buildCard…buildPassage` defined once (3–8) and referenced consistently; `ICON_PATHS`/`glyph` (2) consumed by the rehype plugin; `renderMarkdown` (3) is the single public entry, consumed by tests this pass and by `markdownToHtml` in Pass 6.
