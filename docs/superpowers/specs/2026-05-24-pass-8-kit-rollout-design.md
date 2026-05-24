@@ -100,10 +100,16 @@ single-source-of-truth way.
   in `src/lib/motion.ts` (returns `--rise:<n>s`, the `0.16 + idx*0.04`,
   2-decimal step from the design language). The rehype builder imports it instead
   of defining its own copy; Svelte pages import the same function.
-- **Keyframes stay global.** `page-rise` / `module-rise` and the
-  `prefers-reduced-motion` reset already live in `app.css`. Each consuming page
-  adds (or reuses) a `module-rise` rule scoped to its module wrapper and emits
-  `style={riseStyle(i)}` per module, exactly as the directive pages do.
+- **Promote the keyframes to global.** Today `page-rise` / `module-rise` and
+  their `prefers-reduced-motion` reset are **scoped inside the frozen
+  `[slug]/+page.svelte`** (component-hashed), so they are not reusable. Pass 8
+  adds byte-identical global copies (`page-rise`, `module-rise`, reduced-motion
+  reset) to `app.css` as the single source for any non-`[slug]` page. The frozen
+  `[slug]` page is **not touched** (scope); its private scoped copy becomes
+  redundant with the global one — logged to BACKLOG as a deferred dedup, to close
+  when `[slug]` is next unfrozen. Each consuming page adds a `module-rise` rule
+  scoped to its module wrapper and emits `style={riseStyle(i)}` per module,
+  exactly as the directive pages do.
 - **Honor `prefers-reduced-motion`** on every page that opts in (non-negotiable,
   per the design language).
 
