@@ -1,12 +1,9 @@
-import { remark } from 'remark';
-import remarkGfm from 'remark-gfm';
-import remarkHtml from 'remark-html';
+import { renderMarkdown } from './markdown/render';
 import { SITE_LOCALE } from '$lib/config';
 import type { PostSummary } from '$lib/types';
 
 export async function markdownToHtml(content: string): Promise<string> {
-  const result = await remark().use(remarkGfm).use(remarkHtml, { sanitize: false }).process(content);
-  return result.toString();
+  return renderMarkdown(content);
 }
 
 export function isoFromValue(value: unknown, fallback?: string): string {
