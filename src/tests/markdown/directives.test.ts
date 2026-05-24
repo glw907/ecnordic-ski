@@ -63,3 +63,25 @@ describe('alert directive', () => {
     expect(html).not.toContain('card-title');
   });
 });
+
+describe('grid directive', () => {
+  it('renders a grid card: heading + body list becomes ec-grid', async () => {
+    const html = await renderMarkdown(
+      ':::grid{icon=compass}\n## Philosophy\n\nIntro.\n\n- **One** a\n- **Two** b\n:::\n',
+    );
+    expect(html).toContain('<section class="card ec-card');
+    expect(html).toContain('<div class="ec-head"><span class="ec-icon"><svg');
+    expect(html).toContain('<div class="section-body"><p>Intro.</p>');
+    expect(html).toContain('<ul class="ec-grid">');
+    expect(html).toContain('<li><strong>One</strong> a</li>');
+  });
+
+  it('lifts a nested grid (no heading) to a bare ec-grid list', async () => {
+    const html = await renderMarkdown(
+      '::::card{icon=tent}\n## Camp\n\n### Logistics\n\n:::grid\n- **Travel** by car\n:::\n::::\n',
+    );
+    expect(html).toContain('<h3 id="logistics">Logistics</h3>');
+    expect(html).toContain('<ul class="ec-grid"><li><strong>Travel</strong> by car</li></ul>');
+    expect(html.match(/ec-card/g)?.length).toBe(1); // the nested grid did not become its own card
+  });
+});

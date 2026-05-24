@@ -52,6 +52,27 @@ function buildPassage(node: Element, rise?: string): Element {
   return h('section', properties, [head, h('div', { className: ['section-body'] }, rest)]);
 }
 
+function markFirstList(children: ElementContent[]): Element | undefined {
+  const ul = children.find((c) => isElement(c) && c.tagName === 'ul') as Element | undefined;
+  if (ul) {
+    ul.properties = { ...ul.properties, className: ['ec-grid'] };
+    // Strip whitespace-only text nodes so the bare list serializes without newlines.
+    ul.children = (ul.children as ElementContent[]).filter(
+      (c) => !(c.type === 'text' && /^\s*$/.test(c.value)),
+    );
+  }
+  return ul;
+}
+
+function buildGrid(node: Element, rise?: string): Element {
+  const children = node.children as ElementContent[];
+  const hasHeading = children.some((c) => isElement(c) && c.tagName === 'h2');
+  const ul = markFirstList(children);
+  if (!hasHeading) return ul ?? node; // nested use: emit the bare ec-grid list
+  const { head, rest } = splitHead(node, true);
+  return cardShell(CARD_CLASS, rise, [head, h('div', { className: ['section-body'] }, rest)]);
+}
+
 function buildAlert(node: Element, rise?: string): Element {
   const children = node.children as ElementContent[];
   const i = children.findIndex((c) => isElement(c) && c.tagName === 'h2');
@@ -81,6 +102,7 @@ function transform(node: Element, rise?: string): Element {
     case 'card': return buildCard(node, rise);
     case 'passage': return buildPassage(node, rise);
     case 'alert': return buildAlert(node, rise);
+    case 'grid': return buildGrid(node, rise);
     default: return node; // other primitives added in later tasks
   }
 }
