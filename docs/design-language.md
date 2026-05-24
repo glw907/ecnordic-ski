@@ -3,7 +3,7 @@
 Living reference for the EC Nordic component kit, palette, and icon system.
 Keep it current as the language evolves.
 
-**Last updated:** 2026-05-20 — typography scale, label ramp, vertical rhythm, motion, and the page-refinement process documented.
+**Last updated:** 2026-05-23 — type scale is now one sitewide standard (body 0.92rem set once on `.post-body`; card-body inherits it; lede 1.0rem and grid cells 0.85rem the only deviations, uniform across pages — no per-page font sizing); added *Choosing a primitive* (prose is the default; cards for self-contained units and to chunk long prose); flagged candidate primitives to build when needed (the kit is open); CrewLAB added as the prose-plus-selective-cards worked example.
 **Builds on:** `docs/superpowers/specs/2026-05-14-ecnordic-design.md` (color tokens, type scale, nav).
 
 ---
@@ -87,13 +87,24 @@ never by size alone. Each level states its job:
 |------|-------------|--------|--------|---------|----------|
 | Page title | Nunito · clamp→2.25rem | 800 | heading | 1.15 | −0.02em |
 | Section head (h2 / card) | Nunito · 1.25–1.3rem | 700 | heading | 1.25 | −0.01em |
-| Subhead (h3) | Nunito · 1.05rem | 700 | heading | 1.3 | 0 |
-| Lede | Alegreya · 1.15rem | 500 | heading | 1.55 | 0 |
-| Body | Alegreya · 1.03–1.05rem | 400 | body | 1.62 | 0 |
-| Supporting prose | Alegreya · 0.85–0.95rem | 400 | **body-soft** | 1.5 | 0 |
+| Subhead (h3) | Nunito · 1.02rem | 700 | heading | 1.3 | 0 |
+| Lede (first ¶ of a page) | Alegreya · 1.0rem | 500 | body | 1.6 | 0 |
+| **Body — the sitewide standard** | Alegreya · **0.92rem** | 400 | body | 1.6 | 0 |
+| Supporting / grid-cell prose | Alegreya · 0.85rem | 400 | **body-soft** | 1.5 | 0 |
 | Term / mini-label | Nunito · 1.0rem | 700 | heading | 1.3 | 0 |
 | Eyebrow / label | Nunito · 0.68–0.8rem | 700 | muted (or role) | — | ramp ↓ |
 | Meta / caption | Alegreya · 0.72rem | 400 | muted / faint | 1.3 | 0 |
+
+**Body is one size, site-wide — the default for every page.** The standard body
+size (**0.92rem**) is set once on `.post-body` in `src/app.css` and applies
+everywhere by default: prose, list items, posts, and card content alike. DaisyUI's
+`.card-body` ships its own 0.875rem, so it's overridden to *inherit* the standard
+(`.post-body .card-body { font-size: inherit }`) — text is the same size whether
+or not it sits in a card. **Pages are not art-directed for type.** Only two roles
+step off the standard, and they do so uniformly across the whole site: the
+**lede** (the first paragraph of a content page) steps up one gentle notch to
+1.0rem, and **supporting / grid-cell** text steps down to 0.85rem. There is no
+per-page font sizing — if a page seems to need it, fix the standard, not the page.
 
 Two governing rules behind the numbers:
 
@@ -107,10 +118,9 @@ Two governing rules behind the numbers:
 
 **`--color-body-soft`** is the supporting-prose colour — one measured step from
 `body` toward `muted`, themed in both modes. It marks *elaboration that sits
-under a term or heading* (grid cells, alert body, the About intro context
-paragraph): quieter than body, but well clear of `muted`'s caption weight.
-`muted` stays reserved for genuinely secondary text (meta, captions) — never for
-a substantive paragraph.
+under a term or heading* (grid cells, alert body): quieter than body, but well
+clear of `muted`'s caption weight. `muted` stays reserved for genuinely secondary
+text (meta, captions) — never for a substantive paragraph.
 
 ### Vertical rhythm
 
@@ -246,6 +256,82 @@ primary action is the warm "act" color.
 
 ---
 
+## Choosing a primitive — prose is the default
+
+**Plain prose is the default.** A section earns a card — or any primitive —
+only when its *job* calls for being set apart, never because a heading "should"
+sit in a box. A page that wraps every section in a card reads as a stack of
+identical boxes: hierarchy flattens, nothing stands out, and the eye tires.
+Narrative, rationale, context, and connective passages stay prose. Reach for a
+primitive deliberately.
+
+| The section's job | Primitive | Why |
+|---|---|---|
+| Narrative, rationale, context, connective text | **Plain prose** — a titled passage, no box (`.ec-passage` on a decorated page) | The default. Most reading is prose; don't box it. |
+| A self-contained unit a reader returns to, or one of a set of parallel panels to navigate between | **Module card** (`.ec-card`) | The border + wash says "a thing on its own." |
+| Short titled points that are peers, not a sequence | **Grid card** (`.ec-grid`) | Two unnumbered columns — parallel, scannable. |
+| Exactly two equal-weight, related items | **Split panels** | Side-by-side states the pairing. |
+| An aside that still matters (caution, note) | **Subtle alert** (`.ec-alert`) | A tinted wash sets it apart without a module's weight. |
+| The one action you want taken | **CTA card + `btn btn-primary`** | One per page; the focal accent. |
+
+**Cards also fight the wall of text.** Marking a self-contained unit is one
+reason to card a section; readability is the other. Modern UI/UX practice uses
+cards to *chunk* long content into scannable units — edges for the eye to rest
+on, a clear hierarchy, a structure you can navigate rather than wade through.
+So length itself is a reason to reach for cards: when a section runs long, or a
+page threatens to become one tall column of text, break it into carded sub-units
+to restore rhythm and scannability (this matters most on mobile, where an
+unbroken column is hardest to parse). The two reasons compose — the question for
+each block is "does setting this apart, or chunking it, help the reader?"
+
+The synthesis: **prose is the default voice; cards are how you keep prose from
+becoming a wall.** Default to prose for a single coherent thought. Once content
+accumulates into a long scroll, card the sub-units.
+
+**Intermingle freely.** A page can open with a prose lede, run a couple of prose
+passages, set one section in a card, and close on a CTA. Prose against the
+occasional card is what *makes* the card mean something; box everything and the
+signal is gone.
+
+**The emphatic lede is a treatment, not a default.** About opens with a large
+callout because that intro restates the program's mission, and a mission
+statement earns amplification. A page whose opening is mere orientation
+(CrewLAB: "here's the app, here's how to get on it") keeps a plain lede. Match
+the treatment to whether the words are a statement worth amplifying.
+
+**The worked examples sit at different points on this scale, both correctly.**
+About cards nearly every section because each is a distinct content unit (what
+we do / risks / who can join / …). CrewLAB keeps its rationale as prose and
+cards only the two parallel role panels (athletes / parents & supporters). The
+difference is the content, not one page following the rule better.
+
+### The kit is open — build a new primitive when a page needs one
+
+**The primitives above are a starting set, not a closed list. Do not restrict a
+page to the existing cards by default.** When a section's job isn't served by
+anything here, the right move is to *create* a new primitive — following the
+same rules every existing one obeys (one meaning, DaisyUI-first, color encodes
+role, register it in this doc and the icon matrix) — rather than forcing the
+content into an ill-fitting card or leaving it unstyled. Adding a primitive is
+normal kit evolution, not a deviation.
+
+Don't pre-build them (YAGNI): add each when the page that needs it comes up in a
+pass, then document it in *The component kit* and the table above. Likely
+candidates from standard UI/UX practice, flagged here so they're on the radar:
+
+| Candidate primitive | What it is | Build it when… |
+|---|---|---|
+| **Person / profile card** | Photo + name + role + short blurb, in a responsive grid | The **Volunteers** roster is built — the textbook use case |
+| **Media card** | Image + heading + text (+ optional link) | A page pairs a photo with copy; formalizes the homepage's ad-hoc featured-post block |
+| **Stat / facts strip** | A row of big value + label pairs (e.g. *Free · 3 days/week · May–Aug · grades 9–12*) | A page wants an at-a-glance scannable summary |
+| **Disclosure / accordion** | Collapsible Q→A | A **FAQ / Resources** page needs progressive disclosure to fight wall-of-text |
+| **Link / navigation tile** | A whole clickable card (icon + title + arrow) routing elsewhere | An index or landing page routes to sub-pages |
+
+**Skip (YAGNI for this site):** pricing cards (training is free), dashboard /
+metric tiles, product cards, carousels — none fit a youth-sports info site.
+
+---
+
 ## Icon system (Phosphor)
 
 We use [Phosphor](https://phosphoricons.com) (regular weight). Sources come
@@ -347,7 +433,14 @@ why we do it → what it costs → how to start.
 
 ## Reuse — do / don't
 
+- **Do** default to plain prose; reach for a primitive when a section is a
+  self-contained/parallel unit, or when chunking long prose aids readability
+  (→ *Choosing a primitive*).
 - **Do** pick the primitive whose *meaning* matches the content's job.
+- **Do** build a *new* primitive when none of the existing ones fits the
+  content's job — the kit is an open starting set, not a closed list. Follow the
+  kit's rules and register it (→ *The kit is open*). Don't force content into an
+  ill-fitting card.
 - **Do** let color follow the role table; if no role fits, use none.
 - **Do** confine a container's accent color to its chrome (border, icon, wash);
   keep running text at full body/heading contrast.
@@ -359,6 +452,9 @@ why we do it → what it costs → how to start.
 - **Don't** number a list that isn't a sequence; don't tile every icon.
 - **Don't** invent a new section look when a primitive already fits — sameness
   is the point.
+- **Don't** box every section by reflex — a page of identical cards flattens
+  hierarchy; nor leave long prose as one unbroken wall. Prose is the default;
+  cards keep it from becoming a wall.
 - **Don't** hardcode `oklch()` or DaisyUI v4 short vars; use `var(--color-*)`.
 
 ---
@@ -376,12 +472,15 @@ target page's current markup/content. Confirm scope against the active starter
 prompt in `docs/STATUS.md` (what's in / out). If the page needs *new* content,
 that's a content task first — see `docs/content-guide.md`.
 
-1. **Map each section to a primitive by *meaning*** — module `card`, subtle
-   `.ec-alert`, `.ec-grid`, split panels, or the single CTA (`btn btn-primary`).
-   Pick the one whose job fits; never invent a new section look when one fits
-   (→ *The component kit*, *Reuse do/don't*). Most pages are markdown rendered
-   via `{@html}`, so this is a `decorate<Page>()` function mirroring
-   `decorateAbout`.
+1. **Decide each section's treatment — prose is the default.** Leave a section
+   as a plain titled passage unless its job warrants a primitive: a
+   self-contained/parallel unit, *or* prose long enough that chunking it aids
+   readability. Then pick the primitive whose job fits — module `card`, subtle
+   `.ec-alert`, `.ec-grid`, split panels, or the single CTA (`btn btn-primary`);
+   never invent a new section look when one fits (→ *Choosing a primitive*,
+   *The component kit*, *Reuse do/don't*). Most pages are markdown rendered via
+   `{@html}`, so this is a `decorate<Page>()` function mirroring `decorateAbout`
+   (every section carded) or `decorateCrewlab` (prose + selective cards).
 
 2. **Assign role colour and icons.** Colour follows the role table (primary =
    program/action, secondary = people, warning = caution; if no role fits, use

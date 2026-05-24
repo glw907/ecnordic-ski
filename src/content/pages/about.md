@@ -1,5 +1,5 @@
 ---
-title: "About EC Nordic"
+title: "About East Community Nordic"
 ---
 
 East Community Nordic is a free, volunteer-run summer training group for Anchorage high school Nordic skiers and cross-country runners. We build the fitness, skills, and outdoor habits that carry kids through the ski season and past graduation.
@@ -28,11 +28,11 @@ Athletes train at their own pace. The spread across the group can be wide, parti
 
 ## Program philosophy
 
-Five core principles guide our program design and coaching decisions for every athlete:
+Five core principles guide our program design and the decisions we make for every athlete:
 
 - **Total person first.** A solid sleep schedule, good food, academic success, and community engagement aren't tradeoffs against athletic ambition. They're core ingredients for both athletic success and a healthy, meaningful life. Toward that end, we help athletes build the habits that let them succeed in sport and in the rest of their lives.
 - **Open to any committed athlete.** The program is free and donation-based. Anyone who needs help affording camp, gear, or a ride can ask, with no questions about family finances. All we ask in return is a strong commitment to training and a willingness to give back to the community.
-- **High school sports matter.** Being on a high school team is a once-in-a-lifetime opportunity that sets the stage for a better, healthier life. EC Nordic aims to complement that opportunity. We provide training, knowledge, and support to help students succeed and thrive on their high school teams.
+- **High school sports matter.** Being on a high school team is a once-in-a-lifetime opportunity that sets the stage for a better, healthier life. EC Nordic aims to complement that opportunity. We provide training, knowledge, and support to help students make the most of their high school teams.
 - **A lasting bond with trails and skiing.** We want to help athletes find competitive success in high school and beyond, but our larger mission is to help teens develop a lifelong love for skiing, trails, and the outdoors. We work hard in training, and we also strive to find joy and community every day.
 - **Support the community that supports you.** Our athletes are expected to perform community service as part of their membership in EC Nordic, including trail work and helping at community events and races. Our volunteers organize structured opportunities to give back as a team, and we encourage athletes to find ways to give back that are meaningful to them.
 
@@ -40,7 +40,7 @@ Five core principles guide our program design and coaching decisions for every a
 
 **Free to join.** Participation is free. Voluntary donations are accepted and go to shared expenses — gas, campground fees, group equipment — and to athletes who need gear or transportation to participate. Donations don't affect who can join.
 
-**Lend a hand.** The program is led by unpaid volunteers — parents, former racers, and others. The [Volunteers page](/volunteers) lists who's running things this summer, and how to pitch in if you'd like to help. No certification or background required.
+**Lend a hand.** The program is led by unpaid volunteers: parents, former racers, and others. The [Volunteers page](/volunteers) lists who's running things this summer, and how to pitch in if you'd like to help. No certification or background required.
 
 ## Getting started
 

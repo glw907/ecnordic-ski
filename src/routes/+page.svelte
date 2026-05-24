@@ -1,12 +1,12 @@
 <script lang="ts">
   import type { PageData } from './$types';
-  import { formatDate, formatDayOfWeek, formatMonthDay, formatTimeRange, postUrl, tagUrl } from '$lib/utils';
+  import { formatDate, formatShortDate, postUrl, tagUrl } from '$lib/utils';
   import { HOMEPAGE_FEATURED_COUNT, WELCOME_BLURB } from '$lib/config';
 
   let { data }: { data: PageData } = $props();
 </script>
 
-<!-- Hero: welcome + schedule side by side -->
+<!-- Hero: welcome + recent posts side by side -->
 <div class="hero-grid">
 
   <!-- Welcome card -->
@@ -21,37 +21,29 @@
     </div>
   </div>
 
-  <!-- Schedule card -->
-  <div class="schedule-card">
-    <h2 class="section-label">This Week's Schedule</h2>
-    {#if data.thisWeek.length > 0}
-      <ul class="event-list">
-        {#each data.thisWeek as event}
-          <li class="event-row">
-            <span class="event-title">{event.title}</span>
-            <span class="event-when">
-              <span class="event-daydate">{formatDayOfWeek(event.start)} {formatMonthDay(event.start)}</span>
-              {#if event.start_time}
-                <span class="event-time">{formatTimeRange(event.start_time, event.end_time)}</span>
-              {/if}
-            </span>
-            {#if event.location}
-              <span class="event-location">{event.location}</span>
-            {/if}
+  <!-- Recent posts card -->
+  <div class="recent-card">
+    <h2 class="section-label">Recent Posts</h2>
+    {#if data.posts.length > 0}
+      <ul class="recent-list">
+        {#each data.posts.slice(0, 3) as post}
+          <li class="recent-row">
+            <a href={postUrl(post)} class="recent-title">{post.title}</a>
+            <time class="recent-date" datetime={post.date}>{formatShortDate(post.date)}</time>
           </li>
         {/each}
       </ul>
     {:else}
-      <p class="no-events">No scheduled events this week.</p>
+      <p class="no-posts">No posts yet.</p>
     {/if}
-    <a href="/calendar" class="events-more">View full calendar →</a>
+    <a href="#news" class="recent-more">More news →</a>
   </div>
 
 </div>
 
 <!-- News -->
 {#if data.featured || data.posts.length > HOMEPAGE_FEATURED_COUNT}
-  <h2 class="section-label news-label">News & Updates</h2>
+  <h2 id="news" class="section-label news-label">News & Updates</h2>
   <section class="news-section">
 
     {#if data.featured}
@@ -177,8 +169,8 @@
   }
   .welcome-link:hover { opacity: 0.75; }
 
-  /* ─── Schedule card ─────────────────────────────────────── */
-  .schedule-card {
+  /* ─── Recent posts card ─────────────────────────────────── */
+  .recent-card {
     background: var(--color-base-100);
     border: 1px solid var(--color-border-subtle);
     border-top: 3px solid var(--color-primary);
@@ -189,40 +181,34 @@
     flex-direction: column;
   }
 
-  .event-list {
+  .recent-list {
     list-style: none;
     padding: 0;
     margin: 0 0 1rem;
     flex: 1;
   }
 
-  .event-row {
+  .recent-row {
     display: flex;
     flex-direction: column;
     gap: 0.15rem;
     padding-block: 0.65rem;
     border-bottom: 1px solid var(--color-border-subtle);
   }
-  .event-row:last-child { border-bottom: none; }
+  .recent-row:last-child { border-bottom: none; }
 
-  /* What — most prominent */
-  .event-title {
+  .recent-title {
     font-family: var(--font-display);
     font-size: 0.9rem;
     font-weight: 700;
     color: var(--color-heading);
-    line-height: 1.2;
+    line-height: 1.25;
+    text-decoration: none;
+    transition: color 0.15s ease;
   }
+  .recent-title:hover { color: var(--color-primary); }
 
-  /* When — day+date and time as a unit */
-  .event-when {
-    display: flex;
-    flex-direction: column;
-    gap: 0.08rem;
-    margin-block-start: 0.05rem;
-  }
-
-  .event-daydate {
+  .recent-date {
     font-family: var(--font-display);
     font-size: 0.72rem;
     font-weight: 700;
@@ -232,29 +218,14 @@
     line-height: 1.3;
   }
 
-  .event-time {
-    font-size: 0.72rem;
-    font-weight: 400;
-    color: var(--color-muted);
-    line-height: 1.3;
-  }
-
-  /* Where — quietest */
-  .event-location {
-    font-size: 0.72rem;
-    color: var(--color-faint);
-    line-height: 1.3;
-    margin-block-start: 0.1rem;
-  }
-
-  .no-events {
+  .no-posts {
     font-size: 0.85rem;
     font-style: italic;
     color: var(--color-muted);
     margin: 0 0 0.9rem;
   }
 
-  .events-more {
+  .recent-more {
     font-family: var(--font-display);
     font-size: 0.75rem;
     font-weight: 600;
@@ -263,7 +234,7 @@
     letter-spacing: 0.02em;
     transition: opacity 0.15s ease;
   }
-  .events-more:hover { opacity: 0.75; }
+  .recent-more:hover { opacity: 0.75; }
 
   /* ─── News section ──────────────────────────────────────── */
   .news-label { margin-block-start: 2rem; }

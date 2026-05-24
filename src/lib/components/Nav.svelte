@@ -27,13 +27,50 @@
 
   const navLinks = [
     { href: '/about', label: 'About' },
-    { href: '/calendar', label: 'Calendar' },
     { href: '/training', label: 'Training' },
     { href: '/volunteers', label: 'Volunteers' },
+    { href: '/crewlab', label: 'CrewLAB' },
     { href: '/resources', label: 'Resources' },
     { href: '/contact', label: 'Contact' },
   ];
 </script>
+
+{#snippet searchButton()}
+  <button onclick={onSearchOpen} class="nav-icon" aria-label="Search">
+    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+      fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+      stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.3-4.3" />
+    </svg>
+  </button>
+{/snippet}
+
+{#snippet themeButton()}
+  <button
+    onclick={toggleTheme}
+    class="nav-icon"
+    aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+  >
+    {#if dark}
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2"/><path d="M12 20v2"/>
+        <path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/>
+        <path d="M2 12h2"/><path d="M20 12h2"/>
+        <path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>
+      </svg>
+    {:else}
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+      </svg>
+    {/if}
+  </button>
+{/snippet}
 
 <header class="site-header">
   <nav class="nav-inner">
@@ -52,73 +89,15 @@
         >{link.label}</a>
       {/each}
       <div class="nav-icons">
-        <button onclick={onSearchOpen} class="nav-icon" aria-label="Search">
-          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
-            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8" />
-            <path d="m21 21-4.3-4.3" />
-          </svg>
-        </button>
-        <button
-          onclick={toggleTheme}
-          class="nav-icon"
-          aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
-        >
-          {#if dark}
-            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
-              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round">
-              <circle cx="12" cy="12" r="4"/>
-              <path d="M12 2v2"/><path d="M12 20v2"/>
-              <path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/>
-              <path d="M2 12h2"/><path d="M20 12h2"/>
-              <path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>
-            </svg>
-          {:else}
-            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
-              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round">
-              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
-            </svg>
-          {/if}
-        </button>
+        {@render searchButton()}
+        {@render themeButton()}
       </div>
     </div>
 
     <!-- Mobile right side: icons + hamburger -->
     <div class="mobile-right">
-      <button onclick={onSearchOpen} class="nav-icon" aria-label="Search">
-        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
-          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-          stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8" />
-          <path d="m21 21-4.3-4.3" />
-        </svg>
-      </button>
-      <button
-        onclick={toggleTheme}
-        class="nav-icon"
-        aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
-      >
-        {#if dark}
-          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
-            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round">
-            <circle cx="12" cy="12" r="4"/>
-            <path d="M12 2v2"/><path d="M12 20v2"/>
-            <path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/>
-            <path d="M2 12h2"/><path d="M20 12h2"/>
-            <path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>
-          </svg>
-        {:else}
-          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
-            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round">
-            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
-          </svg>
-        {/if}
-      </button>
+      {@render searchButton()}
+      {@render themeButton()}
       <button
         class="hamburger"
         onclick={() => { mobileOpen = !mobileOpen; }}

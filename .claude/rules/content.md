@@ -41,9 +41,26 @@ Check every draft for these before finishing:
 10. **Banned words:** seamless, transformative, robust, pivotal, foster, leverage (figurative), elevate (figurative), comprehensive, thriving, curated, tailored, dedicated, meticulous, nuanced, "it's worth noting," "when it comes to," "let's explore," "dive into," "not only X but also Y."
 </anti_patterns>
 
-## Self-Critique Pass
+## Self-Critique Pass — MANDATORY
 
-For any piece longer than a paragraph: write a draft, then re-read and flag sentences matching the anti-patterns above. Rewrite the flagged sentences before delivering.
+For any content longer than a paragraph this is not optional. After drafting,
+re-read and **flag every sentence** matching the anti-patterns above, then
+rewrite the flagged sentences before saving. In particular, test **every em
+dash**: a clause followed by a short tacked-on fragment after a dash (e.g.
+"tap Yes or No — No needs a reason") is a tell — use a period, comma, or colon,
+or fold it into the sentence. Do this even when you "already read the guide";
+reading the guide is not the same as running the pass.
+
+### Automated backstop — the content style guard
+
+`.claude/hooks/content-style-guard.py` runs as a `PreToolUse` hook (wired in
+`.claude/settings.json`) on every Write/Edit/MultiEdit of `src/content/**/*.md`.
+It **blocks the write** (exit 2, feedback to the model) when it detects the
+high-confidence tells: the em-dash appendage, em-dash spray, banned
+words/phrases, and banned sentence openers. It is a backstop, not a substitute
+for the self-critique pass — it catches the regex-reliable tells; cadence,
+tricolons, and the subtler anti-patterns are still on you. If it blocks a write,
+fix the flagged text rather than working around the guard.
 
 ## Post Tags (controlled vocabulary)
 

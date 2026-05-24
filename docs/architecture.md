@@ -173,6 +173,12 @@ runes, oklch colors, color token usage, DaisyUI v5 class names, Tailwind v4 APIs
 SvelteKit patterns. Research-backed against official migration guides and community best
 practices.
 
+**Content style guard:** `.claude/hooks/content-style-guard.py` (PreToolUse, wired
+in `.claude/settings.json`) blocks Write/Edit of `src/content/**/*.md` containing
+high-confidence AI-writing tells — the em-dash appendage, em-dash spray (3+), and
+the banned word/phrase/opener lists from `docs/content-guide.md`. It's a
+deterministic backstop to the mandatory self-critique pass, not a replacement.
+
 **Turnstile in dev:** Skipped gracefully — `verifyTurnstile` only runs when
 `platform.env.TURNSTILE_SECRET_KEY` is present. Always-pass test key
 (`1x00000000000000000000AA`) used for the widget in dev.
@@ -195,8 +201,13 @@ that expresses only that page's meaning→primitive branches. `decorateAbout` (t
 example) and `decorateTraining` are thin callbacks over it; the `ecCta` / `ecCard` helpers
 emit the shared markup. Pages without a decorator fall back to `wrapSections`. The
 per-page module CSS (entrance cascade, `.ec-head`, `.ec-cta`, reduced-motion) is scoped
-with `:is([data-page="about"], [data-page="training"])` — a new decorated page adds its
-slug to those selectors.
+with `:is([data-page="about"], [data-page="training"], [data-page="crewlab"])` —
+`decorateCrewlab` is a third callback. **Body type is one sitewide standard:**
+`.post-body` is 0.92rem and `.card-body` inherits it (DaisyUI's 0.875rem is
+overridden), so text is one size in or out of a card; only the lede (1.0rem, the
+first paragraph of a static page) and grid cells (0.85rem) deviate, uniformly —
+there is no per-page font sizing. Pass 5 will replace this slug-keyed decoration
+with explicit inline markdown directives (see `docs/STATUS.md`).
 
 ---
 
@@ -210,11 +221,11 @@ slug to those selectors.
   the build by `npx pagefind`, so it must be listed in `build.rollupOptions.external`
   in `vite.config.ts` (alongside `cloudflare:email`) or the build fails with
   `UNRESOLVED_IMPORT`.
-- **schedule-x v3 (calendar)** requires `Temporal` date objects and validates them
-  with `instanceof globalThis.Temporal.*`. The calendar route imports
-  `temporal-polyfill/global` and constructs `Temporal.PlainDate` from the global so
-  the instanceof check passes regardless of native-Temporal availability. See the
-  comment in `src/routes/calendar/+page.svelte`.
+- **The calendar feature was removed** — the `/calendar` route, `/calendar.ics`,
+  the `src/content/events/` pipeline (`events.ts`/`ics.ts`), and the `@schedule-x/*`
+  + `temporal-polyfill` dependencies. Scheduling now lives in CrewLAB; the site has
+  a `/crewlab` content page instead, and the homepage's old "this week" card became
+  a recent-posts card.
 
 ---
 

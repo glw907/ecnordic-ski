@@ -1,6 +1,5 @@
 import type { PageServerLoad } from './$types';
 import { getAllPosts, getPost } from '$lib/posts';
-import { getThisWeekEvents } from '$lib/events';
 
 export const load: PageServerLoad = async () => {
   const posts = getAllPosts();
@@ -8,5 +7,5 @@ export const load: PageServerLoad = async () => {
   const featured = first
     ? await getPost(first.year, first.month, first.slug)
     : null;
-  return { posts, featured, thisWeek: getThisWeekEvents() };
+  return { posts, featured };
 };

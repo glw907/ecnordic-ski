@@ -27,15 +27,12 @@
     "svelte": "^5",
     "svelte-check": "^4",
     "tailwindcss": "^4",
-    "temporal-polyfill": "^0.3.0",
     "typescript": "^6.0.3",
     "vite": "^8",
     "vitest": "^4.1.6",
     "wrangler": "^4.93.1"
   },
   "dependencies": {
-    "@schedule-x/svelte": "^3.0.0",
-    "@schedule-x/theme-default": "^4.6.0",
     "gray-matter": "^4",
     "mimetext": "^3",
     "remark": "^15",

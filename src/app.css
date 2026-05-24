@@ -423,10 +423,14 @@ body {
 
 /* ─── Post body (rendered markdown HTML) ─────────────────── */
 .post-body {
-  font-size: 1.03rem;
-  line-height: 1.62;
+  font-size: 0.92rem;
+  line-height: 1.6;
   color: var(--color-body);
 }
+/* One standard body size site-wide. DaisyUI's .card-body forces 0.875rem, so
+   card content inherits the standard instead — text is the same size whether or
+   not it sits in a card. (Grid cells keep their own smaller supporting size.) */
+.post-body .card-body { font-size: inherit; }
 
 /* In-page jump links (table of contents) for long content pages */
 .page-toc {
@@ -486,10 +490,17 @@ body {
   padding-left: 1.4rem;
   margin-block: 0.9em;
 }
+/* Tailwind's preflight resets `ul,ol{list-style:none}`, which would leave plain
+   markdown lists with no markers (reading as text runs, not a list). Restore
+   them for ordinary content lists; `.ec-grid` (parallel tiles) and task lists
+   opt out and stay markerless. */
+.post-body ul:not(.ec-grid):not(.contains-task-list) { list-style: disc; }
+.post-body ol { list-style: decimal; }
 .post-body li {
   margin-block: 0.25em;
   line-height: 1.55;
 }
+.post-body li::marker { color: var(--color-muted); }
 
 .post-body ul.contains-task-list { list-style: none; padding-left: 0.15rem; }
 .post-body li.task-list-item { display: flex; align-items: baseline; gap: 0.5rem; }

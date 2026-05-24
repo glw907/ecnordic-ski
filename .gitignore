@@ -33,7 +33,9 @@ Thumbs.db
 
 # Claude Code — ignore machine-local files, track skills and instructions
 .claude/settings.local.json
-.claude/hooks/
+.claude/hooks/*
+# …except the content style guard, which is shared project infrastructure.
+!.claude/hooks/content-style-guard.py
 
 # Playwright
 test-results/

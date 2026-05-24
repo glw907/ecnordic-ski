@@ -62,6 +62,13 @@
     schedule: svg('M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Z'),
     'what-to-bring': svg('M168,40.58V32A24,24,0,0,0,144,8H112A24,24,0,0,0,88,32v8.58A56.09,56.09,0,0,0,40,96V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V96A56.09,56.09,0,0,0,168,40.58ZM112,24h32a8,8,0,0,1,8,8v8H104V32A8,8,0,0,1,112,24Zm56,136H88v-8a8,8,0,0,1,8-8h64a8,8,0,0,1,8,8ZM88,176h48v8a8,8,0,0,0,16,0v-8h16v40H88Zm112,40H184V152a24,24,0,0,0-24-24H96a24,24,0,0,0-24,24v64H56V96A40,40,0,0,1,96,56h64a40,40,0,0,1,40,40V216ZM152,88a8,8,0,0,1-8,8H112a8,8,0,0,1,0-16h32A8,8,0,0,1,152,88Z'),
     'talkeetna-camp': svg('M255.31,188.75l-64-144A8,8,0,0,0,184,40H72a8,8,0,0,0-7.27,4.69.21.21,0,0,0,0,.06l0,.12,0,0L.69,188.75A8,8,0,0,0,8,200H248a8,8,0,0,0,7.31-11.25ZM64,184H20.31L64,85.7Zm16,0V85.7L123.69,184Zm61.2,0L84.31,56H178.8l56.89,128Z'),
+
+    // ── CrewLAB-page sections. `getting-started` reuses the flag (start)
+    // glyph and `for-parents-supporters` reuses the people glyph
+    // (`who-can-join`); the two below are unique to this page: a chat bubble
+    // for the "why" and a runner for the athletes' how-to.
+    'why-we-use-it': svg('M128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Zm32,128H96a8,8,0,0,1,0-16h64a8,8,0,0,1,0,16Zm0-32H96a8,8,0,0,1,0-16h64a8,8,0,0,1,0,16Z'),
+    'for-athletes': svg('M120,56a32,32,0,1,1,32,32A32,32,0,0,1,120,56Zm103.28,74.08a8,8,0,0,0-10.6-4c-.25.12-26.71,10.72-72.18-20.19-52.29-35.54-88-7.77-89.51-6.57a8,8,0,1,0,10,12.48c.26-.21,25.12-19.5,64.07,3.27-4.25,13.35-12.76,31.82-25.25,47-18.56,22.48-41.11,32.56-67,30A8,8,0,0,0,31.2,208a92.29,92.29,0,0,0,9.34.47c27.38,0,52-12.38,71.63-36.18.57-.69,1.14-1.4,1.69-2.1C133.31,175.29,168,190.3,168,232a8,8,0,0,0,16,0c0-24.65-10.08-45.35-29.15-59.86a104.29,104.29,0,0,0-31.31-15.81A169.31,169.31,0,0,0,139,124c26.14,16.09,46.84,20,60.69,20,12.18,0,19.06-3,19.67-3.28A8,8,0,0,0,223.28,130.08Z'),
   };
 
   // Distinct icons for the two cost/volunteer panels: hand-coins (give money)
@@ -72,7 +79,7 @@
   ];
 
   // Cobalt (people) for the community sections; crimson (program) elsewhere.
-  const SECONDARY_SECTIONS = new Set(['who-can-join']);
+  const SECONDARY_SECTIONS = new Set(['who-can-join', 'for-parents-supporters']);
 
   function ecCard(slug: string, head: string, body: string, style = ''): string {
     return `<section class="card ec-card bg-base-100 border border-base-300 shadow-sm" data-section="${slug}"${style}>`
@@ -216,6 +223,44 @@
       },
     );
   }
+
+  // CrewLAB shows the kit's prose-is-default stance (design-language.md →
+  // "Choosing a primitive"): the "why" rationale stays a plain titled passage;
+  // the athlete section becomes a grid card, since its seven parallel how-to
+  // points genuinely benefit from being chunked into scannable cells; the
+  // parents section is a single module card (the grid isn't the default — one
+  // use on the page is enough). "Getting started" is the page's one CTA. The
+  // parents section reuses the people glyph (cobalt, via SECONDARY_SECTIONS).
+  function decorateCrewlab(html: string): string {
+    return decoratePage(
+      html,
+      (slug) => slug === 'for-parents-supporters' ? (ICON['who-can-join'] ?? '') : (ICON[slug] ?? ''),
+      ({ title, slug, rest }, _idx, rise, icon, head) => {
+        // Single call to act → centered CTA, flag tile as the one focal accent.
+        if (slug === 'getting-started') {
+          return ecCta('getting-started', icon, title, rest, rise);
+        }
+
+        // Athletes → grid card of parallel how-to points (same primitive as
+        // Training's activities and About's philosophy).
+        if (slug === 'for-athletes') {
+          const body = rest.replace('<ul>', '<ul class="ec-grid">');
+          return ecCard(slug, head, body, rise);
+        }
+
+        // Parents & supporters → a single module card; its points stay a plain
+        // list rather than a second grid.
+        if (slug === 'for-parents-supporters') {
+          return ecCard(slug, head, rest, rise);
+        }
+
+        // Everything else (the "why" rationale) stays plain prose — a titled
+        // passage, no card chrome, so the page isn't a stack of identical boxes.
+        return `<section class="ec-passage" data-section="${slug}"${rise}>${head}`
+          + `<div class="section-body">${rest}</div></section>`;
+      },
+    );
+  }
 </script>
 
 <script lang="ts">
@@ -228,6 +273,7 @@
   let bodyHtml = $derived.by(() => {
     if (page.slug === 'about') return decorateAbout(page.html);
     if (page.slug === 'training') return decorateTraining(page.html);
+    if (page.slug === 'crewlab') return decorateCrewlab(page.html);
     return wrapSections(page.html);
   });
 </script>
@@ -251,9 +297,10 @@
     animation: page-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
-  /* Intro (lede + opening paragraph) sits above the cards at a tight measure */
+  /* Intro paragraphs fill the content column, so their right edge lines up with
+     the cards below (no narrow measure leaving an off right margin). */
   .static-page :global(.post-body > p) {
-    max-width: 42rem;
+    max-width: none;
   }
 
   .static-page :global(.page-title) {
@@ -273,15 +320,15 @@
     background: var(--color-primary);
   }
 
-  /* Lede: the page thesis. A measured step above body — larger and a touch
-     heavier in heading colour — not a headline. Size + weight carry it, so it
-     doesn't need to shout. */
+  /* Lede: the first paragraph of any static page. A gentle step above the
+     standard body (set in app.css) — a touch larger and a touch heavier (medium,
+     a loaded Alegreya Sans weight), same colour — so it reads as the intro
+     without shouting. Site-wide and uniform; no per-page lede sizing. */
   .static-page :global(.post-body > p:first-child) {
-    font-size: 1.15rem;
-    line-height: 1.55;
+    font-size: 1rem;
     font-weight: 500;
-    color: var(--color-heading);
-    margin-block-end: 1.4rem;
+    line-height: 1.6;
+    margin-block-end: 1.2rem;
     animation: page-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.06s both;
   }
 
@@ -324,30 +371,27 @@
        secondary(cobalt)  = people / community
        warning  (amber)   = caution  ─────────────────────────────────── */
 
-  /* Intro context after the lede: preamble that bridges the thesis to the
-     section cards. A reasoned step down — slightly smaller, in supporting
-     colour — so it stays legible but doesn't compete with the cards below.
-     (Not muted: that read as caption-light for a substantive paragraph.) */
-  .static-page[data-page="about"] :global(.post-body > p:not(:first-child)) {
-    font-size: 0.95rem;
-    color: var(--color-body-soft);
-  }
-
   /* A decorated page orchestrates its own entrance per module (below), so the
      shared whole-page rise would double the transform — let the cascade carry
      it. (About and training both decorate; plain pages keep the page rise.) */
-  .static-page:is([data-page="about"], [data-page="training"]) {
+  .static-page:is([data-page="about"], [data-page="training"], [data-page="crewlab"]) {
     animation: none;
   }
 
   /* Rhythm between modules, and the staggered entrance: each module rises in
      on its own --rise delay so the page resolves as one top-to-bottom cascade
      continuing the title (0s) and lede (0.06s) above it. */
-  .static-page:is([data-page="about"], [data-page="training"]) :global(.ec-card),
+  .static-page:is([data-page="about"], [data-page="training"], [data-page="crewlab"]) :global(.ec-card),
+  .static-page[data-page="crewlab"] :global(.ec-passage),
   .static-page[data-page="about"] :global(.ec-alert) {
     margin-block-start: 1.4rem;
     animation: module-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
     animation-delay: var(--rise, 0s);
+  }
+  /* A titled prose passage carries the section head + body at full page width,
+     with no card border/wash — prose is the kit's default (see design doc). */
+  .static-page[data-page="crewlab"] :global(.ec-passage) {
+    padding-inline: 0.25rem;
   }
   @keyframes module-rise {
     from { opacity: 0; transform: translateY(14px); }
@@ -355,7 +399,7 @@
   }
 
   /* Heading row: icon chip + title (DaisyUI .card-title), margins reset */
-  .static-page:is([data-page="about"], [data-page="training"]) :global(.ec-head) {
+  .static-page:is([data-page="about"], [data-page="training"], [data-page="crewlab"]) :global(.ec-head) {
     display: flex;
     align-items: center;
     gap: 0.7rem;
@@ -363,17 +407,17 @@
        vertical rhythm (0.5 → 0.9 → 1.4rem, each ~1.5× the last) */
     margin-block-end: 0.5rem;
   }
-  .static-page:is([data-page="about"], [data-page="training"]) :global(.ec-head h2),
-  .static-page:is([data-page="about"], [data-page="training"]) :global(.ec-cta h2) {
+  .static-page:is([data-page="about"], [data-page="training"], [data-page="crewlab"]) :global(.ec-head h2),
+  .static-page:is([data-page="about"], [data-page="training"], [data-page="crewlab"]) :global(.ec-cta h2) {
     margin: 0;
     font-size: 1.3rem;
   }
   /* Bare header glyph: a touch larger than inline so it anchors the title */
-  .static-page:is([data-page="about"], [data-page="training"]) :global(.ec-head .ec-glyph) {
+  .static-page:is([data-page="about"], [data-page="training"], [data-page="crewlab"]) :global(.ec-head .ec-glyph) {
     inline-size: 1.6rem;
     block-size: 1.6rem;
   }
-  .static-page:is([data-page="about"], [data-page="training"]) :global(.section-body > :first-child) {
+  .static-page:is([data-page="about"], [data-page="training"], [data-page="crewlab"]) :global(.section-body > :first-child) {
     margin-block-start: 0;
   }
 
@@ -414,7 +458,7 @@
   }
 
   /* Single call to act */
-  .static-page:is([data-page="about"], [data-page="training"]) :global(.ec-cta .btn) {
+  .static-page:is([data-page="about"], [data-page="training"], [data-page="crewlab"]) :global(.ec-cta .btn) {
     margin-block-start: 0.5rem;
   }
 
@@ -434,7 +478,8 @@
     .static-page,
     .static-page :global(.page-title),
     .static-page :global(.post-body > p:first-child),
-    .static-page:is([data-page="about"], [data-page="training"]) :global(.ec-card),
+    .static-page:is([data-page="about"], [data-page="training"], [data-page="crewlab"]) :global(.ec-card),
+    .static-page[data-page="crewlab"] :global(.ec-passage),
     .static-page[data-page="about"] :global(.ec-alert) {
       animation: none;
     }

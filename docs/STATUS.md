@@ -1,11 +1,19 @@
 # ecnordic.ski — Project Status
 
-**Current state:** Pass 4 in progress. Design *language* defined and proven on the About page — a reusable DaisyUI-based component kit (card module, subtle alert card, `.ec-grid` card of parallel titled points, button action), bare Phosphor icons (tile reserved for one focal accent) with a meaning matrix and usage rules, and a meaning-driven warm/cool palette built from the two brand colors. The About-only `.ec-values` list is now the global `.ec-grid` primitive. A full type system is now documented — reasoned scale (size+weight+colour per level), an uppercase-label tracking ramp, the `--color-body-soft` supporting-prose token, a real Alegreya Sans italic face, and a ~1.5× vertical-rhythm scale; About also gains a staggered entrance. Documented in `docs/design-language.md`. **Training** is now migrated too (`decorateTraining` in `[slug]/+page.svelte`, sharing the `decoratePage` skeleton with About). Resources, volunteers, contact, tags, and post detail not yet migrated.
+**Current state:** Design language proven on About, Training, CrewLAB. Calendar
+feature removed, replaced by `/crewlab` (`decorateCrewlab` in `[slug]/+page.svelte`).
+Type is now **one sitewide standard** — body 0.92rem on `.post-body` (`app.css`),
+`.card-body` inherits it, lede 1.0rem and grid cells 0.85rem the only deviations.
+A **content style guard** (`.claude/hooks/content-style-guard.py`, PreToolUse)
+blocks AI-writing tells in `src/content/**/*.md`. `docs/design-language.md` adds
+*Choosing a primitive* (prose is the default) + candidate primitives. Resources,
+volunteers, contact, tags, post detail **not yet migrated — deferred to after
+Pass 5** so new pages adopt directives from the start.
 
-**Toolchain (2026-05-21):** dependencies modernized — Node 24 (pinned via `.nvmrc` +
-`engines`), Vite 8/Rolldown, TypeScript 6, adapter-cloudflare 7, wrangler 4.93, plus
-security patches. Calendar migrated to schedule-x v3 Temporal dates. See `docs/architecture.md`
-→ *Build Toolchain & Version Notes*.
+**Open follow-ups (not blocking):** CrewLAB `[PLACEHOLDER]` (what EC Nordic
+collects via CrewLAB); cross-page conflict (CrewLAB routes waivers + payment
+through the app vs. About / Training / waiver page's paper-waiver + free model);
+posts now 0.92rem (tokenize `--text-body` if they want larger). Nothing committed yet.
 
 ---
 
@@ -13,44 +21,40 @@ security patches. Calendar migrated to schedule-x v3 Temporal dates. See `docs/a
 
 | Pass | Goal | Status |
 |------|------|--------|
-| 1 | Scaffold: repo creation, ECN config, Claude infrastructure | ✓ Done |
-| 2 | Build: 3-segment posts, events pipeline, calendar, static pages, contact, deploy | ✓ Done |
-| 3 | Design: Nunito font, crimson/cobalt palette, hero grid, nav, news cards | ✓ Done |
-| 4 | Design language + rollout: reusable DaisyUI kit, prove on About, migrate remaining pages | in progress — kit + About + Training done |
+| 1 | Scaffold: repo, config, Claude infra | ✓ Done |
+| 2 | Build: posts, events, calendar, pages, contact, deploy | ✓ Done |
+| 3 | Design: font, palette, hero grid, nav | ✓ Done |
+| 4 | Design language: kit, About/Training/CrewLAB, sitewide type, content guard | ✓ Core (rollout deferred) |
+| 5 | Inline directives: explicit, self-documenting content styling | Next |
 
 ---
 
-### Next starter prompt (Pass 4 — rollout)
+### Next starter prompt (Pass 5 — inline directives)
 
-> **Goal.** Roll the EC Nordic design language out to the remaining content pages:
-> resources, volunteers, contact, tag pages, and individual post detail.
-> About and Training are the worked examples — match them.
+> **Goal.** Replace the implicit slug→primitive mapping in `decorate<Page>()`
+> with explicit inline directives in the markdown, so each page's styling is
+> visible in the file and robust to heading renames.
 >
-> **Read first:** `docs/design-language.md`
-> (the kit, the palette, the color=role rule) and `src/routes/[slug]/+page.svelte`
-> (`decoratePage` is the shared skeleton; `decorateAbout` / `decorateTraining` show
-> how markdown sections map to DaisyUI primitives + Phosphor icons. A new markdown
-> page gets its own `decorate<Page>` callback and a `[data-page="<slug>"]` arm on the
-> shared module CSS selectors). The icon primitives live globally in `src/app.css`.
+> **Read first:** `[slug]/+page.svelte` (`decorateAbout/Training/Crewlab` + `ICON`
+> map), the `markdownToHtml` pipeline (`src/lib/utils.ts`, `pages.ts`), and
+> `docs/design-language.md` (*Choosing a primitive*).
 >
-> **Scope.** In: apply the kit (card module, alert caution, list values, btn action,
-> icon chips) to each page; pick the primitive whose *meaning* fits each section;
-> let color follow the role table; mobile + dark-mode check. Out: new features,
-> palette changes, new content.
+> **Scope.** In: a remark container-directive mechanism (`:::card`, `:::grid`,
+> `:::alert`, `:::cta`); render from directives not slugs; migrate About /
+> Training / CrewLAB; unmarked = prose default; document the vocabulary. Out:
+> visual changes (this refactors *how* styling is selected, not the look), new
+> content, the deferred remaining-page rollout.
 >
-> **Settled (do not re-brainstorm):** Design language is locked — DaisyUI-first,
-> meaning-driven warm/cool palette from crimson + cobalt, Phosphor icons, no abstract
-> motifs (the "ski-track" idea was rejected as illegible). See the spec.
+> **Settled:** Inline container directives (not frontmatter, not slugs). Unmarked
+> = prose. Primitives + type scale unchanged — pages must render identically
+> (regression-check via screenshots).
+>
+> **Still open — brainstorm:** directive vocabulary + param passing (role colour,
+> icon — e.g. `:::alert{type=caution}`); which remark plugin + how it slots into
+> `markdownToHtml`; icons as directive attrs vs slug-mapped; keep `decorate*` or unify.
 >
 > **Approach.** Invoke cairn-pass to start. Standard pass-end checklist applies.
-> Verify visually with a headless screenshot (chrome `--headless --screenshot`) —
-> the wrangler dev server serves built assets, so rebuild before checking.
+> Regression-verify with headless screenshots (rebuild first;
+> `--force-prefers-reduced-motion`).
 
----
-
-### Task 12: Deploy — ✓ complete
-
-Live at **https://ecnordic.ski**. Domain registered, Turnstile widget + site key
-wired (`src/lib/components/ContactForm.svelte`), GitHub Actions secrets and Worker
-secrets (`TURNSTILE_SECRET_KEY`, `CONTACT_EMAIL`) all set. Pushes to `main` deploy
-via GitHub Actions.
+**Deploy:** Live at **https://ecnordic.ski** — push to `main` → GitHub Actions (build + pagefind + wrangler deploy). Secrets set.

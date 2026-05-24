@@ -15,7 +15,7 @@ EC Nordic's summer dryland program runs from late May through early August. It's
 
 <h2 id="schedule">Schedule</h2>
 
-We train Monday, Wednesday, and Friday, roughly 4:00–6:00 PM. Locations rotate — Kincaid Park, Hillside, the Coastal Trail, and a few others — and are posted to the [calendar](/calendar) each week.
+We train Monday, Wednesday, and Friday, roughly 4:00–6:00 PM. Locations rotate — Kincaid Park, Hillside, the Coastal Trail, and a few others — and are posted to [CrewLAB](/crewlab) each week.
 
 [PLACEHOLDER — confirm exact start and end dates for this season.]
 
@@ -79,6 +79,6 @@ Evenings are for group meals, recovery, and getting to know your teammates. The 
 
 A signed waiver is required before your first session. Get it on the [Resources](/resources) page. Camp registration is included — you don't need to sign up for Talkeetna separately.
 
-<a href="[CREWLAB_URL]" class="download-link" target="_blank" rel="noopener">Sign Up for Summer Training →</a>
+<a href="https://crewlab.app.link/5g7vhhYEn3b" class="download-link" target="_blank" rel="noopener">Sign Up for Summer Training →</a>
 
 Questions? [Contact us](/contact).
