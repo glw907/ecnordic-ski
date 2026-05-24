@@ -40,3 +40,14 @@ describe('card directive', () => {
     expect(html).not.toContain('ec-grid');
   });
 });
+
+describe('passage directive', () => {
+  it('renders a titled prose passage with no card chrome', async () => {
+    const html = await renderMarkdown(':::passage{icon=chat-circle}\n## Why we use it\n\nReasons.\n:::\n');
+    expect(html).toContain('<section class="ec-passage" style="--rise:0.16s">');
+    expect(html).toContain('<div class="ec-head"><span class="ec-icon"><svg');
+    expect(html).toContain('<h2 class="card-title"');
+    expect(html).toContain('<div class="section-body"><p>Reasons.</p></div>');
+    expect(html).not.toContain('ec-card');
+  });
+});

@@ -45,6 +45,13 @@ function buildCard(node: Element, rise?: string): Element {
   return cardShell(CARD_CLASS, rise, [head, h('div', { className: ['section-body'] }, rest)]);
 }
 
+function buildPassage(node: Element, rise?: string): Element {
+  const { head, rest } = splitHead(node, true);
+  const properties: Record<string, unknown> = { className: ['ec-passage'] };
+  if (rise) properties.style = rise;
+  return h('section', properties, [head, h('div', { className: ['section-body'] }, rest)]);
+}
+
 // Recurse into a node's children, transforming any nested primitive sections
 // (a grid inside a card, panels inside a split) WITHOUT a rise stagger.
 function transformChildren(children: ElementContent[]): ElementContent[] {
@@ -59,6 +66,7 @@ function transform(node: Element, rise?: string): Element {
   node.children = transformChildren(node.children as ElementContent[]);
   switch (node.properties?.dataPrimitive as string) {
     case 'card': return buildCard(node, rise);
+    case 'passage': return buildPassage(node, rise);
     default: return node; // other primitives added in later tasks
   }
 }
