@@ -1,22 +1,25 @@
 # ecnordic.ski — Project Status
 
-**Current state:** Design language proven on About, Training, CrewLAB. Type is one
-sitewide standard (body 0.92rem). **Pass 5 done:** the directive render pipeline is
-built and unit-tested but **not yet wired into the site.** `renderMarkdown` lives in
-`src/lib/markdown/render.ts` (remark-parse → gfm → directive → mark step →
-remark-rehype → rehype-raw → restructure → rehype-slug → stringify); it emits the
-same HTML the `decorate*` builders do, for all primitives (`card/grid/alert/cta/
-split+panel/passage`). Glyphs come from `icons.ts` (byte-identical to the old
-`ICON`/`PANEL_ICONS`). 14 tests in `src/tests/markdown/`. See `docs/architecture.md`.
+**Current state:** The directive render pipeline is **live**. `markdownToHtml`
+(`src/lib/utils.ts`) delegates to `renderMarkdown` (`src/lib/markdown/render.ts`:
+remark-parse → gfm → directive → mark step → remark-rehype → rehype-raw →
+restructure → rehype-slug → stringify); the old `decorate*`/`wrapSections`/
+`boldParasToGrid` machinery is deleted. All five static pages (About, Training,
+CrewLAB, resources, volunteers) carry inline container directives
+(`card/grid/alert/cta/split+panel/passage`). About/Training/CrewLAB verified
+pixel-identical (headless AE=0) and HTML-identical modulo dropped `data-section` +
+slug `id`s; resources/volunteers moved onto the kit. 18 tests in
+`src/tests/markdown/`. The mark step restores accidental prose colons (`4:00`) that
+micromark would parse as directives. See `docs/architecture.md` + `docs/design-language.md`.
 
 The **content style guard** (`.claude/hooks/content-style-guard.py`) blocks AI tells
-in `src/content/**/*.md`. Resources + volunteers **migrate in Pass 6** onto the
-directive kit; contact, tags, post detail are Svelte components, deferred separately.
+in `src/content/**/*.md`. Contact, tags, and post detail are Svelte components, not
+markdown pages — their kit rollout is still deferred.
 
-**Open follow-ups (not blocking):** CrewLAB `[PLACEHOLDER]` (what EC Nordic collects
-via CrewLAB); cross-page conflict (CrewLAB routes waivers + payment through the app
-vs. About / Training / waiver page's paper-waiver + free model); posts at 0.92rem
-(tokenize `--text-body` if they want larger).
+**Open follow-ups (not blocking):** CrewLAB / Training / volunteers `[PLACEHOLDER]`
+content (real specifics from EC Nordic); cross-page conflict (CrewLAB routes waivers
++ payment through the app vs. About / Training / waiver page's paper-waiver + free
+model); posts at 0.92rem (tokenize `--text-body` if they want larger).
 
 ---
 
@@ -29,28 +32,26 @@ vs. About / Training / waiver page's paper-waiver + free model); posts at 0.92re
 | 3 | Design: font, palette, hero grid, nav | ✓ Done |
 | 4 | Design language: kit, About/Training/CrewLAB, sitewide type, content guard | ✓ Core (rollout deferred) |
 | 5 | Directive render pipeline: remark/rehype, all primitives, unit-tested (no site change) | ✓ Done |
-| 6 | Cut over + migrate all five pages to directives; delete `decorate*` | Next |
+| 6 | Cut over + migrate all five pages to directives; delete `decorate*` | ✓ Done |
+| 7 | Kit rollout to Svelte components (contact / tags / post detail) | Next |
 
 ---
 
-### Next starter prompt (Pass 6 — directive cutover & migration)
+### Next starter prompt (Pass 7 — Svelte-component kit rollout)
 
-> **Goal.** Wire the Pass 5 `renderMarkdown` pipeline into the live site: repoint
-> `markdownToHtml` at it, migrate all five content pages to inline directives, and
-> delete the `decorate*`/`wrapSections`/`boldParasToGrid` machinery — proving the
-> output unchanged with a screenshot regression sweep.
+> **Goal.** Bring the design-language kit to the parts of the site that are Svelte
+> components rather than markdown pages: the contact form/page, the tag pages, and
+> the post-detail layout — the three surfaces deferred since Pass 4.
 >
-> **Plan (execute it):** `docs/superpowers/plans/2026-05-24-pass-6-directive-cutover.md`.
-> Spec: `docs/superpowers/specs/2026-05-24-inline-directives-design.md`.
+> **Scope.** In: applying kit primitives/tokens to those components. Out: new content;
+> re-touching the five directive pages (done + frozen).
 >
-> **Settled (do not re-brainstorm):** the pipeline + vocabulary are built and frozen
-> (`src/lib/markdown/`, 14 passing tests, byte-identical glyphs). The restructure step
-> runs *before* `rehype-slug` (so `.card-title` serializes ahead of slug ids). Pages to
-> migrate: About, Training, CrewLAB, resources, volunteers. Remove `remark-html` once
-> `markdownToHtml` is repointed.
+> **Still open — brainstorm these:** these are Svelte components, not markdown, so the
+> directive vocabulary doesn't apply directly — decide how the kit's look is expressed
+> in `.svelte` (shared components? CSS classes? a few Svelte equivalents of the
+> primitives?). Settle the per-surface treatment before coding.
 >
-> **Approach.** Invoke cairn-pass to start; execute the plan task-by-task. This pass
-> DOES need the screenshot regression sweep (before/after each page). Standard
-> pass-end checklist applies.
+> **Approach.** Invoke cairn-pass to start. Brainstorm the component approach, then
+> write a plan. Standard pass-end checklist applies.
 
 **Deploy:** Live at **https://ecnordic.ski** — push to `main` → GitHub Actions (build + pagefind + wrangler deploy). Secrets set.

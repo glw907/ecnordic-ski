@@ -193,28 +193,30 @@ fix and featured slot). Role colours needing a contrast-safe, theme-flipping var
 derived token, e.g. `--color-caution-accent`. Icon use is governed by a meaning matrix
 + usage checklist in the design-language doc.
 
-**Markdown-page decoration:** Body pages rendered via `{@html}` are decorated in
-`src/routes/[slug]/+page.svelte`. A shared `decoratePage(html, iconFor, mapSection)`
-skeleton parses the HTML into H2-led sections and, for each, builds the `rise` (entrance
-delay), `icon`, and `head` strings before handing off to a per-page `mapSection` callback
-that expresses only that page's meaning→primitive branches. `decorateAbout` (the worked
-example) and `decorateTraining` are thin callbacks over it; the `ecCta` / `ecCard` helpers
-emit the shared markup. Pages without a decorator fall back to `wrapSections`. The
-per-page module CSS (entrance cascade, `.ec-head`, `.ec-cta`, reduced-motion) is scoped
-with `:is([data-page="about"], [data-page="training"], [data-page="crewlab"])` —
-`decorateCrewlab` is a third callback. **Body type is one sitewide standard:**
-`.post-body` is 0.92rem and `.card-body` inherits it (DaisyUI's 0.875rem is
-overridden), so text is one size in or out of a card; only the lede (1.0rem, the
+**Markdown-page decoration:** Page styling is selected by **inline container
+directives** authored in `src/content/pages/*.md` (see the pipeline below), not by
+slug inference. `src/routes/[slug]/+page.svelte` renders `page.html` directly via
+`{@html}` — its old `<script module>` decorate machinery (`decoratePage`,
+`decorateAbout/Training/Crewlab`, `wrapSections`, `boldParasToGrid`, the inline icon
+maps) was deleted in Pass 6. The per-page module CSS (entrance cascade, `.ec-head`,
+`.ec-cta`, reduced-motion) is unchanged, still scoped with
+`:is([data-page="about"], [data-page="training"], [data-page="crewlab"])`, because
+the pipeline emits the same classes the builders did. **Body type is one sitewide
+standard:** `.post-body` is 0.92rem and `.card-body` inherits it (DaisyUI's 0.875rem
+is overridden), so text is one size in or out of a card; only the lede (1.0rem, the
 first paragraph of a static page) and grid cells (0.85rem) deviate, uniformly —
-there is no per-page font sizing. Pass 5 will replace this slug-keyed decoration
-with explicit inline markdown directives (see `docs/STATUS.md`).
+there is no per-page font sizing.
 
-### Directive render pipeline (Pass 5)
+### Directive render pipeline (Pass 5 built, Pass 6 wired)
 
 `src/lib/markdown/render.ts` exports `renderMarkdown(content)`, a unified pipeline
-that renders inline container directives into the same HTML the `decorate*`
-builders emit. It is **built but not yet wired into the site** — the cutover and
-content migration are Pass 6, so `markdownToHtml` and the pages are unchanged.
+that renders inline container directives into the same HTML the old `decorate*`
+builders emitted. As of Pass 6 it **is the site's renderer**: `markdownToHtml` in
+`src/lib/utils.ts` is a thin delegate to it (the old `remark-html` bundle is gone),
+serving both posts (no directives) and pages. The cutover was verified
+pixel-identical (headless screenshots, AE=0) and HTML-identical modulo two
+documented invisibles: `data-section` attributes are dropped (no consumer) and
+heading `id`s now come from `rehype-slug`.
 
 Pipeline order: `remark-parse → remark-gfm → remark-directive → remark-ec-directives
 (mark) → remark-rehype(allowDangerousHtml) → rehype-raw → **rehype-ec-primitives
@@ -226,7 +228,11 @@ the slug `id`; slug then stamps ids onto the final element structure.
 - **`remark-ec-directives.ts`** (mdast) stamps each known directive
   (`card/grid/alert/cta/split/panel/passage`) with `data-primitive`/`data-icon`/
   `data-role` markers via `hProperties`; it builds no structure. A caution alert
-  with no explicit icon defaults to the `warning` glyph.
+  with no explicit icon defaults to the `warning` glyph. Because the vocabulary is
+  container-only (`:::name`), the step also reconstructs any text/leaf directive
+  (`:name` / `::name`) back to literal text — these only arise from accidental
+  colons in prose (clock times like `4:00–6:00 PM`), which would otherwise collapse
+  to empty `<div>`s.
 - **`rehype-ec-primitives.ts`** (hast) rewrites the marked elements into the kit's
   markup, dispatching on `data-primitive` in `transform()`. Nested directives are
   converted by `transformChildren` before their parent builds, so by the time
@@ -238,8 +244,8 @@ the slug `id`; slug then stamps ids onto the final element structure.
   pre-Pass-5 `ICON`/`PANEL_ICONS` maps) and `glyph(name)`, which returns the inline
   SVG as a real `hastscript` node — no raw-string injection.
 
-The whole pipeline is pinned by unit tests (`src/tests/markdown/`); the emitted HTML
-is the contract for the Pass 6 regression sweep.
+The whole pipeline is pinned by unit tests (`src/tests/markdown/`, 18 tests); the
+emitted HTML was the contract for the Pass 6 regression sweep, which confirmed it.
 
 ---
 
