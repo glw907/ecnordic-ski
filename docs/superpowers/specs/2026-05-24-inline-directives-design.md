@@ -180,8 +180,8 @@ we do) · `card{icon=users-three role=secondary}` (Who can join) ·
 `card{icon=backpack}` (What to bring) · `card{icon=tent}` (Talkeetna camp, with a
 nested `:::grid` around the Logistics list) · `cta{icon=flag}` (Sign up).
 
-**CrewLAB** — `passage{icon=why-we-use-it}` (Why we use it) ·
-`grid{icon=for-athletes}` (For athletes) · `card{icon=users-three
+**CrewLAB** — `passage{icon=chat-circle}` (Why we use it) ·
+`grid{icon=person-simple-run}` (For athletes) · `card{icon=users-three
 role=secondary}` (For parents & supporters) · `cta{icon=flag}` (Getting started).
 The lede stays a plain (non-emphatic) intro paragraph.
 
