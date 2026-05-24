@@ -209,6 +209,38 @@ first paragraph of a static page) and grid cells (0.85rem) deviate, uniformly �
 there is no per-page font sizing. Pass 5 will replace this slug-keyed decoration
 with explicit inline markdown directives (see `docs/STATUS.md`).
 
+### Directive render pipeline (Pass 5)
+
+`src/lib/markdown/render.ts` exports `renderMarkdown(content)`, a unified pipeline
+that renders inline container directives into the same HTML the `decorate*`
+builders emit. It is **built but not yet wired into the site** — the cutover and
+content migration are Pass 6, so `markdownToHtml` and the pages are unchanged.
+
+Pipeline order: `remark-parse → remark-gfm → remark-directive → remark-ec-directives
+(mark) → remark-rehype(allowDangerousHtml) → rehype-raw → **rehype-ec-primitives
+(restructure) → rehype-slug** → rehype-stringify`. The restructure step runs
+*before* `rehype-slug` (a deliberate deviation from the original plan ordering): it
+retags the section `<h2>` as `.card-title` first, so the class serializes ahead of
+the slug `id`; slug then stamps ids onto the final element structure.
+
+- **`remark-ec-directives.ts`** (mdast) stamps each known directive
+  (`card/grid/alert/cta/split/panel/passage`) with `data-primitive`/`data-icon`/
+  `data-role` markers via `hProperties`; it builds no structure. A caution alert
+  with no explicit icon defaults to the `warning` glyph.
+- **`rehype-ec-primitives.ts`** (hast) rewrites the marked elements into the kit's
+  markup, dispatching on `data-primitive` in `transform()`. Nested directives are
+  converted by `transformChildren` before their parent builds, so by the time
+  `buildSplit` runs its panels are already `.ec-panel` divs. Top-level primitives
+  get a document-order `--rise` stagger (0.16s + 0.04s each); nested ones get none.
+  A grid with an `h2` becomes a grid card; a grid without one (nested use) is lifted
+  to a bare `ul.ec-grid`.
+- **`icons.ts`** holds the Phosphor path data (copied byte-for-byte from the
+  pre-Pass-5 `ICON`/`PANEL_ICONS` maps) and `glyph(name)`, which returns the inline
+  SVG as a real `hastscript` node — no raw-string injection.
+
+The whole pipeline is pinned by unit tests (`src/tests/markdown/`); the emitted HTML
+is the contract for the Pass 6 regression sweep.
+
 ---
 
 ## Build Toolchain & Version Notes
