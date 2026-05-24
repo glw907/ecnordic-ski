@@ -112,3 +112,26 @@ describe('split + panel directives', () => {
     expect(html).toContain('<strong>Free.</strong> No fee.');
   });
 });
+
+describe('prose colons are not parsed as directives', () => {
+	it('renders a time range verbatim', async () => {
+		const html = await renderMarkdown('We train 4:00–6:00 PM.\n');
+		expect(html.trim()).toBe('<p>We train 4:00–6:00 PM.</p>');
+	});
+
+	it('renders a single clock time verbatim', async () => {
+		const html = await renderMarkdown('Meet at 9:30 sharp.\n');
+		expect(html.trim()).toBe('<p>Meet at 9:30 sharp.</p>');
+	});
+
+	it('restores a word-form text directive to literal text', async () => {
+		const html = await renderMarkdown('Word :foo here.\n');
+		expect(html.trim()).toBe('<p>Word :foo here.</p>');
+	});
+
+	it('leaves real container directives working alongside colons', async () => {
+		const html = await renderMarkdown(':::card{icon=path}\n## Schedule\n\nWe meet 4:00–6:00 PM.\n:::\n');
+		expect(html).toContain('<h2 class="card-title"');
+		expect(html).toContain('<div class="section-body"><p>We meet 4:00–6:00 PM.</p></div>');
+	});
+});
