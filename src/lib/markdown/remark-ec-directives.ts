@@ -13,7 +13,7 @@ const ALERT_DEFAULT_ICON: Record<string, string> = { caution: 'warning' };
 
 // Reconstruct a directive's authored attribute block (`{#id .class key="value"}`).
 // Accidental prose directives carry none, so this is almost always empty.
-function serializeAttributes(attributes?: Record<string, string | null | undefined>): string {
+function serializeAttributes(attributes?: Record<string, string | null | undefined> | null): string {
 	if (!attributes) return '';
 	const tokens: string[] = [];
 	for (const [key, value] of Object.entries(attributes)) {
@@ -64,8 +64,7 @@ export default function remarkEcDirectives() {
 
 		visit(tree, ['textDirective', 'leafDirective'], (node, index, parent) => {
 			if (!parent || index == null) return;
-			const directive = node as TextDirective | LeafDirective;
-			const literal = restoreLiteral(directive);
+			const literal = restoreLiteral(node as TextDirective | LeafDirective);
 			if (node.type === 'leafDirective') {
 				// Leaf directives sit at block level; wrap the restored text in a paragraph.
 				const paragraph: Paragraph = { type: 'paragraph', children: literal };
