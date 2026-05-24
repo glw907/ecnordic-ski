@@ -4,11 +4,14 @@ title: "Volunteers"
 
 EC Nordic runs entirely on unpaid volunteers — parents, former racers, and local athletes who want to keep Anchorage kids on snow and on trails. This page lists who's running the program this summer and how you can help.
 
-<h2 id="this-summer">This Summer's Volunteers</h2>
+:::passage{icon=users-three role=secondary}
+## This Summer's Volunteers
 
 > **TK — Add the volunteer roster: names, roles, and a sentence or two on each. Program leads first, then drivers and other adult helpers.**
+:::
 
-<h2 id="help-out">Help Out</h2>
+:::grid{icon=handshake role=secondary}
+## Help Out
 
 We always need more adults. The most useful things you can do:
 
@@ -17,3 +20,4 @@ We always need more adults. The most useful things you can do:
 - **Teach what you know.** Strength work, technique, nutrition, navigation — if you know it, we can use it.
 
 No certification or background required. We'll find a way to put you to work. [Reach out](/contact) if you'd like to help.
+:::
