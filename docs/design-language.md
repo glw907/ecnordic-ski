@@ -3,7 +3,7 @@
 Living reference for the EC Nordic component kit, palette, and icon system.
 Keep it current as the language evolves.
 
-**Last updated:** 2026-05-23 — type scale is now one sitewide standard (body 0.92rem set once on `.post-body`; card-body inherits it; lede 1.0rem and grid cells 0.85rem the only deviations, uniform across pages — no per-page font sizing); added *Choosing a primitive* (prose is the default; cards for self-contained units and to chunk long prose); flagged candidate primitives to build when needed (the kit is open); CrewLAB added as the prose-plus-selective-cards worked example.
+**Last updated:** 2026-05-24 — page styling is now selected by inline container directives in markdown (not slug inference); the `decorate*()` functions are deleted; all five content pages carry directives in `src/content/pages/*.md` and render through `markdownToHtml` → `renderMarkdown` (the unified pipeline in `src/lib/markdown/*`). Previously (2026-05-23): type scale is one sitewide standard (body 0.92rem set once on `.post-body`; card-body inherits it; lede 1.0rem and grid cells 0.85rem the only deviations, uniform across pages — no per-page font sizing); added *Choosing a primitive* (prose is the default; cards for self-contained units and to chunk long prose); flagged candidate primitives to build when needed (the kit is open); CrewLAB added as the prose-plus-selective-cards worked example.
 **Builds on:** `docs/superpowers/specs/2026-05-14-ecnordic-design.md` (color tokens, type scale, nav).
 
 ---
@@ -332,6 +332,64 @@ metric tiles, product cards, carousels — none fit a youth-sports info site.
 
 ---
 
+## Selecting a primitive — inline directives
+
+Page styling is declared with **inline container directives** in the markdown source
+(`src/content/pages/*.md`). There is no slug inference and no `decorate*()` function.
+The rendering pipeline is `markdownToHtml` → `renderMarkdown` (`src/lib/markdown/*`:
+remark-parse → gfm → directive → mark step → remark-rehype → rehype-raw → rehype-slug
+→ restructure → stringify).
+
+### Directive vocabulary
+
+| Directive | Primitive |
+|-----------|-----------|
+| `:::card{icon=NAME role=ROLE}` | Module card |
+| `:::grid{icon=NAME role=ROLE}` | Grid card (heading) / bare `ul.ec-grid` (nested, no heading) |
+| `:::alert{role=caution}` | Subtle alert |
+| `:::cta{icon=NAME}` | CTA card (centered, chip icon, link → `btn btn-primary`) |
+| `::::split` ⊃ `:::panel{icon=NAME role=ROLE}` | Paired panels |
+| `:::passage{icon=NAME}` | Titled prose passage |
+| *(no directive)* | Plain prose |
+
+**Unmarked content = plain prose.** The directive is only written when a section's
+job warrants a primitive (→ *Choosing a primitive*); prose between directives is
+rendered as-is.
+
+### Attributes
+
+Two optional attributes are available on any directive that accepts them:
+
+- **`icon=NAME`** — a key in `ICON_PATHS` (defined in `src/lib/markdown/icons.ts`).
+  Omit when no icon clears the icon checklist (→ *Icon system*).
+- **`role=ROLE`** — drives the role-color token. Values: `primary` (default), `secondary`,
+  `caution`. Color follows the role table: primary = program/action (crimson), secondary =
+  people/community (cobalt), caution = warning (amber).
+
+### Nesting rule
+
+A container that holds inner directives opens with **four colons** (`::::split`,
+`::::card`); the inner directives use three (`:::panel`, `:::card`). Three colons are
+the default for a standalone directive. Mismatched fence depths cause parse failures.
+
+### Example (from `src/content/pages/about.md`)
+
+```markdown
+::::split
+## Costs & volunteers
+
+:::panel{icon=hand-coins}
+**Free to join.** …
+:::
+
+:::panel{icon=handshake role=secondary}
+**Lend a hand.** …
+:::
+::::
+```
+
+---
+
 ## Icon system (Phosphor)
 
 We use [Phosphor](https://phosphoricons.com) (regular weight). Sources come
@@ -384,27 +442,31 @@ overloading an existing glyph.
 |----------------|----------------|------------|-------|
 | `path` | the training path / the work | About → What we do; Training → What we do | primary |
 | `warning` | caution | About → Risks (caution callout) | warning (amber) |
-| `users-three` | people / who belongs | About → Who can join; Training → Who can join | secondary |
+| `users-three` | people / who belongs | About → Who can join; Training → Who can join; Volunteers → people | secondary |
 | `compass` | direction, what guides us | About → Program philosophy | primary |
 | `hand-coins` | giving money / donations | About → "Free to join" panel | primary |
-| `handshake` | giving time / volunteering | About → "Lend a hand" panel | secondary |
+| `handshake` | giving time / volunteering | About → "Lend a hand" panel; Volunteers → volunteering | secondary |
 | `flag` | start / the goal | About → Getting started (CTA); Training → Sign up (CTA) | primary |
 | `calendar-blank` | schedule / when we meet | Training → Schedule | primary |
 | `backpack` | what to bring / gear | Training → What to bring | primary |
 | `tent` | camp / multi-day trip | Training → Talkeetna camp | primary |
+| `chat-circle` | the rationale / why | CrewLAB → Why we use it | primary |
+| `person-simple-run` | athletes / the how-to | CrewLAB → For athletes | primary |
 
 ### Implementation
 
-- **In markdown-driven pages** (rendered via `{@html}`, e.g. `[slug]`): icons
-  are **inlined SVG strings**, mapped per section in the page component. No
-  runtime font. `fill="currentColor"` so `.ec-icon`'s `color` themes them.
+- **In markdown-driven pages** (content in `src/content/pages/*.md`, rendered
+  via `markdownToHtml` → `renderMarkdown`): icons are resolved from the
+  `ICON_PATHS` map in `src/lib/markdown/icons.ts` and inlined as SVG nodes
+  by the restructure step. No runtime font. `fill="currentColor"` so
+  `.ec-icon`'s `color` themes them.
 - **In Svelte components elsewhere:** use inline SVG or, if preferred later,
   `phosphor-svelte` components — same artwork, same `.ec-glyph` sizing.
 
 To add an icon: copy the path from
-`node_modules/@phosphor-icons/core/assets/regular/<name>.svg`, wrap it via the
-`svg()` helper (or `class="ec-glyph"`), add it to the page's icon map, **and
-add a row to the icon matrix above.**
+`node_modules/@phosphor-icons/core/assets/regular/<name>.svg`, add it to the
+`ICON_PATHS` map in `src/lib/markdown/icons.ts`, **and add a row to the icon
+matrix above.**
 
 Sources: [NN/G — Icon Usability](https://www.nngroup.com/articles/icon-usability/),
 [NN/G — Yes, Icons Need Text Labels](https://www.nngroup.com/videos/icon-text-labels/).
@@ -413,17 +475,20 @@ Sources: [NN/G — Icon Usability](https://www.nngroup.com/articles/icon-usabili
 
 ## Worked example — the About page
 
-`src/routes/[slug]/+page.svelte` → `decorateAbout()` maps each H2 section to
-the primitive that fits its job, choosing the role color by meaning:
+`src/content/pages/about.md` carries inline container directives that select
+the primitive for each section. The markdown renders through `markdownToHtml` →
+`renderMarkdown` (`src/lib/markdown/*`) into the same HTML the old `decorate*()`
+functions produced. Each H2 section is wrapped in the directive whose job fits,
+choosing role color by meaning:
 
-| Section | Primitive | Icon (treatment) | Role color |
+| Section | Directive | Icon (treatment) | Role color |
 |---------|-----------|------|------------|
-| What we do | Module card | `path` (bare glyph) | primary |
-| Risks | Subtle alert card (`.ec-alert.ec-alert-caution`) | `warning` (chrome only) | warning |
-| Who can join | Module card | `users-three` (bare glyph) | **secondary** (people) |
-| Program philosophy | Grid card (`.ec-grid`) | `compass` (bare glyph) | primary |
-| Costs & volunteers | Module + split | head: none (panels carry it); panels `hand-coins` / `handshake` (bare) | primary / **secondary** |
-| Getting started | Centered CTA card | `flag` (**`.ec-chip` tile** — the one focal accent) | primary + `btn btn-primary` |
+| What we do | `:::card{icon=path}` | `path` (bare glyph) | primary |
+| Risks | `:::alert{role=caution}` | `warning` (chrome only) | warning |
+| Who can join | `:::card{icon=users-three role=secondary}` | `users-three` (bare glyph) | **secondary** (people) |
+| Program philosophy | `:::grid{icon=compass}` | `compass` (bare glyph) | primary |
+| Costs & volunteers | `::::split` ⊃ `:::panel` × 2 | head: none (panels carry it); panels `hand-coins` / `handshake` (bare) | primary / **secondary** |
+| Getting started | `:::cta{icon=flag}` | `flag` (**`.ec-chip` tile** — the one focal accent) | primary + `btn btn-primary` |
 
 The intro lede stays large; the clarifying paragraph drops to muted. Section
 order is the reader's journey: what it is → the honest caveat → can I join →
@@ -462,8 +527,9 @@ why we do it → what it costs → how to start.
 ## Refining a page — process
 
 The ordered procedure for taking a page from raw to polished. About is the
-worked example (`src/routes/[slug]/+page.svelte` → `decorateAbout`); each step
-links to the rule that governs it. Work top to bottom — the early steps are
+worked example (`src/content/pages/about.md` with inline container directives;
+rendered via `markdownToHtml` → `renderMarkdown` in `src/lib/markdown/*`); each
+step links to the rule that governs it. Work top to bottom — the early steps are
 structure, the later ones are finish.
 
 **Before you start.** Read this whole doc, the relevant rule in
@@ -476,11 +542,13 @@ that's a content task first — see `docs/content-guide.md`.
    as a plain titled passage unless its job warrants a primitive: a
    self-contained/parallel unit, *or* prose long enough that chunking it aids
    readability. Then pick the primitive whose job fits — module `card`, subtle
-   `.ec-alert`, `.ec-grid`, split panels, or the single CTA (`btn btn-primary`);
-   never invent a new section look when one fits (→ *Choosing a primitive*,
-   *The component kit*, *Reuse do/don't*). Most pages are markdown rendered via
-   `{@html}`, so this is a `decorate<Page>()` function mirroring `decorateAbout`
-   (every section carded) or `decorateCrewlab` (prose + selective cards).
+   `alert`, `grid`, `split` + `panel`, `cta`, or `passage`; never invent a new
+   section look when one fits (→ *Choosing a primitive*, *The component kit*,
+   *Reuse do/don't*, *Selecting a primitive — inline directives*). Write the
+   chosen directive directly into the page's markdown
+   (`src/content/pages/<slug>.md`). Content flows through `markdownToHtml` →
+   `renderMarkdown` (`src/lib/markdown/*`); no separate decoration function is
+   needed.
 
 2. **Assign role colour and icons.** Colour follows the role table (primary =
    program/action, secondary = people, warning = caution; if no role fits, use
