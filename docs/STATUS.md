@@ -6,9 +6,12 @@ Type is now **one sitewide standard** — body 0.92rem on `.post-body` (`app.css
 `.card-body` inherits it, lede 1.0rem and grid cells 0.85rem the only deviations.
 A **content style guard** (`.claude/hooks/content-style-guard.py`, PreToolUse)
 blocks AI-writing tells in `src/content/**/*.md`. `docs/design-language.md` adds
-*Choosing a primitive* (prose is the default) + candidate primitives. Resources,
-volunteers, contact, tags, post detail **not yet migrated — deferred to after
-Pass 5** so new pages adopt directives from the start.
+*Choosing a primitive* (prose is the default) + candidate primitives. Resources
++ volunteers **migrate in Pass 6** (onto the directive kit); contact, tags, post
+detail are Svelte components, deferred separately. **Pass 5 brainstorm complete:**
+spec at `docs/superpowers/specs/2026-05-24-inline-directives-design.md`; the
+inline-directives work is split into two plans — Pass 5 (build the render
+pipeline, no site change) and Pass 6 (cut over + migrate all five pages).
 
 **Open follow-ups (not blocking):** CrewLAB `[PLACEHOLDER]` (what EC Nordic
 collects via CrewLAB); cross-page conflict (CrewLAB routes waivers + payment
@@ -25,36 +28,29 @@ posts now 0.92rem (tokenize `--text-body` if they want larger). Nothing committe
 | 2 | Build: posts, events, calendar, pages, contact, deploy | ✓ Done |
 | 3 | Design: font, palette, hero grid, nav | ✓ Done |
 | 4 | Design language: kit, About/Training/CrewLAB, sitewide type, content guard | ✓ Core (rollout deferred) |
-| 5 | Inline directives: explicit, self-documenting content styling | Next |
+| 5 | Directive render pipeline: remark/rehype, all primitives, unit-tested (no site change) | Next |
+| 6 | Cut over + migrate all five pages to directives; delete `decorate*` | Planned |
 
 ---
 
-### Next starter prompt (Pass 5 — inline directives)
+### Next starter prompt (Pass 5 — directive render pipeline)
 
-> **Goal.** Replace the implicit slug→primitive mapping in `decorate<Page>()`
-> with explicit inline directives in the markdown, so each page's styling is
-> visible in the file and robust to heading renames.
+> **Goal.** Build the remark/rehype AST pipeline that renders inline container
+> directives into the kit's HTML — fully unit-tested, exported as `renderMarkdown`,
+> **not yet wired into the site** (the cutover + page migration are Pass 6).
 >
-> **Read first:** `[slug]/+page.svelte` (`decorateAbout/Training/Crewlab` + `ICON`
-> map), the `markdownToHtml` pipeline (`src/lib/utils.ts`, `pages.ts`), and
-> `docs/design-language.md` (*Choosing a primitive*).
+> **Plan (execute it):** `docs/superpowers/plans/2026-05-24-pass-5-directive-pipeline.md`
+> — 8 TDD tasks, no screenshots needed. Spec:
+> `docs/superpowers/specs/2026-05-24-inline-directives-design.md`.
 >
-> **Scope.** In: a remark container-directive mechanism (`:::card`, `:::grid`,
-> `:::alert`, `:::cta`); render from directives not slugs; migrate About /
-> Training / CrewLAB; unmarked = prose default; document the vocabulary. Out:
-> visual changes (this refactors *how* styling is selected, not the look), new
-> content, the deferred remaining-page rollout.
+> **Settled (do not re-brainstorm):** pure AST pipeline (`remark-directive` →
+> mark step → `remark-rehype`/`rehype-raw`/`rehype-slug` → restructure step);
+> vocabulary `:::card/grid/alert/cta/passage`, `::::split`⊃`:::panel`, attrs
+> `icon=`/`role=`, unmarked = prose; icons as hast SVG from path data copied
+> verbatim from the current `ICON`/`PANEL_ICONS` maps (byte-identical glyphs).
 >
-> **Settled:** Inline container directives (not frontmatter, not slugs). Unmarked
-> = prose. Primitives + type scale unchanged — pages must render identically
-> (regression-check via screenshots).
->
-> **Still open — brainstorm:** directive vocabulary + param passing (role colour,
-> icon — e.g. `:::alert{type=caution}`); which remark plugin + how it slots into
-> `markdownToHtml`; icons as directive attrs vs slug-mapped; keep `decorate*` or unify.
->
-> **Approach.** Invoke cairn-pass to start. Standard pass-end checklist applies.
-> Regression-verify with headless screenshots (rebuild first;
-> `--force-prefers-reduced-motion`).
+> **Approach.** Invoke cairn-pass to start; execute the plan task-by-task
+> (subagent-driven recommended). Standard pass-end checklist applies. Pass 6
+> follows with the cutover and the screenshot regression sweep.
 
 **Deploy:** Live at **https://ecnordic.ski** — push to `main` → GitHub Actions (build + pagefind + wrangler deploy). Secrets set.
