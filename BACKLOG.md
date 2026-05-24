@@ -12,6 +12,8 @@
 
 ## Low
 
+- [ ] **#14** Dedup `[slug]` cascade keyframes against the global ones `#cleanup` `#ecnordic` — 2026-05-24
+  `page-rise`/`module-rise` now live globally in `app.css` (Pass 8). `src/routes/[slug]/+page.svelte` still defines its own scoped copies; remove them and reference the globals when the frozen directive pages are next unfrozen. Zero-output-change refactor (CSS-only).
 - [ ] **#11** Rename the welcome post file to drop the day `#improvement` `#ecnordic` *(2026-05-24)*
   `src/content/posts/2026-05-14-welcome.md` resolves to `/2026/05/14-welcome/` — the post route is `[year]/[month]/[slug]`, so the day folds into the slug. The convention is `YYYY-MM-slug.md`. Renaming changes a (likely-unindexed) live URL; do it deliberately. CLAUDE.md and `docs/content-guide.md` also disagree on the filename convention (`YYYY-MM-slug` vs `YYYY-MM-DD-slug`) — reconcile them.
 - [ ] **#10** Sveltia CMS config points at the wrong repo `#bug` `#ecnordic` *(2026-05-24)*
