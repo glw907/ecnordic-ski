@@ -1,5 +1,5 @@
 ---
-title: Volunteers
+title: "Volunteers"
 ---
 
 EC Nordic runs entirely on unpaid volunteers — parents, former racers, and local athletes who want to keep Anchorage kids on snow and on trails. This page lists who's running the program this summer and how you can help.
