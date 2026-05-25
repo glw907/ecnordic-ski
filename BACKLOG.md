@@ -16,10 +16,12 @@
   `page-rise`/`module-rise` now live globally in `app.css` (Pass 8). `src/routes/[slug]/+page.svelte` still defines its own scoped copies; remove them and reference the globals when the frozen directive pages are next unfrozen. Zero-output-change refactor (CSS-only).
 - [ ] **#5** Replace @schedule-x with a custom Svelte calendar component `#improvement` `#ecnordic` *(2026-05-20)*
   Do this when migrating to cairn-cms.
-- [ ] **#4** Add Sveltia CMS config for web-based editing by volunteers `#feature` `#ecnordic` *(2026-05-20)*
-  Config exists at `static/admin/config.yml` (now repo-correct, slug template fixed in #10) but the admin surface isn't wired into the workflow. Finish wiring or remove it.
-
 ## Done
+
+- [x] **#4** Add Sveltia CMS config for web-based editing by volunteers `#feature` `#ecnordic` *(2026-05-20 → 2026-05-25)*
+  Superseded by cairn-cms. Sveltia was never wired in; the dead `static/admin/` was removed
+  in cairn Pass A (it shadowed the new `/admin` route as a static asset), and the magic-link
+  cairn admin (passes A–C) is the web-editing surface now. Resolved by removal, not wiring.
 
 - [x] **#11** Rename the welcome post file to drop the day `#improvement` `#ecnordic` *(2026-05-24 → 2026-05-24)*
   Renamed `2026-05-14-welcome.md` → `2026-05-welcome.md` (URL `/2026/05/14-welcome` → `/2026/05/welcome`). Reconciled the filename convention: code (`posts.ts` `parseFilepath`) and CLAUDE.md use `YYYY-MM-slug`; fixed the contradicting `YYYY-MM-DD-slug` in `.claude/rules/content.md`.
