@@ -20,6 +20,8 @@ declare global {
         // cairn auth secrets (wrangler secret put / .dev.vars).
         MAGIC_LINK_SECRET: string;
         SESSION_SECRET: string;
+        // Optional magic-link base URL; overrides url.origin (set in dev, unset in prod).
+        PUBLIC_ORIGIN?: string;
         // GitHub App credentials — consumed from Pass C onward.
         GITHUB_APP_ID: string;
         GITHUB_APP_INSTALLATION_ID: string;

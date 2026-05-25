@@ -23,7 +23,10 @@ export const POST: RequestHandler = async ({ request, platform, url }) => {
   }
 
   const token = await createMagicLink(email, env.MAGIC_LINK_SECRET, env.AUTH_KV);
-  const link = `${url.origin}/admin/auth/callback?token=${encodeURIComponent(token)}`;
+  // PUBLIC_ORIGIN overrides url.origin for local dev (where wrangler's custom-domain
+  // route makes url.origin the production host); unset in prod → url.origin is correct.
+  const origin = env.PUBLIC_ORIGIN || url.origin;
+  const link = `${origin}/admin/auth/callback?token=${encodeURIComponent(token)}`;
   try {
     await sendMagicLink(env.EMAIL, email, link, 'EC Nordic');
   } catch (err) {
