@@ -2,7 +2,7 @@ import type { RequestHandler } from './$types';
 import { error, redirect } from '@sveltejs/kit';
 import { cairn } from '$lib/cairn.config';
 import { findCollection, frontmatterFromForm } from '$lib/cairn/adapter';
-import { serializeMarkdown } from '$lib/cairn/content';
+import { serializeMarkdown } from 'cairn-cms';
 import { commitFile, installationToken } from '$lib/cairn/github';
 
 // SvelteKit's built-in same-origin check protects this POST (cross-origin form posts → 403),
