@@ -21,7 +21,7 @@ export const SESSION_MAX_AGE = SESSION_TTL_SECONDS;
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
-function bytesToB64url(bytes: Uint8Array): string {
+export function bytesToB64url(bytes: Uint8Array): string {
   const binary = Array.from(bytes, (b) => String.fromCharCode(b)).join('');
   return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
