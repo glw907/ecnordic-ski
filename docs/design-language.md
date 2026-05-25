@@ -579,7 +579,7 @@ that's a content task first — see `docs/content-guide.md`.
 
 7. **Pass-end ritual** — `code-simplifier` over the changed code, svelte-check,
    update `docs/STATUS.md` (+ this doc if the language itself changed), commit
-   and push. This is the `cairn-pass` skill; invoke it to start and to close.
+   and push. This is the `site-pass` skill; invoke it to start and to close.
 
 **Done means:** the page is indistinguishable in craft from About — a casual
 visitor feels the coherence without noticing any single choice, and a designer

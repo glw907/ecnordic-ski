@@ -53,7 +53,7 @@ Passes 7–9 = the **Idiomatic 2026 Exemplar** initiative (`ROADMAP.md`), now co
 > user — this is program-specific and not derivable from the repo); how much directive
 > structure to keep vs. reflow to the content.
 >
-> **Approach.** "Invoke cairn-pass to start. Read `docs/content-guide.md` in full first.
+> **Approach.** "Invoke site-pass to start. Read `docs/content-guide.md` in full first.
 > Standard pass-end checklist applies."
 
 **Deploy:** Live at **https://ecnordic.ski** — push to `main` → GitHub Actions (build + pagefind + wrangler deploy). Secrets set.

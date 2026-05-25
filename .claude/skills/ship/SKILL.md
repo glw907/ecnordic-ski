@@ -1,6 +1,6 @@
 ---
 name: ship
-description: "Land changes on this SvelteKit + Cloudflare project: run the quality gates (svelte-check, vitest, build), code-simplifier, commit specific files, and push to main. Use when the user says /ship, \"ship it\", \"ship\", \"commit and push\", or asks to land their changes. Takes an optional commit message as an argument. NOTE: this is the lightweight land-changes command — for the full pass-end ritual use cairn-pass (\"ship pass\", \"finish pass\")."
+description: "Land changes on this SvelteKit + Cloudflare project: run the quality gates (svelte-check, vitest, build), code-simplifier, commit specific files, and push to main. Use when the user says /ship, \"ship it\", \"ship\", \"commit and push\", or asks to land their changes. Takes an optional commit message as an argument. NOTE: this is the lightweight land-changes command — for the full pass-end ritual use site-pass (\"ship pass\", \"finish pass\")."
 user_invocable: true
 ---
 
@@ -11,7 +11,7 @@ Land the current changes on ecnordic.ski. **Pushing to `main` deploys to product
 https://ecnordic.ski in ~2 min), so this skill ends by shipping the live site.
 
 This is the quick "land my changes" path. For the full pass-end consolidation
-(STATUS rewrite, plan archival, backlog reconciliation), use `cairn-pass` instead —
+(STATUS rewrite, plan archival, backlog reconciliation), use `site-pass` instead —
 trigger it with "finish pass" / "ship pass".
 
 ## Usage
@@ -102,4 +102,4 @@ Workers" run is queued/running. Mention it goes live in ~2 min.
 
 - Mid-implementation (changes aren't all done).
 - When the user wants only a subset (just commit, just check).
-- When the user wants the full pass-end ritual — use `cairn-pass` ("finish pass").
+- When the user wants the full pass-end ritual — use `site-pass` ("finish pass").
