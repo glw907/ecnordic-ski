@@ -2,6 +2,7 @@ import type { RequestHandler } from './$types';
 import { redirect } from '@sveltejs/kit';
 import { createMagicLink, lookupEditor } from '$lib/cairn/auth';
 import { sendMagicLink } from '$lib/cairn/email';
+import { cairn } from '$lib/cairn.config';
 
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
@@ -28,7 +29,7 @@ export const POST: RequestHandler = async ({ request, platform, url }) => {
   const origin = env.PUBLIC_ORIGIN || url.origin;
   const link = `${origin}/admin/auth/callback?token=${encodeURIComponent(token)}`;
   try {
-    await sendMagicLink(env.EMAIL, email, link, 'EC Nordic');
+    await sendMagicLink(env.EMAIL, email, link, cairn.siteName, cairn.sender);
   } catch (err) {
     console.error('magic-link send failed:', err);
     throw redirect(303, '/admin/login?error=config');

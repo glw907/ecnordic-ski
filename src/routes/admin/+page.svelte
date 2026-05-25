@@ -5,7 +5,7 @@
 </script>
 
 <div class="flex items-center justify-between">
-  <h1 class="text-2xl font-bold">EC Nordic CMS</h1>
+  <h1 class="text-2xl font-bold">{data.siteName} CMS</h1>
   <form method="POST" action="/admin/auth/logout">
     <button type="submit" class="btn btn-ghost btn-sm">Sign out</button>
   </form>

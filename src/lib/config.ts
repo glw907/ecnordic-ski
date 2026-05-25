@@ -16,16 +16,8 @@ export const POST_TAGS = [
   'announcements',
 ] as const;
 
-/** cairn-cms: the repository the admin reads content from (and commits to, from Pass C). */
-export const CAIRN_REPO = { owner: 'glw907', repo: 'ecnordic-ski', branch: 'main' } as const;
-
-/** cairn-cms: editable content collections, keyed by the `[type]` route segment. */
-export const CAIRN_COLLECTIONS = {
-  posts: { label: 'Posts', dir: 'src/content/posts' },
-  pages: { label: 'Pages', dir: 'src/content/pages' },
-} as const;
-
-export type CairnCollectionType = keyof typeof CAIRN_COLLECTIONS;
+// cairn-cms: the backend repo and editable collections now live in the site adapter
+// (`src/lib/cairn.config.ts`), behind cairn-core's CairnAdapter seam (Pass D).
 
 export const WELCOME_BLURB =
   'East Community Nordic is a free, volunteer-run summer training group for ' +

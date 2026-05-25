@@ -6,8 +6,6 @@
 // destination_address) but a different call shape: `binding.send({ to, from, ... })`.
 // Resend can slot in behind the same `sendMagicLink` signature if needed.
 
-const SENDER = 'noreply@ecnordic.ski';
-
 /** Cloudflare Email Sending binding surface (the object-form `send`, not the MIME form). */
 export interface EmailSender {
   send(message: {
@@ -24,11 +22,12 @@ export async function sendMagicLink(
   to: string,
   link: string,
   siteName: string,
+  from: string,
 ): Promise<void> {
   const expiry = "This link expires in 10 minutes and works only once. If you didn't request it, ignore this email.";
   await sender.send({
     to,
-    from: SENDER,
+    from,
     subject: `Your ${siteName} sign-in link`,
     text: `Sign in to ${siteName}:\n\n${link}\n\n${expiry}`,
     html: `<p>Sign in to ${siteName}:</p><p><a href="${link}">Sign in</a></p><p style="color:#666;font-size:0.9em">${expiry}</p>`,

@@ -12,11 +12,11 @@
 </script>
 
 <svelte:head>
-  <title>Sign in · EC Nordic CMS</title>
+  <title>Sign in · {data.siteName} CMS</title>
 </svelte:head>
 
 <div class="mx-auto mt-16 max-w-md rounded-box border border-base-300 bg-base-100 p-8">
-  <h1 class="text-2xl font-bold">EC Nordic CMS</h1>
+  <h1 class="text-2xl font-bold">{data.siteName} CMS</h1>
   <p class="mt-1 text-sm opacity-70">Sign in with your editor email.</p>
 
   {#if data.sent}

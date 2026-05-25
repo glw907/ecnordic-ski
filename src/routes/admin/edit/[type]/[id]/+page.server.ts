@@ -1,19 +1,16 @@
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 import matter from 'gray-matter';
-import { CAIRN_REPO, CAIRN_COLLECTIONS, type CairnCollectionType } from '$lib/config';
+import { cairn } from '$lib/cairn.config';
+import { findCollection } from '$lib/cairn/adapter';
 import { readRaw } from '$lib/cairn/github';
 
-function isCollectionType(type: string): type is CairnCollectionType {
-  return type in CAIRN_COLLECTIONS;
-}
-
 export const load: PageServerLoad = async ({ params, url }) => {
-  if (!isCollectionType(params.type)) throw error(404, 'Unknown collection');
-  const { label, dir } = CAIRN_COLLECTIONS[params.type];
+  const collection = findCollection(cairn, params.type);
+  if (!collection) throw error(404, 'Unknown collection');
 
-  const path = `${dir}/${params.id}.md`;
-  const raw = await readRaw(CAIRN_REPO, path);
+  const path = `${collection.dir}/${params.id}.md`;
+  const raw = await readRaw(cairn.backend, path);
   if (raw === null) throw error(404, 'Content not found');
 
   // Split frontmatter from body server-side; the editor form binds to the frontmatter and
@@ -23,7 +20,8 @@ export const load: PageServerLoad = async ({ params, url }) => {
   return {
     type: params.type,
     id: params.id,
-    label,
+    label: collection.label,
+    fields: collection.fields,
     path,
     body,
     frontmatter,

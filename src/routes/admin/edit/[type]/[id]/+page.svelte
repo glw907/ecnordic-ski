@@ -3,8 +3,7 @@
   import { Carta, MarkdownEditor } from 'carta-md';
   import 'carta-md/default.css';
   import { previewCartaOptions } from '$lib/cairn/carta';
-  import { remarkEcPlugins, rehypeEcPlugins } from '$lib/markdown/render';
-  import { POST_TAGS } from '$lib/config';
+  import { cairn } from '$lib/cairn.config';
   import type { PageData } from './$types';
 
   let { data }: { data: PageData } = $props();
@@ -14,18 +13,17 @@
   // svelte-ignore state_referenced_locally — seeding from the initial load is intended.
   let body = $state(data.body);
 
-  const carta = new Carta(
-    previewCartaOptions({ remarkPlugins: remarkEcPlugins, rehypePlugins: rehypeEcPlugins }),
-  );
+  const carta = new Carta(previewCartaOptions(cairn.preview));
 
   // svelte-ignore state_referenced_locally — form defaults from the initial load.
   const fm = data.frontmatter as Record<string, unknown>;
   const fmString = (key: string): string => (typeof fm[key] === 'string' ? (fm[key] as string) : '');
-  const selectedTags = new Set(Array.isArray(fm.tags) ? fm.tags.map(String) : []);
+  const fmTags = (key: string): Set<string> =>
+    new Set(Array.isArray(fm[key]) ? (fm[key] as unknown[]).map(String) : []);
 </script>
 
 <svelte:head>
-  <title>Edit {data.title} · EC Nordic CMS</title>
+  <title>Edit {data.title} · {data.siteName} CMS</title>
 </svelte:head>
 
 <div class="flex items-center justify-between gap-4">
@@ -47,40 +45,44 @@
   <input type="hidden" name="id" value={data.id} />
 
   <fieldset class="grid gap-4 rounded-box border border-base-300 bg-base-100 p-6">
-    <label class="flex flex-col gap-1">
-      <span class="text-sm font-medium">Title</span>
-      <input name="title" required value={fmString('title')} class="input input-bordered w-full" />
-    </label>
-
-    {#if data.type === 'posts'}
-      <label class="flex flex-col gap-1">
-        <span class="text-sm font-medium">Date</span>
-        <input type="date" name="date" required value={fmString('date')} class="input input-bordered w-full" />
-      </label>
-
-      <label class="flex flex-col gap-1">
-        <span class="text-sm font-medium">Description</span>
-        <textarea name="description" required rows="2" class="textarea textarea-bordered w-full"
-          >{fmString('description')}</textarea>
-      </label>
-
-      <div class="flex flex-col gap-1">
-        <span class="text-sm font-medium">Tags</span>
-        <div class="flex flex-wrap gap-3">
-          {#each POST_TAGS as tag (tag)}
-            <label class="flex items-center gap-2 text-sm">
-              <input type="checkbox" name="tags" value={tag} checked={selectedTags.has(tag)} class="checkbox checkbox-sm" />
-              {tag}
-            </label>
-          {/each}
+    {#each data.fields as field (field.name)}
+      {#if field.type === 'text' || field.type === 'date'}
+        <label class="flex flex-col gap-1">
+          <span class="text-sm font-medium">{field.label}</span>
+          <input
+            type={field.type === 'date' ? 'date' : 'text'}
+            name={field.name}
+            required={field.required}
+            value={fmString(field.name)}
+            class="input input-bordered w-full"
+          />
+        </label>
+      {:else if field.type === 'textarea'}
+        <label class="flex flex-col gap-1">
+          <span class="text-sm font-medium">{field.label}</span>
+          <textarea name={field.name} required={field.required} rows={field.rows ?? 4}
+            class="textarea textarea-bordered w-full">{fmString(field.name)}</textarea>
+        </label>
+      {:else if field.type === 'tags'}
+        <div class="flex flex-col gap-1">
+          <span class="text-sm font-medium">{field.label}</span>
+          <div class="flex flex-wrap gap-3">
+            {#each field.options as option (option)}
+              <label class="flex items-center gap-2 text-sm">
+                <input type="checkbox" name={field.name} value={option}
+                  checked={fmTags(field.name).has(option)} class="checkbox checkbox-sm" />
+                {option}
+              </label>
+            {/each}
+          </div>
         </div>
-      </div>
-
-      <label class="flex items-center gap-2 text-sm font-medium">
-        <input type="checkbox" name="draft" checked={fm.draft === true} class="checkbox checkbox-sm" />
-        Draft (hidden from the live site)
-      </label>
-    {/if}
+      {:else if field.type === 'boolean'}
+        <label class="flex items-center gap-2 text-sm font-medium">
+          <input type="checkbox" name={field.name} checked={fm[field.name] === true} class="checkbox checkbox-sm" />
+          {field.label}
+        </label>
+      {/if}
+    {/each}
   </fieldset>
 
   <div class="rounded-box border border-base-300 bg-base-100 p-2">
