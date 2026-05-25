@@ -1,14 +1,29 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 
-import type { SendEmail } from '@cloudflare/workers-types';
+import type { SendEmail, KVNamespace } from '@cloudflare/workers-types';
+import type { Editor } from '$lib/cairn/auth';
+import type { EmailSender } from '$lib/cairn/email';
 
 declare global {
   namespace App {
+    interface Locals {
+      editor: Editor | null;
+    }
     interface Platform {
       env: {
         SEND_EMAIL: SendEmail;
+        // Cloudflare Email Sending (transactional, arbitrary recipients) for magic links.
+        EMAIL: EmailSender;
+        AUTH_KV: KVNamespace;
         CONTACT_EMAIL: string;
         TURNSTILE_SECRET_KEY: string;
+        // cairn auth secrets (wrangler secret put / .dev.vars).
+        MAGIC_LINK_SECRET: string;
+        SESSION_SECRET: string;
+        // GitHub App credentials — consumed from Pass C onward.
+        GITHUB_APP_ID: string;
+        GITHUB_APP_INSTALLATION_ID: string;
+        GITHUB_APP_PRIVATE_KEY_B64: string;
       };
       context: ExecutionContext;
       caches: CacheStorage & { default: Cache };
