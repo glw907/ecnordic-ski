@@ -2,8 +2,7 @@ import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 import matter from 'gray-matter';
 import { cairn } from '$lib/cairn.config';
-import { findCollection } from '$lib/cairn/adapter';
-import { readRaw } from '$lib/cairn/github';
+import { findCollection, readRaw } from 'cairn-cms';
 
 export const load: PageServerLoad = async ({ params, url }) => {
   const collection = findCollection(cairn, params.type);

@@ -1,8 +1,7 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 
 import type { SendEmail, KVNamespace } from '@cloudflare/workers-types';
-import type { Editor } from '$lib/cairn/auth';
-import type { EmailSender } from '$lib/cairn/email';
+import type { Editor, EmailSender } from 'cairn-cms';
 
 declare global {
   namespace App {

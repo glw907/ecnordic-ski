@@ -1,9 +1,7 @@
 import type { RequestHandler } from './$types';
 import { error, redirect } from '@sveltejs/kit';
 import { cairn } from '$lib/cairn.config';
-import { findCollection, frontmatterFromForm } from '$lib/cairn/adapter';
-import { serializeMarkdown } from 'cairn-cms';
-import { commitFile, installationToken } from '$lib/cairn/github';
+import { findCollection, frontmatterFromForm, serializeMarkdown, commitFile, installationToken } from 'cairn-cms';
 
 // SvelteKit's built-in same-origin check protects this POST (cross-origin form posts → 403),
 // so no separate CSRF token is needed — same posture as the contact remote function.

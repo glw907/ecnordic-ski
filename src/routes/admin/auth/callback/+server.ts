@@ -1,12 +1,6 @@
 import type { RequestHandler } from './$types';
 import { redirect } from '@sveltejs/kit';
-import {
-  redeemMagicToken,
-  lookupEditor,
-  createSession,
-  SESSION_COOKIE,
-  SESSION_MAX_AGE,
-} from '$lib/cairn/auth';
+import { redeemMagicToken, lookupEditor, createSession, SESSION_COOKIE, SESSION_MAX_AGE } from 'cairn-cms';
 
 export const GET: RequestHandler = async ({ url, platform, cookies }) => {
   const env = platform?.env;

@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { cairn } from '$lib/cairn.config';
-import { listMarkdown, type RepoFile } from '$lib/cairn/github';
+import { listMarkdown, type RepoFile } from 'cairn-cms';
 
 interface Collection {
   type: string;

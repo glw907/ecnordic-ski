@@ -2,7 +2,7 @@
   import { browser } from '$app/environment';
   import { Carta, MarkdownEditor } from 'carta-md';
   import 'carta-md/default.css';
-  import { previewCartaOptions } from '$lib/cairn/carta';
+  import { previewCartaOptions } from 'cairn-cms';
   import { cairn } from '$lib/cairn.config';
   import type { PageData } from './$types';
 

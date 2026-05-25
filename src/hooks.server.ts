@@ -1,6 +1,6 @@
 import type { Handle } from '@sveltejs/kit';
 import { redirect } from '@sveltejs/kit';
-import { verifySession, SESSION_COOKIE } from '$lib/cairn/auth';
+import { verifySession, SESSION_COOKIE } from 'cairn-cms';
 
 // Routes under /admin that an unauthenticated visitor may still reach.
 function isPublicAdminPath(pathname: string): boolean {

@@ -1,7 +1,6 @@
 import type { RequestHandler } from './$types';
 import { redirect } from '@sveltejs/kit';
-import { createMagicLink, lookupEditor } from '$lib/cairn/auth';
-import { sendMagicLink } from '$lib/cairn/email';
+import { createMagicLink, lookupEditor, sendMagicLink } from 'cairn-cms';
 import { cairn } from '$lib/cairn.config';
 
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
