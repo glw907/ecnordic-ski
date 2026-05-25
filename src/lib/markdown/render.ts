@@ -9,15 +9,20 @@ import rehypeStringify from 'rehype-stringify';
 import remarkEcDirectives from './remark-ec-directives';
 import rehypeEcPrimitives from './rehype-ec-primitives';
 
+// Exported so cairn-cms can inject the same set into Carta's preview pipeline —
+// keeping the editor preview byte-for-byte identical to the live site.
+
+/** remark plugins: directive syntax → EC directive nodes. Injected before remark-rehype. */
+export const remarkEcPlugins = [remarkDirective, remarkEcDirectives];
+/** rehype plugins: raw HTML passthrough, EC primitives, heading slugs. Injected after remark-rehype. */
+export const rehypeEcPlugins = [rehypeRaw, rehypeEcPrimitives, rehypeSlug];
+
 const processor = unified()
   .use(remarkParse)
   .use(remarkGfm)
-  .use(remarkDirective)
-  .use(remarkEcDirectives)
+  .use(remarkEcPlugins)
   .use(remarkRehype, { allowDangerousHtml: true })
-  .use(rehypeRaw)
-  .use(rehypeEcPrimitives)
-  .use(rehypeSlug)
+  .use(rehypeEcPlugins)
   .use(rehypeStringify);
 
 export async function renderMarkdown(content: string): Promise<string> {

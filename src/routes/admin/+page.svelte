@@ -15,6 +15,21 @@
   Signed in as {data.editor?.name} ({data.editor?.email})
 </p>
 
-<div class="mt-8 rounded-box border border-base-300 bg-base-100 p-6">
-  <p class="opacity-70">No content collections wired yet — that arrives in Pass B.</p>
-</div>
+{#each data.collections as collection (collection.type)}
+  <section class="mt-8">
+    <h2 class="mb-3 text-lg font-semibold">{collection.label}</h2>
+    {#if collection.error}
+      <div class="alert alert-warning">Couldn't load {collection.label.toLowerCase()}: {collection.error}</div>
+    {:else if collection.files.length === 0}
+      <p class="opacity-60">No content yet.</p>
+    {:else}
+      <ul class="menu rounded-box border border-base-300 bg-base-100 p-2">
+        {#each collection.files as file (file.path)}
+          <li>
+            <a href="/admin/edit/{collection.type}/{file.id}">{file.id}</a>
+          </li>
+        {/each}
+      </ul>
+    {/if}
+  </section>
+{/each}
