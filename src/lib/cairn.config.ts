@@ -4,7 +4,7 @@
 // which collections are editable, each collection's frontmatter fields + validator, and the
 // remark/rehype plugin set the preview must mirror (the live render's directive pipeline).
 // 907.life supplies its own adapter of the same shape; cairn-core consumes only this.
-import type { CairnAdapter } from 'cairn-cms';
+import type { CairnAdapter } from '@glw907/cairn-cms';
 import { remarkEcPlugins, rehypeEcPlugins } from './markdown/render';
 import { validatePostFrontmatter, validatePageFrontmatter } from './content-schema';
 import { POST_TAGS } from './config';
