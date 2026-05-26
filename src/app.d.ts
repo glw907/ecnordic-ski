@@ -1,27 +1,30 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 
-import type { SendEmail, KVNamespace } from '@cloudflare/workers-types';
-import type { Editor, EmailSender } from '@glw907/cairn-cms';
+import type { SendEmail, D1Database } from '@cloudflare/workers-types';
+import type { EmailSender } from '@glw907/cairn-cms';
+import type { Auth, CairnUser } from '@glw907/cairn-cms/auth';
 
 declare global {
   namespace App {
     interface Locals {
-      editor: Editor | null;
+      // Per-request better-auth instance + resolved session (set in hooks.server.ts).
+      auth: Auth;
+      user: CairnUser | null;
     }
     interface Platform {
       env: {
         SEND_EMAIL: SendEmail;
         // Cloudflare Email Sending (transactional, arbitrary recipients) for magic links.
         EMAIL: EmailSender;
-        AUTH_KV: KVNamespace;
+        // cairn-cms better-auth store + signing secret + base URL.
+        AUTH_DB: D1Database;
+        AUTH_SECRET: string;
+        BETTER_AUTH_URL: string;
         CONTACT_EMAIL: string;
         TURNSTILE_SECRET_KEY: string;
-        // cairn auth secrets (wrangler secret put / .dev.vars).
-        MAGIC_LINK_SECRET: string;
-        SESSION_SECRET: string;
-        // Optional magic-link base URL; overrides url.origin (set in dev, unset in prod).
+        // Optional origin override; supersedes BETTER_AUTH_URL (set in dev, unset in prod).
         PUBLIC_ORIGIN?: string;
-        // GitHub App credentials — consumed from Pass C onward.
+        // GitHub App credentials — the commit signer (stays bespoke).
         GITHUB_APP_ID: string;
         GITHUB_APP_INSTALLATION_ID: string;
         GITHUB_APP_PRIVATE_KEY_B64: string;
