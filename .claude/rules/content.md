@@ -1,6 +1,6 @@
 # Content Standards
 
-Before writing or editing any website content — pages, posts, or form copy — read the content guide:
+Before writing or editing any website content (pages, posts, or form copy), read the content guide:
 
 **`docs/content-guide.md`**
 
@@ -9,13 +9,13 @@ Before writing or editing any website content — pages, posts, or form copy —
 ## Quick Reference
 
 **Voice:** Friendly, competent coach. Second person ("you") for reader, "we" for EC Nordic.
-**Audience:** High school athletes and their parents — write to both at once.
+**Audience:** High school athletes and their parents. Write to both at once.
 **Short form:** "East Community Nordic" on first reference, "EC Nordic" after. Never "ECN."
-**Cost:** Always state clearly — training is free, donations optional.
+**Cost:** Always state clearly. Training is free; donations are optional.
 
 ## Avoiding AI Rhythm
 
-The goal is not to avoid specific constructions — em dashes, parallel lists, and short declarative sentences are all fine. The problem is deploying them at a fixed rate regardless of whether they serve the sentence. Write with **burstiness**: vary sentence length and paragraph size deliberately.
+The goal is not to avoid specific constructions. Em dashes, parallel lists, and short declarative sentences are all fine. The problem is deploying them at a fixed rate regardless of whether they serve the sentence. Write with **burstiness**: vary sentence length and paragraph size deliberately.
 
 <anti_patterns>
 Check every draft for these before finishing:
@@ -38,18 +38,29 @@ Check every draft for these before finishing:
 
 9. **Binary "not X, but Y" constructions.** Fine once; a pattern is a tell.
 
-10. **Banned words:** seamless, transformative, robust, pivotal, foster, leverage (figurative), elevate (figurative), comprehensive, thriving, curated, tailored, dedicated, meticulous, nuanced, "it's worth noting," "when it comes to," "let's explore," "dive into," "not only X but also Y."
+10. **Banned words and phrases.** Do not use any of these:
+
+```
+seamless  transformative  robust  pivotal  foster  leverage (figurative)
+elevate (figurative)  comprehensive  thriving  curated  tailored  dedicated
+meticulous  nuanced  "it's worth noting"  "when it comes to"  "let's explore"
+"dive into"  "not only X but also Y"
+```
 </anti_patterns>
 
-## Self-Critique Pass — MANDATORY
+## Self-Critique Pass (MANDATORY)
 
 For any content longer than a paragraph this is not optional. After drafting,
 re-read and **flag every sentence** matching the anti-patterns above, then
-rewrite the flagged sentences before saving. In particular, test **every em
-dash**: a clause followed by a short tacked-on fragment after a dash (e.g.
-"tap Yes or No — No needs a reason") is a tell — use a period, comma, or colon,
-or fold it into the sentence. Do this even when you "already read the guide";
-reading the guide is not the same as running the pass.
+rewrite the flagged sentences before saving. In particular, test every em dash.
+A clause followed by a tacked-on fragment is a tell. The classic shape:
+
+```
+tap Yes or No — No needs a reason
+```
+
+Fix it with a period, comma, or colon, or fold it into the sentence. Do this
+even when you "already read the guide"; reading is not the same as running the pass.
 
 ### Automated backstop: the prose guard
 
@@ -57,10 +68,10 @@ The workstation `prose-guard` tool (`~/.local/bin/prose-guard`) runs as a global
 `PreToolUse` hook on every Write, Edit, and MultiEdit. Content under `src/content/**/*.md`
 gets the `general` tier, which carries this guide's word and phrase lists. When it finds
 a tell it denies the write and tells you what tripped, so fix the flagged text instead of
-working around it. It only catches what a regex reads reliably, including banned words,
-banned openers, and a stray em-dash appendage. It can't hear a flat cadence or a stack of
-tricolons, so the self-critique pass above still does the real work. It replaced the old
-per-repo `content-style-guard.py`.
+working around it. The guard catches what a regex reads reliably, including banned words,
+banned openers, and a stray em-dash appendage. Flat cadence and stacked tricolons slip
+through, so the self-critique pass above still does the real work. This tool replaced
+the old per-repo `content-style-guard.py`.
 
 ## Post Tags (controlled vocabulary)
 
@@ -70,8 +81,7 @@ Do not invent new tags.
 
 ## New Posts
 
-Create at `src/content/posts/YYYY-MM-slug.md` (no day in the filename — the post
-route is `[year]/[month]/[slug]`, so a day folds into the slug):
+Create at `src/content/posts/YYYY-MM-slug.md`. There is no day in the filename because the route is `[year]/[month]/[slug]`, and a day folds into the slug:
 
 ```yaml
 ---

@@ -1,6 +1,6 @@
 # ecnordic.ski
 
-East Community Nordic — SvelteKit + TypeScript, deployed to Cloudflare Workers.
+East Community Nordic. SvelteKit + TypeScript, deployed to Cloudflare Workers.
 
 @docs/STATUS.md
 
@@ -10,9 +10,7 @@ SvelteKit · TypeScript · Tailwind CSS v4 · DaisyUI v5 · @schedule-x/svelte �
 
 ## Development Workflow
 
-Pass-driven. Trigger phrases — "continue development," "next pass," "finish pass,"
-"ship pass" — invoke the `site-pass` skill (this repo's own roadmap). For cairn-cms
-library work (passes 0/A–F, tracked in `cairn-cms/docs/PLAN.md`), use `cairn-pass` instead.
+Pass-driven. Any of "continue development," "next pass," "finish pass," or "ship pass" invokes the `site-pass` skill (this repo's own roadmap). For cairn-cms library work (passes 0/A–F, tracked in `cairn-cms/docs/PLAN.md`), use `cairn-pass` instead.
 
 ## Build & Dev
 
