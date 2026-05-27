@@ -51,16 +51,16 @@ dash**: a clause followed by a short tacked-on fragment after a dash (e.g.
 or fold it into the sentence. Do this even when you "already read the guide";
 reading the guide is not the same as running the pass.
 
-### Automated backstop — the content style guard
+### Automated backstop: the prose guard
 
-`.claude/hooks/content-style-guard.py` runs as a `PreToolUse` hook (wired in
-`.claude/settings.json`) on every Write/Edit/MultiEdit of `src/content/**/*.md`.
-It **blocks the write** (exit 2, feedback to the model) when it detects the
-high-confidence tells: the em-dash appendage, em-dash spray, banned
-words/phrases, and banned sentence openers. It is a backstop, not a substitute
-for the self-critique pass — it catches the regex-reliable tells; cadence,
-tricolons, and the subtler anti-patterns are still on you. If it blocks a write,
-fix the flagged text rather than working around the guard.
+The workstation `prose-guard` tool (`~/.local/bin/prose-guard`) runs as a global
+`PreToolUse` hook on every Write, Edit, and MultiEdit. Content under `src/content/**/*.md`
+gets the `general` tier, which carries this guide's word and phrase lists. When it finds
+a tell it denies the write and tells you what tripped, so fix the flagged text instead of
+working around it. It only catches what a regex reads reliably, including banned words,
+banned openers, and a stray em-dash appendage. It can't hear a flat cadence or a stack of
+tricolons, so the self-critique pass above still does the real work. It replaced the old
+per-repo `content-style-guard.py`.
 
 ## Post Tags (controlled vocabulary)
 
