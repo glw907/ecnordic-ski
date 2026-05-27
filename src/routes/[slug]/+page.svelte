@@ -49,8 +49,8 @@
   }
 
   /* Lede: the first paragraph of any static page. A gentle step above the
-     standard body (set in app.css) — a touch larger and a touch heavier (medium,
-     a loaded Alegreya Sans weight), same colour — so it reads as the intro
+     standard body (set in app.css), a touch larger and a touch heavier (medium,
+     a loaded Alegreya Sans weight), same colour, so it reads as the intro
      without shouting. Site-wide and uniform; no per-page lede sizing. */
   .static-page :global(.post-body > p:first-child) {
     font-size: 1rem;
@@ -82,15 +82,15 @@
     color: var(--color-heading);
   }
 
-  /* ─── About — worked example of the EC Nordic design language ──────
+  /* ─── About: worked example of the EC Nordic design language ──────
      The page is built from a small, reusable kit (see the Pass-4 design
      spec). Each primitive maps to a DaisyUI component so it's idiomatic
      and portable; the scoped CSS here only tunes spacing and the one
      custom primitive (the icon chip):
 
        module   → DaisyUI .card (subtle: border + shadow-sm)
-       caution  → .ec-alert.ec-alert-caution — subtle alert, amber chrome
-       grid     → .ec-grid (global) — card body of parallel titled points
+       caution  → .ec-alert.ec-alert-caution: subtle alert, amber chrome
+       grid     → .ec-grid (global): card body of parallel titled points
        action   → DaisyUI .btn.btn-primary
        icon     → .ec-icon bare glyph (default); .ec-chip tile = one focal accent
 
@@ -100,7 +100,7 @@
        warning  (amber)   = caution  ─────────────────────────────────── */
 
   /* A decorated page orchestrates its own entrance per module (below), so the
-     shared whole-page rise would double the transform — let the cascade carry
+     shared whole-page rise would double the transform, so let the cascade carry
      it. (About and training both decorate; plain pages keep the page rise.) */
   .static-page:is([data-page="about"], [data-page="training"], [data-page="crewlab"]) {
     animation: none;
@@ -117,7 +117,7 @@
     animation-delay: var(--rise, 0s);
   }
   /* A titled prose passage carries the section head + body at full page width,
-     with no card border/wash — prose is the kit's default (see design doc). */
+     with no card border/wash. Prose is the kit's default (see design doc). */
   .static-page[data-page="crewlab"] :global(.ec-passage) {
     padding-inline: 0.25rem;
   }
@@ -131,7 +131,7 @@
     display: flex;
     align-items: center;
     gap: 0.7rem;
-    /* heading breathes from its body — the innermost step of the page's
+    /* heading breathes from its body; the innermost step of the page's
        vertical rhythm (0.5 → 0.9 → 1.4rem, each ~1.5× the last) */
     margin-block-end: 0.5rem;
   }

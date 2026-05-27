@@ -1,7 +1,7 @@
 import { POST_TAGS } from './config.js';
 import { isoFromValue } from './utils.js';
 
-/** Validated post frontmatter — the editorial fields, after type and vocabulary checks. */
+/** Validated post frontmatter: the editorial fields, after type and vocabulary checks. */
 export interface PostFrontmatter {
   title: string;
   date: string;

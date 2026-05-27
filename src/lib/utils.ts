@@ -13,7 +13,7 @@ export function isoFromValue(value: unknown, fallback?: string): string {
   return fallback ?? '';
 }
 
-// Parses YYYY-MM-DD as UTC — avoids timezone shift from bare date string parsing.
+// Parses YYYY-MM-DD as UTC to avoid timezone shift from bare date string parsing.
 export function parseUtcDate(iso: string): Date {
   const [year, month, day] = iso.split('-').map(Number);
   return new Date(Date.UTC(year, month - 1, day));

@@ -10,7 +10,7 @@ tracked in `cairn-cms/docs/PLAN.md`), use the `cairn-pass` skill instead.
 
 `BACKLOG.md` uses the `/log-issue` structured format (numbered `**#N**`
 items, `#type`/`#ecnordic` tags, dates, grouped under High/Medium/Low/Done).
-Use that format for new items — never plain bullets.
+Use that format for new items, never plain bullets.
 
 When work completes something tracked in the backlog, close it in the same
 pass: mark `[x]`, move it to `## Done` with a completion date, and verify it's

@@ -2,7 +2,7 @@
 title: "Training"
 ---
 
-EC Nordic's summer dryland program runs from late May through early August. It's free, open to all experience levels, and built around the same physical foundation as competitive Nordic skiing. The season builds toward a multi-day training camp in Talkeetna in July, which is part of the same program — no separate sign-up.
+EC Nordic's summer dryland program runs from late May through early August. It's free, open to all experience levels, and built around the same physical foundation as competitive Nordic skiing. The season builds toward a multi-day training camp in Talkeetna in July. No separate sign-up; it's part of the same program.
 
 <nav class="page-toc" aria-label="On this page">
   <a href="#schedule">Schedule</a>
@@ -16,7 +16,7 @@ EC Nordic's summer dryland program runs from late May through early August. It's
 :::card{icon=calendar-blank}
 ## Schedule
 
-We train Monday, Wednesday, and Friday, roughly 4:00–6:00 PM. Locations rotate — Kincaid Park, Hillside, the Coastal Trail, and a few others — and are posted to [CrewLAB](/crewlab) each week.
+We train Monday, Wednesday, and Friday, roughly 4:00–6:00 PM. Locations rotate among Kincaid Park, Hillside, the Coastal Trail, and a few others, and are posted to [CrewLAB](/crewlab) each week.
 
 [PLACEHOLDER — confirm exact start and end dates for this season.]
 :::
@@ -45,7 +45,7 @@ High school athletes in the Anchorage area. No cross-country skiing experience n
 
 - Water and snacks
 - Trail running shoes
-- Helmet (required for roller-skiing and mountain biking — no exceptions)
+- Helmet (required for roller-skiing and mountain biking, no exceptions)
 - Layers. Anchorage summer weather is variable.
 
 Roller skis and poles aren't provided. [PLACEHOLDER — add any loaner equipment details.]
@@ -60,7 +60,7 @@ The Talkeetna camp is the highlight of the summer season. We spend [PLACEHOLDER 
 
 ### What to Expect
 
-Training is concentrated — two or three sessions per day, covering running, roller-skiing, and strength work. The terrain around Talkeetna is excellent and the conditions are usually better than Anchorage in late summer.
+Training is concentrated: two or three sessions per day, covering running, roller-skiing, and strength work. The terrain around Talkeetna is excellent and the conditions are usually better than Anchorage in late summer.
 
 Evenings are for group meals, recovery, and getting to know your teammates. The camp builds more team cohesion than the entire rest of the summer combined.
 
@@ -79,7 +79,7 @@ Evenings are for group meals, recovery, and getting to know your teammates. The 
 
 - All your training gear (running shoes, roller skis and poles, helmet, bike if applicable)
 - Sleeping bag and pad
-- Rain gear — Talkeetna weather is unpredictable
+- Rain gear (Talkeetna weather is unpredictable)
 - Water bottle and personal snacks
 - Medications you take daily
 ::::
@@ -87,7 +87,7 @@ Evenings are for group meals, recovery, and getting to know your teammates. The 
 :::cta{icon=flag}
 ## Sign Up
 
-A signed waiver is required before your first session. Get it on the [Resources](/resources) page. Camp registration is included — you don't need to sign up for Talkeetna separately.
+A signed waiver is required before your first session. Get it on the [Resources](/resources) page. Camp registration is included; you don't need to sign up for Talkeetna separately.
 
 <a href="https://crewlab.app.link/5g7vhhYEn3b" class="download-link" target="_blank" rel="noopener">Sign Up for Summer Training →</a>
 

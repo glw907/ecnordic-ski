@@ -4,20 +4,20 @@ description: "Land changes on this SvelteKit + Cloudflare project: run the quali
 user_invocable: true
 ---
 
-# /ship — Gate, Simplify, Commit, Deploy
+# /ship: Gate, Simplify, Commit, Deploy
 
 Land the current changes on ecnordic.ski. **Pushing to `main` deploys to production**
 (push → GitHub Actions → build + pagefind + `wrangler deploy` → live at
 https://ecnordic.ski in ~2 min), so this skill ends by shipping the live site.
 
 This is the quick "land my changes" path. For the full pass-end consolidation
-(STATUS rewrite, plan archival, backlog reconciliation), use `site-pass` instead —
-trigger it with "finish pass" / "ship pass".
+(STATUS rewrite, plan archival, backlog reconciliation), use `site-pass` instead.
+Trigger it with "finish pass" or "ship pass".
 
 ## Usage
 
-- `/ship` — auto-generate the commit message from the diff
-- `/ship Drop mdsvex, gate frontmatter` — use the provided message verbatim
+- `/ship`: auto-generate the commit message from the diff
+- `/ship Drop mdsvex, gate frontmatter`: use the provided message verbatim
 
 ## Pipeline
 
@@ -33,7 +33,7 @@ npm run build     # full build: catches frontmatter validation + prerender break
 ```
 
 All three matter. `check` and `test` alone won't catch a bad-frontmatter throw
-(`src/lib/content-schema.ts`) or a prerender/`entries()` break — those only surface in
+(`src/lib/content-schema.ts`) or a prerender/`entries()` break. Those only surface in
 `npm run build`. If any gate fails, fix it and re-run before proceeding.
 
 ### 2. Simplify
@@ -47,8 +47,8 @@ this step.
 
 If the change is more than a trivial fix, keep the docs honest before committing:
 
-- **`docs/STATUS.md`** — update "Current state" if the architecture or live behavior changed.
-- **`BACKLOG.md`** — close any item this work resolved (move to `## Done` with today's
+- **`docs/STATUS.md`**: update "Current state" if the architecture or live behavior changed.
+- **`BACKLOG.md`**: close any item this work resolved (move to `## Done` with today's
   date, verify it's actually done first); log anything newly surfaced. Use the
   `/log-issue` structured format (`**#N**`, `#type` + `#ecnordic` tags, dates).
 
@@ -79,9 +79,7 @@ EOF
 git push origin main
 ```
 
-Pushing to `main` triggers the production deploy. This project deploys *from* `main` —
-that is by design here (unlike repos that forbid pushing to main). Proceed when the
-user invoked `/ship`; the deploy is the intended outcome.
+Pushing to `main` triggers the production deploy. This project deploys from `main` by design (unlike repos that forbid pushing to main). Proceed when the user invoked `/ship`; the deploy is the intended outcome.
 
 ### 6. Confirm the deploy started
 
@@ -102,4 +100,4 @@ Workers" run is queued/running. Mention it goes live in ~2 min.
 
 - Mid-implementation (changes aren't all done).
 - When the user wants only a subset (just commit, just check).
-- When the user wants the full pass-end ritual — use `site-pass` ("finish pass").
+- When the user wants the full pass-end ritual, use `site-pass` ("finish pass").

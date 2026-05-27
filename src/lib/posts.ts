@@ -3,7 +3,7 @@ import type { PostDetail, PostSummary } from './types.js';
 import { markdownToHtml } from './utils.js';
 import { validatePostFrontmatter } from './content-schema.js';
 
-// Bundled at build time — no runtime filesystem access needed.
+// Bundled at build time. No runtime filesystem access needed.
 // Keys are absolute paths like "/src/content/posts/2026-03-early-march.md"
 const rawFiles = import.meta.glob<string>('/src/content/posts/*.md', {
   query: '?raw',

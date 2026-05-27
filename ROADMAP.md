@@ -11,10 +11,10 @@ package once the engine is battle-ready.
 
 ### Idiomatic 2026 Exemplar `idiomatic-2026`
 Make ecnordic.ski an exemplar of stable 2026 Svelte 5 / SvelteKit / Tailwind v4 /
-DaisyUI v5 / TypeScript. Pass 7 (conformance & hardening sweep) — **done 2026-05-24**:
+DaisyUI v5 / TypeScript. The conformance & hardening sweep (pass 7, 2026-05-24) landed
 `strProp` typed accessor, typed Pagefind import, `Snippet`-typed children, MCP-verified
-idiom, all surfaces output-identical. Pass 8 (kit rollout to contact / tags / post-detail
-components) — next. Pass 9 (remote-functions spike, BACKLOG #13) — deferred.
+idiom, all surfaces output-identical. Kit rollout to contact/tags/post-detail (pass 8)
+followed. The remote-functions spike (pass 9, BACKLOG #13) is deferred.
 Spec: `docs/superpowers/archive/specs/2026-05-24-idiomatic-2026-exemplar-design.md`
 
 ## Planned
@@ -34,5 +34,5 @@ being stable and battle-tested.
 
 ### AKS Sailing Club site `aksailingclub`
 Build aksailingclub.org as a Cairn site package, including content migration from the
-existing Hugo site. The most complex migration — happens last, after cairn-cms is proven
+existing Hugo site. The most complex migration; happens last, after cairn-cms is proven
 and site-migrations is complete.

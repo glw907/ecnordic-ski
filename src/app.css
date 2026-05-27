@@ -27,7 +27,7 @@
   font-display: swap;
 }
 
-/* Real italic face — so emphasis (`<em>`), blockquotes, and descriptions get
+/* Real italic face, so emphasis (`<em>`), blockquotes, and descriptions get
    the designed italic instead of a synthetic browser slant. */
 @font-face {
   font-family: 'Alegreya Sans';
@@ -63,9 +63,9 @@
   /* ECN color tokens */
   --color-heading: oklch(16% 0.020 15);
   --color-body: oklch(26% 0.012 15);
-  /* Supporting prose — one measured step from body toward muted. Used for
-     elaboration that sits under a term or heading (grid cells, alert body):
-     quieter than body, well clear of muted's caption weight. */
+  /* Supporting prose: one measured step from body toward muted. Used for
+     elaboration under a term or heading (grid cells, alert body),
+     quieter than body and well clear of muted's caption weight. */
   --color-body-soft: oklch(35% 0.012 16);
   --color-muted: oklch(52% 0.010 20);
   --color-faint: oklch(68% 0.006 20);
@@ -82,7 +82,7 @@
   --color-error-bg: oklch(97% 0.008 30);
   --color-error-border: oklch(88% 0.018 30);
   --color-highlight: oklch(80% 0.14 18 / 0.25);
-  /* Subtle-alert icon amber — clear amber that holds 3:1 on the faint caution
+  /* Subtle-alert icon amber. Clear amber that holds 3:1 on the faint caution
      wash (icon only; the label is neutral). Flips brighter in dark mode. */
   --color-caution-accent: oklch(58% 0.16 72);
 }
@@ -95,24 +95,24 @@
   --color-base-200: oklch(95% 0.006 60);
   --color-base-300: oklch(90% 0.008 60);
   --color-base-content: oklch(16% 0.020 15);
-  /* Brand anchors — the warm↔cool axis the whole palette derives from */
-  --color-primary: oklch(54% 0.26 18);          /* crimson — the program & the one action */
+  /* Brand anchors: the warm↔cool axis the whole palette derives from */
+  --color-primary: oklch(54% 0.26 18);          /* crimson: the program & the one action */
   --color-primary-content: oklch(99% 0.003 18);
-  --color-secondary: oklch(48% 0.20 260);       /* cobalt — people, community, wayfinding */
+  --color-secondary: oklch(48% 0.20 260);       /* cobalt: people, community, wayfinding */
   --color-secondary-content: oklch(99% 0.003 260);
-  /* Cool family (calm / affirm) — stepped off cobalt */
-  --color-accent: oklch(60% 0.13 195);          /* teal — highlights & interactive accents */
+  /* Cool family (calm / affirm), stepped off cobalt */
+  --color-accent: oklch(60% 0.13 195);          /* teal: highlights & interactive accents */
   --color-accent-content: oklch(18% 0.020 195);
-  --color-neutral: oklch(30% 0.015 230);        /* slate — structural UI */
+  --color-neutral: oklch(30% 0.015 230);        /* slate: structural UI */
   --color-neutral-content: oklch(92% 0.006 230);
-  --color-info: oklch(58% 0.16 245);            /* azure — information */
+  --color-info: oklch(58% 0.16 245);            /* azure: information */
   --color-info-content: oklch(99% 0.003 245);
-  --color-success: oklch(52% 0.13 155);         /* pine — free / confirmed / go */
+  --color-success: oklch(52% 0.13 155);         /* pine: free / confirmed / go */
   --color-success-content: oklch(99% 0.003 155);
-  /* Warm family (act / attention) — stepped off crimson */
-  --color-warning: oklch(74% 0.17 72);          /* amber — caution */
+  /* Warm family (act / attention), stepped off crimson */
+  --color-warning: oklch(74% 0.17 72);          /* amber: caution */
   --color-warning-content: oklch(20% 0.015 72);
-  --color-error: oklch(55% 0.23 30);            /* vermilion — error / destructive */
+  --color-error: oklch(55% 0.23 30);            /* vermilion: error / destructive */
   --color-error-content: oklch(99% 0.003 30);
 }
 
@@ -125,28 +125,28 @@
   --color-base-300: oklch(25% 0.020 255);
   --color-base-content: oklch(92% 0.006 25);
   /* Brand anchors (brighter for dark surfaces) */
-  --color-primary: oklch(65% 0.26 18);          /* crimson — program & action */
+  --color-primary: oklch(65% 0.26 18);          /* crimson: program & action */
   --color-primary-content: oklch(12% 0.015 18);
-  --color-secondary: oklch(62% 0.19 260);       /* cobalt — people */
+  --color-secondary: oklch(62% 0.19 260);       /* cobalt: people */
   --color-secondary-content: oklch(12% 0.010 260);
-  /* Cool family — stepped off cobalt */
-  --color-accent: oklch(70% 0.13 195);          /* teal — highlight */
+  /* Cool family, stepped off cobalt */
+  --color-accent: oklch(70% 0.13 195);          /* teal: highlight */
   --color-accent-content: oklch(14% 0.020 195);
-  --color-neutral: oklch(24% 0.018 255);        /* slate — structural UI */
+  --color-neutral: oklch(24% 0.018 255);        /* slate: structural UI */
   --color-neutral-content: oklch(82% 0.008 25);
-  --color-info: oklch(68% 0.15 245);            /* azure — information */
+  --color-info: oklch(68% 0.15 245);            /* azure: information */
   --color-info-content: oklch(13% 0.012 245);
-  --color-success: oklch(66% 0.14 155);         /* pine — free / go */
+  --color-success: oklch(66% 0.14 155);         /* pine: free / go */
   --color-success-content: oklch(13% 0.010 155);
-  /* Warm family — stepped off crimson */
-  --color-warning: oklch(80% 0.17 72);          /* amber — caution */
+  /* Warm family, stepped off crimson */
+  --color-warning: oklch(80% 0.17 72);          /* amber: caution */
   --color-warning-content: oklch(18% 0.015 72);
-  --color-error: oklch(68% 0.22 30);            /* vermilion — error */
+  --color-error: oklch(68% 0.22 30);            /* vermilion: error */
   --color-error-content: oklch(13% 0.010 30);
   --color-caution-accent: oklch(82% 0.15 72);   /* brighter amber for dark wash */
   --color-heading: oklch(94% 0.006 25);
   --color-body: oklch(82% 0.008 25);
-  --color-body-soft: oklch(74% 0.008 25);   /* supporting prose — one step toward muted */
+  --color-body-soft: oklch(74% 0.008 25);   /* supporting prose: one step toward muted */
   --color-muted: oklch(60% 0.008 25);
   --color-faint: oklch(44% 0.006 255);
   --color-border: oklch(28% 0.018 255);
@@ -171,7 +171,7 @@ body {
 
 /* ─── Shared post chrome ──────────────────────────────────── */
 
-/* Date label — same eyebrow voice as the home schedule's date (display 700,
+/* Date label: same eyebrow voice as the home schedule's date (display 700,
    uppercase), so a date reads the same wherever it appears. */
 .post-date {
   display: block;
@@ -218,8 +218,8 @@ body {
    The kit's components are DaisyUI (.card, .alert, .list, .btn, .badge);
    the icon chip is the one custom atom. A Phosphor glyph in a tinted
    square whose color states the section's role:
-     default            → primary (crimson) — the program / the action
-     .ec-chip-secondary → secondary (cobalt) — people / community  */
+     default            → primary (crimson): the program / the action
+     .ec-chip-secondary → secondary (cobalt): people / community  */
 .ec-chip {
   flex: 0 0 auto;
   display: inline-flex;
@@ -249,7 +249,7 @@ body {
   block-size: 1.1rem;
 }
 
-/* Bare role-coloured glyph — the default icon treatment. A tinted .ec-chip
+/* Bare role-coloured glyph. The default icon treatment. A tinted .ec-chip
    tile is heavy when repeated down a page, so most section icons are just
    the glyph in its role colour; reserve the tile for a deliberate focal
    accent. Colour states the role, same rule as the chip. */
@@ -262,9 +262,9 @@ body {
   color: var(--color-secondary);
 }
 
-/* ─── Subtle alert card — `.ec-alert` ─────────────────────────
+/* ─── Subtle alert card: `.ec-alert` ─────────────────────────
    A reusable aside that still carries weight. A faint role-tinted wash
-   sets it apart from the calm card stack — no border, no shadow, so it
+   sets it apart from the calm card stack. No border, no shadow, so it
    *recedes* as an aside rather than floating like a module. The amber
    icon + a compact uppercase label give it identity; the prose is quiet
    (smaller, muted-leaning) but readable. Colour lives only in the icon
@@ -274,12 +274,12 @@ body {
    the same way via a sibling modifier class. */
 .ec-alert {
   /* 1.5rem padding matches `.card-body`, so the label and prose line up with
-     the card text above/below — no jarring left-edge shift in the stack. */
+     the card text above/below, with no jarring left-edge shift in the stack. */
   padding: 1.4rem 1.5rem;
   border-radius: 0.7rem;
   background: color-mix(in oklch, var(--alert-edge) 5%, var(--color-base-100));
 }
-/* Role modifier — sets the two custom props the base `.ec-alert` reads.
+/* Role modifier: sets the two custom props the base `.ec-alert` reads.
    Add `.ec-alert-info`, `.ec-alert-success`, etc. the same way. */
 .ec-alert-caution {
   --alert-edge: var(--color-warning);
@@ -287,7 +287,7 @@ body {
 }
 /* Two-class prefix so these beat `.post-body h2/p/a` (equal specificity,
    but those come later in the file). The heading is a compact uppercase
-   label with the alert icon inline at its head — so the body prose isn't
+   label with the alert icon inline at its head, so the body prose isn't
    indented past it and stays aligned with the label's left edge. The label
    is neutral (heading colour); amber lives only in the icon + edge. */
 .ec-alert .ec-alert-body :is(h2, h3) {
@@ -312,7 +312,7 @@ body {
   margin: 0;
   font-size: 0.85rem;
   line-height: 1.5;
-  /* supporting-prose level — same role/colour as the grid cell body, so
+  /* supporting-prose level: same role/colour as the grid cell body, so
      "elaboration under a heading" reads the same wherever it appears */
   color: var(--color-body-soft);
 }
@@ -333,11 +333,11 @@ body {
   .ec-alert .ec-alert-body a { transition: none; }
 }
 
-/* ─── Grid card body — `.ec-grid` ─────────────────────────────
+/* ─── Grid card body: `.ec-grid` ─────────────────────────────
    A set of parallel, titled points (peers, not a sequence) inside a
    module card: convictions, activity types, ways to help. Two columns
    on desktop, one on mobile. The orphan cell of an odd-count grid spans
-   the full width — both an orphan fix and a "featured point" slot for
+   the full width, serving as both an orphan fix and a "featured point" slot for
    the longest/most-important item placed last. Cells reuse the base-200
    surface of the .ec-split panels; colour stays in the card-head icon. */
 .ec-grid {
@@ -428,7 +428,7 @@ body {
   color: var(--color-body);
 }
 /* One standard body size site-wide. DaisyUI's .card-body forces 0.875rem, so
-   card content inherits the standard instead — text is the same size whether or
+   card content inherits the standard instead. Text is the same size whether or
    not it sits in a card. (Grid cells keep their own smaller supporting size.) */
 .post-body .card-body { font-size: inherit; }
 
@@ -608,7 +608,7 @@ body {
   margin-block: 2.25em;
 }
 
-/* ─── Entrance cascade — shared motion ────────────────────────
+/* ─── Entrance cascade: shared motion ────────────────────────
    Single source for the page-entrance keyframes (docs/design-language.md →
    Motion). Pages emit a per-module `--rise` delay via riseStyle() ($lib/motion)
    and reference these keyframes. The frozen [slug] page keeps its own scoped

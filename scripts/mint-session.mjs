@@ -1,11 +1,11 @@
-// Dev-only: mint a valid cairn_session cookie value for smoke-testing the /admin guard
-// without the email loop. Mirrors src/lib/cairn/auth.ts (HMAC-SHA256, b64url payload.sig).
+// Dev-only: mint a valid cairn_session cookie value for smoke-testing the /admin guard.
+// Does not use the email loop. Mirrors src/lib/cairn/auth.ts (HMAC-SHA256, b64url payload.sig).
 // Reads SESSION_SECRET from .dev.vars. Usage: node scripts/mint-session.mjs
 import { readFileSync } from 'node:fs';
 import { webcrypto as crypto } from 'node:crypto';
 
 const vars = readFileSync(new URL('../.dev.vars', import.meta.url), 'utf8');
-// Strip optional surrounding quotes — wrangler does this when loading .dev.vars.
+// Strip optional surrounding quotes (wrangler does this when loading .dev.vars).
 const secret = vars.match(/^SESSION_SECRET=(.*)$/m)?.[1]?.trim().replace(/^["']|["']$/g, '');
 if (!secret) throw new Error('SESSION_SECRET not found in .dev.vars');
 

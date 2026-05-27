@@ -3,8 +3,8 @@
 Editorial standards for ecnordic.ski. These guidelines ensure consistency and quality while maintaining the voice of a friendly, competent coach writing to high school athletes and their parents.
 
 This guide covers two types of content:
-- **Posts** — Training updates, race results, event recaps, and announcements
-- **Pages** — About, Summer Training, Talkeetna Camp, Resources, Contact, and other static sections
+- **Posts:** Training updates, race results, event recaps, and announcements
+- **Pages:** About, Summer Training, Talkeetna Camp, Resources, Contact, and other static sections
 
 ---
 
@@ -14,7 +14,7 @@ Guidelines for static pages: About, Summer Training, Talkeetna Camp, Resources, 
 
 ## Voice and Tone
 
-**The primary audience is high school athletes and their parents.** Write to both at once — not down to students, not over their heads to parents. A 16-year-old and their mom should both feel like this was written for them.
+**The primary audience is high school athletes and their parents.** Write to both at once. Not down to students, not over their heads to parents. A 16-year-old and their mom should both feel like this was written for them.
 
 **Voice: friendly, competent coach.** Not a corporate organization, not a formal institution, not a cheerleader. A coach who knows what they're doing, cares about the athletes, and says what they mean.
 
@@ -35,7 +35,7 @@ Guidelines for static pages: About, Summer Training, Talkeetna Camp, Resources, 
 
 **For parents:** Be informative and trustworthy. Answer the practical questions: cost (free), supervision (volunteer coaches), safety (waivers, helmets required), what to expect. Parents want to know their kid is in good hands.
 
-One page serves both — write the main content for athletes, include the practical parent details (cost, supervision, waivers) without making them feel like a separate section.
+One page serves both. Write the main content for athletes, include the practical parent details (cost, supervision, waivers) without making them feel like a separate section.
 
 ## Sentence Structure
 
@@ -64,7 +64,7 @@ One page serves both — write the main content for athletes, include the practi
 - **Em dash** — interrupts. B is an aside or pivot that deserves emphasis.
 - **Comma** — continues. B adds to A without pausing.
 
-**Em dashes — three permitted uses:**
+**Em dashes: three permitted uses:**
 1. Mid-sentence interruption that needs emphasis: "The camp — four days in Talkeetna — is the highlight of the summer."
 2. Abrupt pivot or reveal: "No experience needed — just show up."
 3. Appositive list when commas would cause confusion: "Three activities — roller-skiing, running, and biking — make up the core of summer training."
@@ -86,7 +86,7 @@ One page serves both — write the main content for athletes, include the practi
 
 **"EC Nordic" as the short form:** Write "East Community Nordic" on first reference, then "EC Nordic" after that. Never abbreviate to "ECN."
 
-**Define any acronyms on first use:** "roller-skiing (roller skis with poles on pavement)" — explain the activity when the audience might not know it.
+**Define any acronyms on first use.** For example: "roller-skiing (roller skis with poles on pavement)". Explain the activity when the audience might not know it.
 
 **Active voice:** Default to active voice. Use "we" for program actions, "you" for athlete actions.
 - ✓ "Volunteer coaches run every session."
@@ -192,13 +192,13 @@ Guidelines for news posts, training updates, race results, and announcements.
 
 ## Voice and Tone
 
-**Posts are more personal than pages.** Use "I" for personal voice when writing as a coach, "we" for the program. This is a coach writing to athletes and families — not a press release.
+**Posts are more personal than pages.** Use "I" for personal voice when writing as a coach, "we" for the program. This is a coach writing to athletes and families, not a press release.
 
 **Trust the reader.** State facts. Don't editorialize about whether something is exciting or important. If it's in the post, it matters.
 
 **Be specific.** Name athletes and coaches. Name the trails and locations. Give the actual result, not "a strong performance." "Kayla went 3rd in the JV women's 5K" beats "athletes had a strong showing."
 
-**Parentheticals** are a natural part of this voice — use them for practical notes, dry humor, and context that would interrupt the main clause.
+**Parentheticals** are a natural part of this voice. Use them for practical notes, dry humor, and context that would interrupt the main clause.
 
 **Humor:** Understated and dry. A coach who's funny by being matter-of-fact, not by announcing that something is funny.
 
@@ -214,7 +214,7 @@ Every post begins with a paragraph that serves as the post summary in excerpts a
 
 ## Headings
 
-Use `##` for major sections, `###` for subsections within those. Don't skip levels. The post title is `h1` — body content starts at `##`.
+Use `##` for major sections, `###` for subsections within those. Don't skip levels. The post title is `h1`; body content starts at `##`.
 
 For short announcements and updates, no headings needed at all.
 
@@ -232,12 +232,12 @@ For short announcements and updates, no headings needed at all.
 
 Use the controlled vocabulary only:
 
-- `training` — workout recaps, dryland updates
-- `racing` — race announcements, meet previews
-- `results` — post-race results and standings
-- `events` — non-race events (camps, clinics, tryouts)
-- `camp` — Talkeetna camp and other multi-day trips
-- `announcements` — schedule changes, program news, general updates
+- `training`: workout recaps, dryland updates
+- `racing`: race announcements, meet previews
+- `results`: post-race results and standings
+- `events`: non-race events (camps, clinics, tryouts)
+- `camp`: Talkeetna camp and other multi-day trips
+- `announcements`: schedule changes, program news, general updates
 
 Multiple tags are fine. Don't invent new tags.
 
@@ -251,10 +251,10 @@ Thanks to Coach Wright and the parent volunteers who made the Talkeetna camp hap
 
 ## What to Avoid
 
-- **Editorializing about the reader's experience:** Not "You'll love this workout" — just describe the workout.
-- **Abstract benefit framing:** Not "This will enhance your aerobic capacity" — say what you're doing and at what intensity.
-- **Gerund-phrase openers:** Not "Building on last week's momentum..." — start with a subject.
-- **Meta-commentary about the post:** Not "In this update, we'll cover..." — just cover it.
+- **Editorializing about the reader's experience:** Not "You'll love this workout." Just describe the workout.
+- **Abstract benefit framing:** Not "This will enhance your aerobic capacity." Say what you're doing and at what intensity.
+- **Gerund-phrase openers:** Not "Building on last week's momentum..." Start with a subject.
+- **Meta-commentary about the post:** Not "In this update, we'll cover..." Just cover it.
 - **Formal connective phrases:** Never "Furthermore," "Additionally," "Moreover."
 - **Reflective endings:** When the facts end, the post ends. Don't add a sentence about what the experience meant.
 - **Benefit restatement:** Same rule as pages. State the fact; trust the reader to see the value.
@@ -263,19 +263,19 @@ Thanks to Coach Wright and the parent volunteers who made the Talkeetna camp hap
 
 # Avoiding AI Rhythm
 
-The goal isn't to ban specific constructions — em dashes, parallel lists, and "X is Y" sentences are all legitimate. The problem is **autopilot deployment**: using them at a fixed rate regardless of whether they serve the sentence. AI-generated prose is detectable not by any single pattern but by the rhythm underneath — uniform sentence length, predictable paragraph size, structural reflexes that trigger on every other line.
+The goal isn't to ban specific constructions. Em dashes, parallel lists, and "X is Y" sentences are all legitimate. The problem is **autopilot deployment**: using them at a fixed rate regardless of whether they serve the sentence. AI-generated prose is detectable not by any single pattern but by the rhythm underneath: uniform sentence length, predictable paragraph size, structural reflexes that trigger on every other line.
 
 ## The Core Problem: Low Burstiness
 
-Human writers naturally vary sentence length and paragraph size. A short sentence after a long one signals emphasis. A one-sentence paragraph makes a point land. AI prose tends toward uniform block sizes throughout — every paragraph 3–4 sentences, every sentence 12–18 words. This rhythm is the tell.
+Human writers naturally vary sentence length and paragraph size. A short sentence after a long one signals emphasis. A one-sentence paragraph makes a point land. AI prose tends toward uniform block sizes throughout: every paragraph 3–4 sentences, every sentence 12–18 words. This rhythm is the tell.
 
-**Fix:** Vary deliberately. Write a one-sentence paragraph when the point deserves isolation. Write a long sentence when the thought genuinely needs room. Don't let every paragraph come out the same size.
+**Fix:** Vary deliberately. Write a one-sentence paragraph when the point deserves isolation. Write a long sentence when the thought needs room. Don't let every paragraph come out the same size.
 
 ## Specific Patterns to Avoid on Autopilot
 
-These aren't forbidden — they become tells when they appear at a fixed rate regardless of whether they're the right choice.
+These aren't forbidden. They become tells when they appear at a fixed rate regardless of whether they're the right choice.
 
-**Em dash as generic connector.** The most common AI tell in contemporary prose. Any sentence where an em dash connects two clauses should be tested: would a period, comma, colon, or parenthesis work better? If yes, use that. Maximum one em dash per paragraph, and only when it genuinely earns its place as an interruption or pivot.
+**Em dash as generic connector.** The most common AI tell in contemporary prose. Any sentence where an em dash connects two clauses should be tested: would a period, comma, colon, or parenthesis work better? If yes, use that. Maximum one em dash per paragraph, and only when it earns its place as an interruption or pivot.
 
 **The rule of three where the third item doesn't surprise.** "Running, roller-skiing, and strength work" is fine. Three consecutive tricolons in the same page is an AI rhythm. Vary list length. Sometimes two items is correct. Sometimes four.
 
@@ -283,7 +283,7 @@ These aren't forbidden — they become tells when they appear at a fixed rate re
 
 **Sweeping contextual openers.** Starting a page, section, or paragraph with a wide-angle setup ("Nordic skiing requires year-round dedication...") before getting to the point. Start close to the point. Let context arrive when needed, not before.
 
-**Participial phrase endings.** The construction "main clause, [verb]-ing at the end" — "We train three days a week, building the aerobic base you'll rely on all winter." Legitimate occasionally; a tell when it appears in every other paragraph.
+**Participial phrase endings.** The construction "main clause, [verb]-ing at the end": "We train three days a week, building the aerobic base you'll rely on all winter." Legitimate occasionally; a tell when it appears in every other paragraph.
 
 **Fabricated social proof.** "Most athletes say the camp does more for team cohesion than the entire rest of the summer." If it's not a real quote from a real person, cut it. It reads as AI padding.
 
@@ -320,7 +320,7 @@ Rewrite the flagged sentences. This catches autopilot patterns that survive even
 |---------|----------|
 | Voice | Second person ("you") for reader, first person plural ("we") for program. |
 | Tone | Friendly, competent coach. Warm but not gushing. |
-| Audience | High school athletes and their parents — write to both simultaneously. |
+| Audience | High school athletes and their parents. Write to both simultaneously. |
 | Sentences | 8–15 words average. Vary for rhythm. |
 | Punctuation | Vary devices. Em dash for interruptions and pivots only. En dash for ranges. Spaces around em dashes. |
 | Lede | 1–3 sentence opening summary. Conversational. Works standalone. |

@@ -5,7 +5,7 @@
 
   let initialized = false;
 
-  // Subset — only the options used at this call site (Pagefind UI accepts more).
+  // Only the options used at this call site (Pagefind UI accepts more).
   interface PagefindUIOptions {
     element: string;
     showSubResults?: boolean;
@@ -38,7 +38,7 @@
 
     try {
       // pagefind UI bundle is generated post-build by `npx pagefind`; no module exists at compile time.
-      // TypeScript resolves string-literal import paths at compile time (TS2307 — "cannot find
+      // TypeScript resolves string-literal import paths at compile time (TS2307, "cannot find
       // module"); a variable path defeats that check, and the cast below supplies the real type.
       const pagefindUrl: string = '/pagefind/pagefind-ui.js';
       const { PagefindUI } = (await import(/* @vite-ignore */ pagefindUrl)) as unknown as PagefindUIModule;
@@ -49,7 +49,7 @@
       });
       initialized = true;
     } catch {
-      // dev mode — pagefind not built yet
+      // dev mode; pagefind not built yet
     }
   }
 

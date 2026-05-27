@@ -20,10 +20,10 @@ pipeline, and deployment.
 | Spam protection | Cloudflare Turnstile | Server-verified on form submit |
 | Fonts | Alegreya Sans + iA Writer Mono S (woff2, self-hosted) | Set in `src/app.css` `@font-face` + `@theme` |
 
-There is **no mdsvex** — content `.md` is read as raw strings and rendered by the
-custom pipeline, not compiled as Svelte components. There is **no calendar** — that
-feature (the `/calendar` route, `events` content, `@schedule-x/*`) was removed;
-scheduling lives in CrewLAB and the site has a `/crewlab` content page instead.
+There is **no mdsvex**: content `.md` is read as raw strings and rendered by the
+custom pipeline, not compiled as Svelte components. There is **no calendar**; that
+feature (the `/calendar` route, `events` content, `@schedule-x/*`) was removed.
+Scheduling lives in CrewLAB and the site has a `/crewlab` content page instead.
 
 ---
 
@@ -52,7 +52,7 @@ day. The Sveltia CMS `slug` template in `static/admin/config.yml` matches this c
 ## Content Pipeline
 
 Both posts and pages are bundled at build time via `import.meta.glob` with `?raw` +
-`eager: true` — Cloudflare Workers has no filesystem, so all markdown ships as string
+`eager: true`. Cloudflare Workers has no filesystem, so all markdown ships as string
 constants. Frontmatter is parsed by `gray-matter`; bodies are rendered by the directive
 pipeline.
 
@@ -61,36 +61,36 @@ pipeline.
 `src/lib/content-schema.ts` validates frontmatter and **throws on the first problem**,
 so malformed content fails the build instead of shipping:
 
-- `validatePostFrontmatter` — requires `title`, a real `YYYY-MM-DD` `date`, a
+- `validatePostFrontmatter` requires `title`, a real `YYYY-MM-DD` `date`, a
   `description`, and at least one `tag` drawn from the controlled vocabulary
   (`POST_TAGS` in `src/lib/config.ts`); `draft` must be boolean if present. Every error
   names the source file.
-- `validatePageFrontmatter` — requires `title`.
+- `validatePageFrontmatter` requires `title`.
 
 Covered by `src/tests/content-schema.test.ts`.
 
-### Posts — `src/lib/posts.ts`
+### Posts: `src/lib/posts.ts`
 
 `getAllPosts` is synchronous and memoized (`_cachedPosts`): rawFiles is eager,
 `gray-matter` is sync, the parsed+sorted result is cached so repeated calls within a
 build don't re-parse. Only `getPost` is async (the remark pipeline returns a Promise).
 
 **Type split:** `PostSummary` (metadata, from `getAllPosts`) vs `PostDetail` (adds
-`html`, from `getPost`) — accessing `.html` on a list result is a type error, not a
+`html`, from `getPost`). Accessing `.html` on a list result is a type error, not a
 runtime undefined.
 
 **Tags:** `getAllTags()` derives counts from `getAllPosts()`; `getPostsByTag(tag)`
-filters it; both benefit from the memo. `/tags/[tag]/` is fully prerendered — its
+filters it; both benefit from the memo. `/tags/[tag]/` is fully prerendered: its
 `entries()` enumerates every tag, and a tag with no posts 404s.
 
-### Pages — `src/lib/pages.ts`
+### Pages: `src/lib/pages.ts`
 
 `getPage(slug)` reads, validates, and renders one page, memoized in `_cachedPages`.
 `getPageSlugs()` lists the bundled page slugs and drives prerendering: `[slug]`
 declares `export const prerender = true` and an `entries()` that maps `getPageSlugs()`,
 so the static surface is enumerated explicitly rather than discovered by link-crawl.
 
-### Directive render pipeline — `src/lib/markdown/`
+### Directive render pipeline: `src/lib/markdown/`
 
 `renderMarkdown(content)` in `render.ts` is the site's single renderer; `markdownToHtml`
 in `utils.ts` is a thin delegate. The unified processor is built once at module level.
@@ -104,7 +104,7 @@ Pipeline order: `remark-parse → remark-gfm → remark-directive → remark-ec-
   (`card/grid/alert/cta/split/panel/passage`) with `data-primitive`/`data-icon`/
   `data-role` markers; it builds no structure. A caution alert with no icon defaults to
   the `warning` glyph. Because the vocabulary is container-only (`:::name`), the step
-  reconstructs any text/leaf directive (`:name`/`::name`) back to literal text — these
+  reconstructs any text/leaf directive (`:name`/`::name`) back to literal text. These
   only arise from accidental prose colons (clock times like `4:00–6:00 PM`) that would
   otherwise collapse to empty `<div>`s.
 - **`rehype-ec-primitives.ts`** (hast) rewrites the marked elements into kit markup,
@@ -127,12 +127,11 @@ lives once in `src/app.css` (`@theme` tokens + global classes like `.page-title`
 `.post-body`, `.post-tags`, `.back-link`), and **markup** is built by whichever tool
 fits the surface. Markdown prose gets kit markup from `rehype-ec-primitives.ts`
 (`{@html}`, prerendered); the interactive/data-driven shells (contact form, tag cloud,
-archive list, post chrome) are Svelte components. The two markup builders are not
-unified — Svelte can't mount inside `{@html}`, and recompiling markdown→Svelte would add
-client JS for no gain. **The class-name contract is the shared interface**; Svelte pages
-consume the global CSS directly rather than re-implementing primitives as `<Card>`/etc.
-components (that path was rejected — it would create two definitions of one primitive
-and invite drift).
+archive list, post chrome) are Svelte components. The two markup builders are not unified: Svelte can't mount inside `{@html}`, and
+recompiling markdown→Svelte would add client JS for no gain. **The class-name contract
+is the shared interface**; Svelte pages consume the global CSS directly rather than
+re-implementing primitives as `<Card>`/etc. components (that path was rejected, because
+it would create two definitions of one primitive and invite drift).
 
 **Shared entrance cascade.** The per-module rise delay is one function, `riseStyle(idx)`
 in `src/lib/motion.ts` (`0.16 + idx*0.04s`, two decimals), imported by both the rehype
@@ -140,7 +139,7 @@ builder and every component page. Its keyframes (`page-rise`, `module-rise`) liv
 globally in `app.css`. Each page scopes its own `.X` / `.X-module` animation rules and
 its own `prefers-reduced-motion` reset (no global animation-disabling rule, to avoid
 reaching into unrelated components); the duplication of that small per-surface block is
-intentional — only the scope selector differs. The frozen `[slug]` page keeps its older
+intentional: only the scope selector differs. The frozen `[slug]` page keeps its older
 private copies of the keyframes (deferred dedup, `BACKLOG.md`).
 
 ---
@@ -148,7 +147,7 @@ private copies of the keyframes (deferred dedup, `BACKLOG.md`).
 ## Contact Form
 
 `/contact` is the only non-prerendered route. As of Pass 9 the form is a **SvelteKit
-remote function** (`form()`), not a `+page.server.ts` action — see the verdict below.
+remote function** (`form()`), not a `+page.server.ts` action. See the verdict below.
 
 `src/lib/contact.remote.ts` exports `sendMessage = form(schema, handler)`. The Valibot
 schema validates `name`/`email`/`message` (plus `cf-turnstile-response`, injected by the
@@ -161,11 +160,11 @@ failures surface inline via `invalid(...)` (a form-level issue) rather than thro
 present, so dev skips it gracefully. Secrets: `TURNSTILE_SECRET_KEY`, `CONTACT_EMAIL`.
 
 `ContactForm.svelte` spreads `{...sendMessage}` and reads `fields.*.as(...)`, `pending`,
-and `result` — no hand-written `use:enhance` or `FormState` interface. `prerender = false`
+and `result`, with no hand-written `use:enhance` or `FormState` interface. `prerender = false`
 lives in `src/routes/contact/+page.ts` and is **load-bearing**: a prerendered static page
 405s on the no-JS POST fallback.
 
-### Remote-functions verdict (Pass 9 spike) — **DEFER (adopt later)**
+### Remote-functions verdict (Pass 9 spike): **DEFER (adopt later)**
 
 The spike works end-to-end on adapter-cloudflare: build generates the
 `/_app/remote/<hash>/sendMessage` endpoint, CSRF origin-checks it, schema validation +
@@ -177,7 +176,7 @@ progressive enhancement.
 
 **Why DEFER, not ADOPT site-wide:** the feature requires `kit.experimental.remoteFunctions`
 and is officially "subject to change without notice" (no stable date as of 2026-05). The
-core team frames it as *additive* — `load`/form actions are not deprecated. So: keep the
+core team frames it as *additive*; `load`/form actions are not deprecated. Keep the
 contact form on remote functions as the live proving ground (low blast radius, degrades
 cleanly), but do **not** migrate other surfaces until the API stabilizes. Re-evaluate when
 SvelteKit ships the feature stable (tracked: BACKLOG #13).
@@ -227,5 +226,5 @@ GitHub Actions secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
 
 - `static/admin/config.yml` (Sveltia/Decap CMS) now points at `glw907/ecnordic-ski` with a
   matching `YYYY-MM-slug` post template, but the CMS is still not wired into the editorial
-  workflow (local editing + git push). Finish wiring it or remove the admin surface —
+  workflow (local editing + git push). Finish wiring it or remove the admin surface;
   tracked as BACKLOG #4.

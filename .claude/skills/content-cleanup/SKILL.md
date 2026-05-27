@@ -1,12 +1,12 @@
 ---
 name: content-cleanup
-description: "Final editorial pass on EC Nordic web content (src/content/**/*.md) before committing — flags the ten AI-rhythm patterns from docs/content-guide.md and proposes per-sentence fixes with reasons, applying nothing without approval. Use after drafting or editing any page or post, when the user says /content-cleanup, \"clean up this content\", \"check for AI tells\", or \"editorial pass\". Takes a file path as argument."
+description: "Final editorial pass on EC Nordic web content (src/content/**/*.md) before committing. Flags the ten AI-rhythm patterns from docs/content-guide.md and proposes per-sentence fixes with reasons, applying nothing without approval. Use after drafting or editing any page or post, when the user says /content-cleanup, \"clean up this content\", \"check for AI tells\", or \"editorial pass\". Takes a file path as argument."
 user_invocable: true
 ---
 
 # Content Cleanup
 
-Final editorial pass on EC Nordic web content before committing. Flags and proposes fixes for AI rhythm patterns. Does not rewrite silently — proposes each change with a reason, waits for approval.
+Final editorial pass on EC Nordic web content before committing. Flags and proposes fixes for AI rhythm patterns. Proposes each change with a reason and waits for approval before applying anything.
 
 ## When to Use
 
@@ -26,16 +26,16 @@ Or on a post:
 
 Ten named patterns from `docs/content-guide.md`. The agent flags a sentence **only if it can name the specific pattern**. No "improved the flow" rewrites.
 
-1. **Em dash overuse** — more than one em dash per paragraph, or an em dash where a period/comma/colon would work better
-2. **Uniform paragraph size** — every paragraph the same block size; no single-sentence paragraphs for emphasis
-3. **Tricolon exhaustion** — multiple consecutive three-part parallel lists
-4. **Paragraph summary restatement** — ending a paragraph by restating what it just said
-5. **Sweeping contextual opener** — wide-angle setup before the point
-6. **Participial phrase ending** — recurring "main clause, [verb]-ing at the end" pattern
-7. **Fabricated social proof** — "most athletes say," "everyone agrees," unattributed generalizations
-8. **Inanimate agency** — "the program provides," "training offers" where "we" would be more direct
-9. **Binary "not X, but Y"** — fine once, a tell when it recurs
-10. **Banned words** — seamless, transformative, robust, pivotal, foster, leverage (figurative), elevate (figurative), comprehensive, thriving, curated, tailored, dedicated, meticulous, nuanced, "it's worth noting," "when it comes to," "let's explore," "dive into," "not only X but also Y"
+1. **Em dash overuse.** More than one em dash per paragraph, or an em dash where a period/comma/colon would work better.
+2. **Uniform paragraph size.** Every paragraph the same block size; no single-sentence paragraphs for emphasis.
+3. **Tricolon exhaustion.** Multiple consecutive three-part parallel lists.
+4. **Paragraph summary restatement.** Ending a paragraph by restating what it just said.
+5. **Sweeping contextual opener.** Wide-angle setup before the point.
+6. **Participial phrase ending.** Recurring "main clause, [verb]-ing at the end" pattern.
+7. **Fabricated social proof.** "Most athletes say," "everyone agrees," unattributed generalizations.
+8. **Inanimate agency.** "The program provides," "training offers" where "we" would be more direct.
+9. **Binary "not X, but Y".** Fine once; a tell when it recurs.
+10. **Banned words.** The full list is in `docs/content-guide.md` under "Banned words and phrases." Check there before flagging.
 
 ## Steps
 

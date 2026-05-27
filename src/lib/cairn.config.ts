@@ -1,4 +1,4 @@
-// ecnordic.ski's cairn adapter — the site-specific half of the CMS.
+// ecnordic.ski's cairn adapter. The site-specific half of the CMS.
 //
 // Everything here is what cairn-core deliberately does NOT know: which repo to commit to,
 // which collections are editable, each collection's frontmatter fields + validator, and the
