@@ -6,6 +6,7 @@
 // 907.life supplies its own adapter of the same shape; cairn-core consumes only this.
 import type { CairnAdapter } from '@glw907/cairn-cms';
 import { remarkEcPlugins, rehypeEcPlugins } from './markdown/render';
+import { ecnordicRegistry } from './markdown/components';
 import { validatePostFrontmatter, validatePageFrontmatter } from './content-schema';
 import { POST_TAGS } from './config';
 
@@ -14,6 +15,9 @@ export const cairn: CairnAdapter = {
   sender: 'noreply@ecnordic.ski',
   backend: { owner: 'glw907', repo: 'ecnordic-ski', branch: 'main' },
   preview: { remarkPlugins: remarkEcPlugins, rehypePlugins: rehypeEcPlugins },
+  // The component registry that drives the render pipeline above; exposed here so the
+  // editor's future insert-component palette reads the same single declaration (R10a).
+  registry: ecnordicRegistry,
   collections: [
     {
       type: 'posts',

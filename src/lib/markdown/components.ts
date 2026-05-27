@@ -1,8 +1,8 @@
 // EC Nordic's component registry — this site's half of the render engine. Each
 // ComponentDef reproduces the directive→hast build that lived in the old
-// rehype-ec-primitives.ts, now composed from cairn-core's shared helpers
+// rehype-ec-primitives.ts, now composed from cairn-cms's shared helpers
 // (splitHead/cardShell/markFirstList/iconSpan) + this site's icon set + class
-// names. cairn-core (the engine) owns the machinery (stamp, dispatch, rise stagger,
+// names. cairn-cms (the engine) owns the machinery (stamp, dispatch, rise stagger,
 // recursion); this file is site code that owns the presentation.
 import { h } from 'hastscript';
 import type { Element, ElementContent, Properties } from 'hast';
