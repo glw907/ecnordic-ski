@@ -1,6 +1,7 @@
 <script lang="ts">
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
+  import { PRIMARY_NAV } from '$lib/config';
 
   let { onSearchOpen }: { onSearchOpen: () => void } = $props();
 
@@ -25,14 +26,6 @@
     mobileOpen = false;
   }
 
-  const navLinks = [
-    { href: '/about', label: 'About' },
-    { href: '/training', label: 'Training' },
-    { href: '/volunteers', label: 'Volunteers' },
-    { href: '/crewlab', label: 'CrewLAB' },
-    { href: '/resources', label: 'Resources' },
-    { href: '/contact', label: 'Contact' },
-  ];
 </script>
 
 {#snippet searchButton()}
@@ -80,12 +73,12 @@
 
     <!-- Desktop links -->
     <div class="desktop-links">
-      {#each navLinks as link}
+      {#each PRIMARY_NAV as link}
         <a
-          href={link.href}
+          href={link.url ?? '#'}
           class="nav-link"
-          class:active={isActive(link.href)}
-          aria-current={isActive(link.href) ? 'page' : undefined}
+          class:active={isActive(link.url ?? '')}
+          aria-current={isActive(link.url ?? '') ? 'page' : undefined}
         >{link.label}</a>
       {/each}
       <div class="nav-icons">
@@ -126,12 +119,12 @@
   <!-- Mobile dropdown -->
   {#if mobileOpen}
     <div class="mobile-menu">
-      {#each navLinks as link}
+      {#each PRIMARY_NAV as link}
         <a
-          href={link.href}
+          href={link.url ?? '#'}
           class="mobile-link"
-          class:active={isActive(link.href)}
-          aria-current={isActive(link.href) ? 'page' : undefined}
+          class:active={isActive(link.url ?? '')}
+          aria-current={isActive(link.url ?? '') ? 'page' : undefined}
           onclick={closeMobile}
         >{link.label}</a>
       {/each}
