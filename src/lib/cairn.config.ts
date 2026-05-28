@@ -36,6 +36,7 @@ export const cairn: CairnAdapter = {
       type: 'pages',
       label: 'Pages',
       dir: 'src/content/pages',
+      kind: 'page',
       fields: [{ type: 'text', name: 'title', label: 'Title', required: true }],
       validate: validatePageFrontmatter,
     },
