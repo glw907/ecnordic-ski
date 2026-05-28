@@ -1,0 +1,26 @@
+siteName: EC Nordic
+description: "East Community Nordic — year-round training for junior skiers in Anchorage, Alaska."
+author: EC Nordic
+url: https://ecnordic.ski
+locale: en-US
+
+menus:
+  primary:
+    - { label: About, url: /about }
+    - { label: Training, url: /training }
+    - { label: Volunteers, url: /volunteers }
+    - { label: CrewLAB, url: /crewlab }
+    - { label: Resources, url: /resources }
+    - { label: Contact, url: /contact }
+
+email:
+  sender: noreply@ecnordic.ski
+  senderName: ECN Nordic Contact
+
+footer:
+  copyrightName: East Community Nordic
+
+settings:
+  feedMaxItems: 20
+  homepageFeaturedCount: 1
+  postTags: [training, racing, results, events, camp, announcements]
