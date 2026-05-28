@@ -18,6 +18,8 @@ export const cairn: CairnAdapter = {
   // The component registry that drives the render pipeline above; exposed here so the
   // editor's future insert-component palette reads the same single declaration (R10a).
   registry: ecnordicRegistry,
+  // The header menu, managed from /admin/nav and committed to the site-config YAML (Pass L2).
+  navMenu: { configPath: 'src/lib/site.config.yaml', menuName: 'primary', label: 'Navigation', maxDepth: 2 },
   collections: [
     {
       type: 'posts',
