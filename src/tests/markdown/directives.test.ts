@@ -29,9 +29,10 @@ describe('card directive', () => {
     expect(html).toContain('<span class="ec-icon ec-icon-secondary">');
   });
 
-  it('staggers the first primitive at --rise:0.16s', async () => {
+  it('stamps the first primitive with the data-rise ordinal 0', async () => {
     const html = await renderMarkdown(':::card{icon=path}\n## A\n\nx\n:::\n');
-    expect(html).toContain('style="--rise:0.16s"');
+    expect(html).toContain('data-rise="0"');
+    expect(html).not.toContain('style=');
   });
 
   it('leaves a non-grid card list as a plain list', async () => {
@@ -44,7 +45,7 @@ describe('card directive', () => {
 describe('passage directive', () => {
   it('renders a titled prose passage with no card chrome', async () => {
     const html = await renderMarkdown(':::passage{icon=chat-circle}\n## Why we use it\n\nReasons.\n:::\n');
-    expect(html).toContain('<section class="ec-passage" style="--rise:0.16s">');
+    expect(html).toContain('<section class="ec-passage" data-rise="0">');
     expect(html).toContain('<div class="ec-head"><span class="ec-icon"><svg');
     expect(html).toContain('<h2 class="card-title"');
     expect(html).toContain('<div class="section-body"><p>Reasons.</p></div>');
@@ -55,7 +56,7 @@ describe('passage directive', () => {
 describe('alert directive', () => {
   it('renders a subtle caution alert with the icon inline in the label', async () => {
     const html = await renderMarkdown(':::alert{role=caution}\n## Risks\n\nFalls happen.\n:::\n');
-    expect(html).toContain('<div role="alert" class="ec-alert ec-alert-caution" style="--rise:0.16s">');
+    expect(html).toContain('<div role="alert" class="ec-alert ec-alert-caution" data-rise="0">');
     expect(html).toContain('<div class="ec-alert-body">');
     expect(html).toContain('<h2 id="risks"><svg class="ec-glyph"');
     expect(html).toContain('Risks</h2>');
@@ -91,7 +92,7 @@ describe('cta directive', () => {
     const html = await renderMarkdown(
       ':::cta{icon=flag}\n## Getting started\n\nDo this.\n\n<a href="/waiver" class="download-link">Get it →</a>\n:::\n',
     );
-    expect(html).toContain('<section class="card ec-card ec-cta bg-base-100 border border-primary/30 shadow-sm" style="--rise:0.16s">');
+    expect(html).toContain('<section class="card ec-card ec-cta bg-base-100 border border-primary/30 shadow-sm" data-rise="0">');
     expect(html).toContain('<div class="card-body items-center text-center">');
     expect(html).toContain('<span class="ec-chip"><svg class="ec-glyph"');
     expect(html).toContain('<h2 class="card-title"');

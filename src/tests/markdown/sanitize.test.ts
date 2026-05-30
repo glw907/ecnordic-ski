@@ -14,13 +14,19 @@ describe('ecnordic sanitize floor', () => {
     expect(out).not.toContain('javascript:');
   });
 
-  it('keeps the directive card section and its classes', async () => {
+  it('keeps the directive card section, its classes, and the data-rise ordinal', async () => {
     const out = await sanitizeHtml(
-      '<section class="card ec-card bg-base-100 border border-base-300 shadow-sm" style="--rise:0.16s"><div class="card-body"><div class="ec-head"></div></div></section>',
+      '<section class="card ec-card bg-base-100 border border-base-300 shadow-sm" data-rise="0"><div class="card-body"><div class="ec-head"></div></div></section>',
     );
     expect(out).toContain('<section');
     expect(out).toContain('class="card ec-card bg-base-100 border border-base-300 shadow-sm"');
-    expect(out).toContain('style="--rise:0.16s"');
+    expect(out).toContain('data-rise="0"');
+  });
+
+  it('drops an inline style now that the engine no longer emits one', async () => {
+    const out = await sanitizeHtml('<section class="ec-card" style="position:fixed;inset:0">x</section>');
+    expect(out).not.toContain('style=');
+    expect(out).toContain('class="ec-card"');
   });
 
   it('keeps the download-link anchor with target and rel', async () => {
