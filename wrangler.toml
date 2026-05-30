@@ -24,16 +24,15 @@ remote = true
 binding = "AUTH_KV"
 id = "73e2f799e9864398ab5e57c02272fe04"
 
-# cairn-cms: better-auth store — users (= editor allowlist), sessions, magic-link verifications.
+# cairn-cms: self-owned magic-link auth store (editor allowlist, magic_token, session tables).
 [[d1_databases]]
 binding = "AUTH_DB"
 database_name = "cairn-ecnordic-auth"
 database_id = "83178db3-0aae-4c1d-b6ad-1626193ebefd"
-migrations_dir = "drizzle/migrations"
 
 [vars]
-# better-auth base URL (prod origin). Dev overrides via PUBLIC_ORIGIN in .dev.vars.
-BETTER_AUTH_URL = "https://ecnordic.ski"
+# Site origin, used to build magic links. Dev overrides via PUBLIC_ORIGIN in .dev.vars.
+PUBLIC_ORIGIN = "https://ecnordic.ski"
 
 [[routes]]
 pattern = "ecnordic.ski"
