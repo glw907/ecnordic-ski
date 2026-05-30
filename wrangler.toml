@@ -18,12 +18,6 @@ destination_address = "contact@ecnordic.ski"
 name = "EMAIL"
 remote = true
 
-# cairn-cms: legacy hand-rolled auth store (magic-link nonces, sessions, allowlist).
-# Kept for rollback grace during the better-auth cutover; removed once D1 is stable in prod.
-[[kv_namespaces]]
-binding = "AUTH_KV"
-id = "73e2f799e9864398ab5e57c02272fe04"
-
 # cairn-cms: self-owned magic-link auth store (editor allowlist, magic_token, session tables).
 [[d1_databases]]
 binding = "AUTH_DB"
