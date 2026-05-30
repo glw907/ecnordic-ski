@@ -5,11 +5,12 @@
 // while allowlisting every element and attribute the EC directive vocabulary emits.
 //
 // What the directives produce (from the characterization snapshot): section/div/span wrappers
-// with classes and a `--rise` custom property in `style`; h2/h3 anchors with `id`; a `nav`
+// with classes and a `data-rise` entrance-cascade ordinal; h2/h3 anchors with `id`; a `nav`
 // table of contents with `aria-label`; an `ec-alert` div with `role="alert"`; inline glyph
 // `svg`/`path`; and authored `a.download-link` anchors carrying `target`/`rel`. Classes, ids,
-// and the rise style do not execute, so they are allowed; scripts, event-handler attributes,
-// and unsafe URL schemes fall to the default schema's core rules and are dropped.
+// and the inert data-rise index do not execute, so they are allowed. `style` is NOT allowed:
+// the engine moved the rise off inline style, so an editor's raw-HTML `style` now falls to the
+// default schema's drop. Scripts, event-handler attributes, and unsafe URL schemes drop too.
 import { unified } from 'unified';
 import rehypeParse from 'rehype-parse';
 import rehypeStringify from 'rehype-stringify';
@@ -44,7 +45,7 @@ const schema: Schema = {
   tagNames: [...(defaultSchema.tagNames ?? []), 'section', 'nav', 'svg', 'path'],
   attributes: {
     ...freedAttributes,
-    '*': [...freeClassName(defaultSchema.attributes?.['*']), 'style', 'id', 'role', 'ariaHidden', 'ariaLabel'],
+    '*': [...freeClassName(defaultSchema.attributes?.['*']), 'dataRise', 'id', 'role', 'ariaHidden', 'ariaLabel'],
     a: [...freeClassName(defaultSchema.attributes?.a), 'target', 'rel', 'download'],
     svg: ['className', 'viewBox', 'fill', 'ariaHidden', 'role', 'width', 'height'],
     path: ['d', 'fill'],

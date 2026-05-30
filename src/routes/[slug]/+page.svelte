@@ -106,16 +106,31 @@
     animation: none;
   }
 
-  /* Rhythm between modules, and the staggered entrance: each module rises in
-     on its own --rise delay so the page resolves as one top-to-bottom cascade
-     continuing the title (0s) and lede (0.06s) above it. */
+  /* Rhythm between modules, and the staggered entrance: each module rises in on its
+     own delay so the page resolves as one top-to-bottom cascade continuing the title
+     (0s) and lede (0.06s) above it. The delay comes from the engine's data-rise ordinal
+     (mapped just below), not an inline style, so the sanitize floor can drop `style`. */
   .static-page:is([data-page="about"], [data-page="training"], [data-page="crewlab"]) :global(.ec-card),
   .static-page[data-page="crewlab"] :global(.ec-passage),
   .static-page[data-page="about"] :global(.ec-alert) {
     margin-block-start: 1.4rem;
     animation: module-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
-    animation-delay: var(--rise, 0s);
   }
+  /* data-rise ordinal → cascade delay (0.16 + n*0.04s). The engine stamps the index on
+     each top-level module; past the enumerated set a module holds the final step. */
+  .static-page :global([data-rise]) { animation-delay: 0.64s; }
+  .static-page :global([data-rise="0"]) { animation-delay: 0.16s; }
+  .static-page :global([data-rise="1"]) { animation-delay: 0.20s; }
+  .static-page :global([data-rise="2"]) { animation-delay: 0.24s; }
+  .static-page :global([data-rise="3"]) { animation-delay: 0.28s; }
+  .static-page :global([data-rise="4"]) { animation-delay: 0.32s; }
+  .static-page :global([data-rise="5"]) { animation-delay: 0.36s; }
+  .static-page :global([data-rise="6"]) { animation-delay: 0.40s; }
+  .static-page :global([data-rise="7"]) { animation-delay: 0.44s; }
+  .static-page :global([data-rise="8"]) { animation-delay: 0.48s; }
+  .static-page :global([data-rise="9"]) { animation-delay: 0.52s; }
+  .static-page :global([data-rise="10"]) { animation-delay: 0.56s; }
+  .static-page :global([data-rise="11"]) { animation-delay: 0.60s; }
   /* A titled prose passage carries the section head + body at full page width,
      with no card border/wash. Prose is the kit's default (see design doc). */
   .static-page[data-page="crewlab"] :global(.ec-passage) {

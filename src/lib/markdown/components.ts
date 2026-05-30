@@ -5,7 +5,7 @@
 // names. cairn-cms (the engine) owns the machinery (stamp, dispatch, rise stagger,
 // recursion); this file is site code that owns the presentation.
 import { h } from 'hastscript';
-import type { Element, ElementContent, Properties } from 'hast';
+import type { Element, ElementContent } from 'hast';
 import {
 	defineRegistry,
 	glyph,
@@ -26,28 +26,26 @@ const makeIcon: MakeIcon = (name, role) => iconSpan(ecGlyph(name), role);
 const CARD_CLASS = ['card', 'ec-card', 'bg-base-100', 'border', 'border-base-300', 'shadow-sm'];
 const CTA_CLASS = ['card', 'ec-card', 'ec-cta', 'bg-base-100', 'border', 'border-primary/30', 'shadow-sm'];
 
-function buildCard(node: Element, rise?: string): Element {
+function buildCard(node: Element): Element {
 	const { head, rest } = splitHead(node, makeIcon);
-	return cardShell(CARD_CLASS, rise, [head, h('div', { className: ['section-body'] }, rest)]);
+	return cardShell(CARD_CLASS, [head, h('div', { className: ['section-body'] }, rest)]);
 }
 
-function buildPassage(node: Element, rise?: string): Element {
+function buildPassage(node: Element): Element {
 	const { head, rest } = splitHead(node, makeIcon);
-	const properties: Properties = { className: ['ec-passage'] };
-	if (rise) properties.style = rise;
-	return h('section', properties, [head, h('div', { className: ['section-body'] }, rest)]);
+	return h('section', { className: ['ec-passage'] }, [head, h('div', { className: ['section-body'] }, rest)]);
 }
 
-function buildGrid(node: Element, rise?: string): Element {
+function buildGrid(node: Element): Element {
 	const children = node.children as ElementContent[];
 	const hasHeading = children.some((c) => isElement(c) && c.tagName === 'h2');
 	const ul = markFirstList(children);
 	if (!hasHeading) return ul ?? node; // nested use: emit the bare ec-grid list
 	const { head, rest } = splitHead(node, makeIcon);
-	return cardShell(CARD_CLASS, rise, [head, h('div', { className: ['section-body'] }, rest)]);
+	return cardShell(CARD_CLASS, [head, h('div', { className: ['section-body'] }, rest)]);
 }
 
-function buildAlert(node: Element, rise?: string): Element {
+function buildAlert(node: Element): Element {
 	const children = node.children as ElementContent[];
 	const i = children.findIndex((c) => isElement(c) && c.tagName === 'h2');
 	const h2 = children[i] as Element;
@@ -55,9 +53,9 @@ function buildAlert(node: Element, rise?: string): Element {
 	if (icon) (h2.children as ElementContent[]).unshift(ecGlyph(icon)); // icon inline at the label head
 	const rest = children.filter((_, j) => j !== i);
 	const role = strProp(node, 'dataRole');
-	const properties: Properties = { role: 'alert', className: ['ec-alert', `ec-alert-${role}`] };
-	if (rise) properties.style = rise;
-	return h('div', properties, [h('div', { className: ['ec-alert-body'] }, [h2, ...rest])]);
+	return h('div', { role: 'alert', className: ['ec-alert', `ec-alert-${role}`] }, [
+		h('div', { className: ['ec-alert-body'] }, [h2, ...rest]),
+	]);
 }
 
 // Append btn classes to the authored `a.download-link` (raw HTML, reparsed by
@@ -74,7 +72,7 @@ function promoteDownloadLink(children: ElementContent[]): void {
 	}
 }
 
-function buildCta(node: Element, rise?: string): Element {
+function buildCta(node: Element): Element {
 	const children = node.children as ElementContent[];
 	const i = children.findIndex((c) => isElement(c) && c.tagName === 'h2');
 	const h2 = children[i] as Element;
@@ -82,9 +80,7 @@ function buildCta(node: Element, rise?: string): Element {
 	const rest = children.filter((_, j) => j !== i);
 	promoteDownloadLink(rest);
 	const icon = strProp(node, 'dataIcon');
-	const properties: Properties = { className: CTA_CLASS };
-	if (rise) properties.style = rise;
-	return h('section', properties, [
+	return h('section', { className: CTA_CLASS }, [
 		h('div', { className: ['card-body', 'items-center', 'text-center'] }, [
 			h('span', { className: ['ec-chip'] }, [ecGlyph(icon ?? '')]),
 			h2,
@@ -102,7 +98,7 @@ function buildPanel(node: Element): Element {
 	return h('div', { className: ['ec-panel'] }, kids);
 }
 
-function buildSplit(node: Element, rise?: string): Element {
+function buildSplit(node: Element): Element {
 	// Panels were already turned into .ec-panel divs by the dispatcher's recursion.
 	const children = node.children as ElementContent[];
 	const i = children.findIndex((c) => isElement(c) && c.tagName === 'h2');
@@ -113,7 +109,7 @@ function buildSplit(node: Element, rise?: string): Element {
 	);
 	const head = h('div', { className: ['ec-head'] }, [h2]); // no icon at the split head
 	const body = h('div', { className: ['section-body'] }, [h('div', { className: ['ec-split'] }, panels)]);
-	return cardShell(CARD_CLASS, rise, [head, body]);
+	return cardShell(CARD_CLASS, [head, body]);
 }
 
 const components: ComponentDef[] = [
