@@ -24,9 +24,16 @@ export async function getPage(slug: string): Promise<StaticPage | null> {
   if (!raw) return null;
 
   const { data, content } = matter(raw);
+  const result = validatePageFrontmatter(data, '');
+  if (!result.ok) {
+    const detail = Object.entries(result.errors)
+      .map(([field, msg]) => `${field}: ${msg}`)
+      .join('; ');
+    throw new Error(`Invalid page frontmatter in ${filepath}: ${detail}`);
+  }
   const page: StaticPage = {
     slug,
-    ...validatePageFrontmatter(data, filepath),
+    title: result.data.title as string,
     html: await markdownToHtml(content),
   };
   _cachedPages.set(slug, page);

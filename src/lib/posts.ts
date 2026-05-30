@@ -1,7 +1,7 @@
 import matter from 'gray-matter';
 import type { PostDetail, PostSummary } from './types.js';
 import { markdownToHtml } from './utils.js';
-import { validatePostFrontmatter } from './content-schema.js';
+import { validatePostFrontmatter, type PostFrontmatter } from './content-schema.js';
 
 // Bundled at build time. No runtime filesystem access needed.
 // Keys are absolute paths like "/src/content/posts/2026-03-early-march.md"
@@ -24,7 +24,14 @@ function buildSummary(
   data: Record<string, unknown>,
   source: string
 ): PostSummary {
-  return { ...coords, ...validatePostFrontmatter(data, source) };
+  const result = validatePostFrontmatter(data, '');
+  if (!result.ok) {
+    const detail = Object.entries(result.errors)
+      .map(([field, msg]) => `${field}: ${msg}`)
+      .join('; ');
+    throw new Error(`Invalid post frontmatter in ${source}: ${detail}`);
+  }
+  return { ...coords, ...(result.data as unknown as PostFrontmatter) };
 }
 
 /** Returns all non-draft posts sorted newest-first. */

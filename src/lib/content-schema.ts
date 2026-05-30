@@ -1,3 +1,4 @@
+import type { ValidationResult } from '@glw907/cairn-cms';
 import { POST_TAGS } from './config.js';
 import { isoFromValue } from './utils.js';
 
@@ -18,58 +19,69 @@ export interface PageFrontmatter {
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 const allowedTags = new Set<string>(POST_TAGS);
 
-function fail(kind: string, source: string, msg: string): never {
-  throw new Error(`Invalid ${kind} frontmatter in ${source}: ${msg}`);
-}
-
 /**
- * Validates a post's raw frontmatter, throwing on the first problem so bad content
- * fails the build rather than shipping. `source` (the filename) is named in every
- * error to make the offending file obvious.
+ * Validates a post's raw frontmatter and returns a ValidationResult. Every rule the
+ * build-time validator enforced is preserved; only the return shape changed from
+ * throw-on-first-error to a collected `errors` map keyed by field. The admin editor reads
+ * the map to show inline field errors; the build callers in posts.ts throw on `ok: false`.
  */
 export function validatePostFrontmatter(
-  data: Record<string, unknown>,
-  source: string
-): PostFrontmatter {
-  const f = (msg: string): never => fail('post', source, msg);
+  frontmatter: Record<string, unknown>,
+  _body: string
+): ValidationResult {
+  const errors: Record<string, string> = {};
 
-  const title = data.title;
-  if (typeof title !== 'string' || title.trim() === '') f('title is required');
+  const rawTitle = frontmatter.title;
+  const title = typeof rawTitle === 'string' ? rawTitle.trim() : '';
+  if (!title) errors.title = 'Title is required';
 
-  if (data.draft !== undefined && typeof data.draft !== 'boolean') f('draft must be a boolean');
-
-  const description = data.description;
-  if (typeof description !== 'string' || description.trim() === '') f('description is required');
-
-  const date = isoFromValue(data.date);
-  if (!ISO_DATE.test(date)) f('date must be a YYYY-MM-DD string');
-  if (new Date(`${date}T00:00:00Z`).toISOString().slice(0, 10) !== date) {
-    f(`date "${date}" is not a real calendar date`);
+  if (frontmatter.draft !== undefined && typeof frontmatter.draft !== 'boolean') {
+    errors.draft = 'Draft must be a boolean';
   }
 
-  const tags = data.tags;
-  if (!Array.isArray(tags) || tags.length === 0) f('at least one tag is required');
-  for (const tag of tags as unknown[]) {
-    if (typeof tag !== 'string' || !allowedTags.has(tag)) {
-      f(`tag "${String(tag)}" is not in the controlled vocabulary (${POST_TAGS.join(', ')})`);
+  const rawDescription = frontmatter.description;
+  const description = typeof rawDescription === 'string' ? rawDescription.trim() : '';
+  if (!description) errors.description = 'Description is required';
+
+  const date = isoFromValue(frontmatter.date);
+  if (!ISO_DATE.test(date)) {
+    errors.date = 'Date must be a YYYY-MM-DD string';
+  } else if (new Date(`${date}T00:00:00Z`).toISOString().slice(0, 10) !== date) {
+    errors.date = `Date "${date}" is not a real calendar date`;
+  }
+
+  const rawTags = frontmatter.tags;
+  if (!Array.isArray(rawTags) || rawTags.length === 0) {
+    errors.tags = 'At least one tag is required';
+  } else {
+    const bad = rawTags.find((tag) => typeof tag !== 'string' || !allowedTags.has(tag));
+    if (bad !== undefined) {
+      errors.tags = `Tag "${String(bad)}" is not in the controlled vocabulary (${POST_TAGS.join(', ')})`;
     }
   }
 
+  if (Object.keys(errors).length > 0) return { ok: false, errors };
+
   return {
-    title: title as string,
-    date,
-    draft: data.draft === true,
-    description: description as string,
-    tags: tags as string[],
+    ok: true,
+    data: {
+      ...frontmatter,
+      title,
+      date,
+      draft: frontmatter.draft === true,
+      description,
+      tags: rawTags as string[],
+    },
   };
 }
 
-/** Validates a static page's raw frontmatter. */
+/** Validates a static page's raw frontmatter and returns a ValidationResult. */
 export function validatePageFrontmatter(
-  data: Record<string, unknown>,
-  source: string
-): PageFrontmatter {
-  const title = data.title;
-  if (typeof title !== 'string' || title.trim() === '') fail('page', source, 'title is required');
-  return { title: title as string };
+  frontmatter: Record<string, unknown>,
+  _body: string
+): ValidationResult {
+  const rawTitle = frontmatter.title;
+  const title = typeof rawTitle === 'string' ? rawTitle.trim() : '';
+  if (!title) return { ok: false, errors: { title: 'Title is required' } };
+  return { ok: true, data: { ...frontmatter, title } };
 }

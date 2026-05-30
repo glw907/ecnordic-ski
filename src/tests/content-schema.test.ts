@@ -9,76 +9,106 @@ const validPost = {
   tags: ['announcements'],
 };
 
-describe('validatePostFrontmatter', () => {
-  it('accepts well-formed frontmatter', () => {
-    expect(validatePostFrontmatter(validPost, 'ok.md')).toEqual(validPost);
+describe('validatePostFrontmatter (ValidationResult)', () => {
+  it('accepts well-formed frontmatter and normalizes', () => {
+    const r = validatePostFrontmatter(validPost, 'b');
+    expect(r.ok).toBe(true);
+    if (r.ok) {
+      expect(r.data.title).toBe('Welcome');
+      expect(r.data.date).toBe('2026-05-14');
+      expect(r.data.draft).toBe(false);
+      expect(r.data.description).toBe('A first post.');
+      expect(r.data.tags).toEqual(['announcements']);
+    }
   });
 
   it('accepts a Date object for date (gray-matter parses bare YAML dates as Date)', () => {
-    const result = validatePostFrontmatter(
+    const r = validatePostFrontmatter(
       { ...validPost, date: new Date('2026-05-14T00:00:00Z') },
-      'ok.md'
+      'b'
     );
-    expect(result.date).toBe('2026-05-14');
+    expect(r.ok).toBe(true);
+    if (r.ok) expect(r.data.date).toBe('2026-05-14');
   });
 
   it('defaults a missing draft flag to false', () => {
     const { draft: _omit, ...noDraft } = validPost;
-    expect(validatePostFrontmatter(noDraft, 'ok.md').draft).toBe(false);
+    const r = validatePostFrontmatter(noDraft, 'b');
+    expect(r.ok).toBe(true);
+    if (r.ok) expect(r.data.draft).toBe(false);
   });
 
-  it('names the source file in the error', () => {
-    expect(() => validatePostFrontmatter({ ...validPost, title: '' }, 'bad.md')).toThrow(
-      /bad\.md/
-    );
+  it('never throws on bad input, returns a field error', () => {
+    const r = validatePostFrontmatter({ ...validPost, title: '' }, 'b');
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.errors.title).toBeTruthy();
   });
 
   it('rejects a missing or empty title', () => {
-    expect(() => validatePostFrontmatter({ ...validPost, title: '' }, 's')).toThrow(/title/);
+    const r1 = validatePostFrontmatter({ ...validPost, title: '' }, 'b');
+    expect(r1.ok).toBe(false);
+    if (!r1.ok) expect(r1.errors.title).toMatch(/title/i);
     const { title: _omit, ...noTitle } = validPost;
-    expect(() => validatePostFrontmatter(noTitle, 's')).toThrow(/title/);
+    const r2 = validatePostFrontmatter(noTitle, 'b');
+    expect(r2.ok).toBe(false);
+    if (!r2.ok) expect(r2.errors.title).toMatch(/title/i);
   });
 
   it('rejects a missing or malformed date', () => {
     const { date: _omit, ...noDate } = validPost;
-    expect(() => validatePostFrontmatter(noDate, 's')).toThrow(/date/);
-    expect(() => validatePostFrontmatter({ ...validPost, date: '5/14/26' }, 's')).toThrow(/date/);
+    const r1 = validatePostFrontmatter(noDate, 'b');
+    expect(r1.ok).toBe(false);
+    if (!r1.ok) expect(r1.errors.date).toMatch(/date/i);
+    const r2 = validatePostFrontmatter({ ...validPost, date: '5/14/26' }, 'b');
+    expect(r2.ok).toBe(false);
+    if (!r2.ok) expect(r2.errors.date).toMatch(/date/i);
   });
 
   it('rejects an impossible calendar date', () => {
-    expect(() => validatePostFrontmatter({ ...validPost, date: '2026-02-30' }, 's')).toThrow(
-      /date/
-    );
+    const r = validatePostFrontmatter({ ...validPost, date: '2026-02-30' }, 'b');
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.errors.date).toMatch(/date/i);
   });
 
   it('rejects a non-boolean draft', () => {
-    expect(() => validatePostFrontmatter({ ...validPost, draft: 'yes' }, 's')).toThrow(/draft/);
+    const r = validatePostFrontmatter({ ...validPost, draft: 'yes' }, 'b');
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.errors.draft).toMatch(/draft/i);
   });
 
   it('rejects a missing or empty description', () => {
-    expect(() => validatePostFrontmatter({ ...validPost, description: '' }, 's')).toThrow(
-      /description/
-    );
+    const r = validatePostFrontmatter({ ...validPost, description: '' }, 'b');
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.errors.description).toMatch(/description/i);
   });
 
   it('rejects tags outside the controlled vocabulary', () => {
-    expect(() => validatePostFrontmatter({ ...validPost, tags: ['misc'] }, 's')).toThrow(/misc/);
+    const r = validatePostFrontmatter({ ...validPost, tags: ['misc'] }, 'b');
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.errors.tags).toMatch(/misc/);
   });
 
   it('rejects an empty or missing tag list', () => {
-    expect(() => validatePostFrontmatter({ ...validPost, tags: [] }, 's')).toThrow(/tag/);
+    const r1 = validatePostFrontmatter({ ...validPost, tags: [] }, 'b');
+    expect(r1.ok).toBe(false);
+    if (!r1.ok) expect(r1.errors.tags).toMatch(/tag/i);
     const { tags: _omit, ...noTags } = validPost;
-    expect(() => validatePostFrontmatter(noTags, 's')).toThrow(/tag/);
+    const r2 = validatePostFrontmatter(noTags, 'b');
+    expect(r2.ok).toBe(false);
+    if (!r2.ok) expect(r2.errors.tags).toMatch(/tag/i);
   });
 });
 
-describe('validatePageFrontmatter', () => {
+describe('validatePageFrontmatter (ValidationResult)', () => {
   it('accepts a page with a title', () => {
-    expect(validatePageFrontmatter({ title: 'About' }, 'about.md')).toEqual({ title: 'About' });
+    const r = validatePageFrontmatter({ title: 'About' }, 'b');
+    expect(r.ok).toBe(true);
+    if (r.ok) expect(r.data.title).toBe('About');
   });
 
-  it('rejects a missing title and names the source', () => {
-    expect(() => validatePageFrontmatter({}, 'about.md')).toThrow(/about\.md/);
-    expect(() => validatePageFrontmatter({}, 'about.md')).toThrow(/title/);
+  it('rejects a missing title without throwing', () => {
+    const r = validatePageFrontmatter({}, 'b');
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.errors.title).toMatch(/title/i);
   });
 });

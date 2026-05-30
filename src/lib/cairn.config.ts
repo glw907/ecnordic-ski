@@ -1,30 +1,21 @@
 // ecnordic.ski's cairn adapter. The site-specific half of the CMS.
 //
-// Everything here is what cairn-core deliberately does NOT know: which repo to commit to,
-// which collections are editable, each collection's frontmatter fields + validator, and the
-// remark/rehype plugin set the preview must mirror (the live render's directive pipeline).
-// 907.life supplies its own adapter of the same shape; cairn-core consumes only this.
+// Everything here is what the engine deliberately does NOT know: which repo to commit to,
+// which concepts are editable, each concept's frontmatter fields + validator, the directive
+// component registry, and the sanitized render the editor preview mirrors. 907.life supplies
+// its own adapter of the same shape; the engine consumes only this.
 import type { CairnAdapter } from '@glw907/cairn-cms';
-import { remarkEcPlugins, rehypeEcPlugins } from './markdown/render';
-import { ecnordicRegistry } from './markdown/components';
-import { validatePostFrontmatter, validatePageFrontmatter } from './content-schema';
-import { POST_TAGS, siteConfig } from './config';
+import { ecnordicRegistry } from './markdown/components.js';
+import { validatePostFrontmatter, validatePageFrontmatter } from './content-schema.js';
+import { markdownToHtml } from './utils.js';
+import { POST_TAGS, siteConfig, siteEmail } from './config.js';
 
 export const cairn: CairnAdapter = {
-  siteName: siteConfig.siteName,
-  sender: siteConfig.email?.sender ?? 'noreply@ecnordic.ski',
-  backend: { owner: 'glw907', repo: 'ecnordic-ski', branch: 'main' },
-  preview: { remarkPlugins: remarkEcPlugins, rehypePlugins: rehypeEcPlugins },
-  // The component registry that drives the render pipeline above; exposed here so the
-  // editor's future insert-component palette reads the same single declaration (R10a).
-  registry: ecnordicRegistry,
-  // The header menu, managed from /admin/nav and committed to the site-config YAML (Pass L2).
-  navMenu: { configPath: 'src/lib/site.config.yaml', menuName: 'primary', label: 'Navigation', maxDepth: 2 },
-  collections: [
-    {
-      type: 'posts',
-      label: 'Posts',
+  siteName: siteConfig.siteName ?? 'EC Nordic',
+  content: {
+    posts: {
       dir: 'src/content/posts',
+      label: 'Posts',
       fields: [
         { type: 'text', name: 'title', label: 'Title', required: true },
         { type: 'date', name: 'date', label: 'Date', required: true },
@@ -34,13 +25,31 @@ export const cairn: CairnAdapter = {
       ],
       validate: validatePostFrontmatter,
     },
-    {
-      type: 'pages',
-      label: 'Pages',
+    pages: {
       dir: 'src/content/pages',
-      kind: 'page',
+      label: 'Pages',
       fields: [{ type: 'text', name: 'title', label: 'Title', required: true }],
       validate: validatePageFrontmatter,
     },
-  ],
+  },
+  backend: {
+    owner: 'glw907',
+    repo: 'ecnordic-ski',
+    branch: 'main',
+    appId: '3847496',
+    installationId: '135372268',
+  },
+  sender: { from: siteEmail.sender ?? 'noreply@ecnordic.ski' },
+  // The editor preview runs the same sanitized directive render as the public page.
+  renderPreview: (md) => markdownToHtml(md),
+  // The directive component registry, exposed so the editor's insert-component palette
+  // reads the same single declaration the public render uses.
+  registry: ecnordicRegistry,
+  // The header menu, managed from /admin/nav and committed to the site-config YAML.
+  navMenu: {
+    configPath: 'src/lib/site.config.yaml',
+    menuName: 'primary',
+    label: 'Navigation',
+    maxDepth: 2,
+  },
 };
