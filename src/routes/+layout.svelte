@@ -3,7 +3,7 @@
   import Nav from '$lib/components/Nav.svelte';
   import SearchModal from '$lib/components/SearchModal.svelte';
   import Icon from '$lib/components/Icon.svelte';
-  import { SITE_TITLE, siteConfig } from '$lib/config';
+  import { SITE_TITLE, siteFooter } from '$lib/config';
   import type { Snippet } from 'svelte';
 
   let { children }: { children: Snippet } = $props();
@@ -53,7 +53,7 @@
       <span class="footer-label">email</span>
     </a>
   </div>
-  <p class="footer-name">© {new Date().getFullYear()} {siteConfig.footer?.copyrightName ?? 'East Community Nordic'}</p>
+  <p class="footer-name">© {new Date().getFullYear()} {siteFooter.copyrightName ?? 'East Community Nordic'}</p>
 </footer>
 
 <style>

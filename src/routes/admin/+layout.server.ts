@@ -1,8 +1,3 @@
-import type { LayoutServerLoad } from './$types';
-import { adminLayoutLoad } from '@glw907/cairn-cms/sveltekit';
-import { cairn } from '$lib/cairn.config';
-
-// The admin surface is dynamic and must never be prerendered, indexed, or Pagefind-crawled.
+// /admin must never be prerendered (dynamic auth and content). The authed shell load lives in
+// the (app) group, so login and auth do not run the session-requiring layout load and cannot loop.
 export const prerender = false;
-
-export const load: LayoutServerLoad = (event) => adminLayoutLoad(event, cairn);
