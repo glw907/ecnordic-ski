@@ -1,9 +1,13 @@
 import { renderMarkdown } from './markdown/render';
+import { sanitizeHtml } from './markdown/sanitize';
 import { SITE_LOCALE } from '$lib/config';
 import type { PostSummary } from '$lib/types';
 
+// The public page and the admin preview both render through here. renderMarkdown runs the
+// directive engine (with rehype-raw passthrough); sanitizeHtml is the security floor over its
+// output, allowlisting the directive vocabulary and the authored download-link anchor.
 export async function markdownToHtml(content: string): Promise<string> {
-  return renderMarkdown(content);
+  return sanitizeHtml(await renderMarkdown(content));
 }
 
 export function isoFromValue(value: unknown, fallback?: string): string {
