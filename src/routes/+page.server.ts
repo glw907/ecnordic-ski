@@ -1,11 +1,17 @@
 import type { PageServerLoad } from './$types';
-import { getAllPosts, getPost } from '$lib/posts';
+import { allPosts, postBody, render } from '$lib/content';
 
 export const load: PageServerLoad = async () => {
-  const posts = getAllPosts();
+  const posts = allPosts();
   const first = posts[0];
   const featured = first
-    ? await getPost(first.year, first.month, first.slug)
+    ? {
+        permalink: first.permalink,
+        title: first.title,
+        date: first.date,
+        tags: first.tags,
+        html: await render(postBody(first.id)),
+      }
     : null;
   return { posts, featured };
 };

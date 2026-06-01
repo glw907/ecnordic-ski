@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageData } from './$types';
-  import { formatDate, formatShortDate, postUrl, tagUrl } from '$lib/utils';
+  import { formatDate, formatShortDate, tagUrl } from '$lib/utils';
   import { HOMEPAGE_FEATURED_COUNT, WELCOME_BLURB } from '$lib/config';
 
   let { data }: { data: PageData } = $props();
@@ -28,7 +28,7 @@
       <ul class="recent-list">
         {#each data.posts.slice(0, 3) as post}
           <li class="recent-row">
-            <a href={postUrl(post)} class="recent-title">{post.title}</a>
+            <a href={post.permalink} class="recent-title">{post.title}</a>
             <time class="recent-date" datetime={post.date}>{formatShortDate(post.date)}</time>
           </li>
         {/each}
@@ -50,7 +50,7 @@
       <article class="featured-post">
         <time class="post-date" datetime={data.featured.date}>{formatDate(data.featured.date)}</time>
         <h3 class="featured-title">
-          <a href={postUrl(data.featured)}>{data.featured.title}</a>
+          <a href={data.featured.permalink}>{data.featured.title}</a>
         </h3>
         <div class="post-body">
           {@html data.featured.html}
@@ -81,7 +81,7 @@
               {/if}
             </div>
             <h3 class="post-title">
-              <a href={postUrl(post)}>{post.title}</a>
+              <a href={post.permalink}>{post.title}</a>
             </h3>
             {#if post.description}
               <p class="post-description">{post.description}</p>
