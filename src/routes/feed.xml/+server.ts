@@ -1,45 +1,35 @@
 import type { RequestHandler } from './$types';
-import { getFeedItems } from '$lib/feed';
-import { SITE_TITLE, SITE_URL, SITE_DESCRIPTION } from '$lib/config';
-import { toRFC822 } from '$lib/utils';
+import { buildRssFeed, type FeedItem } from '@glw907/cairn-cms';
+import { allPosts, postBody, render } from '$lib/content';
+import { SITE_TITLE, SITE_URL, SITE_DESCRIPTION, SITE_AUTHOR, FEED_MAX_ITEMS } from '$lib/config';
 
-function escapeXml(str: string): string {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
+export const prerender = true;
 
 export const GET: RequestHandler = async () => {
-  const items = await getFeedItems();
+  const posts = FEED_MAX_ITEMS > 0 ? allPosts().slice(0, FEED_MAX_ITEMS) : allPosts();
+  const items: FeedItem[] = await Promise.all(
+    posts.map(async (p) => ({
+      title: p.title,
+      url: SITE_URL + p.permalink,
+      date: p.date,
+      summary: p.description,
+      contentHtml: await render(postBody(p.id)),
+      tags: p.tags,
+    })),
+  );
 
-  const itemsXml = items.map((item) => `
-    <item>
-      <title>${escapeXml(item.title)}</title>
-      <link>${escapeXml(item.url)}</link>
-      <guid isPermaLink="true">${escapeXml(item.url)}</guid>
-      <pubDate>${toRFC822(item.date)}</pubDate>
-      <description>${escapeXml(item.description)}</description>
-      <content:encoded><![CDATA[${item.html}]]></content:encoded>
-      ${item.tags.map((tag) => `<category>${escapeXml(tag)}</category>`).join('\n      ')}
-    </item>`).join('');
-
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-  <channel>
-    <title>${escapeXml(SITE_TITLE)}</title>
-    <link>${escapeXml(SITE_URL)}</link>
-    <description>${escapeXml(SITE_DESCRIPTION)}</description>
-    ${items.length > 0 ? `<lastBuildDate>${toRFC822(items[0].date)}</lastBuildDate>` : ''}
-    ${itemsXml}
-  </channel>
-</rss>`;
+  const xml = buildRssFeed(
+    {
+      title: SITE_TITLE,
+      description: SITE_DESCRIPTION,
+      siteUrl: SITE_URL,
+      feedUrl: SITE_URL + '/feed.xml',
+      author: { name: SITE_AUTHOR },
+    },
+    items,
+  );
 
   return new Response(xml, {
-    headers: {
-      'Content-Type': 'application/rss+xml; charset=utf-8',
-      'Cache-Control': 'max-age=3600'
-    }
+    headers: { 'Content-Type': 'application/rss+xml; charset=utf-8' },
   });
 };

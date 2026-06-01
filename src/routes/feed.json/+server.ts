@@ -1,33 +1,35 @@
 import type { RequestHandler } from './$types';
-import { getFeedItems } from '$lib/feed';
-import { SITE_TITLE, SITE_URL, SITE_DESCRIPTION, SITE_AUTHOR } from '$lib/config';
-import { toISODateTime } from '$lib/utils';
+import { buildJsonFeed, type FeedItem } from '@glw907/cairn-cms';
+import { allPosts, postBody, render } from '$lib/content';
+import { SITE_TITLE, SITE_URL, SITE_DESCRIPTION, SITE_AUTHOR, FEED_MAX_ITEMS } from '$lib/config';
+
+export const prerender = true;
 
 export const GET: RequestHandler = async () => {
-  const items = await getFeedItems();
+  const posts = FEED_MAX_ITEMS > 0 ? allPosts().slice(0, FEED_MAX_ITEMS) : allPosts();
+  const items: FeedItem[] = await Promise.all(
+    posts.map(async (p) => ({
+      title: p.title,
+      url: SITE_URL + p.permalink,
+      date: p.date,
+      summary: p.description,
+      contentHtml: await render(postBody(p.id)),
+      tags: p.tags,
+    })),
+  );
 
-  const feed = {
-    version: 'https://jsonfeed.org/version/1.1',
-    title: SITE_TITLE,
-    home_page_url: SITE_URL,
-    feed_url: `${SITE_URL}/feed.json`,
-    description: SITE_DESCRIPTION,
-    authors: [{ name: SITE_AUTHOR }],
-    items: items.map((item) => ({
-      id: item.url,
-      url: item.url,
-      title: item.title,
-      date_published: toISODateTime(item.date),
-      summary: item.description,
-      content_html: item.html,
-      ...(item.tags.length > 0 && { tags: item.tags })
-    }))
-  };
+  const json = buildJsonFeed(
+    {
+      title: SITE_TITLE,
+      description: SITE_DESCRIPTION,
+      siteUrl: SITE_URL,
+      feedUrl: SITE_URL + '/feed.json',
+      author: { name: SITE_AUTHOR },
+    },
+    items,
+  );
 
-  return new Response(JSON.stringify(feed, null, 2), {
-    headers: {
-      'Content-Type': 'application/feed+json; charset=utf-8',
-      'Cache-Control': 'max-age=3600'
-    }
+  return new Response(json, {
+    headers: { 'Content-Type': 'application/feed+json; charset=utf-8' },
   });
 };
