@@ -19,7 +19,12 @@
   {#each data.seo.links as l}
     <link rel={l.rel} type={l.type} href={l.href} title={l.title} />
   {/each}
-  {@html `<script type="application/ld+json">${JSON.stringify(data.seo.jsonLd)}</` + 'script>'}
+  {@html `<script type="application/ld+json">${
+    JSON.stringify(data.seo.jsonLd)
+      .replace(/</g, '\\u003c')
+      .replace(/>/g, '\\u003e')
+      .replace(/&/g, '\\u0026')
+  }</` + 'script>'}
 </svelte:head>
 
 {#if data.concept === 'posts'}

@@ -39,7 +39,7 @@ export function formatShortDate(iso: string): string {
   });
 }
 
-/** Returns the canonical relative URL for a tag page, e.g. /tags/training/ */
+/** Returns the canonical relative URL for a tag page, e.g. /tags/training */
 export function tagUrl(tag: string): string {
-  return `/tags/${tag}/`;
+  return `/tags/${tag}`;
 }
