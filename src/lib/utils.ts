@@ -1,7 +1,6 @@
 import { renderMarkdown } from './markdown/render';
 import { sanitizeHtml } from './markdown/sanitize';
 import { SITE_LOCALE } from '$lib/config';
-import type { PostSummary } from '$lib/types';
 
 // The public page and the admin preview both render through here. renderMarkdown runs the
 // directive engine (with rehype-raw passthrough); sanitizeHtml is the security floor over its
@@ -38,19 +37,6 @@ export function formatShortDate(iso: string): string {
     day: 'numeric',
     timeZone: 'UTC',
   });
-}
-
-export function toRFC822(iso: string): string {
-  return parseUtcDate(iso).toUTCString();
-}
-
-export function toISODateTime(iso: string): string {
-  return iso + 'T00:00:00Z';
-}
-
-/** Returns the canonical relative URL for a post, e.g. /2026/05/spring-dryland/ */
-export function postUrl(post: Pick<PostSummary, 'year' | 'month' | 'slug'>): string {
-  return `/${post.year}/${post.month}/${post.slug}/`;
 }
 
 /** Returns the canonical relative URL for a tag page, e.g. /tags/training/ */

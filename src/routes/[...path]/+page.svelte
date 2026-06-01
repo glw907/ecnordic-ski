@@ -1,24 +1,76 @@
 <script lang="ts">
   import type { PageData } from './$types';
   import { SITE_TITLE } from '$lib/config';
+  import { formatDate, tagUrl } from '$lib/utils';
+  import { riseStyle } from '$lib/motion';
 
   let { data }: { data: PageData } = $props();
-  let { page } = $derived(data);
 </script>
 
 <svelte:head>
-  <title>{page.title} — {SITE_TITLE}</title>
+  <title>{data.title} — {SITE_TITLE}</title>
+  {#each data.seo.meta as m}
+    {#if m.name}
+      <meta name={m.name} content={m.content} />
+    {:else if m.property}
+      <meta property={m.property} content={m.content} />
+    {/if}
+  {/each}
+  {#each data.seo.links as l}
+    <link rel={l.rel} type={l.type} href={l.href} title={l.title} />
+  {/each}
+  {@html `<script type="application/ld+json">${JSON.stringify(data.seo.jsonLd)}</` + 'script>'}
 </svelte:head>
 
-<article class="static-page" data-page={page.slug}>
-  <h1 class="page-title">{page.title}</h1>
+{#if data.concept === 'posts'}
+  <article class="post">
+    <header>
+      <time class="post-date" datetime={data.date}>{formatDate(data.date)}</time>
+      <h1 class="page-title">{data.title}</h1>
+    </header>
 
-  <div class="post-body">
-    {@html page.html}
-  </div>
-</article>
+    <div class="post-module" style={riseStyle(0)}>
+      <div class="post-body">
+        {@html data.html}
+      </div>
+
+      {#if data.tags.length}
+        <ul class="post-tags">
+          {#each data.tags as tag (tag)}
+            <li class="post-tag"><a href={tagUrl(tag)}>#{tag}</a></li>
+          {/each}
+        </ul>
+      {/if}
+    </div>
+  </article>
+
+  <a href="/" class="back-link">← Home</a>
+{:else}
+  <article class="static-page" data-page={data.slug}>
+    <h1 class="page-title">{data.title}</h1>
+
+    <div class="post-body">
+      {@html data.html}
+    </div>
+  </article>
+{/if}
 
 <style>
+  /* Post presentation rules, copied from the old post +page.svelte. */
+  .post {
+    animation: page-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .post-module {
+    animation: module-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--rise, 0s);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .post,
+    .post-module {
+      animation: none;
+    }
+  }
+
   /* ─── Static content page shell ─────────────────────────── */
   .static-page {
     max-width: 46rem;
