@@ -4,6 +4,11 @@ author: EC Nordic
 url: https://ecnordic.ski
 locale: en-US
 
+content:
+  posts:
+    permalink: /:year/:month/:slug
+    datePrefix: month
+
 menus:
   primary:
     - { label: About, url: /about }
