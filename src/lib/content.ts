@@ -8,9 +8,10 @@ import {
   urlPolicyFrom,
   type ContentEntry,
   type ContentIndex,
+  type FeedItem,
 } from '@glw907/cairn-cms';
 import { cairn } from './cairn.config.js';
-import { siteConfig } from './config.js';
+import { siteConfig, SITE_URL, FEED_MAX_ITEMS } from './config.js';
 import { markdownToHtml } from './utils.js';
 
 export type ConceptId = 'posts' | 'pages';
@@ -71,6 +72,22 @@ export function allPosts(): PostListItem[] {
 /** A post's raw markdown body by id, for the home featured render and the feeds. */
 export function postBody(id: string): string {
   return postsIndex.byId(id)?.body ?? '';
+}
+
+/** Posts as feed entries, newest first, capped at FEED_MAX_ITEMS (0 means all).
+ *  Both feed routes render from this one list so they never drift apart. */
+export async function feedItems(): Promise<FeedItem[]> {
+  const posts = FEED_MAX_ITEMS > 0 ? allPosts().slice(0, FEED_MAX_ITEMS) : allPosts();
+  return Promise.all(
+    posts.map(async (p) => ({
+      title: p.title,
+      url: SITE_URL + p.permalink,
+      date: p.date,
+      summary: p.description,
+      contentHtml: await render(postBody(p.id)),
+      tags: p.tags,
+    })),
+  );
 }
 
 /** Non-draft posts carrying the given tag, newest first. */
