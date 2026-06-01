@@ -40,8 +40,8 @@ export const cairn: CairnAdapter = {
     installationId: '135372268',
   },
   sender: { from: siteEmail.sender ?? 'noreply@ecnordic.ski' },
-  // The editor preview runs the same sanitized directive render as the public page.
-  renderPreview: (md) => markdownToHtml(md),
+  // The site's one renderer: the editor preview and (in Pass 1b) every public page call it.
+  render: (md) => markdownToHtml(md),
   // The directive component registry, exposed so the editor's insert-component palette
   // reads the same single declaration the public render uses.
   registry: ecnordicRegistry,
