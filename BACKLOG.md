@@ -4,6 +4,10 @@
 
 ## Medium
 
+- [ ] **#16** Restore a build-time frontmatter validation gate for content `#improvement` `#ecnordic` *(2026-06-01)*
+  The cairn-cms 0.10 content layer (`src/lib/content.ts` through the engine `createContentIndex`) parses frontmatter but does not run the adapter validators (`validatePostFrontmatter`/`validatePageFrontmatter`); those now fire only on the admin save path. The old `posts.ts`/`pages.ts` threw on bad frontmatter at build, so hand-committed content lost that gate: a missing `title` or `description` no longer fails the build. The `url-inventory` test still catches a post whose date disagrees with its filename. Fix by calling the validators per entry in `content.ts`, or by adding a build-time test that runs them over every file. Surfaced during the Pass 1b consolidation.
+- [ ] **#15** Fix the h1 to h3 heading skip in `ArchiveList` `#bug` `#ecnordic` *(2026-06-01)*
+  `src/lib/components/ArchiveList.svelte` emits `<h3 class="year-heading">` directly under the page `<h1>` with no intervening `<h2>`, which skips a heading level (WCAG 2.2 1.3.1). The same shape appears on the home page. Surfaced by the Pass 1b a11y review and deferred because the fix changes rendered structure and the pass's contract was zero output change. Promote the year heading to `<h2>`; there is no competing `<h2>` styling on those routes.
 - [ ] **#12** Tokenize the waiver page's hardcoded `--w-*` color palette `#improvement` `#ecnordic` *(2026-05-24)*
   `src/routes/waiver/+page.svelte` defines a self-contained print/paper palette in raw hex + `rgba()` (`--w-red`, `--w-blue`, `--w-ink`, etc.), which violates the design system (`rules/design-system.md`: oklch + `--color-*` tokens only). Surfaced by the Pass 7 Tailwind/DaisyUI audit. Deferred from Pass 7 because faithfully porting sRGB hex to `oklch()` shifts rendered pixels, and the pass's contract was zero visual change. Do it as a deliberate, visually-reviewed migration (adopt site tokens, or keep a distinct waiver palette expressed as oklch `@theme` tokens).
 - [ ] **#6** Replace placeholder page content (about, resources) `#improvement` `#ecnordic` *(2026-05-20)*
@@ -12,8 +16,8 @@
 
 ## Low
 
-- [ ] **#14** Dedup `[slug]` cascade keyframes against the global ones `#cleanup` `#ecnordic` *(2026-05-24)*
-  `page-rise`/`module-rise` now live globally in `app.css` (Pass 8). `src/routes/[slug]/+page.svelte` still defines its own scoped copies; remove them and reference the globals when the frozen directive pages are next unfrozen. Zero-output-change refactor (CSS-only).
+- [ ] **#14** Dedup the catch-all cascade keyframes against the global ones `#cleanup` `#ecnordic` *(2026-05-24)*
+  `page-rise`/`module-rise` now live globally in `app.css` (Pass 8). `src/routes/[...path]/+page.svelte` carries its own scoped copies, inherited verbatim from the old `[slug]` route during the Pass 1b cutover; remove them and reference the globals when the directive pages are next reworked. Zero-output-change refactor (CSS-only).
 - [ ] **#5** Replace @schedule-x with a custom Svelte calendar component `#improvement` `#ecnordic` *(2026-05-20)*
   Do this when migrating to cairn-cms.
 ## Done
