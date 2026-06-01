@@ -17,13 +17,18 @@ correct. Post-mortem and the durable `@types/node` hoist gotcha are in the plan 
 (`docs/superpowers/plans/2026-05-31-ecnordic-pass-1a-cairn-0.10-catchup.md`). The five commits sit
 on local `main`, not yet pushed.
 
-**Immediate next action: cairn-cms 0.10 migration, Pass 1b (delivery surface).** This is the second
-half of the design's Pass 1: the catch-all `[...path]` route, engine feeds and sitemap, and retiring
-the hand-rolled `posts.ts`/`pages.ts`/`feed.ts`. The roadmap and component-shape design are in
-`docs/superpowers/specs/2026-05-31-ecnordic-cairn-0.10-migration-design.md`. The plan is not yet
-written; **brainstorm the open delivery decisions first, then author it with `writing-plans`**, then
-execute `subagent-driven` from the ecnordic-ski directory. Pass 2 converts the seven components to
-the typed slot schema, and Pass 3 adds the component reference file. The earlier "Pass 10:
+**Immediate next action: execute cairn-cms 0.10 migration Pass 1b (delivery surface).** The plan is
+written and ready at `docs/superpowers/plans/2026-06-01-ecnordic-pass-1b-delivery-surface.md`, with
+its design at `docs/superpowers/specs/2026-06-01-ecnordic-pass-1b-delivery-design.md`. **Execute it
+`subagent-driven` from the ecnordic-ski directory** (`superpowers:subagent-driven-development`, one
+`cairn-implementer` per task), seven tasks, test-first. It replaces the hand-rolled
+`posts.ts`/`pages.ts`/`feed.ts` and the explicit post and page route folders with one content layer
+(`src/lib/content.ts`), a catch-all `[...path]` route behind a byPermalink resolver, engine-built
+feeds, a new sitemap and robots file, and full `buildSeoMeta` heads. The contract is zero URL
+movement, guarded by a URL-inventory test. ecnordic is the first idiomatic cairn delivery site, so
+this wiring seeds the scaffolder template and 907-life's follow-on. Pass 2 converts the seven
+components to the typed slot schema; Pass 3 adds the component reference file. The broader roadmap is
+in `docs/superpowers/specs/2026-05-31-ecnordic-cairn-0.10-migration-design.md`. The earlier "Pass 10:
 placeholder content" work below is separate and still open.
 
 **Pass 9: remote-functions spike (done 2026-05-24). Verdict: DEFER (adopt later).**
