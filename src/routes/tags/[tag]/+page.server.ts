@@ -1,13 +1,13 @@
 import type { PageServerLoad } from './$types';
-import { getAllTags, getPostsByTag } from '$lib/posts';
+import { allTags, postsByTag } from '$lib/content';
 import { error } from '@sveltejs/kit';
 
 export function entries() {
-  return getAllTags().map(({ tag }) => ({ tag }));
+  return allTags().map(({ tag }) => ({ tag }));
 }
 
 export const load: PageServerLoad = ({ params }) => {
-  const posts = getPostsByTag(params.tag);
+  const posts = postsByTag(params.tag);
   if (posts.length === 0) error(404, 'Tag not found');
   return { tag: params.tag, posts };
 };
