@@ -339,3 +339,35 @@ Expected: `^0.10.0`, and `carta-md` absent from the lock. This is what CI `npm c
 - **Breaking-API completeness:** the runtime factories (`composeRuntime`, `createContentRoutes`, `createAuthRoutes`, `createEditorRoutes`, `createNavRoutes`), every other admin route, and all other ecnordic imports from cairn-cms are signature-compatible across `0.6` to `0.10`, so they need no edit. The only required code edits are the two renames, the YAML block, and the one-line policy threading.
 - **`SiteConfig` typing:** ecnordic's `EcSettings`/`EcEmail`/`EcFooter` casts in `config.ts` stay. `0.10`'s `SiteConfig` still types non-core keys as `unknown`, so the workaround is still load-bearing. It is left untouched.
 - **No content change:** no `src/content` file is touched, so the content guard is not involved and no rendered output moves.
+
+---
+
+## Post-mortem (executed 2026-06-01, subagent-driven)
+
+All six tasks landed in five commits (`fc61162`..`1b61a48`), one `cairn-implementer` per task, each gated before the next:
+
+1. `fc61162` build: bump cairn-cms to `^0.10.0`, drop carta-md, relock standalone.
+2. `22b412f` feat: rename the adapter renderer to `render`.
+3. `7854c1e` feat: pass `render` to `EditPage` in the admin edit mount.
+4. `996a584` feat: declare the month-dated posts URL policy in the YAML, with the new `tests/config/url-policy.test.ts`.
+5. `1b61a48` feat: thread `urlPolicyFrom(siteConfig)` into `composeRuntime`.
+
+### Verified with evidence
+
+- `npm run check`: 496 files, 0 errors, 0 warnings.
+- `npm test`: 9 files, 57 tests, exit 0 (the suite gained the 2 url-policy tests).
+- `npm run build`: exit 0 on adapter-cloudflare. The admin page chunk built.
+- Public URLs unchanged: the welcome post still prerenders to `/2026/05/welcome/`, pages to `/<slug>/`, tags under `/tags/`. `feed.xml` and `feed.json` stay dynamic worker routes, served as before. No URL moved.
+- Runtime smoke of the Task 5 wiring (Node, against the resolved cairn-cms 0.10): `composeRuntime(cairn, [], urlPolicyFrom(siteConfig))` does not throw, the posts descriptor resolves `datePrefix: month` and permalink `/:year/:month/:slug`, and `composeDatedId('2026-05-15', 'welcome', 'month')` returns `2026-05-welcome`. The admin create flow will write `YYYY-MM-slug.md`, not `YYYY-MM-DD-slug.md`.
+- Committed `package-lock.json` pins `^0.10.0` with carta-md absent, the state CI `npm ci` installs against.
+
+### Decisions and gotchas locked in
+
+- **`@types/node` hoisting (durable workspace gotcha).** ecnordic's `svelte-check` needs `@types/node` for the `node:fs`/`node:path` imports in `src/tests/markdown/*characterization.test.ts`, but ecnordic does not declare it. It resolves only when a full root `npm install` hoists it from cairn-cms's devDeps to the workspace root `node_modules`. Task 1's standalone relock (root manifest moved aside) installed ecnordic alone, which dropped the hoisted copy and surfaced 8 latent type errors in those two test files. A clean full root `npm install` restored the hoist and the gate returned to the 4 migration errors, then to 0/0. ecnordic CI runs `npm ci` then build and deploy, with no `svelte-check` step, so these errors never blocked CI. The next site relock (907-life's migration) will hit the same trap. Recorded as the `cairn-types-node-hoist-gotcha` memory.
+- **vitest include glob (deviation from the plan's file list).** The plan mandated the test at `tests/config/url-policy.test.ts`, but `vitest.config.ts` globbed only `src/tests/**`, so the test would never run. Task 4 widened the include to `['src/tests/**/*.test.ts', 'tests/**/*.test.ts']` and committed `vitest.config.ts` alongside. The plan's own Step 1 import path (`../../src/lib/site.config.yaml`) resolves correctly only from `tests/config/`, and Task 6 expected `npm test` to include the new test, so the widening realizes the plan's intent.
+- **Workspace symlink engaged.** With the member shadow and stale root lock cleared, ecnordic resolves cairn-cms through the workspace link to the local `0.10.0` member rather than the registry tarball. The two are the same published version, so the gate is equivalent. The committed site lock still resolves cairn-cms from the registry, so `npm ci` on a fresh checkout stays correct.
+
+### Deferred
+
+- The interactive browser load of the `/admin` editor (CodeMirror surface, live preview, form) is a user spot-check. It needs a browser plus a session minted into the local D1 under `wrangler dev`. The headless evidence above covers type-correctness, the build, and the runtime composition; the CodeMirror editor itself is covered by cairn-cms's own component suite.
+- Pass 1b (the delivery surface: the catch-all `[...path]` route, engine feeds and sitemap, retiring `posts.ts`/`pages.ts`/`feed.ts`) is the next pass, written just-in-time against the migration design.

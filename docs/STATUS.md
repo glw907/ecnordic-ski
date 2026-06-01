@@ -6,18 +6,25 @@ inline container directives; the **content style guard** blocks AI tells in
 (`form()`, Pass 9). See `docs/architecture.md`. Contact, tags, and post detail consume the
 kit's CSS contract (Pass 8). See `docs/architecture.md` + `docs/design-language.md`.
 
-**Immediate next action (2026-05-31): cairn-cms 0.10 migration, Pass 1a.** ecnordic still pins
-`@glw907/cairn-cms@0.6.0`, four minor versions behind. The migration runs as a short series of
-site-passes; the roadmap and the component-shape design are in
-`docs/superpowers/specs/2026-05-31-ecnordic-cairn-0.10-migration-design.md`. Pass 1a (the version
-catch-up: bump to `^0.10.0`, the `renderPreview`-to-`render` rename on the adapter and `EditPage`,
-and the month-dated posts URL policy) is written and ready at
-`docs/superpowers/plans/2026-05-31-ecnordic-pass-1a-cairn-0.10-catchup.md`. **Execute it
-`subagent-driven` from the ecnordic-ski directory** (six tasks, test-first, the public delivery
-routes stay until Pass 1b). Pass 1b (the delivery surface: the catch-all `[...path]` route, engine
-feeds and sitemap, retiring `posts.ts`/`feed.ts`) is written just-in-time after 1a lands. Pass 2
-converts the seven components to the typed slot schema, and Pass 3 adds the component reference file.
-The earlier "Pass 10: placeholder content" work below is separate and still open.
+**cairn-cms 0.10 migration, Pass 1a: DONE (2026-06-01).** ecnordic now pins
+`@glw907/cairn-cms@^0.10.0` (was `0.6.0`). The version catch-up landed in five commits
+(`fc61162`..`1b61a48`): the bump and carta-md removal, the `renderPreview`-to-`render` rename on
+both the adapter and `EditPage`, the month-dated posts URL policy in the YAML, and the policy
+threaded into `composeRuntime`. Gates green (`check` 0/0, `npm test` 57 exit 0, build exit 0).
+Public URLs unchanged (the welcome post still serves at `/2026/05/welcome/`). A runtime smoke
+confirmed `composeDatedId` derives ecnordic's `YYYY-MM-slug` filename, so the admin create flow is
+correct. Post-mortem and the durable `@types/node` hoist gotcha are in the plan file
+(`docs/superpowers/plans/2026-05-31-ecnordic-pass-1a-cairn-0.10-catchup.md`). The five commits sit
+on local `main`, not yet pushed.
+
+**Immediate next action: cairn-cms 0.10 migration, Pass 1b (delivery surface).** This is the second
+half of the design's Pass 1: the catch-all `[...path]` route, engine feeds and sitemap, and retiring
+the hand-rolled `posts.ts`/`pages.ts`/`feed.ts`. The roadmap and component-shape design are in
+`docs/superpowers/specs/2026-05-31-ecnordic-cairn-0.10-migration-design.md`. The plan is not yet
+written; **brainstorm the open delivery decisions first, then author it with `writing-plans`**, then
+execute `subagent-driven` from the ecnordic-ski directory. Pass 2 converts the seven components to
+the typed slot schema, and Pass 3 adds the component reference file. The earlier "Pass 10:
+placeholder content" work below is separate and still open.
 
 **Pass 9: remote-functions spike (done 2026-05-24). Verdict: DEFER (adopt later).**
 Converted the live contact form from a `+page.server.ts` action to a `form()` remote
