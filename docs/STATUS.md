@@ -2,37 +2,33 @@
 
 **Current state.** The directive render pipeline is live; all five static pages carry inline
 container directives; the content style guard blocks AI tells in `src/content/**/*.md`. The
-contact form runs on a SvelteKit remote function (`form()`, Pass 9). The public delivery now
-runs entirely on the cairn-cms engine. See `docs/architecture.md`.
+contact form runs on a SvelteKit remote function (`form()`, Pass 9). Public delivery and the admin
+surface run on the cairn-cms engine at `^0.21.0`. See `docs/architecture.md`.
 
-**cairn-cms 0.10 migration, Pass 1a + 1b: DONE (2026-06-01).** 1a pinned
-`@glw907/cairn-cms@^0.10.0` and renamed `renderPreview` to `render`. 1b replaced the
-hand-rolled delivery (`posts.ts`, `pages.ts`, `feed.ts`, the explicit post and page route
-folders) with one content layer (`src/lib/content.ts`), a catch-all `[...path]` route behind a
-byPermalink resolver, engine-built feeds, a new sitemap and robots, and full `buildSeoMeta`
-heads. The contract held: zero URL movement (guarded by the `url-inventory` test) and no
-rendered-body change. Gates green (`check` 0/0, `npm test` 64 exit 0, build). A `wrangler dev`
-smoke confirmed every delivery route serves, `/no/such/path` 404s, and `/admin` still redirects
-to login. Eight commits sit on local `main`, not yet pushed (a push deploys live). Frontmatter
-validation now runs on the admin save path, not as a build gate (BACKLOG #16).
+**cairn-cms 0.21 migration: DONE (2026-06-02).** ecnordic moved from `^0.10.0` to `^0.21.0` as a
+completely idiomatic cairn site, across two plans. Plan A (the breaking floor) ported the adapter to
+the `defineFields` schema contract, the seven directive components to the `build(ctx)` slot model, the
+five directive pages to the slot syntax, dropped the site's second sanitize pass for the engine floor
+(extended via `sanitizeSchema`), and adopted the idiomatic public surface (`createSiteIndexes`,
+`createPublicRoutes`, `CairnHead`, the `*Response` helpers). Plan B added the content graph: the
+committed manifest (`src/content/.cairn/index.json`) and its `verifyManifest` build backstop, the
+`delete`/`rename` admin actions, and the welcome post's CrewLAB link converted to a `cairn:pages/crewlab`
+token (the `/waiver` link stays absolute, since the waiver is a hand-built route, not a content page).
+Zero URL movement (guarded by `url-inventory`), no rendered-body change. Gates green (`check` 0/0,
+`npm test` 50 exit 0, `npm run build` exit 0). The migration doubled as the first cairn-cms DX audit:
+findings in `docs/cairn-dx-findings.md`, filed as an engine backlog in
+`cairn-cms/docs/dx-backlog-ecnordic-migration.md`. All commits sit on local `main`, not pushed (a push
+deploys live).
 
-**Immediate next: the cairn-cms 0.21 migration, Plan A (the breaking floor), subagent-driven.**
-The engine moved from 0.10 to 0.21, so the migration target jumped. This is an all-in migration
-(brainstormed and approved 2026-06-02, design
-`docs/superpowers/specs/2026-06-02-ecnordic-cairn-0.21-migration-design.md`), and it doubles as the
-first real DX audit of cairn-cms. It runs as two plan files, executed back to back in a clean
-session: Plan A (`docs/superpowers/plans/2026-06-02-ecnordic-cairn-0.21-plan-a-breaking-floor.md`)
-is the breaking floor (bump to `^0.21.0`, the schema-contract adapter, the seven components ported to
-the `build(ctx)` slot model, the five directive content files rewritten, the sanitize floor
-reconciled onto the engine's, `createSiteIndexes`), and Plan B
-(`docs/superpowers/plans/2026-06-02-ecnordic-cairn-0.21-plan-b-content-graph.md`) is content-graph
-adoption (manifest, build resolver, delete and rename actions, the `cairn:` link conversion) plus the
-DX-findings synthesis. Start at Plan A Task 0. Do not push; a push deploys live. This supersedes the
-old Pass 2 and Pass 3 (the 0.10-era design); the separate "Pass 10: placeholder content" work stays
-open.
+**Immediate next: deploy and the live `/admin` smoke (human fast-follow).** A push to `main` deploys
+ecnordic to production, so a human pushes when ready, then smoke-tests `/admin`: the delete and rename
+actions and the editor link picker against the real Worker. Two build-time follow-ups are recorded as DX
+findings and in `BACKLOG.md`: the dangling-token backstop is not fatal (the inherited
+`prerender.handleHttpError: 'warn'` downgrades the prerender 500 to a warning), and the schema contract
+dropped four validation rules the old validator enforced.
 
 **Pass 9 (DEFER):** contact form on `form()`, verified on adapter-cloudflare; the API is
-experimental, so keep contact as the proving ground (BACKLOG #13). **Open, not blocking:**
+experimental, so keep contact as the proving ground (BACKLOG #13). **Pass 10 (open, not blocking):**
 placeholder content on CrewLAB / Training / volunteers; waiver/payment-model conflict.
 
 ---
@@ -47,20 +43,16 @@ placeholder content on CrewLAB / Training / volunteers; waiver/payment-model con
 | 7–8 | Conformance sweep + kit rollout to components | ✓ Done |
 | 9 | Remote-functions spike (contact on `form()`) | ✓ Done (DEFER) |
 | 0.10 | 1a version catch-up + 1b delivery surface | ✓ Done |
+| 0.21 | Breaking floor (Plan A) + content graph (Plan B) | ✓ Done |
 
 ---
 
-### Next starter prompt (cairn-cms 0.21 migration, Plan A)
+### Next starter prompt (deploy fast-follow, then Pass 10)
 
-> Execute the ecnordic cairn 0.21 migration, Plan A
-> (`docs/superpowers/plans/2026-06-02-ecnordic-cairn-0.21-plan-a-breaking-floor.md`), subagent-driven,
-> from the ecnordic-ski directory on `main`. Start at Task 0. The design is settled and approved
-> (`docs/superpowers/specs/2026-06-02-ecnordic-cairn-0.21-migration-design.md`), so skip brainstorming.
-> Dispatch one implementer per task and verify each commit before the next. Capture cairn-cms DX
-> friction in `docs/cairn-dx-findings.md` as you go (a co-primary deliverable). Do NOT push; a push
-> deploys ecnordic live. When Plan A's gate is green (`check` 0/0, `npm test` exit 0, `npm run build`
-> exit 0, `url-inventory` and characterization tests green), run Plan B
-> (`docs/superpowers/plans/2026-06-02-ecnordic-cairn-0.21-plan-b-content-graph.md`) the same way, then
-> the `site-pass` pass-end ritual (the live deploy and the admin smoke stay a human fast-follow).
+> The cairn-cms 0.21 migration is committed on local `main`, unpushed. When ready to ship, push to
+> `main` (this deploys ecnordic live via GitHub Actions), then smoke-test `/admin` against the real
+> Worker: create or edit a post, exercise delete and rename, and use the editor link picker. After
+> the deploy is confirmed, Pass 10 (placeholder content on CrewLAB / Training / volunteers) is the
+> next site-pass. Invoke `site-pass` to start. Standard pass-end checklist applies.
 
 **Deploy:** Live at **https://ecnordic.ski**. Push to `main` triggers GitHub Actions (build + pagefind + wrangler deploy).

@@ -13,7 +13,7 @@ pipeline, and deployment.
 |---|---|---|
 | Framework | SvelteKit + TypeScript (Svelte 5 runes) | First-class Cloudflare support |
 | Styling | Tailwind CSS v4 + DaisyUI v5 | CSS-first config, no `tailwind.config.js` |
-| Markdown | remark + rehype, custom unified pipeline | Inline container directives → kit HTML (see below) |
+| Markdown | cairn-cms `createRenderer` (remark + rehype) | Inline container directives → kit HTML, engine sanitize floor (see below) |
 | Search | Pagefind | Post-build static index, zero runtime JS cost |
 | Adapter | `@sveltejs/adapter-cloudflare` v7 | Workers output, form actions work natively |
 | Contact form | SvelteKit remote function (`form()`) + Cloudflare Email Workers (`send_email`) | Type-safe boundary, declarative validation; experimental (Pass 9) |
@@ -43,14 +43,15 @@ Scheduling lives in CrewLAB and the site has a `/crewlab` content page instead.
 Nav links live in `src/lib/components/Nav.svelte`.
 
 **Post and page URLs** come from the cairn-cms content layer, not a route folder. One
-catch-all `[...path]` route resolves an incoming path to a post or page through the
-byPermalink map in `src/lib/content.ts`. The engine computes each entry's permalink from
-the YAML URL policy in `src/lib/site.config.yaml`: posts carry a `month` date prefix, so
-`2026-05-welcome.md` (frontmatter `date: 2026-05-14`) serves at `/2026/05/welcome`; pages
-serve at `/<slug>`. Canonical URLs carry no trailing slash. The `url-inventory` test pins
-this set against the old filename-derived URLs, so the Pass 1b cutover moved no live URL.
-SvelteKit ranks the explicit routes above the catch-all, so `/tags`, `/contact`, the feeds,
-and the rest keep their own routes; the catch-all serves only posts and pages.
+catch-all `[...path]` route resolves an incoming path to a post or page through the engine's
+`createPublicRoutes`, which reads the `site` index built in `src/lib/content.ts`. The engine
+computes each entry's permalink from the YAML URL policy in `src/lib/site.config.yaml`: posts
+carry a `month` date prefix, so `2026-05-welcome.md` (frontmatter `date: 2026-05-14`) serves
+at `/2026/05/welcome`; pages serve at `/<slug>`. Canonical URLs carry no trailing slash. The
+`url-inventory` test pins this set against the old filename-derived URLs, so neither the Pass 1b
+cutover nor the 0.21 migration moved a live URL. SvelteKit ranks the explicit routes above the
+catch-all, so `/tags`, `/contact`, the feeds, and the rest keep their own routes; the catch-all
+serves only posts and pages.
 
 ---
 
@@ -58,78 +59,100 @@ and the rest keep their own routes; the catch-all serves only posts and pages.
 
 ### Content layer: `src/lib/content.ts`
 
-As of the cairn-cms 0.10 migration (Pass 1b), one module reads all content off disk and
-every public surface goes through it. It globs each concept's markdown with
-`import.meta.glob` (`?raw`, `eager: true`), because Cloudflare Workers has no filesystem
-and all markdown ships as string constants, then hands the raw files to the engine.
-`createContentIndex` parses frontmatter, computes each summary (permalink, excerpt, word
-count, tags, draft flag), and sorts newest-first. The per-concept descriptors come from
-`normalizeConcepts(cairn.content, urlPolicyFrom(siteConfig))`, the same inputs the admin
-runtime uses, so the delivery index and the editor agree on every URL.
+As of the cairn-cms 0.21 migration, the content layer is the engine's idiomatic surface, not
+a hand-rolled set of helpers. It globs each concept's markdown with `import.meta.glob` (`?raw`,
+`eager: true`), because Cloudflare Workers has no filesystem and all markdown ships as string
+constants, then hands the raw globs to `createSiteIndexes(cairn, siteConfig, { posts, pages })`.
+That returns `{ site, posts, pages }`: one typed index per concept plus a `site` resolver that
+maps a permalink to its entry across both concepts. The module exports `site`, `ORIGIN`, and
+`SITE_DESCRIPTION`. The same `cairn`, `siteConfig`, `postsRaw`, and `pagesRaw` bindings also feed
+the manifest backstop (see Content graph below). `createSiteIndexes` hard-fails on a missing glob
+key for a declared concept, so every concept the adapter declares must be globbed here.
 
-The home and tag routes read it through `allPosts`/`allTags`/`postsByTag`, the feeds
-through `feedItems`, the sitemap through `contentPermalinks`, and the catch-all through
-`resolvePermalink`. `resolvePermalink` builds a `Map<permalink, {concept, id}>` once across
-both concepts; it is the single unit the catch-all depends on, and a path with no entry
-returns `undefined`, which the route turns into a 404. `/tags/[tag]/` stays explicit and
-fully prerendered: its `entries()` enumerates every tag, and a tag with no posts 404s.
+The catch-all reads `site` through `createPublicRoutes`; the home, tags-index, and tag routes read
+`site.concept('posts')` (`.all()`, `.allTags()`, `.byTag()`, `.byId()`); the feeds map the same
+concept index and thread `buildLinkResolver(site)`; the sitemap and robots use the engine response
+helpers. The home and archive lists show the authored `description`, which the engine `ContentSummary`
+does not carry (it carries a derived `excerpt`), so a small site-local mapper re-reads
+`posts.byId(id).frontmatter.description`; the schema makes that a required `string`, so the read needs
+no cast. `/tags/[tag]/` stays explicit and fully prerendered: its `entries()` enumerates every tag,
+and a tag with no posts 404s.
 
 ### Catch-all presentation: `src/routes/[...path]/`
 
-`+page.server.ts` resolves the path, renders the entry body through the site renderer, and
-builds the SEO head with the engine's `buildSeoMeta` (title, description, canonical URL,
-`og`/`article` tags, JSON-LD, feed links). Its `entries()` enumerates `contentPermalinks()`,
-so prerender stays exhaustive. `+page.svelte` branches on `data.concept`: the post branch
-reproduces the old post markup, the page branch the old page markup with
-`data-page={data.slug}`. The post and page markup and the page route's scoped `<style>`
-block were carried over verbatim from the deleted `[year]/[month]/[slug]/` and `[slug]/`
-routes, so rendering and the animation cascade did not change. The inlined JSON-LD escapes
-`< > &` before `{@html}`, so an author-controlled title or description cannot break out of
-the script element.
+`+page.server.ts` builds `createPublicRoutes({ site, render, origin, siteName, description, feeds })`
+once at module level and exports `entries` and `load` from it. `entryLoad({ url })` resolves the path
+through the `site` index, renders the body (resolving any `cairn:` link), and builds the SEO model
+internally, so the old inline `buildSeoMeta` is gone. `EntryData` carries no concept, so the load
+re-derives it as `data.entry.date ? 'posts' : 'pages'` (posts are the only dated concept). `+page.svelte`
+renders `<CairnHead seo={data.seo} />` for the head and branches on the derived concept: the post branch
+reproduces the post markup, the page branch the page markup with `data-page={data.slug}`. The post and
+page markup and the page route's scoped `<style>` block carried over verbatim, so rendering and the
+animation cascade did not change.
 
-### Frontmatter validation
+### Frontmatter validation: the schema contract
 
-`src/lib/content-schema.ts` holds `validatePostFrontmatter` and `validatePageFrontmatter`,
-registered on the adapter concepts in `src/lib/cairn.config.ts`. `validatePostFrontmatter`
-requires `title`, a real `YYYY-MM-DD` `date`, a `description`, and at least one `tag` from
-the controlled vocabulary (`POST_TAGS` in `src/lib/config.ts`); `draft` must be boolean if
-present. `validatePageFrontmatter` requires `title`. Covered by
-`src/tests/content-schema.test.ts`.
+As of 0.21, validation lives in the adapter's schema, not in a hand-written validator. Each concept in
+`src/lib/cairn.config.ts` carries one `schema: defineFields([...])` (wrapped by `defineAdapter`), which
+is the single source of truth for the editor form, the validator, and the inferred frontmatter type. The
+posts schema declares `title` (required), `date` (required), `description` (required), `tags` (with the
+controlled `POST_TAGS` as `options`), and `draft` (boolean); pages declare `title` (required). The old
+`validatePostFrontmatter`/`validatePageFrontmatter` functions are deleted.
 
-These validators run on the admin **save** path, where the engine checks a form submission
-before committing. The delivery read path (`createContentIndex`) parses frontmatter but
-does not run them, so this is no longer a build-time gate the way the old `posts.ts`/
-`pages.ts` were. The `url-inventory` test still catches a post whose frontmatter date
-disagrees with its filename. A missing `title` or `description` on hand-committed content
-would no longer fail the build (tracked in `BACKLOG.md`).
+This validate-once contract is thinner than the old validators: it enforces required-and-coerce on the
+declared fields and omits empty optional values, but it does not check a real calendar date, a date
+format, the closed `tags` vocabulary as a hard constraint (the `options` drive the editor pick list, not
+a commit-time rejection), or an at-least-one-tag minimum. Those four dropped rules are recorded in the DX
+findings (`docs/cairn-dx-findings.md`) and the cairn-cms backlog; restoring them is an engine change
+(declarative field options), not a site-local re-add. The validator runs on the admin **save** path. The
+delivery read path parses frontmatter but does not re-validate, so a hand-committed post with a missing
+declared field is not a build-time failure (BACKLOG #16); the `url-inventory` test still catches a date
+that disagrees with its filename.
+
+### Content graph: the manifest and `cairn:` links
+
+A committed manifest at `src/content/.cairn/index.json` is a build-verified projection of the corpus: one
+entry per post and page with its id, concept, title, permalink, draft flag, and outbound `cairn:` links.
+`scripts/build-manifest.mjs` (run as `npm run cairn:manifest`) regenerates it. `src/lib/content.ts` calls
+`verifyManifest(buildSiteManifest(...), manifestRaw)` at module load, so a build fails if the committed
+manifest drifted from the corpus (a raw-git content edit cannot ship a stale graph).
+
+Internal links between content use the `cairn:<concept>/<id>` token rather than a hardcoded path, so a link
+survives a future slug change. The welcome post links to the CrewLAB page as `cairn:pages/crewlab`, which
+the render resolver rewrites to the live `/crewlab` permalink on the page and to the absolute URL in the
+feeds. The token resolves content concepts only (posts and pages), not `+page.svelte` routes, so the
+post's `/waiver` link stays an absolute path (the waiver is a hand-built route, not a content page). A
+dangling token throws `cairn link target not found` at prerender. The build does not currently go red on
+it, because `svelte.config.js` carries `prerender.handleHttpError: 'warn'` (inherited from the scaffold),
+which downgrades the prerender 500 to a warning; the broken link still never ships (the page 500s), but the
+build exits 0. Tightening this to a fatal build error is a recorded follow-up (DX finding 16, BACKLOG).
+
+The admin edit route (`src/routes/admin/(app)/[concept]/[id]/+page.server.ts`) registers `save`, `delete`,
+and `rename` actions off the engine runtime, and `editLoad` ships the editor link picker's targets from the
+manifest.
 
 ### Directive render pipeline: `src/lib/markdown/`
 
-`renderMarkdown(content)` in `render.ts` is the site's single renderer; `markdownToHtml`
-in `utils.ts` is a thin delegate. The unified processor is built once at module level.
+As of 0.21, the render pipeline is the engine's `createRenderer`, not a site-owned unified
+processor. `render.ts` calls `createRenderer(ecnordicRegistry, { stagger: true, sanitizeSchema:
+ecSanitizeSchema })` once and re-exports its `renderMarkdown`; `markdownToHtml(md, opts)` in
+`utils.ts` is a thin delegate that threads the optional `resolve` (the `cairn:` link resolver)
+through. The seven directive components (`card/grid/alert/cta/split/panel/passage`) live in
+`components.ts` as `ComponentDef`s with the `build(ctx)` slot model: each reads `ctx.slot('title')`,
+`ctx.slot('body')`, and declared `ctx.attributes` (an `icon` attribute of `type: 'icon'`, a `role`
+select), and arranges kit markup with `hastscript`. A local `head(ctx)` helper rebuilds the
+icon-plus-heading row the removed `splitHead` used to return. A caution alert with no explicit icon
+defaults to the `warning` glyph inside `buildAlert`. The icon path data is the adapter's
+`icons: ICON_PATHS` (`icons.ts`), an `IconSet`.
 
-Pipeline order: `remark-parse → remark-gfm → remark-directive → remark-ec-directives
-(mark) → remark-rehype(allowDangerousHtml) → rehype-raw → rehype-ec-primitives
-(restructure) → rehype-slug → rehype-stringify`. The restructure step runs before
-`rehype-slug` so the retagged `.card-title` `<h2>` class serializes ahead of the slug id.
-
-- **`remark-ec-directives.ts`** (mdast) stamps each known container directive
-  (`card/grid/alert/cta/split/panel/passage`) with `data-primitive`/`data-icon`/
-  `data-role` markers; it builds no structure. A caution alert with no icon defaults to
-  the `warning` glyph. Because the vocabulary is container-only (`:::name`), the step
-  reconstructs any text/leaf directive (`:name`/`::name`) back to literal text. These
-  only arise from accidental prose colons (clock times like `4:00–6:00 PM`) that would
-  otherwise collapse to empty `<div>`s.
-- **`rehype-ec-primitives.ts`** (hast) rewrites the marked elements into kit markup,
-  dispatching on `data-primitive`. Nested directives convert before their parent builds.
-  Top-level primitives get a document-order `--rise` stagger; nested ones get none. The
-  `data-*` markers are read back through a `strProp(node, name)` accessor that narrows
-  hast's `PropertyValue` to `string`, rather than casting at each call site.
-- **`icons.ts`** holds the Phosphor path data and `glyph(name)`, returning the inline
-  SVG as a real `hastscript` node (no raw-string injection).
-
-The directive vocabulary is documented in `docs/design-language.md`; the pipeline is
-pinned by tests in `src/tests/markdown/`.
+**Sanitize: one engine floor, extended.** The engine applies `rehype-sanitize` by default inside
+`createRenderer`, after `rehype-raw` and before the component dispatch, so the built directive markup
+(`<section>`, `<svg>`, `<path>`, `role="alert"`, `data-rise`) is injected by trusted build code after
+the floor and never needs an allowlist entry. The site's old post-render second sanitize pass was pure
+duplication and is gone; `sanitize.ts` now exports `ecSanitizeSchema(defaults)`, a 13-line extend-only
+hook that adds only what authored raw HTML uses (an `aria-label` on `*`, for the page-toc `<nav>`). The
+directive vocabulary is documented in `docs/design-language.md`; the pipeline is pinned by tests in
+`src/tests/markdown/`, including the characterization snapshots that render each content file.
 
 ---
 
