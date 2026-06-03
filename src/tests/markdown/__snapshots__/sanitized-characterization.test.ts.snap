@@ -2,7 +2,7 @@
 
 exports[`characterization: sanitized public HTML is preserved > renders 2026-05-welcome.md (sanitized) identically 1`] = `
 "<p>The EC Nordic website is live. Training updates, race results, and camp information will be posted here throughout the season.</p>
-<p>Summer training starts soon — join us on <a href="/crewlab">CrewLAB</a> for the schedule and the first session, and make sure your <a href="/waiver">waiver</a> is on file before you show up.</p>"
+<p>Summer training starts soon. Join us on <a href="cairn:pages/crewlab">CrewLAB</a> for the schedule and the first session, and make sure your <a href="/waiver">waiver</a> is on file before you show up.</p>"
 `;
 
 exports[`characterization: sanitized public HTML is preserved > renders about.md (sanitized) identically 1`] = `

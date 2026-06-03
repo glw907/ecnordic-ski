@@ -296,3 +296,35 @@ SvelteKit idiom.
     no warning to flag the omission. Fix: the migration guide and the scaffolder's route stub should
     register all four actions by default, so a site opts out of delete or rename rather than forgetting
     to opt in.
+
+15. **A `cairn:` token resolves content concepts only, not arbitrary SvelteKit routes, and nothing
+    says so.** Converting the welcome post's two links, `[CrewLAB](/crewlab)` became
+    `cairn:pages/crewlab` cleanly, but `[waiver](/waiver)` could not. The waiver lives at
+    `src/routes/waiver/+page.svelte`, a hand-built standalone route, not a markdown page under
+    `src/content/pages/`. There is no `pages/waiver` content entry, so `cairn:pages/waiver` has no
+    target and the resolver throws `cairn link target not found`. The token grammar only spans the
+    declared content concepts, which is correct (a route has no id in the manifest), but a SvelteKit
+    developer reasonably reads `/waiver` and `/crewlab` as the same kind of internal link and expects
+    both to convert. The plan itself assumed both were pages. Fix: name the constraint in the
+    internal-links doc ("`cairn:` resolves posts and pages, not `+page.svelte` routes; keep an absolute
+    path for a hand-built route"), and have the editor link picker only offer real content targets so a
+    site author cannot mint a dangling token. Location: the `cairn:` conversion in
+    `src/content/posts/2026-05-welcome.md`, Plan B Task 4.
+
+16. **The build backstop is not fail-closed on a SvelteKit site that inherited
+    `prerender.handleHttpError: 'warn'`.** A dangling `cairn:` token throws `cairn link target not
+    found` while the catch-all prerenders, exactly as designed. But ecnordic's `svelte.config.js`
+    carries `prerender: { handleHttpError: 'warn', handleMissingId: 'warn', handleUnseenRoutes: 'warn' }`,
+    inherited from the original 907.life scaffold, so SvelteKit downgrades the prerender 500 to a warning
+    and `npm run build` still exits 0. The link still fails closed (the page 500s instead of shipping a
+    broken anchor), so it never reaches production, but the build does not go red, which defeats the
+    "a dangling token fails the build, exit 1" guarantee the content-graph promises. The showcase has no
+    `handleHttpError` override, so it gets SvelteKit's default of `'fail'` and the backstop is fatal
+    there. The mismatch is a scaffold default, not engine behavior, but it silently weakens the
+    backstop on any real site that copied the lenient prerender config. Fix: the create-cairn-site
+    scaffolder should NOT emit `handleHttpError: 'warn'` (or should pair it with a targeted
+    `handleHttpError` function that re-throws a `cairn link target not found` while tolerating other
+    prerender hiccups), and the internal-links doc should call out that the build-time guarantee depends
+    on `handleHttpError` staying `'fail'` for the cairn error. Ranked high: it is invisible (the build is
+    green) and it erodes the headline content-graph safety property. Location: ecnordic
+    `svelte.config.js`, surfaced by Plan B Task 4 Step 4.

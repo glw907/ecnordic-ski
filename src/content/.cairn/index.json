@@ -48,7 +48,12 @@
       "date": "2026-05-14",
       "permalink": "/2026/05/welcome",
       "draft": false,
-      "links": []
+      "links": [
+        {
+          "concept": "pages",
+          "id": "crewlab"
+        }
+      ]
     }
   ]
 }
