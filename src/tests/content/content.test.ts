@@ -1,16 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import {
-  allPosts,
-  allTags,
-  postsByTag,
-  resolvePermalink,
-  contentPermalinks,
-} from '$lib/content';
+import { postList, postListByTag, posts, site } from '$lib/content';
 
 describe('content layer', () => {
   it('lists posts with the frontmatter description and the engine permalink', () => {
-    const posts = allPosts();
-    const welcome = posts.find((p) => p.id === '2026-05-welcome');
+    const list = postList();
+    const welcome = list.find((p) => p.id === '2026-05-welcome');
     expect(welcome).toBeDefined();
     expect(welcome!.permalink).toBe('/2026/05/welcome');
     expect(welcome!.slug).toBe('welcome');
@@ -20,31 +14,30 @@ describe('content layer', () => {
   });
 
   it('resolves a post permalink to its entry', () => {
-    const hit = resolvePermalink('/2026/05/welcome');
-    expect(hit?.concept).toBe('posts');
-    expect(hit?.entry.id).toBe('2026-05-welcome');
-    expect(typeof hit?.entry.body).toBe('string');
+    const entry = site.byPermalink('/2026/05/welcome');
+    expect(entry?.id).toBe('2026-05-welcome');
+    expect(entry?.permalink).toBe('/2026/05/welcome');
+    expect(typeof entry?.body).toBe('string');
   });
 
   it('resolves a page permalink to its entry', () => {
-    const hit = resolvePermalink('/about');
-    expect(hit?.concept).toBe('pages');
-    expect(hit?.entry.id).toBe('about');
+    const entry = site.byPermalink('/about');
+    expect(entry?.id).toBe('about');
   });
 
   it('returns undefined for an unknown path', () => {
-    expect(resolvePermalink('/no/such/path')).toBeUndefined();
+    expect(site.byPermalink('/no/such/path')).toBeUndefined();
   });
 
   it('lists every content permalink for prerender and the sitemap', () => {
-    const all = contentPermalinks();
+    const all = site.all().map((s) => s.permalink);
     expect(all).toContain('/2026/05/welcome');
     expect(all).toContain('/about');
     expect(all).toContain('/training');
   });
 
   it('exposes tags with counts and posts by tag', () => {
-    expect(allTags()).toContainEqual({ tag: 'announcements', count: 1 });
-    expect(postsByTag('announcements').some((p) => p.id === '2026-05-welcome')).toBe(true);
+    expect(posts.allTags()).toContainEqual({ tag: 'announcements', count: 1 });
+    expect(postListByTag('announcements').some((p) => p.id === '2026-05-welcome')).toBe(true);
   });
 });

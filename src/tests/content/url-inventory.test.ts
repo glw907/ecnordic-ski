@@ -2,7 +2,7 @@
 // The "expected" set is rebuilt the OLD way, from raw filenames, independent of the engine.
 import { describe, it, expect } from 'vitest';
 import { readdirSync } from 'node:fs';
-import { contentPermalinks } from '$lib/content';
+import { site } from '$lib/content';
 
 function expectedUrls(): string[] {
   const urls: string[] = [];
@@ -21,6 +21,11 @@ function expectedUrls(): string[] {
 
 describe('zero URL movement', () => {
   it('the catch-all serves exactly the old explicit-route URL set', () => {
-    expect([...contentPermalinks()].sort()).toEqual(expectedUrls());
+    expect(
+      site
+        .all()
+        .map((s) => s.permalink)
+        .sort(),
+    ).toEqual(expectedUrls());
   });
 });

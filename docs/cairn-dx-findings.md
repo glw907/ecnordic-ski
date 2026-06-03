@@ -49,6 +49,68 @@ SvelteKit idiom.
    findings 3 and 4), so the first port emitted undefined icons until the attributes were declared. Ranked
    here because the build model is the core of a site's render code.
 
+4. **The delivery surface splits across two import entries with no signpost.** Most delivery symbols
+   live at `@glw907/cairn-cms/delivery`, but `parseSiteConfig`, `createSiteIndexes`, `buildSitemap`,
+   `verifyManifest`, and the `FeedItem`/`SitemapUrl` types also resolve from the package root
+   `@glw907/cairn-cms`. A few symbols a site needs (`buildLinkResolver`, `createPublicRoutes`,
+   `CairnHead`, the four `*Response` helpers, `EntryData`) live only under `/delivery`. The split is
+   real and load-bearing, since the root barrel pulls server code while `/delivery` stays backend-free.
+   It was not discoverable from the call site though. I had to grep `src/lib/index.ts` and
+   `src/lib/delivery/index.ts` to learn which entry owned which symbol, and a wrong guess fails at
+   build with a bare "not exported" error rather than a hint to try the other entry. A SvelteKit
+   developer reaches for one import path per package and reads the export map to disambiguate. Fix:
+   document the root-versus-`/delivery` split in the delivery README with a one-line rule (data and SEO
+   builders are dual-homed, the route loaders and the head component and the response helpers are
+   `/delivery`-only), or re-export the `/delivery`-only public symbols from root so a site can import
+   the whole public surface from one path.
+
+5. **The catch-all `load`/`entries`, `CairnHead`, and the `*Response` feed helpers compose as plain
+   SvelteKit.** `createPublicRoutes({...})` returns `entryLoad`/`entries` that drop straight into a
+   `[...path]/+page.server.ts` as `load` and an `EntryGenerator`, and `entryLoad({ url })` reads the
+   request URL the way a normal `load` does. `CairnHead` is an ordinary component that renders into
+   `<svelte:head>`, with a `title` override prop, so swapping the inline head block for it was a
+   one-line change that left the title text byte-identical. The `rssResponse`/`jsonFeedResponse`/
+   `sitemapResponse`/`robotsResponse` helpers each return a `Response` with the right content type, so
+   a `+server.ts` `GET` becomes a single call and the site stops hand-writing the content-type header.
+   Nothing here fought the `load`/`+server`/`$props` idioms. The one gap is finding 6.
+
+6. **`EntryData` carries no concept, so the catch-all `load` re-derives it from the entry shape.**
+   ecnordic's `[...path]/+page.svelte` branches on `data.concept` (a post renders with a date header and
+   tags, a page renders as a static shell), but `entryLoad` returns an `EntryData` with no concept field.
+   The catch-all resolves any concept through `byPermalink`, so the concept is erased by the time the
+   load returns. I recovered it with `data.entry.date ? 'posts' : 'pages'`, which holds for this site
+   because posts are the only dated concept. That heuristic is fragile: a site that adds a second dated
+   concept, or a dateless post, breaks the branch. A SvelteKit developer expects the loader to hand back
+   the concept it just resolved, not to reconstruct it from a value's shape. Fix: `EntryData` should
+   carry the resolved concept id (the descriptor id `byPermalink` matched), so a template can branch on
+   it directly instead of inferring it.
+
+7. **`ContentSummary` lacks the authored summary field, so a list that shows it must re-read the
+   entry.** The engine summary carries a derived `excerpt`, not the authored `description` frontmatter
+   field. ecnordic's home and archive lists render the authored `description` (the post-list card and the
+   home "Earlier" list both print `post.description`), so I kept a site-local `PostListItem` interface
+   (`{ id, slug, permalink, title, date, tags, description }`) and a `toItem` mapper that re-reads
+   `posts.byId(s.id)!.frontmatter.description` for each summary. The typed read made the re-read painless
+   (the schema makes `frontmatter.description` a required `string`, so no cast), but it is a per-entry
+   `byId` lookup over a list the index already built, and it defeats the point of the cheap plain-data
+   summary. A SvelteKit developer reaches for the list data the index returns and expects the field they
+   author to be on it. Fix: let a descriptor nominate a frontmatter field to surface on `ContentSummary`
+   (a `summaryField` knob), so a site that displays the authored summary gets it on the summary without a
+   detail re-read.
+
+8. **The `/delivery` barrel mixes a `.svelte` component with the data helpers, so a node-environment
+   test that imports the content layer needs the Svelte vitest plugin.** ecnordic's content layer imports
+   `createSiteIndexes` and `buildLinkResolver` from `@glw907/cairn-cms/delivery`. That barrel also
+   re-exports `CairnHead.svelte`, and the export map offers no deeper entry, so importing any data helper
+   drags the `.svelte` file into the module graph. The site's `vitest.config.ts` ran node-environment
+   unit tests with no Svelte transform, so the content tests failed to parse `CairnHead.svelte` as JS.
+   The fix was to add `@sveltejs/vite-plugin-svelte` to the vitest config, which a SvelteKit site already
+   has on hand. It is a surprise though: a pure-data import pulling a component into a node test is not
+   what a SvelteKit developer expects, and the failure reads as a syntax error in an engine file rather
+   than a missing transform. Fix: split the head component out of the data barrel (a `/delivery/head`
+   entry, or keep `CairnHead` only under the existing `/components` or `/sveltekit` entry), so importing
+   the delivery data helpers stays component-free and a node test needs no Svelte plugin.
+
 ## Findings
 
 1. **Coupled breaking changes force a big-bang migration.** 0.12 (the build signature) and 0.13

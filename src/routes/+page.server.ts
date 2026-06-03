@@ -1,17 +1,18 @@
 import type { PageServerLoad } from './$types';
-import { allPosts, postBody, render } from '$lib/content';
+import { postList, posts, linkResolver } from '$lib/content';
+import { cairn } from '$lib/cairn.config';
 
 export const load: PageServerLoad = async () => {
-  const posts = allPosts();
-  const first = posts[0];
+  const list = postList();
+  const first = list[0];
   const featured = first
     ? {
         permalink: first.permalink,
         title: first.title,
         date: first.date,
         tags: first.tags,
-        html: await render(postBody(first.id)),
+        html: await cairn.render(posts.byId(first.id)!.body, { resolve: linkResolver }),
       }
     : null;
-  return { posts, featured };
+  return { posts: list, featured };
 };

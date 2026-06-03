@@ -1,40 +1,32 @@
-import { error } from '@sveltejs/kit';
-import { buildSeoMeta } from '@glw907/cairn-cms';
 import type { PageServerLoad, EntryGenerator } from './$types';
-import { resolvePermalink, contentPermalinks, render } from '$lib/content';
-import { SITE_URL, SITE_TITLE, SITE_DESCRIPTION } from '$lib/config';
+import { createPublicRoutes } from '@glw907/cairn-cms/delivery';
+import { site, ORIGIN, SITE_DESCRIPTION } from '$lib/content';
+import { cairn } from '$lib/cairn.config';
 
 export const prerender = true;
 
-export const entries: EntryGenerator = () =>
-  contentPermalinks().map((p) => ({ path: p.replace(/^\//, '') }));
+const routes = createPublicRoutes({
+  site,
+  render: cairn.render,
+  origin: ORIGIN,
+  siteName: cairn.siteName,
+  description: SITE_DESCRIPTION,
+  feeds: { rss: ORIGIN + '/feed.xml', json: ORIGIN + '/feed.json' },
+});
 
-export const load: PageServerLoad = async ({ params }) => {
-  const hit = resolvePermalink('/' + params.path);
-  if (!hit) error(404, 'Not found');
+export const entries: EntryGenerator = () => routes.entries();
 
-  const { concept, entry } = hit;
-  const html = await render(entry.body);
-  const description =
-    (entry.frontmatter.description as string) || entry.excerpt || SITE_DESCRIPTION;
-
-  const seo = buildSeoMeta({
-    title: entry.title,
-    description,
-    canonicalUrl: SITE_URL + entry.permalink,
-    siteName: SITE_TITLE,
-    type: concept === 'posts' ? 'article' : 'website',
-    ...(concept === 'posts' && entry.date ? { published: entry.date } : {}),
-    feeds: { rss: SITE_URL + '/feed.xml', json: SITE_URL + '/feed.json' },
-  });
-
+export const load: PageServerLoad = async ({ url }) => {
+  const data = await routes.entryLoad({ url });
+  // EntryData carries no concept; a dated entry is a post, an undated one a page.
+  const concept = data.entry.date ? 'posts' : 'pages';
   return {
     concept,
-    slug: entry.slug,
-    title: entry.title,
-    date: entry.date ?? '',
-    tags: entry.tags,
-    html,
-    seo,
+    slug: data.entry.slug,
+    title: data.entry.title,
+    date: data.entry.date ?? '',
+    tags: data.entry.tags,
+    html: data.html,
+    seo: data.seo,
   };
 };

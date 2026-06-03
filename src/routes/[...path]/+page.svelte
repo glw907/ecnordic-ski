@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { PageData } from './$types';
+  import { CairnHead } from '@glw907/cairn-cms/delivery';
   import { SITE_TITLE } from '$lib/config';
   import { formatDate, tagUrl } from '$lib/utils';
   import { riseStyle } from '$lib/motion';
@@ -7,25 +8,7 @@
   let { data }: { data: PageData } = $props();
 </script>
 
-<svelte:head>
-  <title>{data.title} — {SITE_TITLE}</title>
-  {#each data.seo.meta as m}
-    {#if m.name}
-      <meta name={m.name} content={m.content} />
-    {:else if m.property}
-      <meta property={m.property} content={m.content} />
-    {/if}
-  {/each}
-  {#each data.seo.links as l}
-    <link rel={l.rel} type={l.type} href={l.href} title={l.title} />
-  {/each}
-  {@html `<script type="application/ld+json">${
-    JSON.stringify(data.seo.jsonLd)
-      .replace(/</g, '\\u003c')
-      .replace(/>/g, '\\u003e')
-      .replace(/&/g, '\\u0026')
-  }</` + 'script>'}
-</svelte:head>
+<CairnHead seo={data.seo} title={`${data.title} — ${SITE_TITLE}`} />
 
 {#if data.concept === 'posts'}
   <article class="post">
