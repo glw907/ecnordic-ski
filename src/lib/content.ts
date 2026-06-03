@@ -2,12 +2,17 @@
 // the catch-all route) reads content through here. It globs the markdown and hands the
 // adapter to createSiteIndexes, which builds the typed per-concept indexes and the site
 // resolver, and exposes a link resolver for the cairn: tokens the renderer threads.
-import { createSiteIndexes, buildLinkResolver, buildSiteManifest } from '@glw907/cairn-cms/delivery';
+import {
+  createSiteIndexes,
+  buildLinkResolver,
+  buildSiteManifest,
+  type FeedItem,
+} from '@glw907/cairn-cms/delivery';
 import { parseSiteConfig, verifyManifest } from '@glw907/cairn-cms';
 import { cairn } from './cairn.config.js';
 import siteYaml from './site.config.yaml?raw';
 import manifestRaw from '/src/content/.cairn/index.json?raw';
-import { SITE_URL, SITE_DESCRIPTION as DESC } from './config.js';
+import { SITE_URL, SITE_DESCRIPTION as DESC, FEED_MAX_ITEMS } from './config.js';
 
 const postsRaw = import.meta.glob('/src/content/posts/*.md', {
   query: '?raw',
@@ -71,3 +76,24 @@ export function postListByTag(tag: string): PostListItem[] {
 
 /** The resolver the home featured render and the feeds thread so cairn: links resolve. */
 export const linkResolver = buildLinkResolver(site);
+
+/** Posts as feed entries, newest first, capped at FEED_MAX_ITEMS (0 means all). Both feed routes
+ *  render from this one list so they never drift apart. The summary is the authored description
+ *  re-read from the entry, not the derived excerpt, to match the old feed. */
+export function feedItems(): Promise<FeedItem[]> {
+  const all = posts.all();
+  const capped = FEED_MAX_ITEMS > 0 ? all.slice(0, FEED_MAX_ITEMS) : all;
+  return Promise.all(
+    capped.map(async (p) => {
+      const entry = posts.byId(p.id)!;
+      return {
+        title: p.title,
+        url: SITE_URL + p.permalink,
+        date: p.date,
+        summary: entry.frontmatter.description ?? '',
+        contentHtml: await cairn.render(entry.body, { resolve: linkResolver }),
+        tags: p.tags,
+      };
+    }),
+  );
+}
