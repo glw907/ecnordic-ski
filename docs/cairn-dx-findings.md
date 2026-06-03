@@ -8,6 +8,30 @@ The primary lens is SvelteKit-developer fit: cairn is a fully SvelteKit tool, so
 matters most is whether each step feels native to a SvelteKit developer. Record SvelteKit-fit
 observations in their own section below, and rank them above cosmetic friction.
 
+## Verdict
+
+Working with a cairn site mostly feels native to a SvelteKit developer once the site is on the
+idiomatic surface. The public routes are the high point. `createPublicRoutes` hands back
+`load`/`entries` that drop into a `[...path]/+page.server.ts` unchanged, `CairnHead` is an ordinary
+`<svelte:head>` component, and the four `*Response` helpers turn a feed `+server.ts` into a single
+call (SvelteKit-fit findings 5 and the response half of 4). The adapter reads like typed config
+(finding 2), and the `build(ctx)` slot model maps onto the named-slot mental model a Svelte
+developer already has (finding 3). Where cairn still fights the SvelteKit a developer knows, four
+things stand out, ranked by what they cost someone who has never seen cairn. First, the delivery
+surface splits across the package root and `/delivery` with no signpost, and the `/delivery` barrel
+drags a `.svelte` component into a node test (SvelteKit-fit findings 4 and 8): a wrong import path
+fails with a bare "not exported" and a data-only import breaks a unit test, both unexpected for a
+one-package SvelteKit library. Second, `EntryData` hands back no concept, so the catch-all `load`
+re-derives it from the entry shape with a fragile date heuristic (finding 6). Third, `ContentSummary`
+omits the authored summary field, so a list that shows it pays a per-entry detail re-read (finding 7).
+Fourth, the build-time guarantees lean on defaults a real SvelteKit scaffold quietly overrides: a
+`cairn:` token only resolves content concepts (not `+page.svelte` routes), and the dangling-token
+backstop goes silent under an inherited `handleHttpError: 'warn'`, so the build stays green on a bad
+link (general findings 15 and 16). None of these blocks a site, and the workarounds were short, but
+each is a place a SvelteKit developer's correct instinct produces a surprise. The fixes are mostly
+the scaffolder emitting the right defaults and the engine surfacing the concept and the authored
+summary it already holds.
+
 ## SvelteKit fit
 
 Does cairn feel native to a SvelteKit developer? One entry per surface as you wire it. Prompts: does
@@ -328,3 +352,28 @@ SvelteKit idiom.
     on `handleHttpError` staying `'fail'` for the cairn error. Ranked high: it is invisible (the build is
     green) and it erodes the headline content-graph safety property. Location: ecnordic
     `svelte.config.js`, surfaced by Plan B Task 4 Step 4.
+
+## Scaffolder implications
+
+These findings read as "the site had to hand-assemble or get right by hand what the scaffolder should
+emit." The `create-cairn-site` work inherits this checklist, so a fresh site starts correct instead of
+discovering each gap the way ecnordic did.
+
+- **Emit the manifest wiring whole.** The regenerate script (`scripts/build-manifest.mjs`), the
+  `cairn:manifest` package script, the committed `src/content/.cairn/index.json`, and the
+  `verifyManifest(buildSiteManifest(...))` backstop in the content layer are four coupled pieces a site
+  must assemble and is easy to get subtly wrong (general findings 12 and 13). Scaffold all four together.
+- **Emit a build that fails closed on a dangling link.** Do not ship `prerender.handleHttpError: 'warn'`
+  in the scaffolded `svelte.config.js`, or pair it with a targeted handler that re-throws the cairn
+  link error, so the dangling-token backstop the content-graph promises is fatal by default (finding 16).
+- **Register all four admin actions by default.** The route stub should carry
+  `{ save, delete, rename }` (and the `editLoad` that ships the picker targets), so a site opts out of a
+  lifecycle action rather than forgetting to opt in (finding 14).
+- **Import the whole public surface from one obvious place.** Scaffold the delivery imports so a site
+  author does not have to learn the root-versus-`/delivery` split by trial and error, and keep the
+  node-test path component-free (SvelteKit-fit findings 4 and 8).
+- **Teach the single sanitize floor.** The scaffolded render wires `createRenderer(registry, {
+  sanitizeSchema })` extending the engine floor, with no site-owned second pass, so a site never carries
+  the redundant `sanitizeHtml` ecnordic had to delete (general findings 8 and 9).
+- **State the `cairn:` link constraint in the scaffolded content README.** `cairn:` resolves posts and
+  pages, not `+page.svelte` routes; a hand-built route keeps an absolute path (finding 15).
