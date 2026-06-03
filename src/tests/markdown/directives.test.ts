@@ -8,14 +8,14 @@ describe('pipeline baseline', () => {
   });
 
   it('adds slug ids to headings', async () => {
-    const html = await renderMarkdown(':::card{icon=path}\n## Sign Up\n\nx\n:::\n');
+    const html = await renderMarkdown(':::card[Sign Up]{icon="path"}\nx\n:::\n');
     expect(html).toContain('id="sign-up"');
   });
 });
 
 describe('card directive', () => {
   it('renders a module card with icon + heading + body', async () => {
-    const html = await renderMarkdown(':::card{icon=path}\n## What we do\n\nBody text.\n:::\n');
+    const html = await renderMarkdown(':::card[What we do]{icon="path"}\nBody text.\n:::\n');
     expect(html).toContain('<section class="card ec-card bg-base-100 border border-base-300 shadow-sm"');
     expect(html).toContain('<div class="card-body">');
     expect(html).toContain('<div class="ec-head"><span class="ec-icon"><svg class="ec-glyph"');
@@ -25,18 +25,18 @@ describe('card directive', () => {
   });
 
   it('applies the secondary role to the icon', async () => {
-    const html = await renderMarkdown(':::card{icon=users-three role=secondary}\n## Who\n\nx\n:::\n');
+    const html = await renderMarkdown(':::card[Who]{icon="users-three" role="secondary"}\nx\n:::\n');
     expect(html).toContain('<span class="ec-icon ec-icon-secondary">');
   });
 
   it('stamps the first primitive with the data-rise ordinal 0', async () => {
-    const html = await renderMarkdown(':::card{icon=path}\n## A\n\nx\n:::\n');
+    const html = await renderMarkdown(':::card[A]{icon="path"}\nx\n:::\n');
     expect(html).toContain('data-rise="0"');
     expect(html).not.toContain('style=');
   });
 
   it('leaves a non-grid card list as a plain list', async () => {
-    const html = await renderMarkdown(':::card{icon=path}\n## A\n\n- one\n- two\n:::\n');
+    const html = await renderMarkdown(':::card[A]{icon="path"}\n- one\n- two\n:::\n');
     expect(html).toContain('<ul>\n<li>one</li>');
     expect(html).not.toContain('ec-grid');
   });
@@ -44,7 +44,7 @@ describe('card directive', () => {
 
 describe('passage directive', () => {
   it('renders a titled prose passage with no card chrome', async () => {
-    const html = await renderMarkdown(':::passage{icon=chat-circle}\n## Why we use it\n\nReasons.\n:::\n');
+    const html = await renderMarkdown(':::passage[Why we use it]{icon="chat-circle"}\nReasons.\n:::\n');
     expect(html).toContain('<section class="ec-passage" data-rise="0">');
     expect(html).toContain('<div class="ec-head"><span class="ec-icon"><svg');
     expect(html).toContain('<h2 class="card-title"');
@@ -55,7 +55,7 @@ describe('passage directive', () => {
 
 describe('alert directive', () => {
   it('renders a subtle caution alert with the icon inline in the label', async () => {
-    const html = await renderMarkdown(':::alert{role=caution}\n## Risks\n\nFalls happen.\n:::\n');
+    const html = await renderMarkdown(':::alert[Risks]{role="caution"}\nFalls happen.\n:::\n');
     expect(html).toContain('<div role="alert" class="ec-alert ec-alert-caution" data-rise="0">');
     expect(html).toContain('<div class="ec-alert-body">');
     expect(html).toContain('<h2 id="risks"><svg class="ec-glyph"');
@@ -68,7 +68,7 @@ describe('alert directive', () => {
 describe('grid directive', () => {
   it('renders a grid card: heading + body list becomes ec-grid', async () => {
     const html = await renderMarkdown(
-      ':::grid{icon=compass}\n## Philosophy\n\nIntro.\n\n- **One** a\n- **Two** b\n:::\n',
+      ':::grid[Philosophy]{icon="compass"}\nIntro.\n\n- **One** a\n- **Two** b\n:::\n',
     );
     expect(html).toContain('<section class="card ec-card');
     expect(html).toContain('<div class="ec-head"><span class="ec-icon"><svg');
@@ -79,7 +79,7 @@ describe('grid directive', () => {
 
   it('lifts a nested grid (no heading) to a bare ec-grid list', async () => {
     const html = await renderMarkdown(
-      '::::card{icon=tent}\n## Camp\n\n### Logistics\n\n:::grid\n- **Travel** by car\n:::\n::::\n',
+      '::::card[Camp]{icon="tent"}\n### Logistics\n\n:::grid\n- **Travel** by car\n:::\n::::\n',
     );
     expect(html).toContain('<h3 id="logistics">Logistics</h3>');
     expect(html).toContain('<ul class="ec-grid"><li><strong>Travel</strong> by car</li></ul>');
@@ -90,7 +90,7 @@ describe('grid directive', () => {
 describe('cta directive', () => {
   it('renders a centered CTA card, chip icon, and promotes the download link', async () => {
     const html = await renderMarkdown(
-      ':::cta{icon=flag}\n## Getting started\n\nDo this.\n\n<a href="/waiver" class="download-link">Get it →</a>\n:::\n',
+      ':::cta[Getting started]{icon="flag"}\nDo this.\n\n<a href="/waiver" class="download-link">Get it →</a>\n:::\n',
     );
     expect(html).toContain('<section class="card ec-card ec-cta bg-base-100 border border-primary/30 shadow-sm" data-rise="0">');
     expect(html).toContain('<div class="card-body items-center text-center">');
@@ -103,7 +103,7 @@ describe('cta directive', () => {
 describe('split + panel directives', () => {
   it('renders a card with a heading and two iconned panels', async () => {
     const html = await renderMarkdown(
-      '::::split\n## Costs\n\n:::panel{icon=hand-coins}\n**Free.** No fee.\n:::\n\n:::panel{icon=handshake role=secondary}\n**Help.** Pitch in.\n:::\n::::\n',
+      '::::split[Costs]\n:::panel[]{icon="hand-coins"}\n**Free.** No fee.\n:::\n\n:::panel[]{icon="handshake" role="secondary"}\n**Help.** Pitch in.\n:::\n::::\n',
     );
     expect(html).toContain('<section class="card ec-card');
     expect(html).toContain('<div class="ec-head"><h2 class="card-title"'); // head has no icon
@@ -131,7 +131,7 @@ describe('prose colons are not parsed as directives', () => {
 	});
 
 	it('leaves real container directives working alongside colons', async () => {
-		const html = await renderMarkdown(':::card{icon=path}\n## Schedule\n\nWe meet 4:00–6:00 PM.\n:::\n');
+		const html = await renderMarkdown(':::card[Schedule]{icon="path"}\nWe meet 4:00–6:00 PM.\n:::\n');
 		expect(html).toContain('<h2 class="card-title"');
 		expect(html).toContain('<div class="section-body"><p>We meet 4:00–6:00 PM.</p></div>');
 	});

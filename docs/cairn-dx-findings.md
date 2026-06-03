@@ -38,16 +38,54 @@ SvelteKit idiom.
    validates more than it does (see the lost-rules finding below). Ranked above the cosmetic
    findings because the schema declaration is the first thing a site author writes.
 
+3. **The `build(ctx)` slot model reads naturally once the slot rules are known.** Porting the seven
+   components, the new build signature flowed well. A build receives `ctx.attributes`, `ctx.slot(name)`,
+   and `ctx.items(name)`, and arranges hast with `hastscript`. It never walks the stamped tree, which
+   the old `build(node)` form forced. A SvelteKit developer reads `ctx.slot('title')` and
+   `ctx.slot('body')` the way they read named slots in a Svelte component, so the mental model carries
+   over. Two snags cost time. The engine does not export the `ComponentContext` type from the package
+   root, so a site that writes a named helper (not an inline `build: (ctx) =>`) has to recover the type
+   with `Parameters<ComponentDef['build']>[0]`. And the slot-versus-attribute split is implicit (see
+   findings 3 and 4), so the first port emitted undefined icons until the attributes were declared. Ranked
+   here because the build model is the core of a site's render code.
+
 ## Findings
 
 1. **Coupled breaking changes force a big-bang migration.** 0.12 (the build signature) and 0.13
    (the adapter contract) both gate compilation, so a consumer bumps and the repo does not compile
    until the adapter and every component are ported together. Fix: a per-version `MIGRATION.md`, or a
    codemod, or a deprecation window that keeps the old members working with a warning.
-2. **`splitHead` removed with no migration note.** The "first `##` is the title" helper is gone,
-   replaced by the `title` slot, with no changelog pointer. Fix: a changelog entry naming the
-   replacement.
-3. **The schema contract drops four validation rules ecnordic's old validator enforced, and there
+2. **`splitHead` removed with no migration note, and its head markup is now the site's to rebuild.**
+   The "first `##` is the title" helper is gone, replaced by the `title` slot, with no changelog
+   pointer. The helper used to return `{ head, rest }`, so a card build was two lines. Now each
+   component rebuilds the head row by hand: read the icon and role attributes, build the icon span,
+   wrap `ctx.slot('title')` in the heading element, and assemble the `ec-head` div. ecnordic factored
+   this into one local `head(ctx)` helper shared across card, grid, and passage, so the busywork lands
+   once. A site with several titled components still pays the rebuild. Fix: a changelog entry naming
+   the replacement, and consider an engine helper that takes a `ctx` plus a site `makeIcon` and returns
+   the standard icon-plus-heading head, the way `cardShell` and `iconSpan` already factor the common
+   shapes.
+
+3. **An icon or role only reaches `ctx.attributes` when the component declares it as an attribute.**
+   The render dispatch reads `dataAttr<key>`, which the stamper writes only for declared attributes.
+   The first port left `icon` and `role` off the `card`/`grid`/`passage`/`panel` defs, so every icon
+   came back undefined and the glyphs vanished. The fix is to declare `{ key: 'icon', type: 'icon' }`
+   and `{ key: 'role', type: 'select', ... }` on each component that renders an icon. This is correct
+   once you know it, but nothing in the types points at it: a build can call `ctx.attributes.icon`
+   freely and get `undefined` at runtime with no compile error. Fix: document that a build may only
+   read declared attributes, or have the dispatch surface a dev warning when a build reads an
+   undeclared key.
+
+4. **The alert default icon falls in a gap between the two icon paths.** The stamper applies
+   `defaultIconByRole` to its special `dataIcon` marker, but a build reads `dataAttrIcon` (the declared
+   attribute path), and the default is never copied there. So `:::alert{role=caution}` with no explicit
+   icon arrives with `ctx.attributes.icon` undefined, and the warning glyph disappears unless the build
+   hardcodes the default itself. ecnordic dropped `defaultIconByRole` from the alert def and hardcoded
+   `warning` for the caution role inside `buildAlert`. That works, but it splits the default across two
+   places: the engine field exists yet does nothing for a build that reads the declared attribute. Fix:
+   have the stamper also write the role default to `dataAttr<iconKey>` when the component declares an
+   icon attribute, so `defaultIconByRole` reaches the build and stays the single source of the default.
+5. **The schema contract drops four validation rules ecnordic's old validator enforced, and there
    is no per-field custom-validator hook to restore them.** Moving from the hand-written
    `validatePostFrontmatter` to `defineFields` keeps required-and-coerce, but validate-once is
    thinner than the old validator. Each lost rule below was verified against the engine source.
