@@ -13,17 +13,13 @@ EC Nordic's summer dryland program runs from late May through early August. It's
   <a href="#sign-up">Sign Up</a>
 </nav>
 
-:::card{icon=calendar-blank}
-## Schedule
-
+:::card[Schedule]{icon="calendar-blank"}
 We train Monday, Wednesday, and Friday, roughly 4:00–6:00 PM. Locations rotate among Kincaid Park, Hillside, the Coastal Trail, and a few others, and are posted to [CrewLAB](/crewlab) each week.
 
 [PLACEHOLDER — confirm exact start and end dates for this season.]
 :::
 
-:::grid{icon=path}
-## What We Do
-
+:::grid[What We Do]{icon="path"}
 - **Running.** Trail and road runs across Anchorage. Most sessions are at Kincaid or Hillside.
 - **Roller-skiing.** Paved paths and parking lots. Roller skis and poles required; helmets mandatory.
 - **Mountain biking.** Singletrack and gravel at various locations. Helmet mandatory.
@@ -32,17 +28,13 @@ We train Monday, Wednesday, and Friday, roughly 4:00–6:00 PM. Locations rotate
 Most sessions mix two or three of these. You won't do the same thing every day.
 :::
 
-:::card{icon=users-three role=secondary}
-## Who Can Join
-
+:::card[Who Can Join]{icon="users-three" role="secondary"}
 High school athletes in the Anchorage area. No cross-country skiing experience needed. If you show up consistently and work hard, you belong here.
 
 [PLACEHOLDER — confirm age range and whether junior high athletes may participate.]
 :::
 
-:::card{icon=backpack}
-## What to Bring
-
+:::card[What to Bring]{icon="backpack"}
 - Water and snacks
 - Trail running shoes
 - Helmet (required for roller-skiing and mountain biking, no exceptions)
@@ -51,9 +43,7 @@ High school athletes in the Anchorage area. No cross-country skiing experience n
 Roller skis and poles aren't provided. [PLACEHOLDER — add any loaner equipment details.]
 :::
 
-::::card{icon=tent}
-## Talkeetna Camp
-
+::::card[Talkeetna Camp]{icon="tent"}
 The Talkeetna camp is the highlight of the summer season. We spend [PLACEHOLDER — N] days training in Southcentral Alaska's best Nordic terrain, camping together as a team.
 
 [PLACEHOLDER — confirm dates, exact location, and number of days for this season.]
@@ -84,9 +74,7 @@ Evenings are for group meals, recovery, and getting to know your teammates. The 
 - Medications you take daily
 ::::
 
-:::cta{icon=flag}
-## Sign Up
-
+:::cta[Sign Up]{icon="flag"}
 A signed waiver is required before your first session. Get it on the [Resources](/resources) page. Camp registration is included; you don't need to sign up for Talkeetna separately.
 
 <a href="https://crewlab.app.link/5g7vhhYEn3b" class="download-link" target="_blank" rel="noopener">Sign Up for Summer Training →</a>

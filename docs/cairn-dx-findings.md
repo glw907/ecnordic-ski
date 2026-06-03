@@ -119,3 +119,27 @@ SvelteKit idiom.
    real-date check on `date`, a `pattern` on `date`, and an `enforced` flag on a `tags` field's
    `options` so the closed vocabulary is validated, not just suggested. These keep the declaration
    serializable and avoid pushing sites back to bespoke validators.
+
+6. **A no-title panel must drop the inline label entirely, not write an empty `[]`.** The split
+   reference shape in the engine showcase and the `panel` insert template both write
+   `:::panel[]{icon="hand-coins"}`. The `panel` component declares only a body slot and no title slot,
+   so the empty `[]` label has nowhere to land. The directive parser keeps it as an empty paragraph in
+   the body, and the render gains a stray `<p></p>` ahead of the panel content. The author has to know
+   to write a bare `:::panel{icon="hand-coins"}` with no brackets at all. The colon-counting rule for
+   nested fences (an outer fence needs strictly more colons than any fence it wraps) is learnable, but
+   the empty-label trap is a silent one: the page still renders, it just carries an invisible empty
+   paragraph that only a byte-exact snapshot catches. Fix: the insert template and the showcase should
+   show the no-title form without the `[]`, and the engine should drop an empty label slot instead of
+   parking it in the body so the stray paragraph never appears.
+
+7. **The engine sanitize floor rewrites two attributes that a site's pre-0.21 output relied on.**
+   The render path runs `rehype-sanitize` inside `createRenderer` before a site reconciles its own
+   allowlist. With the bare default floor, an external `target="_blank"` anchor gains
+   `rel="noopener noreferrer"` where the site authored `rel="noopener"` alone, and a raw `<nav>` loses
+   its `aria-label`. Neither is a content change, so the directive-content rewrite is byte-clean while
+   the characterization snapshot still shows these two deltas until the `sanitizeSchema` reconciliation
+   runs (Plan A Task 5). The friction is sequencing: a site that ports content before the floor sees a
+   red characterization gate for reasons unrelated to the content, which reads as a content bug. Fix:
+   the migration guide should call out that the sanitize reconciliation and the content rewrite produce
+   one combined green gate, so a site does not chase a content drift that is really an unreconciled
+   floor.
