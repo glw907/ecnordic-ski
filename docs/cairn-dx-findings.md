@@ -271,3 +271,16 @@ SvelteKit idiom.
     `vite-node` entry), so a site gets `cairn manifest` with no per-site loader shim and no Vite-ism
     gap. The scaffolder should emit the committed empty manifest and the package script, so a new site
     starts with the graph already wired.
+
+13. **The build backstop drops into the existing content layer cleanly and reads as one obvious
+    line.** Wiring the drift check meant extending two existing imports (`buildSiteManifest` onto the
+    `/delivery` line, `verifyManifest` onto the root line), adding one `?raw` import of the committed
+    manifest, and placing a single `verifyManifest(buildSiteManifest(...), manifestRaw)` call after
+    `createSiteIndexes`. The same `cairn`, `siteConfig`, `postsRaw`, and `pagesRaw` bindings the index
+    build already used feed the verify, so there was nothing new to thread. The check is honest: a
+    one-character drift in the committed manifest fails `npm run build` with a clear regenerate
+    message. The one rough edge is that the backstop and the regenerate read the corpus through two
+    different paths, the build through Vite's `import.meta.glob` and the script through `fs` and the
+    loader shim, so a divergence between those two paths could in principle pass the build while the
+    script writes a different file. A single engine-owned regenerate that shares the build's resolver
+    (the finding above) would also collapse this two-path risk.

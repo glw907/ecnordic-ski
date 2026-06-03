@@ -2,10 +2,11 @@
 // the catch-all route) reads content through here. It globs the markdown and hands the
 // adapter to createSiteIndexes, which builds the typed per-concept indexes and the site
 // resolver, and exposes a link resolver for the cairn: tokens the renderer threads.
-import { createSiteIndexes, buildLinkResolver } from '@glw907/cairn-cms/delivery';
-import { parseSiteConfig } from '@glw907/cairn-cms';
+import { createSiteIndexes, buildLinkResolver, buildSiteManifest } from '@glw907/cairn-cms/delivery';
+import { parseSiteConfig, verifyManifest } from '@glw907/cairn-cms';
 import { cairn } from './cairn.config.js';
 import siteYaml from './site.config.yaml?raw';
+import manifestRaw from '/src/content/.cairn/index.json?raw';
 import { SITE_URL, SITE_DESCRIPTION as DESC } from './config.js';
 
 const postsRaw = import.meta.glob('/src/content/posts/*.md', {
@@ -21,6 +22,10 @@ const pagesRaw = import.meta.glob('/src/content/pages/*.md', {
 
 const siteConfig = parseSiteConfig(siteYaml);
 const indexes = createSiteIndexes(cairn, siteConfig, { posts: postsRaw, pages: pagesRaw });
+
+// Fail the build if the committed manifest drifted from the corpus. Regenerate with
+// `npm run cairn:manifest`.
+verifyManifest(buildSiteManifest(cairn, siteConfig, { posts: postsRaw, pages: pagesRaw }), manifestRaw);
 
 export const site = indexes.site;
 export const posts = indexes.posts;
