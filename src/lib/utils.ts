@@ -1,12 +1,11 @@
 import { renderMarkdown } from './markdown/render';
-import { sanitizeHtml } from './markdown/sanitize';
 import { SITE_LOCALE } from '$lib/config';
 
-// The public page and the admin preview both render through here. renderMarkdown runs the
-// directive engine (with rehype-raw passthrough); sanitizeHtml is the security floor over its
-// output, allowlisting the directive vocabulary and the authored download-link anchor.
-export async function markdownToHtml(content: string): Promise<string> {
-  return sanitizeHtml(await renderMarkdown(content));
+// The public page and the admin preview both render through here. The engine render applies
+// its own sanitize floor (after rehype-raw, before the component dispatch), so a separate site
+// pass is no longer needed. Options forward through so the cairn: link resolver reaches render.
+export function markdownToHtml(md: string, opts?: Parameters<typeof renderMarkdown>[1]): Promise<string> {
+  return renderMarkdown(md, opts);
 }
 
 export function isoFromValue(value: unknown, fallback?: string): string {

@@ -36,7 +36,7 @@ export const cairn = defineAdapter({
     installationId: '135372268',
   },
   sender: { from: siteEmail.sender ?? 'noreply@ecnordic.ski' },
-  render: (md) => markdownToHtml(md),
+  render: (md, opts) => markdownToHtml(md, opts),
   registry: ecnordicRegistry,
   icons: ICON_PATHS,
   navMenu: {

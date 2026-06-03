@@ -1,64 +1,48 @@
 import { describe, it, expect } from 'vitest';
-import { sanitizeHtml } from '$lib/markdown/sanitize';
+import { renderMarkdown } from '$lib/markdown/render';
 
-describe('ecnordic sanitize floor', () => {
-  it('strips a script and an onclick handler', async () => {
-    const out = await sanitizeHtml('<p onclick="x()">hi</p><script>alert(1)</script>');
+// The engine render now applies the sanitize floor itself (after rehype-raw, before the
+// component dispatch). ecnordic extends that floor with one author attribute (ariaLabel) via
+// ecSanitizeSchema. These tests render real content through renderMarkdown and assert the floor
+// strips hostile markup while keeping the directive output and the author HTML ecnordic relies on.
+
+describe('engine sanitize floor (ecnordic schema)', () => {
+  it('drops a script and an event-handler attribute in authored raw HTML', async () => {
+    const out = await renderMarkdown('Intro.\n\n<p onclick="x()">hi</p>\n\n<script>alert(1)</script>\n');
     expect(out).not.toContain('<script');
     expect(out).not.toContain('onclick');
     expect(out).toContain('hi');
   });
 
-  it('drops a javascript: URL on an anchor', async () => {
-    const out = await sanitizeHtml('<a href="javascript:alert(1)">x</a>');
+  it('drops a javascript: URL on an authored anchor', async () => {
+    const out = await renderMarkdown('<a href="javascript:alert(1)">x</a>\n');
     expect(out).not.toContain('javascript:');
   });
 
-  it('keeps the directive card section, its classes, and the data-rise ordinal', async () => {
-    const out = await sanitizeHtml(
-      '<section class="card ec-card bg-base-100 border border-base-300 shadow-sm" data-rise="0"><div class="card-body"><div class="ec-head"></div></div></section>',
-    );
-    expect(out).toContain('<section');
-    expect(out).toContain('class="card ec-card bg-base-100 border border-base-300 shadow-sm"');
+  it('keeps the directive output: the card section, its classes, and the data-rise ordinal', async () => {
+    const out = await renderMarkdown(':::card[What we do]{icon="path"}\nBody.\n:::\n');
+    expect(out).toContain('<section class="card ec-card bg-base-100 border border-base-300 shadow-sm"');
     expect(out).toContain('data-rise="0"');
   });
 
-  it('drops an inline style now that the engine no longer emits one', async () => {
-    const out = await sanitizeHtml('<section class="ec-card" style="position:fixed;inset:0">x</section>');
-    expect(out).not.toContain('style=');
-    expect(out).toContain('class="ec-card"');
-  });
-
-  it('keeps the download-link anchor with target and rel', async () => {
-    const out = await sanitizeHtml(
-      '<a class="download-link btn btn-primary" href="/waiver" target="_blank" rel="noopener">Get</a>',
+  it('keeps an authored download-link anchor and its target, and hardens rel to noopener noreferrer', async () => {
+    const out = await renderMarkdown(
+      ':::cta[Getting started]{icon="flag"}\nDo this.\n\n<a class="download-link" href="/waiver" target="_blank" style="position:fixed">Get it →</a>\n:::\n',
     );
     expect(out).toContain('class="download-link btn btn-primary"');
     expect(out).toContain('href="/waiver"');
     expect(out).toContain('target="_blank"');
-    expect(out).toContain('rel="noopener"');
+    expect(out).toContain('rel="noopener noreferrer"');
+    // style is not in the floor allowlist, so the author's inline style drops.
+    expect(out).not.toContain('style=');
   });
 
-  it('keeps a glyph svg with its viewBox, fill, aria-hidden, and path d', async () => {
-    const out = await sanitizeHtml(
-      '<svg class="ec-glyph" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M0 0h24"></path></svg>',
+  it('keeps the page-toc nav aria-label that ecSanitizeSchema admits', async () => {
+    const out = await renderMarkdown(
+      '<nav class="page-toc" aria-label="On this page"><a href="#x">X</a></nav>\n',
     );
-    expect(out).toContain('<svg');
-    expect(out).toContain('class="ec-glyph"');
-    expect(out).toContain('viewBox="0 0 256 256"');
-    expect(out).toContain('fill="currentColor"');
-    expect(out).toContain('aria-hidden="true"');
-    expect(out).toContain('<path');
-    expect(out).toContain('d="M0 0h24"');
-  });
-
-  it('keeps the alert role and the toc nav aria-label and heading ids', async () => {
-    const out = await sanitizeHtml(
-      '<div role="alert" class="ec-alert ec-alert-caution"></div><nav class="page-toc" aria-label="On this page"><a href="#x">X</a></nav><h2 id="risks">Risks</h2>',
-    );
-    expect(out).toContain('role="alert"');
     expect(out).toContain('<nav');
+    expect(out).toContain('class="page-toc"');
     expect(out).toContain('aria-label="On this page"');
-    expect(out).toContain('id="risks"');
   });
 });

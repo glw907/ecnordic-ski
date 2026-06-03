@@ -143,3 +143,35 @@ SvelteKit idiom.
    the migration guide should call out that the sanitize reconciliation and the content rewrite produce
    one combined green gate, so a site does not chase a content drift that is really an unreconciled
    floor.
+
+8. **The site's own sanitize pass became redundant once the engine floor moved in.** ecnordic
+   carried a post-render `sanitizeHtml` second pass that re-ran `rehype-sanitize` over the engine
+   output and re-allowlisted the whole directive vocabulary. The engine floor (0.17+) does the same
+   strip inside `createRenderer`, so the second pass was pure duplication. Reconciling it collapsed a
+   64-line `sanitize.ts` processor into a 13-line `ecSanitizeSchema` extender. The extender adds one
+   attribute: `ariaLabel` on `*`, for the page-toc `<nav>`. Everything else the old pass allowlisted
+   turned out to be unnecessary. Fix: the migration guide should frame the engine floor as a
+   replacement for any site-owned sanitize pass, and point a migrating site at its existing allowlist
+   as the thing to delete rather than keep.
+
+9. **The floor runs before the component dispatch, so a site's allowlist only covers authored raw
+   HTML.** This is the insight that shrank the extender. The engine orders the pipeline as rehype-raw,
+   then the sanitize floor, then the dispatch, then `rehypeAnchorRel`. The built `<section>`, `<svg>`,
+   `<path>`, `role="alert"`, and `data-rise` markup is injected after the floor by trusted build code,
+   so it never passes through sanitization and never needs an allowlist entry. The old second pass ran
+   after the dispatch, so it had to allowlist all of that built output. A site reconciling onto the
+   engine floor can drop every built-element rule and keep only what its author raw HTML uses. For
+   ecnordic that was a single `ariaLabel`. Fix: the migration guide and the `sanitizeSchema` docs
+   should state the ordering plainly, so a site author does not re-add section/svg/path rules the floor
+   never sees.
+
+10. **`rehypeAnchorRel` forces `rel="noopener noreferrer"` and a `sanitizeSchema` extender cannot opt
+    out of it.** The hardening runs last in the rehype chain, outside the sanitize schema, so it is not
+    reachable through the one extension point a site is given. Adopting the engine render means
+    inheriting this. ecnordic authored `rel="noopener"` on its external `target="_blank"` anchors, and
+    the engine rewrote all three to `rel="noopener noreferrer"`. This is a security improvement
+    (reverse-tabnabbing prevention), so ecnordic accepts it and the characterization snapshot now pins
+    the hardened form. The SvelteKit-fit note: a site that adopts `createRenderer` inherits this anchor
+    rewrite with no per-site override, so a migrating site must accept the rel change as part of going
+    idiomatic. Fix: the migration guide should list `rehypeAnchorRel` as a deliberate, non-optional
+    output change, so a site does not read the rel delta as a content regression.

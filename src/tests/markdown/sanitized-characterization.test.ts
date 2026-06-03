@@ -4,10 +4,11 @@ import { join } from 'node:path';
 import matter from 'gray-matter';
 import { markdownToHtml } from '$lib/utils';
 
-// The public render goes through markdownToHtml (the directive engine + the sanitize floor).
-// This snapshot pins the sanitized output so a schema change that drops a directive element or
-// the download-link anchor shows up as a diff. It complements the engine-only characterization
-// snapshot, which pins the unsanitized renderMarkdown output.
+// The public render goes through markdownToHtml, which is now the engine render alone: the engine
+// applies its sanitize floor internally (after rehype-raw, before the component dispatch), so there
+// is no second site pass. This snapshot pins that public output so a schema change that drops a
+// directive element or the download-link anchor shows up as a diff. It complements the
+// characterization snapshot, which pins the renderMarkdown output the public path is built on.
 const PAGES_DIR = 'src/content/pages';
 const POSTS_DIR = 'src/content/posts';
 
