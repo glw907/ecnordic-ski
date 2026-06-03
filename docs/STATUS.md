@@ -16,12 +16,20 @@ smoke confirmed every delivery route serves, `/no/such/path` 404s, and `/admin` 
 to login. Eight commits sit on local `main`, not yet pushed (a push deploys live). Frontmatter
 validation now runs on the admin save path, not as a build gate (BACKLOG #16).
 
-**Immediate next: cairn-cms 0.10 migration Pass 2 (components to the typed slot schema).**
-Brainstorm first. This is the per-site half of the cairn component-registry initiative (engine
-Plan 3): convert the seven directive components to the registry's typed attributes and named
-slots so the editor's guided insert form and the build share one declaration. Roadmap:
-`docs/superpowers/specs/2026-05-31-ecnordic-cairn-0.10-migration-design.md`. Pass 3 adds the
-component reference file. The separate "Pass 10: placeholder content" work stays open.
+**Immediate next: the cairn-cms 0.21 migration, Plan A (the breaking floor), subagent-driven.**
+The engine moved from 0.10 to 0.21, so the migration target jumped. This is an all-in migration
+(brainstormed and approved 2026-06-02, design
+`docs/superpowers/specs/2026-06-02-ecnordic-cairn-0.21-migration-design.md`), and it doubles as the
+first real DX audit of cairn-cms. It runs as two plan files, executed back to back in a clean
+session: Plan A (`docs/superpowers/plans/2026-06-02-ecnordic-cairn-0.21-plan-a-breaking-floor.md`)
+is the breaking floor (bump to `^0.21.0`, the schema-contract adapter, the seven components ported to
+the `build(ctx)` slot model, the five directive content files rewritten, the sanitize floor
+reconciled onto the engine's, `createSiteIndexes`), and Plan B
+(`docs/superpowers/plans/2026-06-02-ecnordic-cairn-0.21-plan-b-content-graph.md`) is content-graph
+adoption (manifest, build resolver, delete and rename actions, the `cairn:` link conversion) plus the
+DX-findings synthesis. Start at Plan A Task 0. Do not push; a push deploys live. This supersedes the
+old Pass 2 and Pass 3 (the 0.10-era design); the separate "Pass 10: placeholder content" work stays
+open.
 
 **Pass 9 (DEFER):** contact form on `form()`, verified on adapter-cloudflare; the API is
 experimental, so keep contact as the proving ground (BACKLOG #13). **Open, not blocking:**
@@ -42,19 +50,17 @@ placeholder content on CrewLAB / Training / volunteers; waiver/payment-model con
 
 ---
 
-### Next starter prompt (cairn-cms 0.10 migration, Pass 2)
+### Next starter prompt (cairn-cms 0.21 migration, Plan A)
 
-> **Goal.** Convert ecnordic's seven directive components to the cairn component registry's typed
-> attributes and named slots, so the admin guided-insert form and the build read one declaration.
->
-> **Scope.** In: the directive component definitions and the build/render wiring. Out: visual
-> changes, new components, the placeholder content (Pass 10).
->
-> **Settled.** Delivery runs on the engine (Pass 1b). One canonical remark-directive grammar.
->
-> **Still open, brainstorm first:** how the seven components map to explicit named slots; how
-> `build()` reads the slots; migration order. This is the per-site half of engine Plan 3.
->
-> **Approach.** "Invoke site-pass. Brainstorm before coding. Read the migration design spec first. Standard pass-end checklist."
+> Execute the ecnordic cairn 0.21 migration, Plan A
+> (`docs/superpowers/plans/2026-06-02-ecnordic-cairn-0.21-plan-a-breaking-floor.md`), subagent-driven,
+> from the ecnordic-ski directory on `main`. Start at Task 0. The design is settled and approved
+> (`docs/superpowers/specs/2026-06-02-ecnordic-cairn-0.21-migration-design.md`), so skip brainstorming.
+> Dispatch one implementer per task and verify each commit before the next. Capture cairn-cms DX
+> friction in `docs/cairn-dx-findings.md` as you go (a co-primary deliverable). Do NOT push; a push
+> deploys ecnordic live. When Plan A's gate is green (`check` 0/0, `npm test` exit 0, `npm run build`
+> exit 0, `url-inventory` and characterization tests green), run Plan B
+> (`docs/superpowers/plans/2026-06-02-ecnordic-cairn-0.21-plan-b-content-graph.md`) the same way, then
+> the `site-pass` pass-end ritual (the live deploy and the admin smoke stay a human fast-follow).
 
 **Deploy:** Live at **https://ecnordic.ski**. Push to `main` triggers GitHub Actions (build + pagefind + wrangler deploy).
