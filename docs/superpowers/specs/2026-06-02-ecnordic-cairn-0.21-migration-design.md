@@ -8,10 +8,17 @@ for treating the migration as the first real DX audit of the engine.
 
 ecnordic is the first consumer site to traverse the whole 0.21 surface, so it is the proving ground
 for the `create-cairn-site` scaffolder that comes later. The migration has two ranked goals. The
-first is ecnordic running on 0.21 end to end, deployed and proven. The second is a structured
-cairn-cms DX-improvement report, captured task by task and harvested into the engine backlog at
-pass-end. The second goal is why "migrate ecnordic first" pays for itself: it de-risks every later
-site and feeds the scaffolder.
+first is ecnordic running on 0.21 end to end as a **completely idiomatic cairn site**, deployed and
+proven. The second is a structured cairn-cms DX-improvement report, captured task by task and
+harvested into the engine backlog at pass-end. The second goal is why "migrate ecnordic first" pays
+for itself: it de-risks every later site and feeds the scaffolder.
+
+**The north star: cairn is a fully SvelteKit tool.** Working with cairn should feel easy and natural
+to a SvelteKit developer. ecnordic is the reference for that, so it adopts the engine's idiomatic
+public surface wholesale (`createPublicRoutes`, `CairnHead`, the response helpers) rather than keeping
+its bespoke hand-rolled delivery. Blast radius is not a constraint here; an idiomatic result is the
+goal. ecnordic should end up looking like what the scaffolder would emit. The DX audit's yardstick is
+whether each step feels natural to a SvelteKit developer; a step that does not is a finding.
 
 This design supersedes the Pass 2 and Pass 3 portions of the prior
 `2026-05-31-ecnordic-cairn-0.10-migration-design.md`. Pass 1 (the 0.6-to-0.10 catch-up and the
@@ -100,8 +107,17 @@ movement and no visible content change.
 5. Sanitize reconcile: drop ecnordic's site-level `rehype-sanitize` pass and extend the engine floor
    via `createRenderer(registry, { sanitizeSchema })` to admit ecnordic's vocabulary (svg, path,
    `data-rise`, role, aria, section, nav).
-6. Delivery catch-up: adopt `createSiteIndexes` typed reads in `content.ts`; repoint any moved imports
-   to the entry that now exports them.
+6. Public-surface adoption (the idiomatic rewrite). Replace ecnordic's hand-rolled delivery with the
+   engine's surface, mirroring the showcase: `content.ts` collapses to `createSiteIndexes` exporting
+   `site`, `ORIGIN`, and `SITE_DESCRIPTION`; the `[...path]` catch-all uses `createPublicRoutes({ site,
+   render, origin, siteName, description, feeds })` for `entries` and `entryLoad`; the catch-all page
+   uses `<CairnHead seo={data.seo} />`; the home, tags-index, and tag routes read the engine `site`
+   index (or the `createPublicRoutes` list loaders) instead of `allPosts`/`postsByTag`/`allTags`; and
+   the feeds, sitemap, and robots routes use the `rssResponse`/`jsonFeedResponse`/`sitemapResponse`/
+   `robotsResponse` helpers, with the feeds threading `buildLinkResolver(site)` exactly as the showcase
+   does. The hand-rolled `byPermalink`, `resolvePermalink`, `toListItem`, `PostListItem`, and the manual
+   `buildSeoMeta` head go away. The `url-inventory` test guards that every URL stays put across the
+   rewrite.
 
 Phase A gate: the `url-inventory` and URL-policy tests green (zero URL movement), the five directive
 pages render equivalently, `npm run check` 0/0, `npm test` and `npm run build` exit 0.
@@ -125,8 +141,10 @@ permalinks on the page and in the feeds; URLs still stable; the full gate green.
 - The live deploy and the live `/admin` smoke. A push deploys ecnordic to production, so the deploy
   and the interactive smoke of delete, rename, and the picker against the real Worker stay a human
   fast-follow.
-- The SEO head consumer (0.14, `readSeoFields`, `defaultImage`). ecnordic reads no per-post image,
-  robots, or author today, so it is free polish at most, taken only if a task touches that code anyway.
+- Declaring per-post SEO fields (image, robots, author). Adopting `createPublicRoutes`/`entryLoad`
+  brings the SEO head consumer (0.14) in by default, and ecnordic's `<CairnHead>` renders whatever
+  `entryLoad` resolves. ecnordic declares none of those fields today, so they stay absent; adding them
+  is a later content decision, not this migration.
 - The component reference doc (`generateComponentReference`). It is a one-command follow-up, recorded
   as a backlog item rather than a task here.
 
@@ -140,6 +158,18 @@ honest:
   entry. An entry records the symptom, the file or API where it bit, and a concrete suggested fix.
 - A final synthesis task reads the findings file and files engine backlog items in cairn-cms, so the
   improvements land where the fix happens.
+
+**The primary lens is SvelteKit-developer fit.** cairn is a fully SvelteKit tool, so the test that
+matters most is whether each step feels native to a SvelteKit developer. The findings file carries a
+dedicated "SvelteKit fit" section, and every task evaluates its surface against the SvelteKit a
+developer already knows: does the adapter feel like ordinary config, do the routes read like normal
+`load`/`actions`/`+server` handlers, do the types flow without casts, do `$props`/`$app/state`/the
+runes work as expected, does `createPublicRoutes`/`CairnHead`/`createContentRoutes` compose the way a
+SvelteKit library should, are the import paths and the export map obvious. Anywhere cairn fights a
+SvelteKit idiom (a handler that cannot be a plain `load`, a type that needs a cast, a concept with no
+SvelteKit analog, a doc that assumes cairn-internal knowledge) is a first-class finding, ranked above
+cosmetic friction. The synthesis ranks findings by how much they cost a SvelteKit developer who has
+never seen cairn.
 
 Seed findings already visible from planning, to be confirmed or refined during execution:
 
@@ -172,9 +202,14 @@ Seed findings already visible from planning, to be confirmed or refined during e
 - **Single sanitize floor.** Drop ecnordic's site-level pass and extend the engine floor through
   `sanitizeSchema`. One floor, in the engine, matching the model the scaffolder template will teach.
   This is also finding #3.
-- **Mirror the showcase.** The showcase adapter, content layer, manifest script, and admin route are
+- **Mirror the showcase, including the public surface.** The showcase adapter, content layer, public
+  routes (`createPublicRoutes`, `CairnHead`, the response helpers), manifest script, and admin route are
   the reference. ecnordic's files should read like the showcase's, since the scaffolder will template
-  from the same shape.
+  from the same shape. ecnordic's hand-rolled delivery is replaced, not merely re-pointed.
+- **A bespoke listing page keeps its presentation, not its plumbing.** ecnordic's home, tags, and
+  per-tag pages keep their design-system markup and their routes, but read the engine `site` index (or
+  the `createPublicRoutes` list loaders) instead of the hand-rolled `content.ts` helpers. The
+  presentation is ecnordic's; the data path is the engine's.
 - **No push, no deploy in the pass.** The clean session runs every gate locally and leaves `main`
   committed and unpushed. The deploy and the live admin smoke are a human fast-follow.
 - **Render equivalence, not strict byte-identity, is the Phase A gate.** The sanitize reconcile can

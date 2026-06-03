@@ -44,7 +44,10 @@
 - Modify the five directive content files under `src/content/pages/*.md`: rewrite to the slot syntax.
 - Modify `src/lib/markdown/sanitize.ts` and `src/lib/markdown/render.ts` and `src/lib/utils.ts`: drop the site-level sanitize pass; move ecnordic's allowlist into a `sanitizeSchema` passed to `createRenderer`.
 - Modify `src/tests/markdown/sanitize.test.ts`, `src/tests/markdown/sanitized-characterization.test.ts`: repoint to the engine-floor render.
-- Modify `src/lib/content.ts`: replace the manual two-index build with `createSiteIndexes`.
+- Modify `src/lib/content.ts`: collapse to `createSiteIndexes`, exporting `site`, `ORIGIN`, `SITE_DESCRIPTION`; drop the hand-rolled helpers.
+- Modify `src/routes/[...path]/+page.server.ts` and `+page.svelte`: adopt `createPublicRoutes` and `<CairnHead>`.
+- Modify `src/routes/+page.server.ts`, `src/routes/tags/+page.server.ts`, `src/routes/tags/[tag]/+page.server.ts`: read the engine `site` index instead of the hand-rolled helpers.
+- Modify `src/routes/feed.xml/+server.ts`, `src/routes/feed.json/+server.ts`, `src/routes/sitemap.xml/+server.ts`, `src/routes/robots.txt/+server.ts`: use the response helpers.
 - Create `docs/cairn-dx-findings.md`: the running DX log.
 
 ---
@@ -64,6 +67,19 @@ Create `docs/cairn-dx-findings.md`:
 Friction this migration hit in the cairn-cms consumer surface. Each entry: the symptom, where it
 bit, and a concrete suggested fix. The pass-end synthesis (Plan B, final task) files these as
 engine backlog items in cairn-cms.
+
+The primary lens is SvelteKit-developer fit: cairn is a fully SvelteKit tool, so the test that
+matters most is whether each step feels native to a SvelteKit developer. Record SvelteKit-fit
+observations in their own section below, and rank them above cosmetic friction.
+
+## SvelteKit fit
+
+Does cairn feel native to a SvelteKit developer? One entry per surface as you wire it. Prompts: does
+the adapter read like ordinary config; do the routes read like normal `load`/`actions`/`+server`
+handlers; do the types flow without casts; do `$props`/`$app/state`/the runes behave; does
+`createPublicRoutes`/`CairnHead`/`createContentRoutes` compose like a SvelteKit library should; are
+the import paths and the export map obvious. Note both what flowed naturally and what fought a
+SvelteKit idiom.
 
 ## Findings
 
@@ -411,50 +427,152 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 ---
 
-## Task 6: adopt createSiteIndexes in the delivery layer
+## Task 6: adopt the idiomatic engine public surface
 
 **Files:**
 - Modify: `src/lib/content.ts`
-- Modify: `src/tests/content/content.test.ts` if its imports change
+- Modify: `src/routes/[...path]/+page.server.ts`, `src/routes/[...path]/+page.svelte`
+- Modify: `src/routes/+page.server.ts`, `src/routes/tags/+page.server.ts`, `src/routes/tags/[tag]/+page.server.ts`
+- Modify: `src/routes/feed.xml/+server.ts`, `src/routes/feed.json/+server.ts`, `src/routes/sitemap.xml/+server.ts`, `src/routes/robots.txt/+server.ts`
+- Modify: `src/tests/content/content.test.ts`, `src/tests/content/url-inventory.test.ts` if their imports change
 
-Replace the hand-rolled two-index build and the `byPermalink` map with `createSiteIndexes`, mirroring the showcase `content.ts`. Keep every exported function name and signature (`allPosts`, `postBody`, `feedItems`, `postsByTag`, `allTags`, `resolvePermalink`, `contentPermalinks`, `render`, the `PostListItem` type, `ConceptId`) so no caller changes.
+Replace ecnordic's hand-rolled delivery with the engine's idiomatic surface, mirroring the showcase. cairn is a fully SvelteKit tool, so this is the heart of making ecnordic a natural SvelteKit-plus-cairn site. The hand-rolled `byPermalink`, `resolvePermalink`, `contentPermalinks`, `toListItem`, `PostListItem`, `allPosts`, `postsByTag`, `allTags`, `feedItems`, `postBody`, and the manual `buildSeoMeta` head all go. The `url-inventory` test is the contract: every URL must stay put. Work the steps in order, since later steps import what `content.ts` now exports. The build stays red until Task 7; run each step's targeted test.
 
-- [ ] **Step 1: Rewrite the index construction**
+The worked references are the showcase routes: `../cairn-cms/examples/showcase/src/lib/content.ts`, `.../routes/[...path]/+page.server.ts` and `+page.svelte`, `.../routes/feed.xml/+server.ts`, `.../routes/sitemap.xml/+server.ts`, `.../routes/robots.txt/+server.ts`.
+
+- [ ] **Step 1: Collapse `content.ts` to `createSiteIndexes`**
+
+Rewrite `src/lib/content.ts` to the showcase shape:
 
 ```ts
+// The site's one delivery content layer: glob the markdown, hand the adapter to createSiteIndexes,
+// export the site index and the origin constants the public routes read.
 import { createSiteIndexes } from '@glw907/cairn-cms/delivery';
 import { parseSiteConfig } from '@glw907/cairn-cms';
-import type { ContentEntry, FeedItem } from '@glw907/cairn-cms';
 import { cairn } from './cairn.config.js';
 import siteYaml from './site.config.yaml?raw';
-import { SITE_URL, FEED_MAX_ITEMS } from './config.js';
-import { markdownToHtml } from './utils.js';
+import { SITE_URL, SITE_DESCRIPTION as DESC } from './config.js';
 
 const postsRaw = import.meta.glob('/src/content/posts/*.md', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
 const pagesRaw = import.meta.glob('/src/content/pages/*.md', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
 
 const siteConfig = parseSiteConfig(siteYaml);
 const indexes = createSiteIndexes(cairn, siteConfig, { posts: postsRaw, pages: pagesRaw });
-const postsIndex = indexes.posts;
-const pagesIndex = indexes.pages;
+
+export const site = indexes.site;
+export const ORIGIN = SITE_URL;
+export const SITE_DESCRIPTION = DESC;
 ```
 
-Keep the rest of the file (the `byPermalink` map built from the two indexes, `toListItem`, and the exported functions) as is, reading from `postsIndex`/`pagesIndex`. The `resolvePermalink` and `contentPermalinks` logic does not change. Confirm `indexes.site` is available if any caller needs the site resolver; ecnordic builds its own `byPermalink`, so it may not.
+Use ecnordic's real `SITE_URL` and description constants from `./config.js` (confirm the export names; if `SITE_DESCRIPTION` does not exist there, use the site's existing description constant). If `parseSiteConfig` lives behind a different entry in 0.21, find it (`grep -rn "export.*parseSiteConfig" ../cairn-cms/src`) and record the surprise as a DX finding.
 
-If `urlPolicyFrom`/`normalizeConcepts`/`fromGlob`/`createContentIndex` are no longer imported, remove them. If `parseSiteConfig` lives behind a different entry in 0.21, find it (`grep -rn "export.*parseSiteConfig" ../cairn-cms/src`); record any import-location surprise as a DX finding.
+- [ ] **Step 2: Adopt `createPublicRoutes` in the catch-all**
 
-- [ ] **Step 2: Run the content tests**
+Rewrite `src/routes/[...path]/+page.server.ts`:
+
+```ts
+import type { PageServerLoad, EntryGenerator } from './$types';
+import { createPublicRoutes } from '@glw907/cairn-cms/delivery';
+import { site, ORIGIN, SITE_DESCRIPTION } from '$lib/content';
+import { cairn } from '$lib/cairn.config';
+
+export const prerender = true;
+
+const routes = createPublicRoutes({
+  site,
+  render: cairn.render,
+  origin: ORIGIN,
+  siteName: cairn.siteName,
+  description: SITE_DESCRIPTION,
+  feeds: { rss: ORIGIN + '/feed.xml', json: ORIGIN + '/feed.json' },
+});
+
+export const entries: EntryGenerator = () => routes.entries();
+export const load: PageServerLoad = ({ url }) => routes.entryLoad({ url });
+```
+
+`entryLoad` resolves `cairn:` links and builds the SEO internally, so the manual `buildSeoMeta` and the resolver threading are gone. The returned `data` carries `entry`, `html`, `seo`, and the concept; confirm the exact `EntryData` shape against `../cairn-cms/src/lib/sveltekit/public-routes.ts`.
+
+- [ ] **Step 3: Adopt `<CairnHead>` in the catch-all page**
+
+In `src/routes/[...path]/+page.svelte`, replace the inline `<svelte:head>` SEO loop with `<CairnHead seo={data.seo} />` and keep ecnordic's post/page presentation (the `.post-body`, `.post-date`, `.post-tags`, `.page-title` markup), reading `data.entry`, `data.html`, and the concept branch from the new `EntryData` shape:
+
+```svelte
+<script lang="ts">
+  import type { PageData } from './$types';
+  import { CairnHead } from '@glw907/cairn-cms/delivery';
+  let { data }: { data: PageData } = $props();
+</script>
+
+<CairnHead seo={data.seo} />
+```
+
+Map ecnordic's current template fields (title, date, tags, html) onto the `EntryData` properties. Keep the design-system classes; only the head and the data source change.
+
+- [ ] **Step 4: Rewire the home, tags-index, and tag routes to the engine index**
+
+Read the post summaries from the engine `site` index instead of the hand-rolled helpers. The `site` index exposes `site.concept('posts')` (a concept index with `.all()`, `.byId()`, `.byTag()`, `.allTags()`), and each summary carries `title`, `date`, `tags`, `permalink`, `id`, `excerpt`. If `createPublicRoutes` exposes list loaders (`archiveLoad`/`tagLoad`/`tagIndexLoad`, per its `ListData`/`TagData`/`TagIndexData` types), prefer those; otherwise read `site.concept('posts')` directly.
+
+`src/routes/+page.server.ts` (home, featured first post):
+
+```ts
+import type { PageServerLoad } from './$types';
+import { site } from '$lib/content';
+import { cairn } from '$lib/cairn.config';
+
+export const load: PageServerLoad = async () => {
+  const posts = site.concept('posts')?.all() ?? [];
+  const first = posts[0];
+  const featured = first
+    ? { permalink: first.permalink, title: first.title, date: first.date, tags: first.tags, html: await cairn.render(site.concept('posts')!.byId(first.id)!.body) }
+    : null;
+  return { posts, featured };
+};
+```
+
+`src/routes/tags/+page.server.ts`: `return { tags: site.concept('posts')?.allTags() ?? [] };`. `src/routes/tags/[tag]/+page.server.ts`: `entries()` maps `site.concept('posts')?.allTags()`, and `load` reads `site.concept('posts')?.byTag(params.tag)`, 404ing on empty. Confirm the concept-index method names against `../cairn-cms/src/lib/delivery`; if a method differs, use the real name and note any surprise as a DX finding. Update the `+page.svelte` for each only if a field name moved (the summaries carry the same fields the hand-rolled list items did).
+
+- [ ] **Step 5: Adopt the response helpers in the feeds, sitemap, and robots**
+
+Rewrite the four `+server.ts` routes to mirror the showcase. The feeds thread the resolver explicitly via `buildLinkResolver(site)`:
+
+```ts
+// src/routes/feed.xml/+server.ts
+import type { RequestHandler } from './$types';
+import { rssResponse, buildLinkResolver, type FeedItem } from '@glw907/cairn-cms/delivery';
+import { site, ORIGIN, SITE_DESCRIPTION } from '$lib/content';
+import { cairn } from '$lib/cairn.config';
+
+export const prerender = true;
+
+export const GET: RequestHandler = async () => {
+  const posts = site.concept('posts');
+  const toPermalink = buildLinkResolver(site);
+  const resolve = (ref: Parameters<typeof toPermalink>[0]) => ORIGIN + toPermalink(ref);
+  const items: FeedItem[] = await Promise.all(
+    (posts?.all() ?? []).map(async (p) => ({
+      title: p.title, url: ORIGIN + p.permalink, date: p.date, summary: p.excerpt,
+      contentHtml: await cairn.render(posts!.byId(p.id)!.body, { resolve }), tags: p.tags,
+    })),
+  );
+  return rssResponse({ title: cairn.siteName, description: SITE_DESCRIPTION, siteUrl: ORIGIN, feedUrl: ORIGIN + '/feed.xml' }, items);
+};
+```
+
+Do `feed.json` with `jsonFeedResponse` and `buildJsonFeed` the same way (read the showcase if it has a `feed.json`; if not, mirror `buildJsonFeed`'s existing ecnordic usage with the response helper). `sitemap.xml` uses `sitemapResponse` over `site.all()`; `robots.txt` uses `robotsResponse({ sitemapUrl, disallow: ['/admin'] })`. Honor ecnordic's `FEED_MAX_ITEMS` cap by slicing the posts list if it was capped before.
+
+- [ ] **Step 6: Run the delivery and URL tests**
 
 Run: `npx vitest run src/tests/content/`
-Expected: PASS (the same indexes, now engine-built).
+Expected: PASS. The `url-inventory` test is the contract: every public URL is unchanged. If a test imported a now-deleted helper (`allPosts`, `resolvePermalink`), repoint it to the engine index or the route, asserting the same URLs and the same listing order.
 
-- [ ] **Step 3: Capture DX friction, then commit**
+- [ ] **Step 7: Capture DX friction, then commit**
 
-Append the delivery-import-ambiguity finding (bare entry versus `/delivery` subpath). Then:
+Append findings: the delivery-import ambiguity (bare entry versus `/delivery`), and a SvelteKit-naturalness read of `createPublicRoutes`, `CairnHead`, and the response helpers (did the catch-all, the head, and the feeds feel natural to wire, or did anything fight SvelteKit's `load`/`+server` idioms?). Then:
 
 ```bash
-git add src/lib/content.ts src/tests/content/ docs/cairn-dx-findings.md
-git commit -m "refactor: build the delivery indexes with createSiteIndexes
+git add src/lib/content.ts "src/routes/[...path]/" src/routes/+page.server.ts src/routes/tags/ src/routes/feed.xml/ src/routes/feed.json/ src/routes/sitemap.xml/ src/routes/robots.txt/ src/tests/content/ docs/cairn-dx-findings.md
+git commit -m "refactor: adopt the idiomatic cairn public surface
 
 Co-Authored-By: Claude <noreply@anthropic.com>"
 ```
@@ -505,6 +623,6 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 ## Self-review notes
 
-- **Spec coverage.** Bump (Task 1), adapter contract (Task 2), component slot port (Task 3), content rewrites (Task 4), sanitize reconcile (Task 5), delivery catch-up (Task 6), green restore (Task 7). The DX-findings deliverable is the per-task capture step plus Task 0; the synthesis is Plan B's final task.
+- **Spec coverage.** Bump (Task 1), adapter contract (Task 2), component slot port (Task 3), content rewrites (Task 4), sanitize reconcile (Task 5), idiomatic public-surface adoption (Task 6: createSiteIndexes, createPublicRoutes, CairnHead, the listing routes, the response helpers), green restore (Task 7). The DX-findings deliverable is the per-task capture step plus Task 0; the synthesis is Plan B's final task.
 - **Type consistency.** `defineAdapter`, `defineFields`, `ComponentContext`, `createRenderer(..., { sanitizeSchema })`, `createSiteIndexes(adapter, siteConfig, globs)`, and the preserved `content.ts` export signatures are used identically across tasks.
 - **Altitude.** The deterministic shapes (adapter, content.ts, sanitize, the simple-component skeleton) carry full code. The seven component builds are contract plus the characterization snapshot as the authority, because the exact head and panel markup must match the existing snapshot rather than invented hast; the showcase and the snapshot are the worked references the porting step reads.

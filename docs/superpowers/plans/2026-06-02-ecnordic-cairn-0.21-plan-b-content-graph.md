@@ -4,7 +4,7 @@
 
 **Goal:** Adopt the cairn content-graph on ecnordic: a committed, build-verified manifest of the corpus, a build resolver so `cairn:` internal links resolve to live permalinks on the page and in the feeds, the admin delete and rename actions plus the link picker, and the one post's two internal links converted to `cairn:` tokens.
 
-**Architecture:** Additive on Plan A's green floor. ecnordic hand-rolls its public delivery (its own `content.ts` and `[...path]` catch-all), so it wires the resolver itself rather than getting it free from the engine's `entryLoad`. The manifest is a git-committed JSON projection that the build regenerates and verifies, so a raw-git content edit cannot ship a stale graph. The showcase (`../cairn-cms/examples/showcase`) is the worked reference.
+**Architecture:** Additive on Plan A's green floor. Plan A made ecnordic idiomatic: the catch-all runs on `createPublicRoutes`, so `entryLoad` resolves `cairn:` links on every page automatically, and the feeds already thread `buildLinkResolver(site)`. So the resolver is wired; this plan adds the committed manifest and its build backstop (a git-committed JSON projection the build regenerates and verifies, so a raw-git content edit cannot ship a stale graph), registers the admin delete and rename actions, and converts the post's two links to `cairn:` tokens to prove the path end to end. The showcase (`../cairn-cms/examples/showcase`) is the worked reference.
 
 **Tech Stack:** SvelteKit 2, Svelte 5, TypeScript, `@glw907/cairn-cms ^0.21.0`, vitest. ecnordic is an npm-workspaces member of `/home/glw907/Projects/cairn`.
 
@@ -77,53 +77,41 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 ---
 
-## Task 2: the build backstop and the link resolver
+## Task 2: the manifest build backstop
 
 **Files:**
 - Modify: `src/lib/content.ts`
 
-The build regenerates the manifest and fails if the committed file drifted, so a raw-git edit cannot ship a stale graph. The resolver turns a `cairn:` token into the target's live permalink, threaded through `render` so the catch-all and the feeds both resolve.
+The build regenerates the manifest and fails if the committed file drifted, so a raw-git edit cannot ship a stale graph. The resolver is already wired (Plan A: `entryLoad` resolves on every page, the feeds thread `buildLinkResolver`), so this task only adds the verify backstop, mirroring the showcase `content.ts`.
 
-- [ ] **Step 1: Add the verify backstop and the resolver**
+- [ ] **Step 1: Add the verify backstop**
 
 In `src/lib/content.ts`, after the `createSiteIndexes` call, add:
 
 ```ts
-import { buildSiteManifest, buildLinkResolver } from '@glw907/cairn-cms/delivery';
+import { buildSiteManifest } from '@glw907/cairn-cms/delivery';
 import { verifyManifest } from '@glw907/cairn-cms';
 import manifestRaw from '/src/content/.cairn/index.json?raw';
 
 // Fail the build if the committed manifest drifted from the corpus. Regenerate with
 // `npm run cairn:manifest`.
 verifyManifest(buildSiteManifest(cairn, siteConfig, { posts: postsRaw, pages: pagesRaw }), manifestRaw);
-
-const linkResolver = buildLinkResolver(indexes.site);
 ```
 
-- [ ] **Step 2: Thread the resolver through `render`**
+This reuses the `siteConfig`, `postsRaw`, and `pagesRaw` already in `content.ts` from Plan A. Confirm those bindings still exist (Plan A's collapse kept them); if the collapse inlined them, lift them back to module bindings so the verify call can read them, mirroring the showcase.
 
-Change the exported `render` so every caller (the catch-all and `feedItems`) resolves `cairn:` links:
-
-```ts
-export function render(md: string): Promise<string> {
-  return markdownToHtml(md, { resolve: linkResolver });
-}
-```
-
-Confirm the option name `resolve` against the showcase or `../cairn-cms/src/lib/render`; if it differs, use the real name and record the surprise as a DX finding. The `feedItems` function already calls `render(postBody(p.id))`, so it inherits resolution with no further change.
-
-- [ ] **Step 3: Run the build**
+- [ ] **Step 2: Run the build**
 
 Run: `npm run build`
-Expected: exit 0. The manifest matches the corpus (no drift), and the resolver builds. No `cairn:` token exists yet, so nothing resolves or fails.
+Expected: exit 0. The manifest matches the corpus (no drift). No `cairn:` token exists yet, so nothing resolves or fails.
 
-- [ ] **Step 4: Run the gate, then commit**
+- [ ] **Step 3: Run the gate, then commit**
 
-Run `npm run check` (0/0) and `npm test` (exit 0). Append the "hand-rolled delivery must thread the resolver itself" finding (the engine `entryLoad` does it for you, but a site with its own catch-all does not get that). Then:
+Run `npm run check` (0/0) and `npm test` (exit 0). Capture any manifest-wiring DX friction. Then:
 
 ```bash
 git add src/lib/content.ts docs/cairn-dx-findings.md
-git commit -m "feat: verify the manifest at build and resolve cairn links in render
+git commit -m "feat: verify the content manifest at build
 
 Co-Authored-By: Claude <noreply@anthropic.com>"
 ```
@@ -210,9 +198,9 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 The migration captured DX friction task by task. This task turns the findings into actionable engine backlog items where the fix happens, in cairn-cms.
 
-- [ ] **Step 1: Review and dedupe the findings**
+- [ ] **Step 1: Review, dedupe, and rank by SvelteKit fit**
 
-Read `docs/cairn-dx-findings.md` end to end. Merge duplicates, drop anything that turned out to be a non-issue on closer inspection, and make sure each remaining finding has a concrete suggested fix. Rank them by how much they hurt a first-time site author (the scaffolder's audience).
+Read `docs/cairn-dx-findings.md` end to end, including the "SvelteKit fit" section. Merge duplicates, drop anything that turned out to be a non-issue on closer inspection, and make sure each remaining finding has a concrete suggested fix. Rank them by how much they cost a SvelteKit developer who has never seen cairn: a surface that fights a SvelteKit idiom (a handler that cannot be a plain `load`, a type that needs a cast, a concept with no SvelteKit analog, a doc that assumes cairn-internal knowledge) ranks above cosmetic friction. Write a one-paragraph verdict at the top: does working with a cairn site feel native and comfortable to a SvelteKit developer, and where does it not yet.
 
 - [ ] **Step 2: File the findings as cairn-cms backlog items**
 
