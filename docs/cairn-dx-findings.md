@@ -284,3 +284,15 @@ SvelteKit idiom.
     loader shim, so a divergence between those two paths could in principle pass the build while the
     script writes a different file. A single engine-owned regenerate that shares the build's resolver
     (the finding above) would also collapse this two-path risk.
+
+14. **Delete and rename are a one-line action registration, but a SvelteKit dev has no signpost that
+    they exist.** Turning on content delete and rename meant adding two entries to the `actions`
+    object (`delete: content.deleteAction`, `rename: content.renameAction`) next to the `save` that
+    was already there. The runtime already exposes all four handlers off `createContentRoutes`, the
+    `editLoad` already ships the link picker's `linkTargets` from the manifest, and the admin form
+    already posts to named actions, so nothing else needed wiring and the gate passed first try. The
+    gap is discovery. A migrating site that copied only `{ save: content.saveAction }` from the 0.10
+    surface has a fully working delete and rename sitting unused on the runtime with no type error and
+    no warning to flag the omission. Fix: the migration guide and the scaffolder's route stub should
+    register all four actions by default, so a site opts out of delete or rename rather than forgetting
+    to opt in.
