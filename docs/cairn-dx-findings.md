@@ -17,6 +17,17 @@ handlers; do the types flow without casts; do `$props`/`$app/state`/the runes be
 the import paths and the export map obvious. Note both what flowed naturally and what fought a
 SvelteKit idiom.
 
+1. **A plain `npm install` cannot relock the site lockfile.** Symptom: ecnordic is an npm
+   workspace member, so running `npm install` from inside the site rewrites the workspace-root
+   lockfile and leaves the site's own committed lockfile stale, which breaks CI `npm ci`. The
+   version bump needs a move-aside dance (mv the root `package.json` and `package-lock.json` aside,
+   `npm install --package-lock-only --ignore-scripts`, then restore the root files). Location: the
+   `^0.21.0` bump in `package.json`, Plan A Task 1. A SvelteKit developer expects a bump and a plain
+   `npm install` to refresh the lockfile in place. Fix: the create-cairn-site scaffolder should
+   document the relock step in the site README, or ship a small `npm run relock` script that wraps
+   the move-aside so the site dev never types it by hand. Standalone (non-workspace) sites avoid this
+   entirely, so the scaffolder output should not assume the workspace layout.
+
 ## Findings
 
 1. **Coupled breaking changes force a big-bang migration.** 0.12 (the build signature) and 0.13
