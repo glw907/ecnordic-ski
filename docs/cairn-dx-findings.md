@@ -352,6 +352,12 @@ SvelteKit idiom.
     on `handleHttpError` staying `'fail'` for the cairn error. Ranked high: it is invisible (the build is
     green) and it erodes the headline content-graph safety property. Location: ecnordic
     `svelte.config.js`, surfaced by Plan B Task 4 Step 4.
+    **RESOLVED on ecnordic (2026-06-03):** `handleHttpError` is now a function that rethrows on any
+    5xx (a prerender page crash, which a dangling `cairn:` token produces) and warns on a 4xx, so the
+    backstop is fatal again. Verified both ways: a dangling token fails the build with exit 1, a valid
+    token builds clean. Matching on the 5xx status is more robust than matching the error text, since
+    SvelteKit's `handleHttpError` message carries the `500 <path>` form, not the original throw. The
+    scaffolder should emit this same `handleHttpError` shape so every site inherits the fatal backstop.
 
 ## Scaffolder implications
 
