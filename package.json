@@ -9,6 +9,7 @@
     "dev": "vite dev",
     "build": "vite build",
     "build:search": "vite build && npx pagefind --site .svelte-kit/cloudflare",
+    "cairn:manifest": "node scripts/build-manifest.mjs",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",

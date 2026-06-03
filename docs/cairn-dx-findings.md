@@ -251,3 +251,23 @@ SvelteKit idiom.
     expects it to satisfy the type, so the readonly clash reads as a surprise. Fix: widen
     `AttributeField.options` (and any sibling list field) to `readonly string[]`, so a site can write
     a shared attribute constant `as const` and have it assign cleanly.
+
+12. **The manifest regenerate is manual wiring a site must carry, and the showcase script does not
+    survive a real config chain.** Adopting the content graph means three hand-placed pieces: a copied
+    `scripts/build-manifest.mjs`, a `cairn:manifest` package script, and the committed
+    `src/content/.cairn/index.json` the build verifies against. The script hard-codes the glob map
+    (`{ posts, pages }`), so a site adds a line per concept by hand and a forgotten concept silently
+    drops from the manifest. The showcase script is the documented starting point, but it only runs
+    because the showcase `cairn.config.ts` is self-contained. ecnordic's adapter imports the site's
+    real render pipeline, so the plain `node` run hit four Vite-isms in a row that the showcase never
+    exercises: a `.js` specifier pointing at a `.ts` source, an extensionless relative import, the
+    `$lib` alias, and a `?raw` YAML import. Each surfaced as a separate `ERR_MODULE_NOT_FOUND` or
+    `ERR_UNKNOWN_FILE_EXTENSION`, so the fix was iterative. ecnordic resolved it with a
+    `module.registerHooks` resolve-and-load shim in the script (map `$lib`, rewrite `.js`/extensionless
+    to `.ts`, serve `?raw` as a string module), which adds about twenty-five lines of Node-internals
+    code the showcase never needed. A SvelteKit developer expects the same import graph that builds
+    under Vite to also run under `node`, and it does not. Fix: the engine should ship the regenerate as
+    a CLI that runs the adapter through the same Vite resolver the build uses (for example a thin
+    `vite-node` entry), so a site gets `cairn manifest` with no per-site loader shim and no Vite-ism
+    gap. The scaffolder should emit the committed empty manifest and the package script, so a new site
+    starts with the graph already wired.

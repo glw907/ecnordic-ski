@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "id": "about",
+      "concept": "pages",
+      "title": "About East Community Nordic",
+      "permalink": "/about",
+      "draft": false,
+      "links": []
+    },
+    {
+      "id": "crewlab",
+      "concept": "pages",
+      "title": "CrewLAB",
+      "permalink": "/crewlab",
+      "draft": false,
+      "links": []
+    },
+    {
+      "id": "resources",
+      "concept": "pages",
+      "title": "Resources",
+      "permalink": "/resources",
+      "draft": false,
+      "links": []
+    },
+    {
+      "id": "training",
+      "concept": "pages",
+      "title": "Training",
+      "permalink": "/training",
+      "draft": false,
+      "links": []
+    },
+    {
+      "id": "volunteers",
+      "concept": "pages",
+      "title": "Volunteers",
+      "permalink": "/volunteers",
+      "draft": false,
+      "links": []
+    },
+    {
+      "id": "2026-05-welcome",
+      "concept": "posts",
+      "title": "Welcome to the EC Nordic Website",
+      "date": "2026-05-14",
+      "permalink": "/2026/05/welcome",
+      "draft": false,
+      "links": []
+    }
+  ]
+}
