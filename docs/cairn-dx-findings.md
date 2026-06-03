@@ -237,3 +237,17 @@ SvelteKit idiom.
     rewrite with no per-site override, so a migrating site must accept the rel change as part of going
     idiomatic. Fix: the migration guide should list `rehypeAnchorRel` as a deliberate, non-optional
     output change, so a site does not read the rel delta as a content regression.
+
+11. **`AttributeField.options` is a mutable `string[]`, so a site cannot factor a shared attribute
+    with `as const`.** ecnordic hoists its repeated component fields into shared constants
+    (`ICON_ATTR`, `ROLE_ATTR`, `TITLE_SLOT`, `BODY_SLOT`) to avoid restating them across seven
+    component defs. Writing the whole object `as const` is the natural way to pin the discriminant
+    literals (`type: 'select'`, `kind: 'inline'`) without restating each as a per-field annotation.
+    But `as const` also freezes `options` into a `readonly ['primary', 'secondary']`, and
+    `AttributeField.options` is a mutable `string[]`, so the constant stops being assignable and
+    `npm run check` reports four errors. The workaround is to drop the whole-object `as const` and
+    pin only the discriminant fields one by one (`type: 'select' as const`), which leaves `options`
+    a mutable `string[]`. A SvelteKit developer reaches for `as const` on a shared config literal and
+    expects it to satisfy the type, so the readonly clash reads as a surprise. Fix: widen
+    `AttributeField.options` (and any sibling list field) to `readonly string[]`, so a site can write
+    a shared attribute constant `as const` and have it assign cleanly.

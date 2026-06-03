@@ -137,15 +137,10 @@ function buildSplit(ctx: Ctx): Element {
 	return cardShell(CARD_CLASS, [headEl, body]);
 }
 
-const ICON_ATTR = { key: 'icon', label: 'Icon', type: 'icon' } as const;
-const ROLE_ATTR = {
-	key: 'role',
-	label: 'Role',
-	type: 'select',
-	options: ['primary', 'secondary'],
-} as const;
-const TITLE_SLOT = { name: 'title', label: 'Title', kind: 'inline', required: true } as const;
-const BODY_SLOT = { name: 'body', label: 'Body', kind: 'markdown' } as const;
+const ICON_ATTR = { key: 'icon', label: 'Icon', type: 'icon' as const };
+const ROLE_ATTR = { key: 'role', label: 'Role', type: 'select' as const, options: ['primary', 'secondary'] };
+const TITLE_SLOT = { name: 'title', label: 'Title', kind: 'inline' as const, required: true };
+const BODY_SLOT = { name: 'body', label: 'Body', kind: 'markdown' as const };
 
 const components: ComponentDef[] = [
 	{
@@ -190,7 +185,7 @@ const components: ComponentDef[] = [
 		label: 'Split',
 		description: 'A card laying nested :::panel blocks side by side.',
 		insertTemplate:
-			'::::split[Title]\n:::panel[]{icon="hand-coins"}\nFirst panel.\n:::\n\n:::panel[]{icon="handshake"}\nSecond panel.\n:::\n::::',
+			'::::split[Title]\n:::panel{icon="hand-coins"}\nFirst panel.\n:::\n\n:::panel{icon="handshake"}\nSecond panel.\n:::\n::::',
 		build: buildSplit,
 		slots: [TITLE_SLOT, BODY_SLOT],
 	},
@@ -198,7 +193,7 @@ const components: ComponentDef[] = [
 		name: 'panel',
 		label: 'Panel',
 		description: 'A single panel with an optional icon (used inside a split).',
-		insertTemplate: ':::panel[]{icon="hand-coins"}\nPanel content.\n:::',
+		insertTemplate: ':::panel{icon="hand-coins"}\nPanel content.\n:::',
 		build: buildPanel,
 		attributes: [ICON_ATTR, ROLE_ATTR],
 		slots: [BODY_SLOT],
