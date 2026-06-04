@@ -256,12 +256,3 @@ GitHub Actions secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
   Pagefind's UI bundle (`/pagefind/pagefind-ui.js`) is generated *after* the build, so it
   must stay in `build.rollupOptions.external` in `vite.config.ts` (with `cloudflare:email`)
   or the build fails with `UNRESOLVED_IMPORT`.
-
----
-
-## Known cruft
-
-- `static/admin/config.yml` (Sveltia/Decap CMS) now points at `glw907/ecnordic-ski` with a
-  matching `YYYY-MM-slug` post template, but the CMS is still not wired into the editorial
-  workflow (local editing + git push). Finish wiring it or remove the admin surface;
-  tracked as BACKLOG #4.

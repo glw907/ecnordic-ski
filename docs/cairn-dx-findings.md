@@ -50,7 +50,10 @@ SvelteKit idiom.
    `npm install` to refresh the lockfile in place. Fix: the create-cairn-site scaffolder should
    document the relock step in the site README, or ship a small `npm run relock` script that wraps
    the move-aside so the site dev never types it by hand. Standalone (non-workspace) sites avoid this
-   entirely, so the scaffolder output should not assume the workspace layout.
+   entirely, so the scaffolder output should not assume the workspace layout. **Update (2026-06-04):**
+   the cairn meta-workspace was flattened to standalone sibling repos, so ecnordic now installs with a
+   plain `npm install` and this friction is resolved. The finding stands as scaffolder guidance: do not
+   assume a workspace layout.
 
 2. **`defineAdapter`/`defineFields` read like ordinary typed config.** The adapter is a single
    `defineAdapter({...})` literal with one `defineFields([...])` per concept. A SvelteKit developer
