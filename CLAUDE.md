@@ -10,7 +10,7 @@ SvelteKit · TypeScript · Tailwind CSS v4 · DaisyUI v5 · @schedule-x/svelte �
 
 ## Development Workflow
 
-Pass-driven. Any of "continue development," "next pass," "finish pass," or "ship pass" invokes the `site-pass` skill (this repo's own roadmap). For cairn-cms library work (passes 0/A–F, tracked in `cairn-cms/docs/PLAN.md`), use `cairn-pass` instead.
+Pass-driven. Any of "continue development," "next pass," "finish pass," or "ship pass" invokes the `site-pass` skill (this repo's own roadmap). The site consumes `@glw907/cairn-cms` from the npm registry by version range; that library is a separate standalone repo with its own roadmap.
 
 ## Build & Dev
 
