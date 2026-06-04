@@ -3,7 +3,16 @@
 **Current state.** The directive render pipeline is live; all five static pages carry inline
 container directives; the content style guard blocks AI tells in `src/content/**/*.md`. The
 contact form runs on a SvelteKit remote function (`form()`, Pass 9). Public delivery and the admin
-surface run on the cairn-cms engine at `^0.21.0`. See `docs/architecture.md`.
+surface run on the cairn-cms engine at `^0.24.0`. See `docs/architecture.md`.
+
+**cairn-cms 0.24 bump: DONE (2026-06-04).** ecnordic moved from `^0.21.0` to `^0.24.0`, the latest
+version on npm. A routine version bump, not a structural migration. The whole upgrade was one consumer
+change: the `CairnHead` import moved to `@glw907/cairn-cms/delivery/head` (the 0.22 entry-point split).
+The 0.23 date and tags validation tightening needed no work, since the one post already held a valid
+date and an in-vocabulary tag. Gates green (`check` 0/0, `npm test` 50, build clean). The upgrade
+surfaced one DX finding, filed in `cairn-cms/docs/cairn-dx-feedback-2026-06-04-ecnordic-0.24.md`: the
+changelog and upgrade guide ship in neither the npm tarball nor a `homepage` link, so an npm consumer
+cannot reach the upgrade path from the registry.
 
 **cairn-cms 0.21 migration: DONE (2026-06-02).** ecnordic moved from `^0.10.0` to `^0.21.0` as a
 completely idiomatic cairn site, across two plans. Plan A (the breaking floor) ported the adapter to

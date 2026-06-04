@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageData } from './$types';
-  import { CairnHead } from '@glw907/cairn-cms/delivery';
+  import { CairnHead } from '@glw907/cairn-cms/delivery/head';
   import { SITE_TITLE } from '$lib/config';
   import { formatDate, tagUrl } from '$lib/utils';
   import { riseStyle } from '$lib/motion';
