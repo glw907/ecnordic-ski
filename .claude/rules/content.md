@@ -4,6 +4,14 @@ Before writing or editing any website content (pages, posts, or form copy), read
 
 **`docs/content-guide.md`**
 
+When drafting or editing **page** content that uses container directives (cards, grids, alerts,
+callouts, split sections), also read the directive syntax reference:
+
+**`docs/directive-syntax.md`**
+
+Its source of truth is the registry in `src/lib/markdown/components.ts`; consult that file directly
+when adding or changing a directive.
+
 ---
 
 ## Quick Reference
