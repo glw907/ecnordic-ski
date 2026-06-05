@@ -28,7 +28,7 @@ prefer four for consistency with what is already authored.
 Three parts carry the content:
 
 - `[label]` is the **title slot**. It renders as an `<h2>` heading inside the component. Most
-  directives require it; `panel` is the exception.
+  directives require it; `panel` has no title, and `aside` makes it optional.
 - The lines between the fences are the **body slot**, parsed as markdown. Lists, links, and emphasis
   all work.
 - `{...}` holds **attributes**, written as `key="value"`. The two attributes in play are `icon` and
@@ -49,7 +49,7 @@ Second panel copy.
 ::::
 ```
 
-## The seven directives
+## The eight directives
 
 | Name | Title | Body | Attributes | What it renders |
 |------|-------|------|------------|-----------------|
@@ -60,6 +60,7 @@ Second panel copy.
 | `split` | required | yes | none | A card that lays its nested `panel` blocks side by side. |
 | `panel` | none | yes | `icon`, `role` | A single panel with an optional icon. Use it inside `split`. |
 | `passage` | required | yes | `icon`, `role` | A titled section without the card border. |
+| `aside` | optional | yes | `icon`, `role` | A lightweight semantic `<aside>` for a gloss or side note. |
 
 ### Per-directive notes
 
@@ -80,6 +81,11 @@ outside, three inside.
 
 `passage` has the same shape as `card` without the card chrome, for a lighter titled section.
 
+`aside` is for a gloss or side note, like a one-line definition of spenst, OD, or SafeSport. It
+renders a semantic `<aside>` styled lighter than a card. The title is optional, so a bare
+`:::aside\nA quick note.\n:::` works, and an `icon` (often `info`) sits beside the title when set.
+Never use it for a warning; that is what `alert` is for.
+
 ## Valid icon names
 
 The `icon` attribute takes one of these names (Phosphor glyphs from `icons.ts`). A name outside this
@@ -87,12 +93,12 @@ list renders nothing, so it is a silent miss to watch for:
 
 ```
 backpack  calendar-blank  chat-circle  compass  flag  hand-coins
-handshake  path  person-simple-run  tent  users-three  warning
+handshake  info  path  person-simple-run  tent  users-three  warning
 ```
 
 ## The `role` attribute
 
-For `alert`, `role` must be `caution`. For `card`, `grid`, `panel`, and `passage`, `role` is
+For `alert`, `role` must be `caution`. For `card`, `grid`, `panel`, `passage`, and `aside`, `role` is
 `primary` or `secondary` and tints the icon. Leave it off when the default sits fine.
 
 ## A worked example

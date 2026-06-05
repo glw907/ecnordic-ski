@@ -333,6 +333,22 @@ body {
   .ec-alert .ec-alert-body a { transition: none; }
 }
 
+/* ─── Gloss aside: `.ec-aside` ───────────────────────────────
+   A side note for a gloss (spenst, OD, SafeSport): lighter than a card,
+   no shadow, a quiet base-200 fill with a left rule. Distinct from
+   `.ec-alert`, which carries a role wash for cautions; the aside is
+   neutral and never signals a warning. */
+.ec-aside {
+  border-inline-start: 3px solid var(--color-border);
+  background: var(--color-base-200);
+  border-radius: 0 8px 8px 0;
+  padding: 0.85rem 1.1rem;
+  margin-block: 1.25rem;
+  font-size: 0.92rem;
+}
+.ec-aside .ec-head { margin-block-end: 0.4rem; }
+.ec-aside .section-body { color: var(--color-body); }
+
 /* ─── Grid card body: `.ec-grid` ─────────────────────────────
    A set of parallel, titled points (peers, not a sequence) inside a
    module card: convictions, activity types, ways to help. Two columns

@@ -8,6 +8,7 @@ describe('icons', () => {
     for (const name of [
       'path', 'warning', 'users-three', 'compass', 'flag', 'calendar-blank',
       'backpack', 'tent', 'chat-circle', 'person-simple-run', 'hand-coins', 'handshake',
+      'info',
     ]) {
       expect(ICON_PATHS[name], name).toBeTruthy();
     }

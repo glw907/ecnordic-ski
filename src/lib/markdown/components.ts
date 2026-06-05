@@ -62,6 +62,23 @@ function buildPassage(ctx: Ctx): Element {
 	]);
 }
 
+function buildAside(ctx: Ctx): Element {
+	const icon = strAttr(ctx, 'icon');
+	const role = strAttr(ctx, 'role');
+	const title = ctx.slot('title');
+	const kids: ElementContent[] = [];
+	if (title.length > 0) {
+		const headKids: ElementContent[] = [];
+		if (icon) headKids.push(makeIcon(icon, role));
+		headKids.push(h('h2', { className: ['card-title'] }, title));
+		kids.push(h('div', { className: ['ec-head'] }, headKids));
+	} else if (icon) {
+		kids.push(makeIcon(icon, role));
+	}
+	kids.push(h('div', { className: ['section-body'] }, ctx.slot('body')));
+	return h('aside', { className: ['ec-aside'] }, kids);
+}
+
 function buildGrid(ctx: Ctx): Element {
 	const body = ctx.slot('body');
 	const titled = ctx.slot('title').length > 0;
@@ -140,6 +157,7 @@ function buildSplit(ctx: Ctx): Element {
 const ICON_ATTR = { key: 'icon', label: 'Icon', type: 'icon' as const };
 const ROLE_ATTR = { key: 'role', label: 'Role', type: 'select' as const, options: ['primary', 'secondary'] };
 const TITLE_SLOT = { name: 'title', label: 'Title', kind: 'inline' as const, required: true };
+const OPTIONAL_TITLE_SLOT = { name: 'title', label: 'Title', kind: 'inline' as const };
 const BODY_SLOT = { name: 'body', label: 'Body', kind: 'markdown' as const };
 
 const components: ComponentDef[] = [
@@ -206,6 +224,15 @@ const components: ComponentDef[] = [
 		build: buildPassage,
 		attributes: [ICON_ATTR, ROLE_ATTR],
 		slots: [TITLE_SLOT, BODY_SLOT],
+	},
+	{
+		name: 'aside',
+		label: 'Aside',
+		description: 'A lightweight semantic aside for a gloss or side note. Not for warnings.',
+		insertTemplate: ':::aside[Term]{icon="info"}\nA short definition or note.\n:::',
+		build: buildAside,
+		attributes: [ICON_ATTR, ROLE_ATTR],
+		slots: [OPTIONAL_TITLE_SLOT, BODY_SLOT],
 	},
 ];
 
