@@ -7,7 +7,12 @@
       "title": "About East Community Nordic",
       "permalink": "/about",
       "draft": false,
-      "links": []
+      "links": [
+        {
+          "concept": "pages",
+          "id": "crewlab"
+        }
+      ]
     },
     {
       "id": "crewlab",
