@@ -16,12 +16,31 @@ import {
 	glyph,
 	iconSpan,
 	cardShell,
-	markFirstList,
-	isElement,
 	type ComponentDef,
 	type MakeIcon,
 } from '@glw907/cairn-cms';
 import { ICON_PATHS } from './icons';
+
+// Two small hast helpers this registry relies on. The engine used to re-export them
+// from its root barrel, but the 0.27.0 surface narrowing classed them as internal
+// engine plumbing and dropped them. They are pure (hast plus hastscript, both already
+// site deps), so the site owns its copies rather than reach into engine internals.
+function isElement(node: ElementContent | undefined): node is Element {
+	return !!node && node.type === 'element';
+}
+
+// Tag the first <ul> among children with ec-grid and strip its whitespace-only text
+// nodes so the bare list serializes without newlines. Returns that <ul>.
+function markFirstList(children: ElementContent[]): Element | undefined {
+	const ul = children.find((c) => isElement(c) && c.tagName === 'ul') as Element | undefined;
+	if (ul) {
+		ul.properties = { ...ul.properties, className: ['ec-grid'] };
+		ul.children = (ul.children as ElementContent[]).filter(
+			(c) => !(c.type === 'text' && /^\s*$/.test(c.value)),
+		);
+	}
+	return ul;
+}
 
 // The structured input a build receives. Derived from the engine's ComponentDef so the
 // site never needs the engine to export the ComponentContext type by name.
