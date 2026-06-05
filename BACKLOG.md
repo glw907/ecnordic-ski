@@ -17,6 +17,12 @@
 
 ## Low
 
+- [ ] **#25** Finalize the Talkeetna camp packing list `#improvement` `#ecnordic` *(2026-06-04)*
+  `src/content/pages/training.md` carries `[PLACEHOLDER: finalize the camp packing list before publish.]` above a draft list. Confirm the real list before publish and replace the placeholder.
+- [ ] **#24** Confirm loaner equipment and fill the Training "What to bring" placeholder `#improvement` `#ecnordic` *(2026-06-04)*
+  `src/content/pages/training.md` carries `[PLACEHOLDER: confirm any loaner roller skis, poles, or bikes the program can lend.]`. Confirm what the program can lend and replace the placeholder.
+- [ ] **#23** Adopt the `toc` component once cairn-cms ships a post-rehype hook `#improvement` `#ecnordic` *(2026-06-04)*
+  The Training page keeps a hand-maintained `<nav class="page-toc">` because cairn-cms `^0.24.0` has no hook for a render pass that runs after `rehypeSlug`, which the toc needs to read the rendered `<h2>` slug ids. See `docs/cairn-dx-findings.md` finding 18. When the engine adds a post-rehype hook, build the `toc` directive (a `:::toc` placeholder component plus a rehype plugin that collects `<h2 id>` and fills it) and replace the hand-maintained nav.
 - [ ] **#22** Pre-publish: confirm the CrewLAB join link, self-signing, and donation collection are current `#improvement` `#ecnordic` *(2026-06-04)*
   Before beta launch, check against the live CrewLAB setup that the join deep link (`crewlab.app.link/5g7vhhYEn3b`) still resolves, that guardian-for-minor and adult-self signing of the waiver both work as the CrewLAB and About pages describe, and that EC Nordic actually collects donations through the app. Plan 2 states these as current in `src/content/pages/crewlab.md` and `about.md`; they need a real-world check before they ship.
 - [ ] **#21** Confirm what EC Nordic collects through CrewLAB and replace the placeholder `#improvement` `#ecnordic` *(2026-06-04)*
