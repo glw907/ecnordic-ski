@@ -16,7 +16,7 @@ EC Nordic's summer dryland program runs from late May through early August. It's
 :::card[Schedule]{icon="calendar-blank"}
 We train Monday, Wednesday, and Friday, roughly 4:00–6:00 PM. Locations rotate among Kincaid Park, Hillside, the Coastal Trail, and a few others, and are posted to [CrewLAB](/crewlab) each week.
 
-[PLACEHOLDER — confirm exact start and end dates for this season.]
+[PLACEHOLDER: confirm exact start and end dates for this season.]
 :::
 
 :::grid[What We Do]{icon="path"}
@@ -31,7 +31,7 @@ Most sessions mix two or three of these. You won't do the same thing every day.
 :::card[Who Can Join]{icon="users-three" role="secondary"}
 High school athletes in the Anchorage area. No cross-country skiing experience needed. If you show up consistently and work hard, you belong here.
 
-[PLACEHOLDER — confirm age range and whether junior high athletes may participate.]
+[PLACEHOLDER: confirm age range and whether junior high athletes may participate.]
 :::
 
 :::card[What to Bring]{icon="backpack"}
@@ -40,13 +40,13 @@ High school athletes in the Anchorage area. No cross-country skiing experience n
 - Helmet (required for roller-skiing and mountain biking, no exceptions)
 - Layers. Anchorage summer weather is variable.
 
-Roller skis and poles aren't provided. [PLACEHOLDER — add any loaner equipment details.]
+Roller skis and poles aren't provided. [PLACEHOLDER: add any loaner equipment details.]
 :::
 
 ::::card[Talkeetna Camp]{icon="tent"}
-The Talkeetna camp is the highlight of the summer season. We spend [PLACEHOLDER — N] days training in Southcentral Alaska's best Nordic terrain, camping together as a team.
+The Talkeetna camp is the highlight of the summer season. We spend [PLACEHOLDER: N] days training in Southcentral Alaska's best Nordic terrain, camping together as a team.
 
-[PLACEHOLDER — confirm dates, exact location, and number of days for this season.]
+[PLACEHOLDER: confirm dates, exact location, and number of days for this season.]
 
 ### What to Expect
 
@@ -57,15 +57,15 @@ Evenings are for group meals, recovery, and getting to know your teammates. The 
 ### Logistics
 
 :::grid
-- **Travel** We drive up in private vehicles, driven by parent and adult volunteers. The drive is roughly [PLACEHOLDER — N hours].
-- **Lodging** [PLACEHOLDER — camping, cabin, or other lodging details.]
-- **Meals** Group meals, prepared together. [PLACEHOLDER — confirm meal logistics and whether athletes need to bring food.]
-- **Cost** The camp is free. We accept donations to offset gas and site fees. [PLACEHOLDER — confirm if there is any required contribution.]
+- **Travel** We drive up in private vehicles, driven by parent and adult volunteers. The drive is roughly [PLACEHOLDER: N hours].
+- **Lodging** [PLACEHOLDER: camping, cabin, or other lodging details.]
+- **Meals** Group meals, prepared together. [PLACEHOLDER: confirm meal logistics and whether athletes need to bring food.]
+- **Cost** The camp is free. We accept donations to offset gas and site fees. [PLACEHOLDER: confirm if there is any required contribution.]
 :::
 
 ### Packing List
 
-[PLACEHOLDER — finalize packing list.]
+[PLACEHOLDER: finalize packing list.]
 
 - All your training gear (running shoes, roller skis and poles, helmet, bike if applicable)
 - Sleeping bag and pad
