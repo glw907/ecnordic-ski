@@ -11,11 +11,11 @@ content:
 
 menus:
   primary:
+    - { label: Home, url: / }
     - { label: About, url: /about }
     - { label: Training, url: /training }
-    - { label: Volunteers, url: /volunteers }
+    - { label: Volunteers & Coaches, url: /volunteers }
     - { label: CrewLAB, url: /crewlab }
-    - { label: Resources, url: /resources }
     - { label: Contact, url: /contact }
 
 email:

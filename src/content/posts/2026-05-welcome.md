@@ -10,4 +10,4 @@ draft: false
 ---
 The EC Nordic website is live. Training updates, race results, and camp information will be posted here throughout the season.
 
-Summer training starts soon. Join us on [CrewLAB](cairn:pages/crewlab) for the schedule and the first session, and make sure your [waiver](/waiver) is on file before you show up.
+Summer training starts soon. Join us on [CrewLAB](cairn:pages/crewlab) for the schedule and the first session, and sign your [liability waiver](cairn:pages/crewlab) in CrewLAB before you show up.

@@ -52,6 +52,16 @@
       </Icon>
       <span class="footer-label">email</span>
     </a>
+    <a href="/archives" aria-label="Archives" class="footer-icon-link">
+      <Icon label="Archives">
+        {#snippet children()}
+          <path d="M3 7h18v13H3z"/>
+          <path d="M3 7l2-3h14l2 3"/>
+          <line x1="10" y1="12" x2="14" y2="12"/>
+        {/snippet}
+      </Icon>
+      <span class="footer-label">archives</span>
+    </a>
   </div>
   <p class="footer-name">© {new Date().getFullYear()} {siteFooter.copyrightName ?? 'East Community Nordic'}</p>
 </footer>
