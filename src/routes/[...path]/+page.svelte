@@ -156,6 +156,15 @@
     margin-block-start: 1.4rem;
     animation: module-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
+  /* A training section band is a top-level module: it carries a data-rise ordinal and
+     rises as one unit. Its inner modules ride that entrance, so they don't animate
+     again (the override below beats the .ec-card rule on specificity). */
+  .static-page[data-page="training"] :global(.ec-band) {
+    animation: module-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .static-page[data-page="training"] :global(.ec-band .ec-card) {
+    animation: none;
+  }
   /* data-rise ordinal → cascade delay (0.16 + n*0.04s). The engine stamps the index on
      each top-level module; past the enumerated set a module holds the final step. */
   .static-page :global([data-rise]) { animation-delay: 0.64s; }
@@ -263,7 +272,8 @@
     .static-page :global(.post-body > p:first-child),
     .static-page:is([data-page="about"], [data-page="training"], [data-page="crewlab"]) :global(.ec-card),
     .static-page[data-page="crewlab"] :global(.ec-passage),
-    .static-page[data-page="about"] :global(.ec-alert) {
+    .static-page[data-page="about"] :global(.ec-alert),
+    .static-page[data-page="training"] :global(.ec-band) {
       animation: none;
     }
   }

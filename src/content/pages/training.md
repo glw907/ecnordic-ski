@@ -5,7 +5,7 @@ title: "Training"
 East Community Nordic runs two summer programs for Anchorage high school athletes: a dryland training program three mornings a week, and a four-day camp near Talkeetna in July. The two are built to go together, and most athletes will do both. You can also do just one. Both are free, with need-blind donations, and both welcome any high schooler whatever your experience.
 
 ::::programs
-:::program[Summer training]{icon="path" href="#summer-training" meta="Jun 1–Aug 19 · 3 mornings a week" cta="See summer training"}
+:::program[Summer training]{icon="person-simple-run" href="#summer-training" meta="Jun 1–Aug 19 · 3 mornings a week" cta="See summer training"}
 Run, lift, roller-ski, and ride with the group. The weekly base for your Nordic season.
 :::
 
@@ -14,9 +14,9 @@ A lake cabin near Talkeetna. Twice-a-day training, plus the lake and a sauna. It
 :::
 ::::
 
-::::passage[Summer training]{icon="person-simple-run"}
+:::::section[Summer training]{icon="person-simple-run" meta="Jun 1–Aug 19 · 3 mornings a week"}
+
 We meet Monday, Wednesday, and Friday from June 1 to August 19, 2026. Practice starts at 10:30 AM sharp, and late arrivals miss the group. The summer builds toward the Talkeetna camp, and you can train all summer without going.
-::::
 
 ### Schedule
 
@@ -81,15 +81,15 @@ Everyone trains as one team, and we split into three groups by experience and pa
 
 ::::spectrum
 :::zone[Foundation]
-New to organized training and racing, and here to learn the work.
+New to organized training and racing. You join to learn the work and build your base from the ground up.
 :::
 
-:::zone[Devo]
-The development group. Younger or newer athletes with some organized training and racing behind them.
+:::zone[Devos]
+The development group. Younger or newer athletes who already have some organized training and racing behind them.
 :::
 
 :::zone[Comp]
-The competition group. Experienced, older athletes aiming for state teams and the Besh Cup series, with a background training and racing at a high level.
+The competition group. Experienced older athletes with a high-level background, aiming for state teams and the Besh Cup series.
 :::
 ::::
 
@@ -126,9 +126,11 @@ A signed liability waiver has to be on file before your first session. You sign 
 Questions first? [Contact us](/contact).
 :::
 
-::::passage[Talkeetna camp]{icon="tent"}
+:::::
+
+:::::section[Talkeetna camp]{icon="tent" meta="Jul 21–24 · 4 days, 3 nights" role="secondary"}
+
 The Talkeetna camp is the high point of the summer, and it stands on its own. You can come to camp whether or not you train with us all summer. We leave the morning of July 21, 2026 and return the evening of July 24: four days and three nights. We stay in cabins on a lake near Talkeetna. It is a dry cabin, so expect outhouses and no showers. Amy Purevsuren runs the camp.
-::::
 
 ### A day at camp
 
@@ -158,6 +160,8 @@ Camp registration and consent happen inside [CrewLAB](cairn:pages/crewlab), sepa
 
 Questions first? [Contact us](/contact).
 :::
+
+:::::
 
 ## Common questions
 

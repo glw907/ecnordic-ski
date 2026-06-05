@@ -81,23 +81,56 @@ function childrenByClass(ctx: Ctx, cls: string): ElementContent[] {
 		.filter((c) => isElement(c) && Array.isArray(c.properties?.className) && c.properties.className.includes(cls));
 }
 
-// A program offering as a full clickable card: icon chip, name, a meta line, a blurb,
-// and a "go" link. `role="secondary"` recolours the accent edge (crimson by default).
+// A program offering as a calm clickable card. The head matches the site-wide row
+// (a role-coloured glyph beside the name), then a meta eyebrow, a blurb, and a "go"
+// link. `role="secondary"` recolours the icon and the hover edge from crimson to cobalt.
 function buildProgram(ctx: Ctx): Element {
 	const icon = strAttr(ctx, 'icon');
 	const href = strAttr(ctx, 'href') ?? '#';
 	const meta = strAttr(ctx, 'meta');
 	const cta = strAttr(ctx, 'cta');
 	const role = strAttr(ctx, 'role');
-	const kids: ElementContent[] = [];
-	if (icon) kids.push(h('span', { className: ['ec-program-chip'] }, [ecGlyph(icon)]));
-	kids.push(h('span', { className: ['ec-program-name'] }, ctx.slot('title')));
+	const headKids: ElementContent[] = [];
+	if (icon) headKids.push(makeIcon(icon, role));
+	headKids.push(h('span', { className: ['ec-program-name'] }, ctx.slot('title')));
+	const kids: ElementContent[] = [h('div', { className: ['ec-program-head'] }, headKids)];
 	if (meta) kids.push(h('span', { className: ['ec-program-meta'] }, meta));
 	kids.push(h('div', { className: ['ec-program-blurb'] }, ctx.slot('body')));
 	if (cta) kids.push(h('span', { className: ['ec-program-go'] }, [cta, ' ', h('span', { className: ['ec-program-arr'] }, '→')]));
 	const className = ['ec-program'];
 	if (role) className.push(`ec-program-${role}`);
 	return h('a', { className, href }, kids);
+}
+
+// A major page section: a headed band wrapping its content (intro prose, subsection
+// headings, and nested directives), so the page reads as distinct acts. The engine
+// builds the nested directives first, so they arrive in the body slot already rendered.
+// The title <h2> picks up its slug from rehypeSlug, so a program card can jump to it.
+// `role="secondary"` recolours the header icon and eyebrow from crimson to cobalt.
+function buildSection(ctx: Ctx): Element {
+	const icon = strAttr(ctx, 'icon');
+	const role = strAttr(ctx, 'role');
+	const meta = strAttr(ctx, 'meta');
+	const titleRow: ElementContent[] = [];
+	if (icon) {
+		const iconEl = makeIcon(icon, role);
+		// Name hook so a single glyph can get an optical-seat nudge in CSS (e.g. the tent,
+		// whose base sits high in its viewBox). Keyed to the glyph, so it travels with the
+		// icon rather than the section's colour role.
+		const cls = iconEl.properties.className;
+		if (Array.isArray(cls)) cls.push(`ec-ico-${icon}`);
+		titleRow.push(iconEl);
+	}
+	titleRow.push(h('h2', { className: ['ec-band-title'] }, ctx.slot('title')));
+	const headKids: ElementContent[] = [];
+	if (meta) headKids.push(h('span', { className: ['ec-band-eyebrow'] }, meta));
+	headKids.push(h('div', { className: ['ec-band-titlerow'] }, titleRow));
+	const className = ['ec-band'];
+	if (role) className.push(`ec-band-${role}`);
+	return h('section', { className }, [
+		h('header', { className: ['ec-band-head'] }, headKids),
+		h('div', { className: ['ec-band-body'] }, ctx.slot('body')),
+	]);
 }
 
 function buildPrograms(ctx: Ctx): Element {
@@ -311,6 +344,16 @@ const components: ComponentDef[] = [
 		insertTemplate: ':::aside[Term]\nA short definition or note.\n:::',
 		build: buildAside,
 		slots: [OPTIONAL_TITLE_SLOT, BODY_SLOT],
+	},
+	{
+		name: 'section',
+		label: 'Section',
+		description: 'A major page section: a headed band wrapping its content (prose and nested directives).',
+		insertTemplate:
+			':::::section[Section title]{icon="path" meta="Eyebrow"}\nSection content, including other directives.\n:::::',
+		build: buildSection,
+		attributes: [ICON_ATTR, ROLE_ATTR, META_ATTR],
+		slots: [TITLE_SLOT, BODY_SLOT],
 	},
 	{
 		name: 'programs',

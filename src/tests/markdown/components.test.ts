@@ -5,7 +5,8 @@ import { ecnordicRegistry } from '$lib/markdown/components';
 describe('ecnordicRegistry', () => {
 	it('registers the primitives in document order', () => {
 		expect(ecnordicRegistry.names).toEqual([
-			'card', 'grid', 'alert', 'cta', 'split', 'panel', 'passage', 'aside', 'figure', 'gallery',
+			'card', 'grid', 'alert', 'cta', 'split', 'panel', 'passage', 'aside', 'section',
+			'programs', 'program', 'week', 'day', 'spectrum', 'zone', 'figure', 'gallery',
 		]);
 	});
 

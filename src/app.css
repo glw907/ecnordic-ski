@@ -339,36 +339,38 @@ body {
    rule marking it as information. Distinct from `.ec-alert`, which carries a role
    wash for cautions; the aside is neutral and never signals a warning. */
 .ec-aside {
-  margin-block: 1.3rem;
-  padding: 0.7rem 0 0.7rem 1rem;
-  border-inline-start: 2px solid color-mix(in oklch, var(--color-info) 55%, var(--color-border));
+  margin-block: 1.1rem;
+  padding: 0.1rem 0 0.1rem 0.9rem;
+  border-inline-start: 2px solid var(--color-border);
 }
 .ec-aside-term {
   display: block;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: var(--color-muted);
-  margin-block-end: 0.15rem;
+  color: var(--color-faint);
+  margin-block-end: 0.1rem;
 }
 .ec-aside-def {
-  font-size: 0.9rem;
-  line-height: 1.55;
-  color: var(--color-body-soft);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--color-muted);
 }
 .ec-aside-def p { margin: 0; }
 .ec-aside-def p + p { margin-block-start: 0.5rem; }
 
 /* ─── Program cards: `.ec-programs` / `.ec-program` ───────────
-   Two side-by-side program offerings as full clickable cards. The accent edge is
-   crimson by default (the program colour); `role="secondary"` swaps it to cobalt
-   for wayfinding contrast between the two. */
+   Two side-by-side program offerings as calm clickable cards, on the same card
+   vocabulary as the rest of the page: a role-coloured glyph beside the name (the
+   site-wide head row), no loud top edge, a gentle hover. Crimson is the default
+   program colour; `role="secondary"` swaps the icon and hover edge to cobalt so the
+   two read as distinct. */
 .ec-programs {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.1rem;
+  gap: 1rem;
   margin-block: 1.5rem;
 }
 @media (max-width: 600px) {
@@ -376,69 +378,72 @@ body {
 }
 .ec-program {
   --edge: var(--color-primary);
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   background: var(--color-base-100);
   border: 1px solid var(--color-border);
-  border-radius: 14px;
-  padding: 1.5rem 1.4rem 1.3rem;
+  border-radius: 12px;
+  padding: 1.65rem 1.5rem;
   text-decoration: none;
   color: inherit;
-  overflow: hidden;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-}
-.ec-program::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto 0;
-  block-size: 4px;
-  background: var(--edge);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
 }
 .ec-program:hover {
-  transform: translateY(-3px);
-  border-color: var(--edge);
-  box-shadow: 0 12px 28px -12px color-mix(in oklch, var(--edge) 45%, transparent);
+  border-color: color-mix(in oklch, var(--edge) 45%, var(--color-border));
+  box-shadow: 0 2px 12px -5px color-mix(in oklch, var(--color-heading) 22%, transparent);
 }
 .ec-program-secondary { --edge: var(--color-secondary); }
-.ec-program-chip {
-  display: grid;
-  place-items: center;
-  inline-size: 2.9rem;
-  block-size: 2.9rem;
-  border-radius: 11px;
-  background: color-mix(in oklch, var(--edge) 13%, transparent);
-  color: var(--edge);
-  margin-block-end: 0.9rem;
+.ec-program-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-block-end: 0.55rem;
 }
-.ec-program-chip svg { inline-size: 1.6rem; block-size: 1.6rem; }
+.ec-program-head .ec-glyph { inline-size: 1.55rem; block-size: 1.55rem; }
 .ec-program-name {
   font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.32rem;
+  font-weight: 700;
+  font-size: 1.2rem;
   color: var(--color-heading);
   letter-spacing: -0.01em;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.18s ease;
+}
+/* Hover underlines the title only. The card link itself carries no underline in any
+   state, overriding the global `.post-body a` rule that would mark every line. */
+.post-body a.ec-program,
+.post-body a.ec-program:hover {
+  text-decoration: none;
+}
+.ec-program:hover .ec-program-name {
+  text-decoration-color: var(--edge);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ec-program-name { transition: none; }
 }
 .ec-program-meta {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--color-muted);
-  margin-block: 0.3rem 0.7rem;
+  margin-block: 0 0.6rem;
 }
 .ec-program-blurb { flex: 1; color: var(--color-body-soft); }
-.ec-program-blurb p { margin: 0; font-size: 0.96rem; }
+.ec-program-blurb p { margin: 0; font-size: 0.95rem; }
 .ec-program-go {
-  margin-block-start: 1.1rem;
+  margin-block-start: 0.7rem;
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   color: var(--color-link);
 }
 .ec-program-arr { transition: transform 0.18s ease; }
@@ -447,23 +452,96 @@ body {
   .ec-program, .ec-program-arr { transition: none; }
 }
 
+/* ─── Page section band: `.ec-band` ──────────────────────────
+   A major section (the intro chooser, summer training, the camp) held as one
+   coherent act: a strong header over a clear top boundary, with generous space
+   above, so the page reads as distinct sections instead of one continuous run.
+   The header icon and eyebrow take the section's role colour (crimson default,
+   cobalt for `role="secondary"`); the body holds the section's own modules. */
+.ec-band {
+  --band-edge: var(--color-primary);
+  margin-block-start: 4rem;
+  padding-block-start: 1.9rem;
+  border-block-start: 1px solid var(--color-border-subtle);
+}
+.ec-band-secondary { --band-edge: var(--color-secondary); }
+.ec-band-head { margin-block-end: 1.6rem; }
+.ec-band-eyebrow {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--band-edge);
+  margin-block-end: 0.7rem;
+}
+.ec-band-titlerow {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.ec-band-titlerow .ec-glyph {
+  inline-size: 2.05rem;
+  block-size: 2.05rem;
+}
+/* Optical seat: the tent glyph's base sits ~32px high in its 256 viewBox, so a
+   box-centered tent reads as raised next to the title. Drop it onto the floor the
+   runner already sits on. Keyed to the glyph, so it travels with the icon. */
+.ec-band-titlerow .ec-ico-tent {
+  transform: translateY(0.12rem);
+}
+/* Two-part selector so the section title beats `.post-body h2` (which would otherwise
+   shrink it to 1.25rem and add a 2.25em top margin that knocks the title out of line
+   with its icon). The bare class still applies anywhere the page chrome isn't present. */
+.ec-band-title,
+.post-body .ec-band-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 3.8vw, 1.8rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--color-heading);
+}
+/* Hanging header: the section header sits at the column edge while the body indents
+   beneath it, so each section reads as one bracketed unit. A casual reader feels the
+   grouping; the outdented header over the indented body is the craft a designer reads. */
+.ec-band-body {
+  padding-inline-start: 1.75rem;
+}
+.ec-band-body > :first-child {
+  margin-block-start: 0;
+}
+/* Section lede: the opening paragraph steps up a touch, so each section starts the
+   way the page does, on a slightly larger, slightly heavier line. */
+.ec-band-body > p:first-child {
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: var(--color-body);
+}
+@media (max-width: 640px) {
+  .ec-band { margin-block-start: 3rem; }
+  .ec-band-body { padding-inline-start: 0.85rem; }
+}
+
 /* ─── Weekly schedule: `.ec-week` ────────────────────────────
    A seven-day rail. Group-practice days (M/W/F) carry a crimson edge, a filled
    dot, and a time; solo days recede with a hollow dot; the rest day is a dash. */
 .ec-week {
   border: 1px solid var(--color-border);
-  border-radius: 14px;
+  border-radius: 12px;
   background: var(--color-base-100);
   overflow: hidden;
-  margin-block: 1.25rem;
+  margin-block: 1.1rem;
 }
 .ec-week-row {
   position: relative;
   display: grid;
-  grid-template-columns: 4.5rem 1fr auto;
+  grid-template-columns: 3.5rem 1fr auto;
   align-items: center;
-  gap: 0.6rem 1rem;
-  padding: 0.85rem 1.2rem;
+  gap: 0.5rem 0.9rem;
+  padding: 0.6rem 1.1rem;
   border-block-end: 1px solid var(--color-border-subtle);
 }
 .ec-week-row:last-child { border-block-end: 0; }
@@ -478,10 +556,10 @@ body {
 .ec-week-day {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
+  gap: 0.5rem;
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: 0.98rem;
+  font-size: 0.92rem;
   color: var(--color-heading);
 }
 .ec-week-solo .ec-week-day,
@@ -494,13 +572,13 @@ body {
 .ec-week-solo .ec-week-dot { border: 1.5px solid var(--color-faint); }
 .ec-week-rest .ec-week-dot { inline-size: 0.7rem; block-size: 2px; border-radius: 2px; background: var(--color-border); }
 .ec-week-focus { color: var(--color-body-soft); }
-.ec-week-focus p { margin: 0; font-size: 0.95rem; }
+.ec-week-focus p { margin: 0; font-size: 0.9rem; }
 .ec-week-group .ec-week-focus { color: var(--color-body); }
 .ec-week-focus strong { color: var(--color-heading); font-weight: 700; }
 .ec-week-time {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--color-primary);
   white-space: nowrap;
 }
