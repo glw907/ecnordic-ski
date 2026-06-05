@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PageData } from './$types';
   import { formatDate, formatShortDate, tagUrl } from '$lib/utils';
-  import { HOMEPAGE_FEATURED_COUNT, WELCOME_BLURB } from '$lib/config';
+  import { HOMEPAGE_FEATURED_COUNT } from '$lib/config';
 
   let { data }: { data: PageData } = $props();
 </script>
@@ -16,7 +16,7 @@
     </div>
     <div class="welcome-body">
       <h2 class="welcome-heading">Welcome</h2>
-      <p class="welcome-blurb">{WELCOME_BLURB}</p>
+      <div class="welcome-blurb">{@html data.welcomeHtml}</div>
       <a href="/about" class="welcome-link">Learn more →</a>
     </div>
   </div>
@@ -151,11 +151,19 @@
   }
 
   .welcome-blurb {
+    margin: 0 0 1.1rem;
+  }
+  /* The body is rendered from home.md, so its paragraphs come through {@html} and
+     need :global to reach. Keep the welcome card's distinct prose weight and size. */
+  .welcome-blurb :global(p) {
     font-size: 1.02rem;
     font-weight: 500;
     line-height: 1.5;
     color: var(--color-heading);
-    margin: 0 0 1.1rem;
+    margin: 0 0 0.7rem;
+  }
+  .welcome-blurb :global(p:last-child) {
+    margin-bottom: 0;
   }
 
   .welcome-link {

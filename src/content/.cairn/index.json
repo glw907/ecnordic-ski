@@ -18,6 +18,14 @@
       "links": []
     },
     {
+      "id": "home",
+      "concept": "pages",
+      "title": "Home",
+      "permalink": "/home",
+      "draft": false,
+      "links": []
+    },
+    {
       "id": "resources",
       "concept": "pages",
       "title": "Resources",

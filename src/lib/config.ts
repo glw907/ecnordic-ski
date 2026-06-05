@@ -42,11 +42,3 @@ export const PRIMARY_NAV = extractMenu(siteConfig, 'primary', 2);
 
 // cairn-cms: the backend repo and editable collections live in the site adapter
 // (`src/lib/cairn.config.ts`), behind cairn-core's CairnAdapter seam (Pass D).
-
-// Homepage welcome copy. This is prose content, not site config, so it stays here until it is
-// modeled as a reusable markdown content fragment (see cairn-cms PLAN.md, reusable-content fragments).
-export const WELCOME_BLURB =
-  'East Community Nordic is a free, volunteer-run summer training group for ' +
-  'Anchorage high school Nordic skiers and cross-country runners. We build the ' +
-  'fitness, skills, and outdoor habits that carry kids through the ski season ' +
-  'and past graduation.';
