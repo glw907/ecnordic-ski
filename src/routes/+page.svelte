@@ -36,7 +36,7 @@
     {:else}
       <p class="no-posts">No posts yet.</p>
     {/if}
-    <a href="#news" class="recent-more">More news →</a>
+    <a href="/archives" class="recent-more">see all posts →</a>
   </div>
 
 </div>
