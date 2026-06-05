@@ -1,5 +1,17 @@
 # ecnordic.ski: Project Status
 
+**Site refresh initiative: SPEC + PLAN 1 READY (2026-06-04).** A full content rebuild to the brief's
+six-page IA (Home, About, Training, Volunteers & Coaches, CrewLAB, Contact, plus a utility Archives).
+The design spec is committed at `docs/superpowers/specs/2026-06-04-site-refresh-design.md`; it carries the
+canonical-facts block (activities, eligibility, schedule, camp, non-affiliation, waiver) that keeps copy
+in sync across separately-drafted pages. The work is three sequenced plans. Plan 1 is written at
+`docs/superpowers/plans/2026-06-04-site-refresh-plan-1-floor.md` (nav, footer archives link, `aside` /
+`figure` / `gallery` directives, `/archives` page, editable Home, Contact copy). All work sits on the
+`site-refresh` branch, unpushed (a push to `main` deploys live). **Immediate next: execute Plan 1 via
+`subagent-driven-development`.** Plans 2 (About, CrewLAB, Volunteers) and 3 (Training hub) get authored
+after Plan 1 lands, against the real directive APIs. A secondary mission runs alongside: collect cairn-cms
+DX findings in `docs/cairn-dx-findings.md`.
+
 **Current state.** The directive render pipeline is live; all five static pages carry inline
 container directives; the content style guard blocks AI tells in `src/content/**/*.md`. The
 contact form runs on a SvelteKit remote function (`form()`, Pass 9). Public delivery and the admin
