@@ -4,6 +4,8 @@
 
 ## Medium
 
+- [ ] **#20** Add a global `.ec-head` flex rule so `aside`/`gallery` heads work off the three directive pages `#bug` `#ecnordic` *(2026-06-04)*
+  The `.ec-head` flex layout (icon and title inline with a gap, larger glyph) is page-scoped to the about/training/crewlab routes in `src/routes/[...path]/+page.svelte`. A titled or icon-only `aside`, or a titled `gallery`, used on Home, Contact, Archives, or inside a post body renders its head block-stacked with no gap and a default-size glyph, since the scoped rule does not reach those routes. Add a global `.ec-aside .ec-head` and gallery `.ec-head` rule (in `app.css`) so these directives are self-contained anywhere they appear, not only on the three directive pages. Found in the Plan 1 Task 2 code-quality review.
 - [ ] **#16** Restore a build-time frontmatter validation gate for content `#improvement` `#ecnordic` *(2026-06-01, updated 2026-06-02)*
   The cairn-cms content layer (`src/lib/content.ts` through `createSiteIndexes`) parses frontmatter but does not re-validate on the delivery read path; validation fires only on the admin save path, through the adapter's `defineFields` schema. The old `posts.ts`/`pages.ts` threw on bad frontmatter at build, so hand-committed content lost that gate: a missing `title` or `description` no longer fails the build. The 0.21 migration widened this: the schema contract dropped four rules the old `validatePostFrontmatter` enforced (a real calendar date, a `YYYY-MM-DD` format, the closed `POST_TAGS` vocabulary as a hard constraint, and an at-least-one-tag minimum). See `docs/cairn-dx-findings.md` finding 5 and `cairn-cms/docs/dx-backlog-ecnordic-migration.md` item 10; the durable fix is declarative engine field options, not a site-local re-add. The `url-inventory` test still catches a post whose date disagrees with its filename. Interim option: a build-time test that runs the schema over every file.
 - [ ] **#15** Fix the h1 to h3 heading skip in `ArchiveList` `#bug` `#ecnordic` *(2026-06-01)*
@@ -16,6 +18,12 @@
 
 ## Low
 
+- [ ] **#19** Defer the `roster` directive until real coach photos exist `#improvement` `#ecnordic` *(2026-06-04)*
+  A `roster` directive (a grid of coach or volunteer headshot cards) waits on real photos. The Volunteers & Coaches page in Plan 2 uses the existing `split`/`panel` directives for the bios in the meantime, so the page ships without the roster grid. Add `roster` to the registry (`src/lib/markdown/components.ts`) and convert the Volunteers bios to it once headshots are in hand.
+- [ ] **#18** Launch-time redirects: `/resources` -> its new home, `/waiver` -> CrewLAB `#improvement` `#ecnordic` *(2026-06-04)*
+  Two redirects to add at launch. Resources is dropped from the primary nav in Plan 1, and its content gets re-homed under CrewLAB in Plan 2 before `src/content/pages/resources.md` is deleted, so `/resources` needs a redirect to wherever the content lands. The `/waiver` route still exists as a hand-built route (`src/routes/waiver/+page.svelte`), but the welcome post now points waiver references at CrewLAB, so a `/waiver` -> CrewLAB redirect keeps old links working once the standalone route retires. Wire both at launch, after Plan 2 settles the CrewLAB destinations.
+- [ ] **#17** Launch-time redirect `/home` -> `/` `#bug` `#ecnordic` *(2026-06-04)*
+  The editable Home copy moved into a routed content page (`src/content/pages/home.md`, Plan 1 Task 5), and `pages` is a routed concept, so the entry also answers at `/home`, a redundant public URL that duplicates `/`. Accepted for beta. Add a `/home` -> `/` redirect at launch so the duplicate URL does not ship to production. The underlying gap (cairn has no route-less content fragment) is a DX finding, not a site fix; see `docs/cairn-dx-findings.md` finding 17.
 - [ ] **#14** Dedup the catch-all cascade keyframes against the global ones `#cleanup` `#ecnordic` *(2026-05-24)*
   `page-rise`/`module-rise` now live globally in `app.css` (Pass 8). `src/routes/[...path]/+page.svelte` carries its own scoped copies, inherited verbatim from the old `[slug]` route during the Pass 1b cutover; remove them and reference the globals when the directive pages are next reworked. Zero-output-change refactor (CSS-only).
 - [ ] **#5** Replace @schedule-x with a custom Svelte calendar component `#improvement` `#ecnordic` *(2026-05-20)*

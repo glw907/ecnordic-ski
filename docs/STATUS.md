@@ -1,16 +1,20 @@
 # ecnordic.ski: Project Status
 
-**Site refresh initiative: SPEC + PLAN 1 READY (2026-06-04).** A full content rebuild to the brief's
+**Site refresh initiative: PLAN 1 DONE (2026-06-04).** A full content rebuild to the brief's
 six-page IA (Home, About, Training, Volunteers & Coaches, CrewLAB, Contact, plus a utility Archives).
 The design spec is committed at `docs/superpowers/specs/2026-06-04-site-refresh-design.md`; it carries the
 canonical-facts block (activities, eligibility, schedule, camp, non-affiliation, waiver) that keeps copy
-in sync across separately-drafted pages. The work is three sequenced plans. Plan 1 is written at
-`docs/superpowers/plans/2026-06-04-site-refresh-plan-1-floor.md` (nav, footer archives link, `aside` /
-`figure` / `gallery` directives, `/archives` page, editable Home, Contact copy). All work sits on the
-`site-refresh` branch, unpushed (a push to `main` deploys live). **Immediate next: execute Plan 1 via
-`subagent-driven-development`.** Plans 2 (About, CrewLAB, Volunteers) and 3 (Training hub) get authored
-after Plan 1 lands, against the real directive APIs. A secondary mission runs alongside: collect cairn-cms
-DX findings in `docs/cairn-dx-findings.md`.
+in sync across separately-drafted pages. The work is three sequenced plans. Plan 1 (the structural floor)
+landed in six commits on `site-refresh`: the six-page primary nav (Resources dropped), the footer Archives
+link, the `aside` / `figure` / `gallery` directives, the `/archives` page (tag index plus by-year list plus
+feed links), the editable Home (welcome copy moved from the `WELCOME_BLURB` constant into a
+`src/content/pages/home.md` content page rendered through cairn), and the Contact intro copy. Gates green
+(`check` 0/0, `npm test` 56, build clean). All work sits on the `site-refresh` branch, unpushed (a push to
+`main` deploys live). **Immediate next: author Plan 2 (About, CrewLAB, Volunteers content) from the spec's
+section maps and canonical-facts block, then execute it via `subagent-driven-development`.** Plan 3 (the
+Training hub) follows. A secondary mission runs alongside: collect cairn-cms DX findings in
+`docs/cairn-dx-findings.md` (Plan 1 added finding 17, the missing route-less content-fragment concept that
+forced the editable Home into a redundant `/home` URL).
 
 **Current state.** The directive render pipeline is live; all five static pages carry inline
 container directives; the content style guard blocks AI tells in `src/content/**/*.md`. The
@@ -65,15 +69,18 @@ placeholder content on CrewLAB / Training / volunteers; waiver/payment-model con
 | 9 | Remote-functions spike (contact on `form()`) | ✓ Done (DEFER) |
 | 0.10 | 1a version catch-up + 1b delivery surface | ✓ Done |
 | 0.21 | Breaking floor (Plan A) + content graph (Plan B) | ✓ Done |
+| Refresh 1 | Structural floor (nav, directives, archives, editable Home, Contact copy) | ✓ Done |
 
 ---
 
-### Next starter prompt (deploy fast-follow, then Pass 10)
+### Next starter prompt (author site-refresh Plan 2)
 
-> The cairn-cms 0.21 migration is committed on local `main`, unpushed. When ready to ship, push to
-> `main` (this deploys ecnordic live via GitHub Actions), then smoke-test `/admin` against the real
-> Worker: create or edit a post, exercise delete and rename, and use the editor link picker. After
-> the deploy is confirmed, Pass 10 (placeholder content on CrewLAB / Training / volunteers) is the
-> next site-pass. Invoke `site-pass` to start. Standard pass-end checklist applies.
+> Site-refresh Plan 1 is done and committed on `site-refresh`, unpushed. Author Plan 2: the About,
+> CrewLAB, and Volunteers & Coaches content. Work from the design spec at
+> `docs/superpowers/specs/2026-06-04-site-refresh-design.md`, using its section maps and the
+> canonical-facts block so copy stays in sync across the separately-drafted pages. Write the plan
+> against the real directive APIs that Plan 1 landed (`aside`, `figure`, `gallery`, plus the existing
+> `split`/`panel` for the Volunteers bios, since the `roster` directive is deferred per BACKLOG #19).
+> Then execute via `subagent-driven-development`. Standard pass-end checklist applies.
 
 **Deploy:** Live at **https://ecnordic.ski**. Push to `main` triggers GitHub Actions (build + pagefind + wrangler deploy).

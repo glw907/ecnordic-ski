@@ -362,6 +362,23 @@ SvelteKit idiom.
     SvelteKit's `handleHttpError` message carries the `500 <path>` form, not the original throw. The
     scaffolder should emit this same `handleHttpError` shape so every site inherits the fatal backstop.
 
+17. **No reusable-content-fragment concept, so page-fragment copy must own a public route (2026-06-04).**
+    Surfaced in the site-refresh Plan 1, Task 5. The Home page wanted its welcome intro to be editable in
+    `/admin`, so the copy moved out of a `WELCOME_BLURB` constant and into a routed content page at
+    `src/content/pages/home.md`, rendered through cairn. That works, but `pages` is a routed concept: every
+    page entry resolves at its own permalink, so the new entry also answers at `/home`, a redundant public
+    URL that duplicates `/`. The site does not want a second route for this copy. It wants a fragment: a
+    piece of content an editor can edit in `/admin` and that renders into a bespoke layout (here, the Home
+    hero) without minting its own public route. cairn `^0.24.0` has no such concept. A concept is either a
+    routed content type or it is not modeled at all, so editable page-fragment copy has only the routed
+    option. The constant this replaced already anticipated the gap: `src/lib/config.ts` carried a
+    `WELCOME_BLURB` comment flagging that the blurb wanted to be editable content rather than a hardcoded
+    string, before Task 5 removed the constant. The redundant `/home` URL is accepted for beta and a
+    launch-time `/home` -> `/` redirect is filed in `BACKLOG.md`. Fix: add a content-fragment concept to
+    the engine. A fragment is editable in `/admin` and addressable by id for a site layout to pull and
+    render, but it carries no permalink and generates no route, so a site can move bespoke-layout copy into
+    `/admin` without a duplicate public URL.
+
 ## Scaffolder implications
 
 These findings read as "the site had to hand-assemble or get right by hand what the scaffolder should
