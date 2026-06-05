@@ -62,21 +62,84 @@ function buildPassage(ctx: Ctx): Element {
 	]);
 }
 
+// A quiet gloss: a small term label over a muted definition, no card chrome and no
+// heading. The term is a styled <span>, not an <h2>, so a gloss stays out of the page
+// heading outline and reads subordinate to body text.
 function buildAside(ctx: Ctx): Element {
-	const icon = strAttr(ctx, 'icon');
-	const role = strAttr(ctx, 'role');
 	const title = ctx.slot('title');
 	const kids: ElementContent[] = [];
-	if (title.length > 0) {
-		const headKids: ElementContent[] = [];
-		if (icon) headKids.push(makeIcon(icon, role));
-		headKids.push(h('h2', { className: ['card-title'] }, title));
-		kids.push(h('div', { className: ['ec-head'] }, headKids));
-	} else if (icon) {
-		kids.push(makeIcon(icon, role));
-	}
-	kids.push(h('div', { className: ['section-body'] }, ctx.slot('body')));
+	if (title.length > 0) kids.push(h('span', { className: ['ec-aside-term'] }, title));
+	kids.push(h('div', { className: ['ec-aside-def'] }, ctx.slot('body')));
 	return h('aside', { className: ['ec-aside'] }, kids);
+}
+
+// The built children of a container directive (panels, days, zones) arrive in the body
+// slot already dispatched. Pull the ones carrying a given class, dropping whitespace.
+function childrenByClass(ctx: Ctx, cls: string): ElementContent[] {
+	return ctx
+		.slot('body')
+		.filter((c) => isElement(c) && Array.isArray(c.properties?.className) && c.properties.className.includes(cls));
+}
+
+// A program offering as a full clickable card: icon chip, name, a meta line, a blurb,
+// and a "go" link. `role="secondary"` recolours the accent edge (crimson by default).
+function buildProgram(ctx: Ctx): Element {
+	const icon = strAttr(ctx, 'icon');
+	const href = strAttr(ctx, 'href') ?? '#';
+	const meta = strAttr(ctx, 'meta');
+	const cta = strAttr(ctx, 'cta');
+	const role = strAttr(ctx, 'role');
+	const kids: ElementContent[] = [];
+	if (icon) kids.push(h('span', { className: ['ec-program-chip'] }, [ecGlyph(icon)]));
+	kids.push(h('span', { className: ['ec-program-name'] }, ctx.slot('title')));
+	if (meta) kids.push(h('span', { className: ['ec-program-meta'] }, meta));
+	kids.push(h('div', { className: ['ec-program-blurb'] }, ctx.slot('body')));
+	if (cta) kids.push(h('span', { className: ['ec-program-go'] }, [cta, ' ', h('span', { className: ['ec-program-arr'] }, '→')]));
+	const className = ['ec-program'];
+	if (role) className.push(`ec-program-${role}`);
+	return h('a', { className, href }, kids);
+}
+
+function buildPrograms(ctx: Ctx): Element {
+	return h('div', { className: ['ec-programs'] }, childrenByClass(ctx, 'ec-program'));
+}
+
+// One day-row of the weekly schedule. `kind` (group/solo/rest) drives the marker and
+// emphasis; `time` is the optional time chip.
+function buildDay(ctx: Ctx): Element {
+	const kind = strAttr(ctx, 'kind') ?? 'solo';
+	const time = strAttr(ctx, 'time');
+	const kids: ElementContent[] = [
+		h('div', { className: ['ec-week-day'] }, [h('span', { className: ['ec-week-dot'] }), ...ctx.slot('title')]),
+		h('div', { className: ['ec-week-focus'] }, ctx.slot('body')),
+		h('div', { className: ['ec-week-time'] }, time ? [time] : []),
+	];
+	return h('div', { className: ['ec-week-row', `ec-week-${kind}`] }, kids);
+}
+
+function buildWeek(ctx: Ctx): Element {
+	return h('div', { className: ['ec-week'] }, childrenByClass(ctx, 'ec-week-row'));
+}
+
+// One zone of the training-group spectrum: a name and who it is for. The ordinal is a
+// CSS counter, so authors never number them by hand.
+function buildZone(ctx: Ctx): Element {
+	return h('div', { className: ['ec-zone'] }, [
+		h('div', { className: ['ec-zone-name'] }, ctx.slot('title')),
+		h('div', { className: ['ec-zone-who'] }, ctx.slot('body')),
+	]);
+}
+
+// The spectrum: a gradient bar with one segment per zone, then the zone labels. The bar
+// communicates "one continuum, split by pace" rather than separate groups.
+function buildSpectrum(ctx: Ctx): Element {
+	const zones = childrenByClass(ctx, 'ec-zone');
+	const bar = h(
+		'div',
+		{ className: ['ec-spectrum-bar'] },
+		zones.map(() => h('span')),
+	);
+	return h('div', { className: ['ec-spectrum'] }, [bar, h('div', { className: ['ec-spectrum-zones'] }, zones)]);
 }
 
 function buildFigure(ctx: Ctx): Element {
@@ -159,11 +222,7 @@ function buildPanel(ctx: Ctx): Element {
 function buildSplit(ctx: Ctx): Element {
 	// The body holds the nested panels, already turned into .ec-panel divs by the
 	// dispatcher's recursion (panel is not a declared split slot, so it stays in body).
-	const panels = ctx
-		.slot('body')
-		.filter(
-			(c) => isElement(c) && Array.isArray(c.properties?.className) && c.properties.className.includes('ec-panel'),
-		);
+	const panels = childrenByClass(ctx, 'ec-panel');
 	const headEl = h('div', { className: ['ec-head'] }, [h('h2', { className: ['card-title'] }, ctx.slot('title'))]); // no icon
 	const body = h('div', { className: ['section-body'] }, [h('div', { className: ['ec-split'] }, panels)]);
 	return cardShell(CARD_CLASS, [headEl, body]);
@@ -171,6 +230,11 @@ function buildSplit(ctx: Ctx): Element {
 
 const ICON_ATTR = { key: 'icon', label: 'Icon', type: 'icon' as const };
 const ROLE_ATTR = { key: 'role', label: 'Role', type: 'select' as const, options: ['primary', 'secondary'] };
+const HREF_ATTR = { key: 'href', label: 'Link', type: 'text' as const };
+const META_ATTR = { key: 'meta', label: 'Meta line', type: 'text' as const };
+const CTA_ATTR = { key: 'cta', label: 'Link label', type: 'text' as const };
+const KIND_ATTR = { key: 'kind', label: 'Kind', type: 'select' as const, options: ['group', 'solo', 'rest'] };
+const TIME_ATTR = { key: 'time', label: 'Time', type: 'text' as const };
 const TITLE_SLOT = { name: 'title', label: 'Title', kind: 'inline' as const, required: true };
 const OPTIONAL_TITLE_SLOT = { name: 'title', label: 'Title', kind: 'inline' as const };
 const BODY_SLOT = { name: 'body', label: 'Body', kind: 'markdown' as const };
@@ -243,11 +307,63 @@ const components: ComponentDef[] = [
 	{
 		name: 'aside',
 		label: 'Aside',
-		description: 'A lightweight semantic aside for a gloss or side note. Not for warnings.',
-		insertTemplate: ':::aside[Term]{icon="info"}\nA short definition or note.\n:::',
+		description: 'A quiet gloss or side note: a small term over muted text. Not for warnings.',
+		insertTemplate: ':::aside[Term]\nA short definition or note.\n:::',
 		build: buildAside,
-		attributes: [ICON_ATTR, ROLE_ATTR],
 		slots: [OPTIONAL_TITLE_SLOT, BODY_SLOT],
+	},
+	{
+		name: 'programs',
+		label: 'Program cards',
+		description: 'A row of side-by-side program cards (nested :::program blocks).',
+		insertTemplate:
+			'::::programs\n:::program[Summer training]{icon="path" href="#summer-training" meta="Jun–Aug" cta="See summer training"}\nWhat it is.\n:::\n\n:::program[Talkeetna camp]{icon="tent" href="#talkeetna-camp" meta="July" cta="See the camp" role="secondary"}\nWhat it is.\n:::\n::::',
+		build: buildPrograms,
+		slots: [BODY_SLOT],
+	},
+	{
+		name: 'program',
+		label: 'Program card',
+		description: 'A clickable program-offering card (used inside :::programs).',
+		insertTemplate: ':::program[Name]{icon="path" href="#anchor" meta="Dates" cta="Learn more"}\nShort blurb.\n:::',
+		build: buildProgram,
+		attributes: [ICON_ATTR, HREF_ATTR, META_ATTR, CTA_ATTR, ROLE_ATTR],
+		slots: [TITLE_SLOT, BODY_SLOT],
+	},
+	{
+		name: 'week',
+		label: 'Weekly schedule',
+		description: 'A seven-day schedule rail (nested :::day blocks).',
+		insertTemplate:
+			'::::week\n:::day[Mon]{kind="group" time="10:30–12:15"}\n**Group practice.** Focus.\n:::\n:::day[Tue]{kind="solo" time="on your own"}\nSolo work.\n:::\n::::',
+		build: buildWeek,
+		slots: [BODY_SLOT],
+	},
+	{
+		name: 'day',
+		label: 'Schedule day',
+		description: 'One day-row of the weekly schedule (used inside :::week).',
+		insertTemplate: ':::day[Mon]{kind="group" time="10:30–12:15"}\nFocus for the day.\n:::',
+		build: buildDay,
+		attributes: [KIND_ATTR, TIME_ATTR],
+		slots: [TITLE_SLOT, BODY_SLOT],
+	},
+	{
+		name: 'spectrum',
+		label: 'Training-group spectrum',
+		description: 'A pace continuum with labelled zones (nested :::zone blocks).',
+		insertTemplate:
+			'::::spectrum\n:::zone[Group one]\nWho it is for.\n:::\n\n:::zone[Group two]\nWho it is for.\n:::\n::::',
+		build: buildSpectrum,
+		slots: [BODY_SLOT],
+	},
+	{
+		name: 'zone',
+		label: 'Spectrum zone',
+		description: 'One zone of the training-group spectrum (used inside :::spectrum).',
+		insertTemplate: ':::zone[Group name]\nWho it is for.\n:::',
+		build: buildZone,
+		slots: [TITLE_SLOT, BODY_SLOT],
 	},
 	{
 		name: 'figure',

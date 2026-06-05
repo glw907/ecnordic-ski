@@ -49,7 +49,7 @@ Second panel copy.
 ::::
 ```
 
-## The ten directives
+## The directives
 
 | Name | Title | Body | Attributes | What it renders |
 |------|-------|------|------------|-----------------|
@@ -60,9 +60,15 @@ Second panel copy.
 | `split` | required | yes | none | A card that lays its nested `panel` blocks side by side. |
 | `panel` | none | yes | `icon`, `role` | A single panel with an optional icon. Use it inside `split`. |
 | `passage` | required | yes | `icon`, `role` | A titled section without the card border. |
-| `aside` | optional | yes | `icon`, `role` | A lightweight semantic `<aside>` for a gloss or side note. |
+| `aside` | optional | yes | none | A quiet gloss: a small term label over muted text. The title is the term. |
 | `figure` | optional | yes | none | A captioned image. The body holds one markdown image; the title is the caption. |
 | `gallery` | optional | yes | none | A small set of images in a responsive grid. The body holds the images; the title heads the set. |
+| `programs` | none | yes | none | A row of side-by-side program cards. The body holds `program` blocks. |
+| `program` | required | yes | `icon`, `href`, `meta`, `cta`, `role` | One program offering as a clickable card. Use inside `programs`. |
+| `week` | none | yes | none | A seven-day schedule rail. The body holds `day` blocks. |
+| `day` | required | yes | `kind`, `time` | One day-row of the week. Use inside `week`. |
+| `spectrum` | none | yes | none | A pace continuum with a bar plus labelled zones. The body holds `zone` blocks. |
+| `zone` | required | yes | none | One zone of the spectrum. Use inside `spectrum`. |
 
 ### Per-directive notes
 
@@ -84,9 +90,9 @@ outside, three inside.
 `passage` has the same shape as `card` without the card chrome, for a lighter titled section.
 
 `aside` is for a gloss or side note, like a one-line definition of spenst, OD, or SafeSport. It
-renders a semantic `<aside>` styled lighter than a card. The title is optional, so a bare
-`:::aside\nA quick note.\n:::` works, and an `icon` (often `info`) sits beside the title when set.
-Never use it for a warning; that is what `alert` is for.
+renders a quiet semantic `<aside>`: the title becomes a small term label over muted text, marked by a
+thin azure rule. It stays subordinate to body text and takes no icon. The title is optional, so a bare
+`:::aside\nA quick note.\n:::` works. Never use it for a warning; that is what `alert` is for.
 
 `figure` shows one image with a caption. Put a markdown image in the body and the caption in the
 title: `:::figure[Athletes at East]\n![Skiers warming up](/images/east.webp)\n:::`. Drop the title
@@ -97,6 +103,36 @@ body and an optional heading in the title: `:::gallery[Spring camp]\n![Trailhead
 Separate each image with a blank line so each becomes its own paragraph; consecutive image lines collapse
 into one paragraph and so render as a single grid cell. Per-image grid sizing gets refined in a later
 visual pass once the image is unwrapped from its paragraph.
+
+### The three container pairs
+
+Three directives lay out repeating items the way `split` lays out `panel`s: a container holds child
+blocks. The container takes four colons, the children three.
+
+`programs` and `program` render the two program offerings as side-by-side clickable cards. Each `program`
+takes an `icon`, an `href` (where the card links), a `meta` line (the dates-and-cadence eyebrow), and a
+`cta` (the link label, which gets an arrow appended). `role="secondary"` swaps the crimson accent edge to
+cobalt, so the two cards read as distinct.
+
+```
+::::programs
+:::program[Summer training]{icon="path" href="#summer-training" meta="Jun 1–Aug 19" cta="See summer training"}
+The blurb.
+:::
+
+:::program[Talkeetna camp]{icon="tent" href="#talkeetna-camp" meta="Jul 21–24" cta="See the camp" role="secondary"}
+The blurb.
+:::
+::::
+```
+
+`week` and `day` render the seven-day schedule rail. Each `day` takes a `kind` of `group`, `solo`, or
+`rest`, which sets the marker and emphasis, and an optional `time`. The title is the day name; the body is
+the focus.
+
+`spectrum` and `zone` render the training-group continuum: a gradient bar with one segment per zone, then
+the zone labels. Each `zone` has a name (title) and a who-it-is-for line (body); the ordinal is numbered
+for you. Write the intro line and any closing line as ordinary prose around the directive.
 
 ## Valid icon names
 

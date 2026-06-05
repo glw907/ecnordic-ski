@@ -94,7 +94,10 @@ and Training.
 three nights. Cabins on a lake near Talkeetna, a dry cabin (outhouses, no showers). Amy Purevsuren runs
 the camp. Training twice a day. Free with requested donations per ability to pay. Camp registration and
 consent are separate from summer-training registration; both are handled in CrewLAB. The exact site and
-address go to registered families in CrewLAB, not the public page.
+address go to registered families in CrewLAB, not the public page. Summer training and the camp are two
+programs built to go together: most athletes do both, and an athlete may do either on its own. Inaugural
+season, so phrase "most do both" as the intended model, not observed history. Stated on Training (intro,
+the Talkeetna camp section, and Common questions).
 
 **Access framing.** The program is need-blind: donations and ability to pay do not affect who can join,
 and EC Nordic does its best to make room for any athlete who fully commits to their training. Use this on

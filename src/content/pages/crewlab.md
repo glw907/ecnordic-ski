@@ -4,7 +4,7 @@ title: "CrewLAB"
 
 EC Nordic runs on CrewLAB, a free app that holds the schedule, team chat, workouts, and the day-to-day of training. If you are with us this summer, you will use it most days. It is also built to meet SafeSport standards.
 
-:::aside[SafeSport]{icon="info"}
+:::aside[SafeSport]
 SafeSport is the national framework, set by the U.S. Center for SafeSport, for protecting young athletes from abuse and misconduct in sport. In practice it means our communication stays out in the open. Volunteers can see every channel, and there is no private one-on-one messaging between an adult and an athlete.
 :::
 
