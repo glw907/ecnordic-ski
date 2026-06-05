@@ -226,7 +226,7 @@ CrewLAB-only waiver, and the two senses of "waiver."
 
 ### Origin story (About)
 
-> East Community Nordic was founded in 2026 by Amy Purevsuren and Geoff Wright. Anchorage is home to two of the most storied Nordic ski clubs in the country, APU Nordic and Alaska Winter Stars, whose athletes have cemented Alaska's reputation for producing extraordinary Nordic skiers. But year-round professional coaching is out of reach for many families. EC Nordic exists to help fill that gap. We're not trying to replace APU or Winter Stars, and we can't match that level of support. What we offer is structured summer training and coaching, open to any athlete who's driven enough to put in their own work, regardless of ability to pay. For a dedicated skier or runner, a strong summer is the base the season is built on.
+> East Community Nordic was founded in 2026 by Amy Purevsuren and Geoff Wright. Anchorage is home to two of the most storied Nordic ski clubs in the country, APU Nordic and Alaska Winter Stars, whose athletes have cemented Alaska's reputation for producing extraordinary Nordic skiers. But year-round professional coaching is out of reach for many families. EC Nordic exists to help fill that gap. We're not trying to replace APU or Winter Stars, and we can't match that level of support. What we offer is structured summer training and coaching, open to any athlete who's driven enough to put in their own work, regardless of ability to pay. For a committed skier or runner, a strong summer is the base the season is built on.
 
 ### Coach bios (Volunteers & Coaches), leads first
 
