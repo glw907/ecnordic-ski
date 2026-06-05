@@ -1,24 +1,31 @@
 # ecnordic.ski: Project Status
 
-**Site refresh initiative: PLAN 1 DONE, PLAN 2 AUTHORED (2026-06-04).** A full content rebuild to the brief's
-six-page IA (Home, About, Training, Volunteers & Coaches, CrewLAB, Contact, plus a utility Archives).
-The design spec is committed at `docs/superpowers/specs/2026-06-04-site-refresh-design.md`; it carries the
-canonical-facts block (activities, eligibility, schedule, camp, non-affiliation, waiver) that keeps copy
-in sync across separately-drafted pages. The work is three sequenced plans. Plan 1 (the structural floor)
-landed in six commits on `site-refresh`: the six-page primary nav (Resources dropped), the footer Archives
-link, the `aside` / `figure` / `gallery` directives, the `/archives` page (tag index plus by-year list plus
-feed links), the editable Home (welcome copy moved from the `WELCOME_BLURB` constant into a
-`src/content/pages/home.md` content page rendered through cairn), and the Contact intro copy. Gates green
-(`check` 0/0, `npm test` 56, build clean). Plan 2 (carry-over and revise pages) is now written at
-`docs/superpowers/plans/2026-06-04-site-refresh-plan-2-pages.md`: it rewrites About, CrewLAB, and
-Volunteers & Coaches to the canonical facts, places the origin story and the three bios verbatim, points
-every waiver reference at CrewLAB, and retires the Resources page into CrewLAB. The plan carries the full
-target content for each page, already em-dash-clean for the content guard. All work sits on the
-`site-refresh` branch, unpushed (a push to `main` deploys live). **Immediate next: execute Plan 2 via
-`subagent-driven-development`, one implementer per task.** Plan 3 (the Training hub, with the `toc`
-component) gets authored after Plan 2 lands. A secondary mission runs alongside: collect cairn-cms DX
-findings in `docs/cairn-dx-findings.md` (Plan 1 added finding 17, the missing route-less content-fragment
-concept that forced the editable Home into a redundant `/home` URL).
+**Site refresh initiative: PLAN 1 + PLAN 2 DONE, PLAN 3 NEXT (2026-06-04).** A full content rebuild to the
+brief's six-page IA (Home, About, Training, Volunteers & Coaches, CrewLAB, Contact, plus a utility
+Archives). The design spec is committed at `docs/superpowers/specs/2026-06-04-site-refresh-design.md`; it
+carries the canonical-facts block (activities, eligibility, schedule, camp, non-affiliation, waiver) that
+keeps copy in sync across separately-drafted pages. The work is three sequenced plans, each executed via
+`subagent-driven-development`, one implementer per task.
+
+Plan 1 (the structural floor) landed in six commits on `site-refresh`: the six-page primary nav (Resources
+dropped), the footer Archives link, the `aside` / `figure` / `gallery` directives, the `/archives` page,
+the editable Home (welcome copy moved into a `src/content/pages/home.md` content page), and the Contact
+intro copy.
+
+Plan 2 (carry-over and revise pages) is DONE, in four content commits plus one spec fix on `site-refresh`.
+It rewrote About, CrewLAB, and Volunteers & Coaches to the canonical facts, placed the origin story and the
+three bios verbatim, pointed every waiver reference at CrewLAB, and retired the Resources page. The waiver
+and forms content folded into CrewLAB first, then the page was deleted and its one inbound link repointed.
+The editorial backstop found no AI-rhythm tells in the rewritten pages. One snag surfaced mid-execution:
+the verbatim origin story used "dedicated", a word on the content-guide banned list, so `prose-guard`
+blocked writing it into a content page. The fix swapped it to "committed" at the canonical source, so the
+spec and the About page stay in sync. Gate green (`check` 0/0, `npm test` 54, build clean). The count fell
+from 56 to 54 because the two Resources characterization tests retired with the page.
+
+Plan 3 (the Training hub, with the `toc` component) is the immediate next action. Author it from the spec's
+Training map, then execute it via `subagent-driven-development`. A secondary mission runs alongside:
+collect cairn-cms DX findings in `docs/cairn-dx-findings.md` (Plan 2 surfaced none new). All work sits on
+the `site-refresh` branch, unpushed (a push to `main` deploys live).
 
 **Current state.** The directive render pipeline is live; all five static pages carry inline
 container directives; the content style guard blocks AI tells in `src/content/**/*.md`. The
@@ -57,8 +64,11 @@ findings and in `BACKLOG.md`: the dangling-token backstop is not fatal (the inhe
 dropped four validation rules the old validator enforced.
 
 **Pass 9 (DEFER):** contact form on `form()`, verified on adapter-cloudflare; the API is
-experimental, so keep contact as the proving ground (BACKLOG #13). **Pass 10 (open, not blocking):**
-placeholder content on CrewLAB / Training / volunteers; waiver/payment-model conflict.
+experimental, so keep contact as the proving ground (BACKLOG #13). **Pass 10 (mostly closed):** the
+old placeholder-content concern is down to the Training page, which Plan 3 rewrites. CrewLAB and
+Volunteers now carry real content. The waiver and payment model is settled by the canonical facts: the
+waiver is signed in CrewLAB, and the program is free with need-blind donations. One CrewLAB collection
+placeholder stays open as BACKLOG #21.
 
 ---
 
@@ -74,17 +84,20 @@ placeholder content on CrewLAB / Training / volunteers; waiver/payment-model con
 | 0.10 | 1a version catch-up + 1b delivery surface | ✓ Done |
 | 0.21 | Breaking floor (Plan A) + content graph (Plan B) | ✓ Done |
 | Refresh 1 | Structural floor (nav, directives, archives, editable Home, Contact copy) | ✓ Done |
+| Refresh 2 | Carry-over and revise pages (About, CrewLAB, Volunteers; retire Resources) | ✓ Done |
 
 ---
 
-### Next starter prompt (execute site-refresh Plan 2)
+### Next starter prompt (author site-refresh Plan 3)
 
-> Site-refresh Plan 1 is done and Plan 2 is written, both committed on `site-refresh`, unpushed.
-> Execute `docs/superpowers/plans/2026-06-04-site-refresh-plan-2-pages.md` using
-> `subagent-driven-development`, one implementer per task, on the `site-refresh` branch. Run the project
-> gate (`npm run check && npm test && npm run build`) before each commit, and regenerate the manifest and
-> characterization snapshots whenever content changes (the plan's "What every task needs to know" section
-> covers the snapshot and content-guard mechanics). Do not push. When Plan 2 is done and green, author
-> Plan 3 (the Training hub, with the `toc` component) from the spec's Training map.
+> Site-refresh Plans 1 and 2 are done and green, committed on `site-refresh`, unpushed. Author Plan 3, the
+> Training hub, from the Training map in `docs/superpowers/specs/2026-06-04-site-refresh-design.md`, using
+> the `superpowers:writing-plans` skill. Plan 3 introduces the `toc` component and rewrites
+> `src/content/pages/training.md` to the canonical schedule, camp, and activity facts. Follow the same plan
+> shape as Plan 2: full target content inline per task, em-dash-clean for `prose-guard`, the project gate
+> (`npm run check && npm test && npm run build`) before each commit, and manifest plus characterization
+> snapshot regeneration on any content change. Write it to
+> `docs/superpowers/plans/2026-06-04-site-refresh-plan-3-training.md`, then execute it via
+> `subagent-driven-development`, one implementer per task, on `site-refresh`. Do not push.
 
 **Deploy:** Live at **https://ecnordic.ski**. Push to `main` triggers GitHub Actions (build + pagefind + wrangler deploy).
