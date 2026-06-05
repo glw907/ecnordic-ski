@@ -379,6 +379,27 @@ SvelteKit idiom.
     render, but it carries no permalink and generates no route, so a site can move bespoke-layout copy into
     `/admin` without a duplicate public URL.
 
+18. **`createRenderer` has no post-rehype plugin hook, so a render pass that needs the final slug ids
+    cannot live in site code (2026-06-04).** Surfaced while authoring site-refresh Plan 3, the Training
+    hub. The page wants a `toc` directive: a small post-pass that reads the rendered `<h2>` slug ids and
+    fills a `:::toc` placeholder, so the on-page table of contents stays in sync instead of being
+    hand-maintained. The engine assigns those ids with `rehypeSlug`, which runs after the directive
+    dispatch and after the sanitize floor (`rehypeRaw -> sanitize -> dispatch -> rehypeSlug -> anchorRel ->
+    stringify`). A toc pass must therefore run after `rehypeSlug`, and the site has no way to add one.
+    `RendererOptions` exposes `stagger`, `sanitizeSchema`, `unsafeDisableSanitize`, and `anchorRel`, none
+    of which is a plugin slot. A registry `build(ctx)` sees only its own slots, never sibling slugs, so the
+    toc cannot be an ordinary component. Both escape hatches fail. Mutating the returned `rehypePlugins`
+    array does nothing, since `createRenderer` already composed the processor with `.use(rehypePlugins)`.
+    Hand-rolling a parallel processor from the exported plugin arrays breaks cairn-token resolution,
+    because the VFile resolve key the engine reads (`CAIRN_RESOLVE`) and the `remarkResolveCairnLinks`
+    plugin are both unexported. The only site-only path left is an HTML-string rewrite of `renderMarkdown`
+    output, which reintroduces exactly the regex HTML surgery the directive pipeline was built to remove
+    (ecnordic BACKLOG #8, closed). Fix: add a post-rehype hook to `RendererOptions`, for example
+    `rehypePost?: PluggableList`, appended after `rehypeSlug` and before `rehypeStringify`, so a site can
+    register a pass that reads the final tree with slug ids and still flows through the engine's resolve
+    and stringify. With that hook the ecnordic toc is a few lines: a `:::toc` placeholder component plus a
+    rehype plugin that collects `<h2 id>` and fills it.
+
 ## Scaffolder implications
 
 These findings read as "the site had to hand-assemble or get right by hand what the scaffolder should
