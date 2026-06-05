@@ -17,10 +17,6 @@
 
 ## Low
 
-- [ ] **#25** Finalize the Talkeetna camp packing list `#improvement` `#ecnordic` *(2026-06-04)*
-  `src/content/pages/training.md` carries `[PLACEHOLDER: finalize the camp packing list before publish.]` above a draft list. Confirm the real list before publish and replace the placeholder.
-- [ ] **#24** Confirm loaner equipment and fill the Training "What to bring" placeholder `#improvement` `#ecnordic` *(2026-06-04)*
-  `src/content/pages/training.md` carries `[PLACEHOLDER: confirm any loaner roller skis, poles, or bikes the program can lend.]`. Confirm what the program can lend and replace the placeholder.
 - [ ] **#23** Adopt the `toc` component once cairn-cms ships a post-rehype hook `#improvement` `#ecnordic` *(2026-06-04)*
   The Training page keeps a hand-maintained `<nav class="page-toc">` because cairn-cms `^0.24.0` has no hook for a render pass that runs after `rehypeSlug`, which the toc needs to read the rendered `<h2>` slug ids. See `docs/cairn-dx-findings.md` finding 18. When the engine adds a post-rehype hook, build the `toc` directive (a `:::toc` placeholder component plus a rehype plugin that collects `<h2 id>` and fills it) and replace the hand-maintained nav.
 - [ ] **#22** Pre-publish: confirm the CrewLAB join link, self-signing, and donation collection are current `#improvement` `#ecnordic` *(2026-06-04)*
@@ -39,6 +35,10 @@
   Do this when migrating to cairn-cms.
 ## Done
 
+- [x] **#25** Finalize the Talkeetna camp packing list `#improvement` `#ecnordic` *(2026-06-04 → 2026-06-05)*
+  The real packing list replaced the `[PLACEHOLDER]` and draft list in the camp "What to pack" section of `src/content/pages/training.md`: sleeping bag and pillow, training clothes for cool and warm weather, rain gear, hang-out clothes, sock and clothing changes, a swimsuit and towel, running shoes, hill bounding poles, roller-ski kit (boots, skis, poles, helmet) if applicable, a water bottle with a carrier, hygiene items, daily medications, and optional personal food and snacks.
+- [x] **#24** Confirm loaner equipment and fill the Training "What to bring" placeholder `#improvement` `#ecnordic` *(2026-06-04 → 2026-06-05)*
+  EC Nordic can lend roller skis, poles, and other gear to any athlete who needs it; the athlete just tells a coach. The `[PLACEHOLDER]` in the "What to bring" list and the "not provided" line in the Common questions FAQ were both replaced with that policy in `src/content/pages/training.md`.
 - [x] **#6** Replace placeholder page content (about, resources) `#improvement` `#ecnordic` *(2026-05-20 → 2026-06-04)*
   About was rewritten to the canonical facts in site-refresh Plan 2: the origin story, the full eligibility range, the schedule and camp dates, and the CrewLAB waiver, replacing the old placeholder copy. Resources was retired in the same plan, its waiver-and-forms content folded into CrewLAB and the page deleted. Both named pages are resolved. The Training page is still placeholder and is tracked with Plan 3; the one remaining CrewLAB collection placeholder is #21.
 

@@ -112,7 +112,7 @@ The program is need-blind. Donations and ability to pay do not affect who can jo
 - A helmet, required for roller-skiing and mountain biking.
 - Layers. Anchorage summer weather changes fast.
 
-Roller skis and poles are not provided. [PLACEHOLDER: confirm any loaner roller skis, poles, or bikes the program can lend.]
+Short on gear? We can lend roller skis, poles, and more to any athlete who needs them. Just tell a coach what you need.
 
 ### Your first session
 
@@ -138,14 +138,20 @@ The camp is free, with donations requested according to what your family can man
 
 ### What to pack
 
-[PLACEHOLDER: finalize the camp packing list before publish.]
-
-- All your training gear: running shoes, roller skis and poles, a helmet, and a bike if you ride.
-- Sleeping bag and sleeping pad.
+- Sleeping bag and a pillow.
+- Training clothes for both cool and warm weather.
 - Rain gear. Talkeetna weather is its own thing.
+- Pants, shorts, and a sweatshirt for hanging out.
+- Changes of socks and other personal clothing.
 - A swimsuit and a towel for the lake and sauna.
-- A water bottle and personal snacks.
-- Any medications you take daily.
+- Running shoes.
+- Hill bounding poles.
+- If you roller-ski: ski boots, roller skis, roller-ski poles, and a helmet.
+- A water bottle, with a carrier for the longer sessions.
+- Personal hygiene items.
+- Any daily medications.
+- Personal food for any dietary needs (optional).
+- Personal snacks (optional).
 
 :::cta[Register for camp]{icon="tent"}
 Camp has its own registration and consent forms, separate from summer training, and both live in [CrewLAB](cairn:pages/crewlab). A signed waiver must be on file before camp. [PLACEHOLDER: confirm the direct CrewLAB camp registration link.]
@@ -160,4 +166,4 @@ Questions first? [Contact us](/contact).
 - **Who can join?** Anyone entering 9th grade through 12th grade, plus graduates home from college for the summer. No junior high.
 - **Do I have to do both?** No. Summer training and the camp are separate offerings. Sign up for either one, or both.
 - **What if I miss a session?** Come to the next one. The weekly plan includes work you can do on your own, posted on CrewLAB.
-- **Do I need my own gear?** Bring trail shoes, water, and a helmet for bike and roller-ski days. Roller skis and poles are not provided.
+- **Do I need my own gear?** Bring trail shoes, water, and a helmet for bike and roller-ski days. If you need roller skis or poles, we can lend them. Just ask a coach.
