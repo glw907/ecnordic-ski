@@ -154,7 +154,7 @@ The camp is free, with donations requested according to what your family can man
 - Personal snacks (optional).
 
 :::cta[Register for camp]{icon="tent"}
-Camp has its own registration and consent forms, separate from summer training, and both live in [CrewLAB](cairn:pages/crewlab). A signed waiver must be on file before camp. [PLACEHOLDER: confirm the direct CrewLAB camp registration link.]
+Camp registration and consent happen inside [CrewLAB](cairn:pages/crewlab), separate from summer training. A signed waiver must be on file before camp. Head to CrewLAB to register.
 
 Questions first? [Contact us](/contact).
 :::
