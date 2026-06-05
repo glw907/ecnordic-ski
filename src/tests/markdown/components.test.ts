@@ -5,8 +5,22 @@ import { ecnordicRegistry } from '$lib/markdown/components';
 describe('ecnordicRegistry', () => {
 	it('registers the primitives in document order', () => {
 		expect(ecnordicRegistry.names).toEqual([
-			'card', 'grid', 'alert', 'cta', 'split', 'panel', 'passage', 'aside',
+			'card', 'grid', 'alert', 'cta', 'split', 'panel', 'passage', 'aside', 'figure', 'gallery',
 		]);
+	});
+
+	it('wraps a :::figure body image in a figure with a figcaption', async () => {
+		const html = await renderMarkdown(':::figure[Athletes at East]\n![Athletes warming up](/images/east.webp)\n:::\n');
+		expect(html).toContain('<figure class="ec-figure"');
+		expect(html).toContain('<img');
+		expect(html).toContain('<figcaption>Athletes at East</figcaption>');
+	});
+
+	it('wraps a :::gallery body in an ec-gallery container', async () => {
+		const html = await renderMarkdown(':::gallery[Camp]\n![One](/a.webp)\n![Two](/b.webp)\n:::\n');
+		expect(html).toContain('<div class="ec-gallery"');
+		expect(html).toContain('/a.webp');
+		expect(html).toContain('/b.webp');
 	});
 
 	it('builds a :::card into a section.card.ec-card with an ec-head + card-title', async () => {

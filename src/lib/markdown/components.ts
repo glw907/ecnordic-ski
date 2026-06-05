@@ -79,6 +79,20 @@ function buildAside(ctx: Ctx): Element {
 	return h('aside', { className: ['ec-aside'] }, kids);
 }
 
+function buildFigure(ctx: Ctx): Element {
+	const caption = ctx.slot('title');
+	const kids: ElementContent[] = [...ctx.slot('body')];
+	if (caption.length > 0) kids.push(h('figcaption', {}, caption));
+	return h('figure', { className: ['ec-figure'] }, kids);
+}
+
+function buildGallery(ctx: Ctx): Element {
+	const kids: ElementContent[] = [];
+	if (ctx.slot('title').length > 0) kids.push(h('h2', { className: ['card-title'] }, ctx.slot('title')));
+	kids.push(h('div', { className: ['ec-gallery'] }, ctx.slot('body')));
+	return h('section', { className: ['ec-gallery-section'] }, kids);
+}
+
 function buildGrid(ctx: Ctx): Element {
 	const body = ctx.slot('body');
 	const titled = ctx.slot('title').length > 0;
@@ -232,6 +246,22 @@ const components: ComponentDef[] = [
 		insertTemplate: ':::aside[Term]{icon="info"}\nA short definition or note.\n:::',
 		build: buildAside,
 		attributes: [ICON_ATTR, ROLE_ATTR],
+		slots: [OPTIONAL_TITLE_SLOT, BODY_SLOT],
+	},
+	{
+		name: 'figure',
+		label: 'Figure',
+		description: 'A captioned image. The body holds a markdown image; the title is the caption.',
+		insertTemplate: ':::figure[Caption]\n![Alt text](/images/photo.webp)\n:::',
+		build: buildFigure,
+		slots: [OPTIONAL_TITLE_SLOT, BODY_SLOT],
+	},
+	{
+		name: 'gallery',
+		label: 'Gallery',
+		description: 'A small set of images laid out in a responsive grid.',
+		insertTemplate: ':::gallery[Title]\n![One](/images/one.webp)\n![Two](/images/two.webp)\n:::',
+		build: buildGallery,
 		slots: [OPTIONAL_TITLE_SLOT, BODY_SLOT],
 	},
 ];

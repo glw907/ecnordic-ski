@@ -349,6 +349,42 @@ body {
 .ec-aside .ec-head { margin-block-end: 0.4rem; }
 .ec-aside .section-body { color: var(--color-body); }
 
+/* ─── Captioned image: `.ec-figure` ──────────────────────────
+   A single image with an optional caption below. The caption is
+   the directive title; the body holds the markdown image. */
+.ec-figure {
+  margin: 1.5rem 0;
+}
+.ec-figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+}
+.ec-figure figcaption {
+  font-size: 0.82rem;
+  color: var(--color-muted);
+  margin-block-start: 0.5rem;
+  text-align: center;
+}
+
+/* ─── Image set: `.ec-gallery` ───────────────────────────────
+   A small set of images in a responsive grid. The body holds the
+   markdown images; an optional title heads the set. */
+.ec-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.75rem;
+  margin-block: 1.25rem;
+}
+.ec-gallery img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  aspect-ratio: 4 / 3;
+}
+
 /* ─── Grid card body: `.ec-grid` ─────────────────────────────
    A set of parallel, titled points (peers, not a sequence) inside a
    module card: convictions, activity types, ways to help. Two columns

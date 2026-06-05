@@ -49,7 +49,7 @@ Second panel copy.
 ::::
 ```
 
-## The eight directives
+## The ten directives
 
 | Name | Title | Body | Attributes | What it renders |
 |------|-------|------|------------|-----------------|
@@ -61,6 +61,8 @@ Second panel copy.
 | `panel` | none | yes | `icon`, `role` | A single panel with an optional icon. Use it inside `split`. |
 | `passage` | required | yes | `icon`, `role` | A titled section without the card border. |
 | `aside` | optional | yes | `icon`, `role` | A lightweight semantic `<aside>` for a gloss or side note. |
+| `figure` | optional | yes | none | A captioned image. The body holds one markdown image; the title is the caption. |
+| `gallery` | optional | yes | none | A small set of images in a responsive grid. The body holds the images; the title heads the set. |
 
 ### Per-directive notes
 
@@ -85,6 +87,13 @@ outside, three inside.
 renders a semantic `<aside>` styled lighter than a card. The title is optional, so a bare
 `:::aside\nA quick note.\n:::` works, and an `icon` (often `info`) sits beside the title when set.
 Never use it for a warning; that is what `alert` is for.
+
+`figure` shows one image with a caption. Put a markdown image in the body and the caption in the
+title: `:::figure[Athletes at East]\n![Skiers warming up](/images/east.webp)\n:::`. Drop the title
+for an uncaptioned image. Always write real alt text in the image.
+
+`gallery` shows a small set of images in a responsive grid. Put two or more markdown images in the
+body, one per line, and an optional heading in the title: `:::gallery[Spring camp]\n![Trailhead](/images/one.webp)\n![Cabin](/images/two.webp)\n:::`.
 
 ## Valid icon names
 
