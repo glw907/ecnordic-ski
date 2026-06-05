@@ -88,9 +88,10 @@ function buildFigure(ctx: Ctx): Element {
 
 function buildGallery(ctx: Ctx): Element {
 	const kids: ElementContent[] = [];
-	if (ctx.slot('title').length > 0) kids.push(h('h2', { className: ['card-title'] }, ctx.slot('title')));
+	if (ctx.slot('title').length > 0)
+		kids.push(h('div', { className: ['ec-head'] }, [h('h2', { className: ['card-title'] }, ctx.slot('title'))]));
 	kids.push(h('div', { className: ['ec-gallery'] }, ctx.slot('body')));
-	return h('section', { className: ['ec-gallery-section'] }, kids);
+	return h('section', {}, kids);
 }
 
 function buildGrid(ctx: Ctx): Element {

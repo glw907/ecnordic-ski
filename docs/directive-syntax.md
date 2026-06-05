@@ -93,7 +93,10 @@ title: `:::figure[Athletes at East]\n![Skiers warming up](/images/east.webp)\n::
 for an uncaptioned image. Always write real alt text in the image.
 
 `gallery` shows a small set of images in a responsive grid. Put two or more markdown images in the
-body, one per line, and an optional heading in the title: `:::gallery[Spring camp]\n![Trailhead](/images/one.webp)\n![Cabin](/images/two.webp)\n:::`.
+body and an optional heading in the title: `:::gallery[Spring camp]\n![Trailhead](/images/one.webp)\n\n![Cabin](/images/two.webp)\n:::`.
+Separate each image with a blank line so each becomes its own paragraph; consecutive image lines collapse
+into one paragraph and so render as a single grid cell. Per-image grid sizing gets refined in a later
+visual pass once the image is unwrapped from its paragraph.
 
 ## Valid icon names
 
