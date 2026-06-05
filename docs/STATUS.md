@@ -1,6 +1,6 @@
 # ecnordic.ski: Project Status
 
-**Site refresh initiative: PLAN 1 + PLAN 2 DONE, PLAN 3 NEXT (2026-06-04).** A full content rebuild to the
+**Site refresh initiative: PLANS 1 + 2 DONE, PLAN 3 AUTHORED (2026-06-04).** A full content rebuild to the
 brief's six-page IA (Home, About, Training, Volunteers & Coaches, CrewLAB, Contact, plus a utility
 Archives). The design spec is committed at `docs/superpowers/specs/2026-06-04-site-refresh-design.md`; it
 carries the canonical-facts block (activities, eligibility, schedule, camp, non-affiliation, waiver) that
@@ -22,10 +22,19 @@ blocked writing it into a content page. The fix swapped it to "committed" at the
 spec and the About page stay in sync. Gate green (`check` 0/0, `npm test` 54, build clean). The count fell
 from 56 to 54 because the two Resources characterization tests retired with the page.
 
-Plan 3 (the Training hub, with the `toc` component) is the immediate next action. Author it from the spec's
-Training map, then execute it via `subagent-driven-development`. A secondary mission runs alongside:
-collect cairn-cms DX findings in `docs/cairn-dx-findings.md` (Plan 2 surfaced none new). All work sits on
-the `site-refresh` branch, unpushed (a push to `main` deploys live).
+Plan 3 (the Training hub) is now AUTHORED, committed at
+`docs/superpowers/plans/2026-06-04-site-refresh-plan-3-training.md` on `site-refresh`. It rewrites
+`src/content/pages/training.md` to the canonical facts across the full Training map (intro, schedule,
+activities, training groups, who can join, what to bring, Talkeetna camp, sign up, your first session,
+common questions), glosses "spenst" and "over-distance" in asides, and corrects the old "camp registration
+is included" clause to the canonical separate-registration phrasing. The spec assigned a `toc` directive to
+this plan, but cairn-cms `^0.24.0` cannot host it: the toc needs a render pass after `rehypeSlug`, and the
+engine exposes no plugin hook (DX finding 18). The toc is descoped by decision; the page keeps a
+hand-maintained `<nav class="page-toc">`, and the real component waits on a cairn-cms engine change
+(BACKLOG #23). **Immediate next: execute Plan 3 via `subagent-driven-development`, one implementer per
+task, on `site-refresh`.** A secondary mission runs alongside: collect cairn-cms DX findings in
+`docs/cairn-dx-findings.md` (Plan 3 authoring added finding 18, the missing post-rehype hook). All work
+sits on the `site-refresh` branch, unpushed (a push to `main` deploys live).
 
 **Current state.** The directive render pipeline is live; all five static pages carry inline
 container directives; the content style guard blocks AI tells in `src/content/**/*.md`. The
@@ -88,16 +97,16 @@ placeholder stays open as BACKLOG #21.
 
 ---
 
-### Next starter prompt (author site-refresh Plan 3)
+### Next starter prompt (execute site-refresh Plan 3)
 
-> Site-refresh Plans 1 and 2 are done and green, committed on `site-refresh`, unpushed. Author Plan 3, the
-> Training hub, from the Training map in `docs/superpowers/specs/2026-06-04-site-refresh-design.md`, using
-> the `superpowers:writing-plans` skill. Plan 3 introduces the `toc` component and rewrites
-> `src/content/pages/training.md` to the canonical schedule, camp, and activity facts. Follow the same plan
-> shape as Plan 2: full target content inline per task, em-dash-clean for `prose-guard`, the project gate
-> (`npm run check && npm test && npm run build`) before each commit, and manifest plus characterization
-> snapshot regeneration on any content change. Write it to
-> `docs/superpowers/plans/2026-06-04-site-refresh-plan-3-training.md`, then execute it via
-> `subagent-driven-development`, one implementer per task, on `site-refresh`. Do not push.
+> Site-refresh Plans 1 and 2 are done and green, and Plan 3 is authored, all committed on `site-refresh`,
+> unpushed. Execute `docs/superpowers/plans/2026-06-04-site-refresh-plan-3-training.md` using
+> `subagent-driven-development`, one implementer per task, on the `site-refresh` branch. Run the project
+> gate (`npm run check && npm test && npm run build`) before each commit, and regenerate the manifest and
+> characterization snapshots whenever content changes (the plan's "What every task needs to know" section
+> covers the snapshot and content-guard mechanics). The `toc` component is descoped (cairn-cms has no
+> post-rehype hook; DX finding 18, BACKLOG #23); the plan keeps a hand-maintained nav. Do not push. When
+> Plan 3 is done and green, the content rebuild is at a finished first draft; the remaining initiative work
+> is the pre-publish checklist and the launch-time redirects, both already in BACKLOG.
 
 **Deploy:** Live at **https://ecnordic.ski**. Push to `main` triggers GitHub Actions (build + pagefind + wrangler deploy).
