@@ -31,20 +31,17 @@
       "links": []
     },
     {
-      "id": "resources",
-      "concept": "pages",
-      "title": "Resources",
-      "permalink": "/resources",
-      "draft": false,
-      "links": []
-    },
-    {
       "id": "training",
       "concept": "pages",
       "title": "Training",
       "permalink": "/training",
       "draft": false,
-      "links": []
+      "links": [
+        {
+          "concept": "pages",
+          "id": "crewlab"
+        }
+      ]
     },
     {
       "id": "volunteers",

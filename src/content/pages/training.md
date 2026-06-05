@@ -75,7 +75,7 @@ Evenings are for group meals, recovery, and getting to know your teammates. The 
 ::::
 
 :::cta[Sign Up]{icon="flag"}
-A signed waiver is required before your first session. Get it on the [Resources](/resources) page. Camp registration is included; you don't need to sign up for Talkeetna separately.
+A signed waiver is required before your first session. You sign it in [CrewLAB](cairn:pages/crewlab). Camp registration is included; you don't need to sign up for Talkeetna separately.
 
 <a href="https://crewlab.app.link/5g7vhhYEn3b" class="download-link" target="_blank" rel="noopener">Sign Up for Summer Training →</a>
 
