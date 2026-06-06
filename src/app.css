@@ -392,11 +392,9 @@ html { scroll-behavior: smooth; }
   }
 }
 
-/* The CTA button keeps a small top margin; the titled prose passage gets a hair of
-   inline padding so its text aligns with the bordered modules above and below. */
-.ec-cta .btn {
-  margin-block-start: 0.5rem;
-}
+/* ─── Titled prose passage: `.ec-passage` ────────────────────
+   A section head + body at full page width, with no card border or wash. A hair of
+   inline padding aligns its text with the bordered modules above and below. */
 .ec-passage {
   padding-inline: 0.25rem;
 }
@@ -423,6 +421,9 @@ html { scroll-behavior: smooth; }
 .ec-cta-head .ec-glyph {
   inline-size: 1.5rem;
   block-size: 1.5rem;
+}
+.ec-cta .btn {
+  margin-block-start: 0.5rem;
 }
 .ec-cta .section-body {
   color: var(--color-body-soft);
