@@ -29,17 +29,21 @@ function isElement(node: ElementContent | undefined): node is Element {
 	return !!node && node.type === 'element';
 }
 
-// Tag the first <ul> among children with ec-grid and strip its whitespace-only text
+// Tag the first <ul> among children with a class and strip its whitespace-only text
 // nodes so the bare list serializes without newlines. Returns that <ul>.
-function markFirstList(children: ElementContent[]): Element | undefined {
+function markFirstListAs(children: ElementContent[], cls: string): Element | undefined {
 	const ul = children.find((c) => isElement(c) && c.tagName === 'ul') as Element | undefined;
 	if (ul) {
-		ul.properties = { ...ul.properties, className: ['ec-grid'] };
+		ul.properties = { ...ul.properties, className: [cls] };
 		ul.children = (ul.children as ElementContent[]).filter(
 			(c) => !(c.type === 'text' && /^\s*$/.test(c.value)),
 		);
 	}
 	return ul;
+}
+
+function markFirstList(children: ElementContent[]): Element | undefined {
+	return markFirstListAs(children, 'ec-grid');
 }
 
 // The structured input a build receives. Derived from the engine's ComponentDef so the
@@ -50,7 +54,7 @@ const ecGlyph = (name: string): Element => glyph(name, ICON_PATHS);
 const makeIcon: MakeIcon = (name, role) => iconSpan(ecGlyph(name), role);
 
 const CARD_CLASS = ['card', 'ec-card', 'bg-base-100', 'border', 'border-base-300', 'shadow-sm'];
-const CTA_CLASS = ['card', 'ec-card', 'ec-cta', 'bg-base-100', 'border', 'border-primary/30', 'shadow-sm'];
+const CTA_CLASS = ['card', 'ec-card', 'ec-cta'];
 
 // Read a string attribute, or undefined when absent or non-string.
 function strAttr(ctx: Ctx, key: string): string | undefined {
@@ -86,18 +90,42 @@ function buildPassage(ctx: Ctx): Element {
 // heading outline and reads subordinate to body text.
 function buildAside(ctx: Ctx): Element {
 	const title = ctx.slot('title');
+	const id = strAttr(ctx, 'id');
 	const kids: ElementContent[] = [];
 	if (title.length > 0) kids.push(h('span', { className: ['ec-aside-term'] }, title));
 	kids.push(h('div', { className: ['ec-aside-def'] }, ctx.slot('body')));
-	return h('aside', { className: ['ec-aside'] }, kids);
+	const aside = h('aside', { className: ['ec-aside'] }, kids);
+	if (id) aside.properties.id = id;
+	return aside;
+}
+
+// A gear checklist: the first body list, tagged for the check-box styling. It is a
+// single column by default; `cols="2"` adds the two-column modifier for a long list
+// like the camp packing list.
+function buildChecklist(ctx: Ctx): Element {
+	const body = ctx.slot('body');
+	const ul = markFirstListAs(body, 'ec-checklist');
+	if (ul && strAttr(ctx, 'cols') === '2' && Array.isArray(ul.properties.className)) {
+		ul.properties.className.push('ec-checklist-2col');
+	}
+	return ul ?? h('div', body);
+}
+
+// A FAQ list: the first body list, tagged for the ruled question-and-answer styling.
+function buildFaq(ctx: Ctx): Element {
+	const body = ctx.slot('body');
+	return markFirstListAs(body, 'ec-faq') ?? h('div', body);
+}
+
+// True when an element node carries the given class.
+function hasClass(node: ElementContent, cls: string): boolean {
+	return isElement(node) && Array.isArray(node.properties?.className) && node.properties.className.includes(cls);
 }
 
 // The built children of a container directive (panels, days, zones) arrive in the body
 // slot already dispatched. Pull the ones carrying a given class, dropping whitespace.
 function childrenByClass(ctx: Ctx, cls: string): ElementContent[] {
-	return ctx
-		.slot('body')
-		.filter((c) => isElement(c) && Array.isArray(c.properties?.className) && c.properties.className.includes(cls));
+	return ctx.slot('body').filter((c) => hasClass(c, cls));
 }
 
 // A program offering as a calm clickable card. The head matches the site-wide row
@@ -156,21 +184,30 @@ function buildPrograms(ctx: Ctx): Element {
 	return h('div', { className: ['ec-programs'] }, childrenByClass(ctx, 'ec-program'));
 }
 
-// One day-row of the weekly schedule. `kind` (group/solo/rest) drives the marker and
-// emphasis; `time` is the optional time chip.
+// One day-row of the weekly schedule: day, time, then focus. `kind` (group/solo/rest)
+// is carried as a class for authors who want it, but the current rail styles every row
+// the same; `time` is the optional time label.
 function buildDay(ctx: Ctx): Element {
 	const kind = strAttr(ctx, 'kind') ?? 'solo';
 	const time = strAttr(ctx, 'time');
 	const kids: ElementContent[] = [
-		h('div', { className: ['ec-week-day'] }, [h('span', { className: ['ec-week-dot'] }), ...ctx.slot('title')]),
-		h('div', { className: ['ec-week-focus'] }, ctx.slot('body')),
+		h('div', { className: ['ec-week-day'] }, ctx.slot('title')),
 		h('div', { className: ['ec-week-time'] }, time ? [time] : []),
+		h('div', { className: ['ec-week-focus'] }, ctx.slot('body')),
 	];
 	return h('div', { className: ['ec-week-row', `ec-week-${kind}`] }, kids);
 }
 
+// The schedule panel: the day rows, plus any trailing prose in the body rendered as a
+// footer note (the off-day line). Both sit inside one `.ec-week` surface so the rail
+// reads as a single UI unit rather than a list followed by a stray paragraph.
 function buildWeek(ctx: Ctx): Element {
-	return h('div', { className: ['ec-week'] }, childrenByClass(ctx, 'ec-week-row'));
+	const rows = childrenByClass(ctx, 'ec-week-row');
+	// Anything else in the body (the trailing off-day paragraph) becomes the footer note.
+	const foot = ctx.slot('body').filter((c) => isElement(c) && !hasClass(c, 'ec-week-row'));
+	const kids: ElementContent[] = [h('div', { className: ['ec-week-rows'] }, rows)];
+	if (foot.length > 0) kids.push(h('div', { className: ['ec-week-foot'] }, foot));
+	return h('div', { className: ['ec-week'] }, kids);
 }
 
 // One zone of the training-group spectrum: a name and who it is for. The ordinal is a
@@ -253,10 +290,12 @@ function buildCta(ctx: Ctx): Element {
 	const body = ctx.slot('body');
 	promoteDownloadLink(body);
 	const icon = strAttr(ctx, 'icon');
+	const headKids: ElementContent[] = [];
+	if (icon) headKids.push(makeIcon(icon));
+	headKids.push(h('h2', { className: ['card-title'] }, ctx.slot('title')));
 	return h('section', { className: CTA_CLASS }, [
-		h('div', { className: ['card-body', 'items-center', 'text-center'] }, [
-			h('span', { className: ['ec-chip'] }, [ecGlyph(icon ?? '')]),
-			h('h2', { className: ['card-title'] }, ctx.slot('title')),
+		h('div', { className: ['card-body'] }, [
+			h('div', { className: ['ec-cta-head'] }, headKids),
 			h('div', { className: ['section-body'] }, body),
 		]),
 	]);
@@ -362,6 +401,7 @@ const components: ComponentDef[] = [
 		description: 'A quiet gloss or side note: a small term over muted text. Not for warnings.',
 		insertTemplate: ':::aside[Term]\nA short definition or note.\n:::',
 		build: buildAside,
+		attributes: [{ key: 'id', label: 'Anchor id', type: 'text' }],
 		slots: [OPTIONAL_TITLE_SLOT, BODY_SLOT],
 	},
 	{
@@ -442,6 +482,23 @@ const components: ComponentDef[] = [
 		insertTemplate: ':::gallery[Title]\n![One](/images/one.webp)\n![Two](/images/two.webp)\n:::',
 		build: buildGallery,
 		slots: [OPTIONAL_TITLE_SLOT, BODY_SLOT],
+	},
+	{
+		name: 'checklist',
+		label: 'Checklist',
+		description: 'A check-box list for gear. `cols="2"` lays it out in two columns. Use under a heading.',
+		insertTemplate: '::::checklist\n- First item\n- Second item\n::::',
+		build: buildChecklist,
+		attributes: [{ key: 'cols', label: 'Columns', type: 'select', options: ['1', '2'] }],
+		slots: [BODY_SLOT],
+	},
+	{
+		name: 'faq',
+		label: 'FAQ list',
+		description: 'A ruled question-and-answer list; each item leads with a bold question.',
+		insertTemplate: '::::faq\n- **A question?** The answer.\n- **Another?** The answer.\n::::',
+		build: buildFaq,
+		slots: [BODY_SLOT],
 	},
 ];
 

@@ -166,7 +166,74 @@ body {
   font-family: var(--font-body);
   font-size: 1.05rem;
   line-height: 1.62;
+  text-rendering: optimizeLegibility;
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ─── Final polish: selection, focus, line-breaking ──────────
+   Brand-tinted text selection; a single keyboard focus ring at zero specificity so
+   any component can still override it; balanced headings and tidy body ragging. */
+::selection {
+  background-color: color-mix(in oklab, var(--color-primary) 18%, transparent);
+}
+:where(a, button, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-link);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+.page-title,
+.ec-band-title,
+.ec-cta-head h2,
+.post-body :is(h2, h3) {
+  text-wrap: balance;
+}
+.post-body p {
+  text-wrap: pretty;
+}
+
+/* ─── In-page scrolling ────────────────────────────────────
+   Smooth scroll for anchor jumps (program cards, footnotes, the FAQ pointer);
+   anchored targets clear the 3.5rem sticky header with scroll-margin. */
+html { scroll-behavior: smooth; }
+.ec-band, .ec-aside { scroll-margin-block-start: 4.5rem; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* ─── Training: FAQ pointer (second lede) ──────────────────
+   A short pointer to the FAQ section, lifted off the body as a quiet info-tinted
+   callout with a prominent link. The link is matched by href, so only this one. */
+.static-page[data-page="training"] .post-body p:has(> a[href="#frequently-asked-questions"]) {
+  margin-block: 0.9rem 1.5rem;
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--color-info) 7%, var(--color-base-100));
+  font-size: 0.98rem;
+  color: var(--color-body);
+}
+.post-body a[href="#frequently-asked-questions"] {
+  font-weight: 700;
+  color: var(--color-info);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--color-info) 45%, transparent);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 2px;
+  transition: text-decoration-color 0.15s ease;
+}
+.post-body a[href="#frequently-asked-questions"]:hover {
+  text-decoration-color: var(--color-info);
+}
+.post-body a[href="#frequently-asked-questions"]::after {
+  content: " \2193"; /* the FAQ sits at the foot of the page */
+  display: inline-block;
+  font-weight: 700;
+  transition: transform 0.18s ease;
+}
+.post-body a[href="#frequently-asked-questions"]:hover::after {
+  transform: translateY(2px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .post-body a[href="#frequently-asked-questions"]::after { transition: none; }
 }
 
 /* ─── Shared post chrome ──────────────────────────────────── */
@@ -262,6 +329,38 @@ body {
   color: var(--color-secondary);
 }
 
+/* ─── Call to action: `.ec-cta` ──────────────────────────────
+   A compact, left-aligned action card. Crimson is the action colour, so it carries a
+   quiet crimson wash and edge; the head row is icon + title, then a short note and the
+   button. Flatter and tighter than a standard module card. */
+.ec-cta {
+  border: 1px solid color-mix(in oklab, var(--color-primary) 22%, var(--color-border-subtle));
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--color-primary) 4%, var(--color-base-100));
+}
+.ec-cta .card-body {
+  padding: 1.1rem 1.3rem;
+  gap: 0;
+}
+.ec-cta-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-block-end: 0.45rem;
+}
+.ec-cta-head .ec-glyph {
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+}
+.ec-cta .section-body {
+  color: var(--color-body-soft);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.ec-cta .section-body p { margin-block: 0; }
+.ec-cta .section-body p + p { margin-block-start: 0.4rem; }
+.ec-cta .section-body a.download-link { margin-block: 0.7rem 0.2rem; }
+
 /* ─── Subtle alert card: `.ec-alert` ─────────────────────────
    A reusable aside that still carries weight. A faint role-tinted wash
    sets it apart from the calm card stack. No border, no shadow, so it
@@ -275,6 +374,7 @@ body {
 .ec-alert {
   /* 1.5rem padding matches `.card-body`, so the label and prose line up with
      the card text above/below, with no jarring left-edge shift in the stack. */
+  margin-block: 1.1rem;
   padding: 1.4rem 1.5rem;
   border-radius: 0.7rem;
   background: color-mix(in oklch, var(--alert-edge) 5%, var(--color-base-100));
@@ -348,7 +448,7 @@ body {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 0.68rem;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-faint);
   margin-block-end: 0.1rem;
@@ -390,8 +490,12 @@ body {
   transition: border-color 0.18s ease, box-shadow 0.18s ease;
 }
 .ec-program:hover {
-  border-color: color-mix(in oklch, var(--edge) 45%, var(--color-border));
-  box-shadow: 0 2px 12px -5px color-mix(in oklch, var(--color-heading) 22%, transparent);
+  /* Mix in oklab, not oklch. The cobalt edge (hue 260) interpolated toward the warm
+     neutral border (hue 20) in cylindrical oklch takes the short hue arc through purple,
+     so the camp card's hover border came out magenta. oklab blends in rectangular space,
+     so the cobalt just desaturates toward the border and stays blue. */
+  border-color: color-mix(in oklab, var(--edge) 45%, var(--color-border));
+  box-shadow: 0 2px 12px -5px color-mix(in oklab, var(--color-heading) 22%, transparent);
 }
 .ec-program-secondary { --edge: var(--color-secondary); }
 .ec-program-head {
@@ -429,7 +533,8 @@ body {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 0.72rem;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.09em;
+  font-variant-numeric: tabular-nums;
   text-transform: uppercase;
   color: var(--color-muted);
   margin-block: 0 0.6rem;
@@ -513,6 +618,14 @@ body {
 .ec-band-body > :first-child {
   margin-block-start: 0;
 }
+/* Subsection rhythm: a clear break above each `###`, then it hugs its content (the
+   next block's top margin is reset so the heading sits close to what it labels). */
+.ec-band-body > h3 {
+  margin-block: 1.9rem 0.5rem;
+}
+.ec-band-body > h3 + * {
+  margin-block-start: 0;
+}
 /* Section lede: the opening paragraph steps up a touch, so each section starts the
    way the page does, on a slightly larger, slightly heavier line. */
 .ec-band-body > p:first-child {
@@ -526,73 +639,89 @@ body {
 }
 
 /* ─── Weekly schedule: `.ec-week` ────────────────────────────
-   A seven-day rail. Group-practice days (M/W/F) carry a crimson edge, a filled
-   dot, and a time; solo days recede with a hollow dot; the rest day is a dash. */
+   The group practices as one compact UI unit: a soft recessed panel (a base-200 fill,
+   no border or shadow, so it's lighter than a card). Day and time lead each row, the
+   focus follows on a shared baseline, hairlines divide the rows, and the off-day line
+   sits in a quiet footer inside the same panel. */
 .ec-week {
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  background: var(--color-base-100);
-  overflow: hidden;
   margin-block: 1.1rem;
+  background: var(--color-base-200);
+  border-radius: 12px;
+  padding-inline: 1.15rem;
 }
 .ec-week-row {
-  position: relative;
   display: grid;
-  grid-template-columns: 3.5rem 1fr auto;
-  align-items: center;
-  gap: 0.5rem 0.9rem;
-  padding: 0.6rem 1.1rem;
-  border-block-end: 1px solid var(--color-border-subtle);
+  grid-template-columns: 3.25rem auto 1fr;
+  align-items: baseline;
+  gap: 0.25rem 1rem;
+  padding-block: 0.62rem;
 }
-.ec-week-row:last-child { border-block-end: 0; }
-.ec-week-group { background: color-mix(in oklch, var(--color-primary) 5%, transparent); }
-.ec-week-group::before {
-  content: '';
-  position: absolute;
-  inset: 0 auto 0 0;
-  inline-size: 3px;
-  background: var(--color-primary);
+.ec-week-row + .ec-week-row {
+  border-block-start: 1px solid var(--color-base-300);
 }
 .ec-week-day {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: 0.92rem;
+  font-size: 0.98rem;
   color: var(--color-heading);
 }
-.ec-week-solo .ec-week-day,
-.ec-week-rest .ec-week-day { color: var(--color-muted); font-weight: 700; }
-.ec-week-dot { inline-size: 0.5rem; block-size: 0.5rem; border-radius: 50%; flex: none; }
-.ec-week-group .ec-week-dot {
-  background: var(--color-primary);
-  box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-primary) 16%, transparent);
-}
-.ec-week-solo .ec-week-dot { border: 1.5px solid var(--color-faint); }
-.ec-week-rest .ec-week-dot { inline-size: 0.7rem; block-size: 2px; border-radius: 2px; background: var(--color-border); }
-.ec-week-focus { color: var(--color-body-soft); }
-.ec-week-focus p { margin: 0; font-size: 0.9rem; }
-.ec-week-group .ec-week-focus { color: var(--color-body); }
-.ec-week-focus strong { color: var(--color-heading); font-weight: 700; }
 .ec-week-time {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 0.78rem;
-  color: var(--color-primary);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-muted);
   white-space: nowrap;
 }
-.ec-week-solo .ec-week-time,
-.ec-week-rest .ec-week-time { color: var(--color-faint); }
+.ec-week-focus { color: var(--color-body); }
+.ec-week-focus p { margin: 0; font-size: 0.88rem; line-height: 1.4; }
+.ec-week-focus strong { color: var(--color-heading); font-weight: 700; }
+/* Footnote marker: a glossed term links to the aside that explains it. Keyed to the
+   `#gloss-*` anchor, so any glossed term anywhere gets the same superscript dagger in
+   the info colour, matched on its aside. */
+.post-body a[href^="#gloss-"] {
+  font-size: 0.72em;
+  vertical-align: super;
+  line-height: 0;
+  margin-inline-start: 0.1em;
+  font-weight: 700;
+  color: var(--color-info);
+  text-decoration: none;
+}
+.post-body a[href^="#gloss-"]:hover { color: var(--color-link-hover); }
+/* The matching end of the footnote: the same dagger on the gloss aside it points to. */
+[id^="gloss-"] .ec-aside-term::before {
+  content: "† ";
+  color: var(--color-info);
+}
+.ec-week-foot {
+  border-block-start: 1px solid var(--color-base-300);
+  padding-block: 0.7rem 0.75rem;
+}
+.ec-week-foot p {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--color-muted);
+}
+/* The first line is the day callout: a bold display label that highlights the
+   off-days over the muted note beneath it. */
+.ec-week-foot p:first-child {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--color-heading);
+  margin-block-end: 0.3rem;
+}
 @media (max-width: 600px) {
-  .ec-week-row { grid-template-columns: 3.6rem 1fr; }
-  .ec-week-time { grid-column: 2; font-size: 0.75rem; color: var(--color-muted); }
+  .ec-week-row { grid-template-columns: 3rem 1fr; }
+  .ec-week-time { grid-column: 2; }
+  .ec-week-focus { grid-column: 1 / -1; }
 }
 
 /* ─── Training-group spectrum: `.ec-spectrum` ────────────────
    One pace continuum, not separate groups: a gradient bar with a segment per zone,
    then the zone labels. Ordinals come from a CSS counter. */
-.ec-spectrum { margin-block: 1rem; counter-reset: zone; }
+.ec-spectrum { margin-block: 1.1rem; counter-reset: zone; }
 .ec-spectrum-bar { display: flex; block-size: 0.55rem; border-radius: 99px; overflow: hidden; }
 .ec-spectrum-bar span { flex: 1; }
 .ec-spectrum-bar span:nth-child(1) { background: color-mix(in oklch, var(--color-primary) 32%, var(--color-base-200)); }
@@ -702,6 +831,71 @@ body {
   .ec-grid { grid-template-columns: 1fr; }
 }
 
+/* ─── Checklist: `.ec-checklist` ─────────────────────────────
+   Gear lists (what to bring, what to pack) as a quiet two-column list with check-box
+   markers, so a packing list reads as something to tick off. The `.post-body` prefix
+   beats the generic list rules on specificity. */
+.post-body .ec-checklist {
+  list-style: none;
+  padding: 0;
+  margin-block: 1.1rem;
+}
+.post-body .ec-checklist-2col {
+  columns: 2;
+  column-gap: 1.75rem;
+}
+.post-body .ec-checklist > li {
+  break-inside: avoid;
+  position: relative;
+  margin-block: 0.42rem;
+  padding-inline-start: 1.6rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--color-body-soft);
+}
+.post-body .ec-checklist > li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0.18em;
+  inline-size: 0.95em;
+  block-size: 0.95em;
+  border: 1.5px solid var(--color-faint);
+  border-radius: 3px;
+}
+@media (max-width: 540px) {
+  .post-body .ec-checklist-2col { columns: 1; }
+}
+
+/* ─── FAQ list: `.ec-faq` ────────────────────────────────────
+   A ruled question-and-answer list: each item leads with its question in the display
+   face over the answer, divided by a hairline. No boxes, just rhythm. */
+.post-body .ec-faq {
+  list-style: none;
+  padding: 0;
+  margin-block: 1.1rem;
+}
+.post-body .ec-faq > li {
+  margin: 0;
+  padding-block: 0.85rem;
+  border-block-start: 1px solid var(--color-border-subtle);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--color-body);
+}
+.post-body .ec-faq > li:first-child {
+  border-block-start: 0;
+  padding-block-start: 0;
+}
+.post-body .ec-faq > li > strong:first-child {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--color-heading);
+  margin-block-end: 0.2rem;
+}
+
 /* ─── Page-level headings ─────────────────────────────────── */
 .page-title {
   font-family: var(--font-display);
@@ -743,10 +937,22 @@ body {
   text-decoration: none;
   text-decoration-color: transparent;
   border-radius: 7px;
-  transition: opacity 0.15s ease;
+  transition: background-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
 }
 .download-link:hover,
-.post-body a.download-link:hover { opacity: 0.85; color: oklch(99% 0.003 60); text-decoration-color: transparent; }
+.post-body a.download-link:hover {
+  background: var(--color-link-hover);
+  color: oklch(99% 0.003 60);
+  text-decoration-color: transparent;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px -8px color-mix(in oklab, var(--color-primary) 65%, transparent);
+}
+.download-link:active,
+.post-body a.download-link:active { transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .download-link, .post-body a.download-link { transition: background-color 0.16s ease; }
+  .download-link:hover, .post-body a.download-link:hover { transform: none; }
+}
 
 /* ─── Post body (rendered markdown HTML) ─────────────────── */
 .post-body {
@@ -796,7 +1002,7 @@ body {
   font-family: var(--font-display);
   font-size: 1.05rem;
   font-weight: 700;
-  letter-spacing: 0;
+  letter-spacing: -0.01em;
   line-height: 1.3;
   margin-block: 1.75em 0.4em;
   color: var(--color-heading);
@@ -821,7 +1027,7 @@ body {
    markdown lists with no markers (reading as text runs, not a list). Restore
    them for ordinary content lists; `.ec-grid` (parallel tiles) and task lists
    opt out and stay markerless. */
-.post-body ul:not(.ec-grid):not(.contains-task-list) { list-style: disc; }
+.post-body ul:not(.ec-grid):not(.ec-checklist):not(.ec-faq):not(.contains-task-list) { list-style: disc; }
 .post-body ol { list-style: decimal; }
 .post-body li {
   margin-block: 0.25em;
@@ -922,7 +1128,7 @@ body {
 }
 .post-body a:hover {
   color: var(--color-link-hover);
-  text-decoration-color: var(--color-muted);
+  text-decoration-color: color-mix(in oklab, var(--color-link) 45%, transparent);
 }
 .post-body a:active {
   color: var(--color-heading);

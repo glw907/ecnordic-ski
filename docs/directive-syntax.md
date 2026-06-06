@@ -65,10 +65,12 @@ Second panel copy.
 | `gallery` | optional | yes | none | A small set of images in a responsive grid. The body holds the images; the title heads the set. |
 | `programs` | none | yes | none | A row of side-by-side program cards. The body holds `program` blocks. |
 | `program` | required | yes | `icon`, `href`, `meta`, `cta`, `role` | One program offering as a clickable card. Use inside `programs`. |
-| `week` | none | yes | none | A seven-day schedule rail. The body holds `day` blocks. |
-| `day` | required | yes | `kind`, `time` | One day-row of the week. Use inside `week`. |
+| `week` | none | yes | none | A light ruled schedule list (no card). The body holds `day` blocks. |
+| `day` | required | yes | `kind`, `time` | One row: day, time, then focus. Use inside `week`. |
 | `spectrum` | none | yes | none | A pace continuum with a bar plus labelled zones. The body holds `zone` blocks. |
 | `zone` | required | yes | none | One zone of the spectrum. Use inside `spectrum`. |
+| `checklist` | none | yes | `cols` | A check-box list for gear (single column; `cols="2"` for two). Wrap a bullet list, use under a heading. |
+| `faq` | none | yes | none | A ruled question-and-answer list. Wrap a bullet list whose items lead with a bold question. |
 
 ### Per-directive notes
 
@@ -126,9 +128,10 @@ The blurb.
 ::::
 ```
 
-`week` and `day` render the seven-day schedule rail. Each `day` takes a `kind` of `group`, `solo`, or
-`rest`, which sets the marker and emphasis, and an optional `time`. The title is the day name; the body is
-the focus.
+`week` and `day` render the schedule as a light ruled list, not a card: each row leads with the day and
+its `time`, then the focus. `day` still accepts a `kind` of `group`, `solo`, or `rest` as a class hook,
+but the current rail styles every row the same. The title is the day name; the body is the focus. List
+only the days that carry detail (the group practices), and describe the off-days in prose beside the rail.
 
 `spectrum` and `zone` render the training-group continuum: a gradient bar with one segment per zone, then
 the zone labels. Each `zone` has a name (title) and a who-it-is-for line (body); the ordinal is numbered
@@ -140,8 +143,8 @@ The `icon` attribute takes one of these names (Phosphor glyphs from `icons.ts`).
 list renders nothing, so it is a silent miss to watch for:
 
 ```
-backpack  calendar-blank  chat-circle  compass  flag  hand-coins
-handshake  info  path  person-simple-run  tent  users-three  warning
+backpack  calendar-blank  car  chat-circle  compass  flag  hand-coins
+handshake  info  path  person-simple-run  question  tent  users-three  warning
 ```
 
 ## The `role` attribute

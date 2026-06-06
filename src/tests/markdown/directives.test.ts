@@ -88,13 +88,12 @@ describe('grid directive', () => {
 });
 
 describe('cta directive', () => {
-  it('renders a centered CTA card, chip icon, and promotes the download link', async () => {
+  it('renders a compact CTA card with an icon-and-title head row and promotes the download link', async () => {
     const html = await renderMarkdown(
       ':::cta[Getting started]{icon="flag"}\nDo this.\n\n<a href="/waiver" class="download-link">Get it →</a>\n:::\n',
     );
-    expect(html).toContain('<section class="card ec-card ec-cta bg-base-100 border border-primary/30 shadow-sm" data-rise="0">');
-    expect(html).toContain('<div class="card-body items-center text-center">');
-    expect(html).toContain('<span class="ec-chip"><svg class="ec-glyph"');
+    expect(html).toContain('<section class="card ec-card ec-cta" data-rise="0">');
+    expect(html).toContain('<div class="ec-cta-head"><span class="ec-icon"><svg class="ec-glyph"');
     expect(html).toContain('<h2 class="card-title"');
     expect(html).toContain('class="download-link btn btn-primary"');
   });

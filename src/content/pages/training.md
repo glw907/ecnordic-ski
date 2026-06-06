@@ -4,6 +4,8 @@ title: "Training"
 
 East Community Nordic runs two summer programs for Anchorage high school athletes: a dryland training program three mornings a week, and a four-day camp near Talkeetna in July. The two are built to go together, and most athletes will do both. You can also do just one. Both are free, with need-blind donations, and both welcome any high schooler whatever your experience.
 
+Have a question? The [frequently asked questions](#frequently-asked-questions) cover cost, gear, and who can join.
+
 ::::programs
 :::program[Summer training]{icon="person-simple-run" href="#summer-training" meta="Jun 1–Aug 19 · 3 mornings a week" cta="See summer training"}
 Run, lift, roller-ski, and ride with the group. The weekly base for your Nordic season.
@@ -20,56 +22,43 @@ We meet Monday, Wednesday, and Friday from June 1 to August 19, 2026. Practice s
 
 ### Schedule
 
-We meet for group practice Monday, Wednesday, and Friday. Tuesday, Thursday, and the weekend are yours for solo training.
-
 ::::week
 :::day[Mon]{kind="group" time="10:30–12:15"}
-**Group practice.** Running, outdoor strength, and spenst. East High.
-:::
-:::day[Tue]{kind="solo" time="on your own"}
-Solo training from your group's plan.
+Strength, core, and spenst[†](#gloss-spenst-od), with some running. East High.
 :::
 :::day[Wed]{kind="group" time="10:30–12:15"}
-**Group practice.** Intervals, hill work, and bounding.
-:::
-:::day[Thu]{kind="solo" time="on your own"}
-Solo training from your group's plan.
+Hill intervals and bounding.
 :::
 :::day[Fri]{kind="group" time="10:30–12:30"}
-**Group practice.** Over-distance, the week's long day.
+Over-distance[†](#gloss-spenst-od) mountain running.
 :::
-:::day[Sat]{kind="solo" time="on your own"}
-Solo training from your group's plan.
-:::
-:::day[Sun]{kind="rest"}
-Rest, or easy recovery.
-:::
+
+**Tuesday, Thursday, and weekends**
+
+We have independent workouts scheduled for the days we're not meeting as a team, with options for biking and roller-skiing. You can find these in CrewLAB. You can do them solo, but it is more fun with teammates, so grab an EC Nordic training partner when you can!
 ::::
 
-Your group's solo workouts live in CrewLAB, and so do recovery-day ideas. Log in to see the plan for your days off. Each workout comes with options for the gear you have on hand. You can train on your own, but it is more fun with teammates, so grab an EC Nordic training partner when you can.
+:::aside[Spenst & Over-distance]{id="gloss-spenst-od"}
+Spenst is explosive jumping work: short, powerful bounds and hops that build the spring a skier needs. Over-distance, or OD, is a long session at an easy, conversational pace. The point is steady time on your feet, not speed.
+:::
 
 These are practice times and do not include travel. Monday is always at East High, with no carpool. The other days move among East High, Hillside (Hilltop parking lot), Kincaid Park, Bartlett trails, and Chugach front range trailheads. The spot for each practice is posted on CrewLAB, and it can change, so check before you head out.
 
+::::card[Carpooling]{icon="car"}
 For an off-site day, a carpool leaves from East High. Arrive by 10:00 AM to ride along, and a return carpool brings athletes back to East. Parents can pick up at East or at the site.
-
-:::aside[Spenst]
-Spenst is explosive jumping work: short, powerful bounds and hops that build the spring a skier needs. You will hear the term on Mondays.
-:::
-
-:::aside[Over-distance]
-Over-distance, or OD, is a long session at an easy, conversational pace. Friday is the week's long day, and the point is steady time on your feet, not speed.
-:::
+::::
 
 ### Activities
 
-Running and strength are the weekly core. Mountain biking and roller-skiing come in on some days, not every week.
+Group practice is built around running and strength. We work in hill intervals, bounding, and spenst through the week, and close it with a long over-distance run.
 
-- **Running.** Trail and road runs across Anchorage, the backbone of the week.
-- **Strength training.** Bounding, plyometrics, and core work, mostly outdoors. No gym needed.
+- **Running.** Trail, road, and mountain running across Anchorage, the backbone of group practice.
+- **Strength and core.** Bounding, plyometrics, spenst, and core work, mostly outdoors. No gym needed.
+
+On your independent days, you also have biking and roller-skiing:
+
+- **Biking.** Singletrack and gravel at various trailheads.
 - **Roller-skiing.** Roller skis and poles on pavement.
-- **Mountain biking.** Singletrack and gravel at various trailheads.
-
-Most sessions mix two or three of these. You will not do the same thing every day.
 
 ::::alert[Helmets required]{role="caution"}
 You need a helmet for every roller-ski and mountain-bike session. No helmet, no wheels. We hold to this every time.
@@ -89,11 +78,11 @@ The development group. Younger or newer athletes who already have some organized
 :::
 
 :::zone[Comp]
-The competition group. Experienced older athletes with a high-level background, aiming for state teams and the Besh Cup series.
+The competition group. Experienced older athletes with a high-level background, aiming for state teams and the Besh Cup[†](#gloss-besh-cup) series.
 :::
 ::::
 
-:::aside[Besh Cup]
+:::aside[Besh Cup]{id="gloss-besh-cup"}
 The Besh Cup is Alaska's six-race cross-country ski series, held over three winter weekends. The results pick Team Alaska for Junior Nationals, and in even years for the Arctic Winter Games.
 :::
 
@@ -107,10 +96,12 @@ The program is need-blind. Donations and ability to pay do not affect who can jo
 
 ### What to bring
 
+::::checklist
 - Water and snacks for the session.
 - Trail running shoes.
 - A helmet, required for roller-skiing and mountain biking.
 - Layers. Anchorage summer weather changes fast.
+::::
 
 Short on gear? We can lend roller skis, poles, and more to any athlete who needs them. Just tell a coach what you need.
 
@@ -140,6 +131,7 @@ The camp is free, with donations requested according to what your family can man
 
 ### What to pack
 
+::::checklist{cols="2"}
 - Sleeping bag and a pillow.
 - Training clothes for both cool and warm weather.
 - Rain gear. Talkeetna weather is its own thing.
@@ -154,6 +146,7 @@ The camp is free, with donations requested according to what your family can man
 - Any daily medications.
 - Personal food for any dietary needs (optional).
 - Personal snacks (optional).
+::::
 
 :::cta[Register for camp]{icon="tent"}
 Camp registration and consent happen inside [CrewLAB](cairn:pages/crewlab), separate from summer training. A signed waiver must be on file before camp. Head to CrewLAB to register.
@@ -163,11 +156,15 @@ Questions first? [Contact us](/contact).
 
 :::::
 
-## Common questions
+:::::section[Frequently Asked Questions]{icon="question"}
 
+::::faq
 - **What does it cost?** Nothing. The summer program and the camp are both free, and donations are optional and need-blind.
 - **Do I need skiing experience?** No. The training builds the same base competitive Nordic skiers use, and it works for any high school athlete. Cross-country runners fit right in.
 - **Who can join?** Anyone entering 9th grade through 12th grade, plus graduates home from college for the summer. No junior high.
 - **Do I have to do both?** No. Summer training and the camp are separate offerings. Sign up for either one, or both.
 - **What if I miss a session?** Come to the next one. The weekly plan includes work you can do on your own, posted on CrewLAB.
 - **Do I need my own gear?** Bring trail shoes, water, and a helmet for bike and roller-ski days. If you need roller skis or poles, we can lend them. Just ask a coach.
+::::
+
+:::::

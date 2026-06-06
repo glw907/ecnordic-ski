@@ -7,6 +7,7 @@ describe('ecnordicRegistry', () => {
 		expect(ecnordicRegistry.names).toEqual([
 			'card', 'grid', 'alert', 'cta', 'split', 'panel', 'passage', 'aside', 'section',
 			'programs', 'program', 'week', 'day', 'spectrum', 'zone', 'figure', 'gallery',
+			'checklist', 'faq',
 		]);
 	});
 
