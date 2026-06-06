@@ -76,6 +76,8 @@ The hybrid split puts the method in the dotfiles and the voice in each repo.
 - `.claude/rules/content.md`: carries the context-to-register map and routes drafting to
   `content-draft` and review to `content-review`.
 - `CLAUDE.md`: gains a short Website Content line naming the workflow and pointing at the rule.
+- A hookify reminder (`.claude/hookify.content-review-reminder.local.md`, matching the existing
+  reminder files) nudges `content-review` when a `src/content/` file is edited.
 - `.claude/skills/content-cleanup/`: deleted. `content-review` supersedes it.
 
 Banned-word lists go inside fenced code blocks in every file, because `prose-guard` skips fenced
@@ -163,10 +165,10 @@ Four layers decide when the skills fire and which voice applies, from softest to
 3. **The project pointer.** `CLAUDE.md` gains a short Website Content line that names the workflow
    and points at the rule, so the always-loaded instructions carry it.
 
-4. **An optional drafting-time reminder.** A `PostToolUse` note, fired when a file under
-   `src/content/` is edited, that suggests `content-review` before the commit. It mirrors the
-   existing svelte-check reminder. This is the one layer that is a matter of taste, since reminder
-   hooks can read as noise. It is included only if the user wants it.
+4. **A drafting-time reminder.** A reminder, fired when a file under `src/content/` is edited, that
+   suggests `content-review` before the commit. It mirrors the existing hookify svelte-check
+   reminder and matches its tracked-or-local status. Reminder hooks can read as noise, so it stays a
+   single short nudge, not a repeated block.
 
 The cross-site story rides on layers 1 and 2. The skills are global, so their descriptions trigger
 everywhere. Each site carries its own `content.md` rule and `CLAUDE.md` pointer, so 907.life gets
