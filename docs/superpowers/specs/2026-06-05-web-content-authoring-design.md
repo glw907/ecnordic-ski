@@ -73,7 +73,9 @@ The hybrid split puts the method in the dotfiles and the voice in each repo.
 - `docs/content-guide.md`: stays the site voice source of truth. It gains a short pointer to the
   shared method and keeps the ecnordic specifics (the trailhead voice, the Anchorage features, the
   off/on-voice examples). It does not duplicate the catalog.
-- `.claude/rules/content.md`: routes drafting to `content-draft` and review to `content-review`.
+- `.claude/rules/content.md`: carries the context-to-register map and routes drafting to
+  `content-draft` and review to `content-review`.
+- `CLAUDE.md`: gains a short Website Content line naming the workflow and pointing at the rule.
 - `.claude/skills/content-cleanup/`: deleted. `content-review` supersedes it.
 
 Banned-word lists go inside fenced code blocks in every file, because `prose-guard` skips fenced
@@ -138,6 +140,37 @@ independence.
 
 Its description carries the old `content-cleanup` triggers (`/content-cleanup`, "clean up this
 content", "check for AI tells", "editorial pass") so existing habits still reach it.
+
+## Activation: how Claude knows when and how to use these
+
+Skills that never fire are dead weight, and the register has to be chosen correctly every time.
+Four layers decide when the skills fire and which voice applies, from softest to hardest.
+
+1. **Skill descriptions. The discovery layer.** Each `SKILL.md` description names its trigger
+   moment and scopes it to website content. `content-draft` triggers when the next action is
+   drafting a site page, post, or form copy, or when the user asks to write or draft such copy.
+   `content-review` triggers before committing edited site content and on the old `content-cleanup`
+   phrases. Both descriptions say in plain terms that they are for website content, not for code,
+   docs, specs, or commit messages.
+
+2. **The repo rule. The router.** `.claude/rules/content.md` auto-loads, so it is always in
+   context. It carries the context-to-register map and the workflow. Editing a file under
+   `src/content/`, or drafting a page, post, or form copy, uses the web-content register and the two
+   skills: invoke `content-draft` before writing, run `content-review` before committing. Editing
+   code, docs, specs, or commit messages keeps the technical voice and its existing tools. This rule
+   is the line that makes the right voice and the right skill the default rather than an afterthought.
+
+3. **The project pointer.** `CLAUDE.md` gains a short Website Content line that names the workflow
+   and points at the rule, so the always-loaded instructions carry it.
+
+4. **An optional drafting-time reminder.** A `PostToolUse` note, fired when a file under
+   `src/content/` is edited, that suggests `content-review` before the commit. It mirrors the
+   existing svelte-check reminder. This is the one layer that is a matter of taste, since reminder
+   hooks can read as noise. It is included only if the user wants it.
+
+The cross-site story rides on layers 1 and 2. The skills are global, so their descriptions trigger
+everywhere. Each site carries its own `content.md` rule and `CLAUDE.md` pointer, so 907.life gets
+the same routing by copying two small local files.
 
 ## The rubric
 
@@ -293,6 +326,8 @@ burstiness detector limits
   per-sentence findings list on a sample page. Its hard gates fire on a planted banned word and a
   planted care promise. It runs as a fresh agent, not the drafting context.
 - The retired `content-cleanup` triggers still reach `content-review`.
+- Editing a file under `src/content/` routes to the web-content register: the `content.md` rule
+  names the two skills, and editing a code or docs file does not.
 - `prose-guard --all` after the lexicon change flags a planted blocking word and surfaces a
   planted advisory word without blocking it. The tool's own tests pass.
 - The technical track is unchanged: a docs or code edit behaves exactly as before.
