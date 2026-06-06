@@ -193,39 +193,6 @@
   /* The icon primitives (.ec-icon bare glyph, .ec-chip tile) and the caution
      subtle alert (.ec-alert) live globally in app.css. Below: About-only tuning. */
 
-  /* Paired info: two labelled panels, each with its own icon */
-  .static-page[data-page="about"] :global(.ec-split) {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.9rem;
-    margin-block-start: 0.25rem;
-  }
-  .static-page[data-page="about"] :global(.ec-panel) {
-    display: flex;
-    gap: 0.75rem;
-    align-items: flex-start;
-    background: var(--color-base-200);
-    border-radius: 0.75rem;
-    padding: 1.1rem 1.2rem;
-  }
-  .static-page[data-page="about"] :global(.ec-panel .ec-icon) {
-    margin-block-start: 0.1rem;
-  }
-  .static-page[data-page="about"] :global(.ec-panel .ec-glyph) {
-    inline-size: 1.5rem;
-    block-size: 1.5rem;
-  }
-  .static-page[data-page="about"] :global(.ec-panel p) {
-    margin: 0;
-  }
-  .static-page[data-page="about"] :global(.ec-panel strong) {
-    display: block;
-    font-family: var(--font-display);
-    font-size: 1.02rem;
-    margin-block-end: 0.3rem;
-    color: var(--color-heading);
-  }
-
   /* Single call to act */
   .static-page:is([data-page="about"], [data-page="training"], [data-page="crewlab"]) :global(.ec-cta .btn) {
     margin-block-start: 0.5rem;
@@ -234,13 +201,6 @@
   @keyframes page-rise {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: none; }
-  }
-
-  /* ─── Mobile ─────────────────────────────────────────────── */
-  @media (max-width: 640px) {
-    .static-page[data-page="about"] :global(.ec-split) {
-      grid-template-columns: 1fr;
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {
