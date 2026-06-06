@@ -6,7 +6,7 @@ EC Nordic runs entirely on unpaid volunteers: parents, former racers, and local 
 
 ::::split[This summer's coaches]
 :::panel{icon="person-simple-run"}
-Geoff Wright leads the summer session. He's a lifelong runner and cyclist who came to cross-country skiing as an adult, and he's spent 13 years coaching NSAA's Junior Nordic program, eight of them as site director at Kincaid. He was an assistant coach at West High in 2024/25 and now coaches at Bettye Davis East. He's raised three competitive cross-country runner-skiers, the youngest now racing and training with the APU Nordic Elite Team. When he's not coaching, he loves snow, trails, books, general nerdery, and Sunday morning pancakes.
+Geoff Wright leads the summer session. He's a lifelong runner and cyclist who came to cross-country skiing as an adult, and he's spent 13 years coaching NSAA's[†](#gloss-nsaa) Junior Nordic program, eight of them as site director at Kincaid. He was an assistant coach at West High in 2024/25 and now coaches at Bettye Davis East. He's raised three competitive cross-country runner-skiers, the youngest now racing and training with the APU[†](#gloss-apu) Nordic Elite Team. When he's not coaching, he loves snow, trails, books, general nerdery, and Sunday morning pancakes.
 :::
 
 :::panel{icon="person-simple-run"}
@@ -17,6 +17,14 @@ Amy Purevsuren runs the Talkeetna camp and is the head nordic coach at Bettye Da
 Duncan Wright, Geoff's oldest, coaches the Friday distance sessions. He's a lifelong competitive mountain runner, cyclist, and skier, with top-10 finishes at Crow Pass and the Kesugi Ridge 50K, where he was the youngest in the field. His latest endurance feat was second place at the Kenai 250, a 250-mile mountain bike race and one of the most grueling in the country. He holds an Outdoor Studies degree from APU with a concentration in snow science. When he's not plotting his next big race, he reads science fiction, works on local trails, builds bikes, and makes beautiful things out of wood.
 :::
 ::::
+
+:::aside[NSAA]{id="gloss-nsaa"}
+The Nordic Skiing Association of Anchorage, the nonprofit that grooms Anchorage's cross-country ski trails and runs community programs, including the Junior Nordic youth program.
+:::
+
+:::aside[APU]{id="gloss-apu"}
+Alaska Pacific University. Its APU Nordic program is one of the country's top cross-country ski clubs.
+:::
 
 ::::grid[Help out]{icon="handshake" role="secondary"}
 We always need more adults. Graduates home from college for the summer are especially welcome to train with us and step into team leadership. The most useful things you can do:
