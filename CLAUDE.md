@@ -12,6 +12,12 @@ SvelteKit · TypeScript · Tailwind CSS v4 · DaisyUI v5 · @schedule-x/svelte �
 
 Pass-driven. Any of "continue development," "next pass," "finish pass," or "ship pass" invokes the `site-pass` skill (this repo's own roadmap). The site consumes `@glw907/cairn-cms` from the npm registry by version range; that library is a separate standalone repo with its own roadmap.
 
+## Website Content
+
+Website content (pages, posts, form copy under `src/content/`) uses the audience-first web-content
+register, not the technical voice. Draft with the `content-draft` skill and review with
+`content-review`. The routing and the voice rules are in `.claude/rules/content.md`.
+
 ## Build & Dev
 
 ```bash

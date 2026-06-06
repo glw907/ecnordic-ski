@@ -1,5 +1,17 @@
 # Content Standards
 
+## Voice routing: pick the register by context
+
+Website content and code are different writing. Route by what you are editing.
+
+- **Website content** (pages, posts, or form copy under `src/content/`): the web-content register.
+  Before drafting, use the `content-draft` skill. Before committing edited content, use the
+  `content-review` skill. The shared method is at `~/.claude/docs/web-content-method.md`; the local
+  voice is in `docs/content-guide.md` below.
+- **Code, docs, specs, commit messages:** the technical voice. Keep the existing tools (the
+  `writing-voice` output style, `prose-voice.md`, the `prose-guard` docs and comments tiers). Do not
+  apply the web-content skills to them.
+
 Before writing or editing any website content (pages, posts, or form copy), read the content guide:
 
 **`docs/content-guide.md`**
@@ -46,14 +58,9 @@ Check every draft for these before finishing:
 
 9. **Binary "not X, but Y" constructions.** Fine once; a pattern is a tell.
 
-10. **Banned words and phrases.** Do not use any of these:
-
-```
-seamless  transformative  robust  pivotal  foster  leverage (figurative)
-elevate (figurative)  comprehensive  thriving  curated  tailored  dedicated
-meticulous  nuanced  "it's worth noting"  "when it comes to"  "let's explore"
-"dive into"  "not only X but also Y"
-```
+10. **Banned words and phrases.** The full Signs-of-AI-writing catalog lives in the shared method
+    doc (`~/.claude/docs/web-content-method.md`) and in `docs/content-guide.md`. `prose-guard`
+    enforces it at write time. Do not maintain a third copy here.
 </anti_patterns>
 
 ## Self-Critique Pass (MANDATORY)
