@@ -16,12 +16,13 @@ the general tier, the docs tier still does not block on `robust` or `comprehensi
 90 green. A live `content-review` smoke test on `src/content/pages/about.md` loaded the method doc,
 ran the rubric, and returned a Publish band (93) with a full score table and per-sentence findings.
 
-The dotfiles changes are committed in `~/.dotfiles`, unpushed. The ecnordic changes are committed on
-local `main`, unpushed, because a push to `main` deploys live. One operational note: the dotfiles side
-needed a re-stow of the `claude` package (`stow -R claude`) so the new
-`~/.claude/docs/web-content-method.md` symlink exists, and that was done. What remains for the human:
-push both repos when ready, then smoke-test by drafting a short post with `content-draft` and reviewing
-it with `content-review`. The two out-of-scope follow-ups are filed in `BACKLOG.md` (#26 and #27).
+Both repos are pushed: the dotfiles to `github.com/glw907/workstation`, the ecnordic changes to `main`.
+The ecnordic push touched only config and docs, no rendered page, so the live site content did not
+change. One operational note: the dotfiles side needed a re-stow of the `claude` package
+(`stow -R claude`) so the new `~/.claude/docs/web-content-method.md` symlink exists, and that was done.
+The two out-of-scope follow-ups are filed in `BACKLOG.md` (#26 and #27). The natural next step is the
+#26 rubric audit: run `content-review` over each page in `src/content/pages/`, ideally in a fresh
+session for an independent score.
 
 **Shipped: global component layer (2026-06-06).** The `.ec-*` component styles moved to the global
 stylesheet, the Volunteers page is fixed, the entrance cascade now covers every static page, and
@@ -66,7 +67,9 @@ keeps a hand-maintained `<nav class="page-toc">` until a cairn-cms engine change
 The editorial backstop found no AI-rhythm tells in the rewritten page, so the content, manifest, and
 snapshots were left untouched. The page carries two tracked content placeholders, a loaner-equipment line
 (BACKLOG #24) and the camp packing list (BACKLOG #25). Gate green (`check` 0/0, `npm test` 54, build clean).
-All work sits on the `site-refresh` branch, unpushed (a push to `main` deploys live).
+Correction (2026-06-06): this work is on `main` and deployed, not pending. The `site-refresh` branch was
+merged before the global component-layer pass and has now been deleted, along with the stale
+`chore/stable-0.6.0` and `cutover/cairn-rc` branches. The repo runs on `main` alone.
 
 **Current state.** The directive render pipeline is live; all five static pages carry inline
 container directives; the content style guard blocks AI tells in `src/content/**/*.md`. The
@@ -108,9 +111,9 @@ dropped four validation rules the old validator enforced.
 experimental, so keep contact as the proving ground (BACKLOG #13). **Pass 10 (closed):** the
 old placeholder-content concern is resolved. Every page now carries real content, the Training rewrite in
 Plan 3 being the last. The waiver and payment model is settled by the canonical facts: the waiver is signed
-in CrewLAB, and the program is free with need-blind donations. Three content confirmations remain open as
-pre-publish items, the CrewLAB collection model (BACKLOG #21), the Training loaner equipment (#24), and the
-camp packing list (#25).
+in CrewLAB, and the program is free with need-blind donations. One content confirmation remains open as a
+pre-publish item, the CrewLAB collection model (BACKLOG #21 and #22). The Training loaner equipment (#24)
+and the camp packing list (#25) are now closed.
 
 ---
 
@@ -131,15 +134,17 @@ camp packing list (#25).
 
 ---
 
-### Next starter prompt (finish the site-refresh initiative)
+### Remaining before the public launch
 
-> All three site-refresh plans are done and green on `site-refresh`, unpushed. The content rebuild is at a
-> finished first draft. What remains is the pre-publish checklist and the launch-time redirects. The
-> pre-publish checklist covers attorney review of the waiver, the external confirmations (the live CrewLAB
-> join link and signing flow in BACKLOG #22, the CrewLAB collection model in #21, the Training loaner
-> equipment in #24, and the camp packing list in #25), and swapping in real photos. The launch-time
-> redirects are `/resources` and `/waiver` to CrewLAB (BACKLOG #18) and `/home` to `/` (#17). Decide
-> whether to merge `site-refresh` to `main` now (a push to `main` deploys live) or to hold for the
-> pre-publish items first. Do not push without that decision.
+The content rebuild is a finished first draft, merged to `main` and deploying to the live URL. The site
+is not a public launch yet, so the pre-publish checklist is the gate before announcing it:
+
+- Attorney review of the waiver.
+- The external confirmations: the CrewLAB join link and signing flow (#22) and the CrewLAB collection
+  model (#21). The crewlab page still carries a live `PLACEHOLDER` for what EC Nordic collects.
+- The launch-time redirects: `/resources` and `/waiver` to CrewLAB (#18), and `/home` to `/` (#17).
+- Real photos in place of the placeholders.
+
+BACKLOG #24 (Training loaner equipment) and #25 (camp packing list) are already closed.
 
 **Deploy:** Live at **https://ecnordic.ski**. Push to `main` triggers GitHub Actions (build + pagefind + wrangler deploy).
