@@ -100,28 +100,6 @@
     animation: page-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.06s both;
   }
 
-  /* ─── Base card (used as-is on training, volunteers, resources) ─── */
-  .static-page :global(.page-section) {
-    margin-block-start: 1rem;
-    padding: 1.5rem 1.75rem;
-    background: var(--color-base-100);
-    border: 1px solid var(--color-border-subtle);
-    border-radius: 12px;
-    box-shadow: 0 1px 4px oklch(0% 0 0 / 0.05);
-  }
-  .static-page :global(.page-section h2) {
-    font-size: 1.25rem;
-    margin-block: 0 0.75rem;
-  }
-  .static-page :global(.section-body > :first-child) {
-    margin-block-start: 0;
-  }
-  .static-page :global(.page-section h3) {
-    font-size: 1.02rem;
-    margin-block: 1.2rem 0.2rem;
-    color: var(--color-heading);
-  }
-
   /* ─── About: worked example of the EC Nordic design language ──────
      The page is built from a small, reusable kit (see the Pass-4 design
      spec). Each primitive maps to a DaisyUI component so it's idiomatic
