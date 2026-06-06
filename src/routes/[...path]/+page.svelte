@@ -150,11 +150,17 @@
      own delay so the page resolves as one top-to-bottom cascade continuing the title
      (0s) and lede (0.06s) above it. The delay comes from the engine's data-rise ordinal
      (mapped just below), not an inline style, so the sanitize floor can drop `style`. */
-  .static-page:is([data-page="about"], [data-page="training"], [data-page="crewlab"]) :global(.ec-card),
-  .static-page[data-page="crewlab"] :global(.ec-passage),
-  .static-page[data-page="about"] :global(.ec-alert) {
+  .static-page :global(.ec-card),
+  .static-page :global(.ec-passage),
+  .static-page :global(.ec-alert) {
     margin-block-start: 1.4rem;
     animation: module-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  /* Training's only alert sits inside a section band, which carries the entrance and
+     keeps light modules on the 1.1rem tier. Hold it there instead of the 1.4rem rule. */
+  .static-page[data-page="training"] :global(.ec-band .ec-alert) {
+    margin-block-start: 1.1rem;
+    animation: none;
   }
   /* A training section band is a top-level module: it carries a data-rise ordinal and
      rises as one unit. Its inner modules ride that entrance, so they don't animate
@@ -194,9 +200,9 @@
     .static-page,
     .static-page :global(.page-title),
     .static-page :global(.post-body > p:first-child),
-    .static-page:is([data-page="about"], [data-page="training"], [data-page="crewlab"]) :global(.ec-card),
-    .static-page[data-page="crewlab"] :global(.ec-passage),
-    .static-page[data-page="about"] :global(.ec-alert),
+    .static-page :global(.ec-card),
+    .static-page :global(.ec-passage),
+    .static-page :global(.ec-alert),
     .static-page[data-page="training"] :global(.ec-band) {
       animation: none;
     }
