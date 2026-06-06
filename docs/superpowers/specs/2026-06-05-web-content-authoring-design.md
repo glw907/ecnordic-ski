@@ -62,8 +62,9 @@ The hybrid split puts the method in the dotfiles and the voice in each repo.
 **Shared, in `~/.dotfiles/claude/.claude/` (synced by stow, reusable across sites):**
 
 - `docs/web-content-method.md`: the methodology. It holds the audience-first drafting method, the
-  full Signs-of-AI-writing catalog (banned vocabulary, constructions, structural and tonal tells)
-  in fenced blocks, the scoring rubric, and the calibration note. Both skills load it.
+  exemplar library, the full Signs-of-AI-writing catalog (banned vocabulary, constructions,
+  structural and tonal tells) in fenced blocks, the scoring rubric with its per-dimension level
+  anchors, and the calibration gold set. Both skills load it.
 - `skills/content-draft/SKILL.md`: the drafting skill.
 - `skills/content-review/SKILL.md`: the review-and-score skill.
 
@@ -81,7 +82,10 @@ the hook rejecting the edit.
 
 ## The drafting skill: `content-draft`
 
-A process skill. The steps are ordered and the first one is the point of the whole skill.
+A process skill. The steps are ordered. The first one is the point of the whole skill, and the
+draft is steered by positive exemplars rather than by a list of words to avoid. The 2026 research
+is clear that a banned-word list is a soft constraint that decays over a long draft, while a
+consistent set of example pairs is a reliable style control (see Design rationale and evidence).
 
 1. **Audience and purpose brief, first.** Before any prose, state who the piece serves (athletes,
    parents, or both), what they already know, what they need or worry about, where and how they
@@ -90,31 +94,46 @@ A process skill. The steps are ordered and the first one is the point of the who
 2. **Gather the concrete facts.** Pull the real specifics from the content-guide canonical facts:
    places, dates, schedule, gear, cost, sign-up. Drafting on abstractions is the failure mode this
    step prevents.
-3. **Load the local register.** Read the site `content-guide.md` for the voice and the canonical
-   facts.
-4. **Draft.** Write audience-first, concrete, with varied sentence and paragraph length.
-5. **Self-check.** Run the Signs-of-AI-writing self-check from the method doc: read it aloud, hunt
+3. **Load the register and its exemplars.** Read the site `content-guide.md` for the voice and the
+   canonical facts, and read the off/on-voice exemplar pairs in the method doc. The exemplars are
+   the primary style control. Match them.
+4. **Outline, then critique the outline.** Sketch the structure first: headings and the one or two
+   sentences each section must carry. Check the outline against the brief before writing prose.
+   Fix a weak structure here, not after a full draft exists.
+5. **Draft.** Write audience-first and concrete, matching the exemplars, with varied sentence and
+   paragraph length.
+6. **Self-check.** Run the Signs-of-AI-writing self-check from the method doc: read it aloud, hunt
    the banned vocabulary and the negative-parallelism frame, test every dash, and check for
-   trailing "-ing" editorial tags.
-6. **Offer the score.** Offer to run `content-review` before saving or committing.
+   trailing "-ing" editorial tags. This is a backstop. The deterministic enforcement is
+   `prose-guard`, which blocks the banned vocabulary at write time regardless of what the draft
+   remembers.
+7. **Offer the score.** Offer to run `content-review` before saving or committing.
 
-The skill is reusable. The audience-first steps and the self-check are site-agnostic; the local
-`content-guide.md` supplies the voice and the facts.
+The skill is reusable. The audience-first steps, the outline critique, and the self-check are
+site-agnostic. The local `content-guide.md` supplies the voice, the exemplars, and the facts.
 
 ## The review-and-score skill: `content-review`
 
-A review skill that produces a score and a findings list, then gates edits on approval.
+A review skill that produces a band, a score, and a findings list, then gates edits on approval.
+It runs as a fresh agent, separate from whatever context drafted the piece. The research is
+consistent that single-model self-critique is unreliable, while rubric-guided review by an
+independent evaluator is the form that works. Running it fresh is the design's way of buying that
+independence.
 
-1. Read the target file, the site `content-guide.md`, and the rubric in the method doc.
+1. Read the target file, the site `content-guide.md`, and the rubric in the method doc, including
+   the per-dimension level anchors.
 2. Run `prose-guard` on the file for the machine signals: burstiness, banned words, structural
    tells, and the advisory sweep.
-3. Score the seven dimensions. The machine signals feed cadence and part of AI-tell freedom; agent
-   judgment scores audience fit, concreteness, voice, structure, and key-fact clarity.
+3. Score the seven dimensions against their 0-to-5 level anchors. The machine signals feed cadence
+   and part of AI-tell freedom; agent judgment scores audience fit, concreteness, voice, structure,
+   and key-fact clarity.
 4. Check the hard gates.
-5. Compute the band: publish, hold, or redraft.
-6. Report: the score table, the band, the hard-gate status, and a per-sentence findings list. Each
-   finding names the specific pattern and proposes a fix. This is the `content-cleanup` behavior,
-   preserved.
+5. Decide the band: publish, hold, or redraft. The band is the headline output, because a
+   three-way decision is the reliable part of an LLM judgment. The 0-to-100 number is reported
+   under it as a secondary signal, not as the verdict.
+6. Report: the band first, then the hard-gate status, then the score table, then a per-sentence
+   findings list. Each finding names the specific pattern and proposes a fix. This is the
+   `content-cleanup` behavior, preserved.
 7. Apply only approved edits. Change nothing else.
 
 Its description carries the old `content-cleanup` triggers (`/content-cleanup`, "clean up this
@@ -146,26 +165,43 @@ Audience-first, with hard gates that override the score.
 The weights sum to twelve sub-scores. Maximum raw score is sixty. The normalized score is the raw
 score times 100 divided by 60.
 
-**Bands.**
+**Level anchors.** Each dimension scores against explicit descriptors in the method doc for what a
+0, a 1, a 3, and a 5 look like. A 100-point scale with no anchors drifts and reads as false
+precision. The anchors are what make a 3 mean the same thing across sessions.
+
+**The band is the verdict; the number is a secondary signal.** A three-way decision is the
+reliable part of an LLM judgment, so the band leads. The 0-to-100 number rides under it for
+tracking, not as the call.
 
 - Publish at 80 or above, with no hard-gate hit.
 - Hold from 60 to 79. One revision pass, then re-score.
 - Redraft below 60. Return to the brief.
 
-**Calibration.** The agent's scoring drifts over time. The method doc carries two or three scored
-sample pieces with their expected bands, so a reviewer can re-anchor periodically and keep the
-scores steady.
+**Cadence and AI-tell freedom are inputs, never gates.** Burstiness and the detector-style signals
+are evadable and prone to false positives, so they inform their two dimensions and never block a
+piece on their own. Only the four hard gates block.
+
+**Calibration is required, not optional.** The method doc carries a small gold set: a handful of
+sample pieces scored by hand with their expected bands. A reviewer re-anchors against it
+periodically. The aim is a steady judgment, with the same piece landing in the same band across
+sessions.
 
 ## The shared method doc: `web-content-method.md`
 
 The reusable reference both skills load. Its sections:
 
-1. The audience-first method. The six drafting steps, written site-agnostic.
-2. The Signs-of-AI-writing catalog. The full set, in fenced blocks so `prose-guard` skips it. It
+1. The audience-first method. The seven drafting steps, written site-agnostic.
+2. The exemplar library. Off/on-voice pairs that show the target register beside the slop version
+   of the same idea. These are the primary style control, so this section earns real length. Each
+   site extends it with its own pairs in the local `content-guide.md`.
+3. The Signs-of-AI-writing catalog. The full set, in fenced blocks so `prose-guard` skips it. It
    covers the banned vocabulary, the banned constructions, the structural tells, and the tonal
    tells. It credits Wikipedia's "Signs of AI writing" page as the source.
-3. The rubric. The dimensions, weights, gates, bands, and the normalization formula.
-4. The calibration samples.
+4. The rubric. The dimensions, weights, gates, bands, and the normalization formula.
+5. The per-dimension level anchors. For each of the seven dimensions, what a 0, a 1, a 3, and a 5
+   look like, so the score means the same thing across sessions.
+6. The calibration gold set. A handful of sample pieces scored by hand with their expected bands,
+   used to re-anchor the agent's scoring.
 
 The catalog's banned vocabulary, recorded for reference (this block is fenced, so the guard skips
 it):
@@ -210,12 +246,52 @@ splits the new words by how safely they block.
 This touches `~/.dotfiles/bin/.local/bin/prose-guard` and needs a `stow -R bin` refresh. The tool
 has its own tests; the change keeps the existing tier structure and only extends the word lists.
 
+## Design rationale and evidence
+
+The shape follows current research on what actually improves writing from a frontier model. The
+short version: the substance levers do the real work, and the avoidance levers are backstops.
+
+- **Audience-first is the highest-leverage lever.** Slop is fluent on the surface and empty
+  underneath, and it is what a model produces by default when given no audience and no constraints.
+  Persona, audience, and tone conditioning is the documented frontier for fighting that default.
+  This is why the brief comes first and audience fit carries triple weight.
+- **Exemplars beat banned lists for style.** A negative instruction is a soft constraint competing
+  with the model's training prior, and it decays across a long draft. Consistent positive examples
+  are a more reliable style control. So the drafting skill leads with the exemplar pairs, and the
+  banned vocabulary is enforced deterministically by `prose-guard`, not by the model's memory.
+- **Rubric review works, and independence matters.** Rubric-guided feedback beats generic critique
+  and helps a writer internalize the standard. Single-model self-critique is unreliable, so the
+  review runs as a fresh agent. A three-way band is the dependable part of an LLM judgment, so the
+  band leads and the number trails, with a hand-scored gold set to hold the scoring steady.
+- **Progressive drafting reduces slop.** Outline, critique the outline, then write prose. This beats
+  going straight to prose, which is why the drafting skill adds the outline-critique step.
+
+Two honest limits. There is no Opus-4.8-specific writing evaluation in public, so this rests on
+general 2026 frontier findings, which apply to a strong instruction-follower and arguably help it
+most. And the detector-style signals (burstiness, perplexity) are evadable and false-positive
+prone, so they stay advisory inputs and never gate a piece.
+
+Sources: Redish on plain-language and audience
+(https://redish.net/), the 2026 anti-slop and structured-prompting writing
+(https://aitoolly.com/ai-news/article/2026-05-29-taste-skill-the-new-github-project-aiming-to-eliminate-ai-generated-slop-and-mediocrity),
+the banned-lexicon validator on negative prompting limits
+(https://blog.ozigi.app/blog/stopping-ai-slop-in-production-banned-lexicon-validator),
+few-shot exemplar reliability
+(https://promptingweekly.substack.com/p/few-shot-examples-done-properly),
+rubric-based evaluation and LLM-judge calibration
+(https://arxiv.org/html/2602.12779,
+https://mer.vin/2025/11/llm-as-a-judge-best-practices-for-consistent-evaluation/), and the
+burstiness detector limits
+(https://www.pangram.com/blog/why-perplexity-and-burstiness-fail-to-detect-ai).
+
 ## Verification
 
-- The drafting skill produces a stated audience-and-purpose brief before any prose. A draft made
-  without that brief is a failure of the skill.
-- The review skill returns a score table, a band, and a per-sentence findings list on a sample
-  page, and its hard gates fire on a planted banned word and a planted care promise.
+- The drafting skill produces a stated audience-and-purpose brief and a critiqued outline before
+  any prose, and it loads the exemplar pairs. A draft made without the brief is a failure of the
+  skill.
+- The review skill leads with the band, then reports the hard-gate status, the score table, and a
+  per-sentence findings list on a sample page. Its hard gates fire on a planted banned word and a
+  planted care promise. It runs as a fresh agent, not the drafting context.
 - The retired `content-cleanup` triggers still reach `content-review`.
 - `prose-guard --all` after the lexicon change flags a planted blocking word and surfaces a
   planted advisory word without blocking it. The tool's own tests pass.
