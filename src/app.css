@@ -329,6 +329,29 @@ html { scroll-behavior: smooth; }
   color: var(--color-secondary);
 }
 
+/* ─── Component head row: `.ec-head` ─────────────────────────
+   The icon-and-title row shared by card, grid, passage, and cta heads. Global so it
+   renders the same on every page; the `.post-body` prefix on the title keeps it above
+   `.post-body h2` on specificity. */
+.ec-head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-block-end: 0.5rem;
+}
+.ec-head .ec-glyph {
+  inline-size: 1.6rem;
+  block-size: 1.6rem;
+}
+.post-body .ec-head h2,
+.post-body .ec-cta h2 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+.post-body .section-body > :first-child {
+  margin-block-start: 0;
+}
+
 /* ─── Call to action: `.ec-cta` ──────────────────────────────
    A compact, left-aligned action card. Crimson is the action colour, so it carries a
    quiet crimson wash and edge; the head row is icon + title, then a short note and the

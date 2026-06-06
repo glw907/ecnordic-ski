@@ -190,29 +190,6 @@
     to { opacity: 1; transform: none; }
   }
 
-  /* Heading row: icon chip + title (DaisyUI .card-title), margins reset */
-  .static-page:is([data-page="about"], [data-page="training"], [data-page="crewlab"]) :global(.ec-head) {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    /* heading breathes from its body; the innermost step of the page's
-       vertical rhythm (0.5 → 0.9 → 1.4rem, each ~1.5× the last) */
-    margin-block-end: 0.5rem;
-  }
-  .static-page:is([data-page="about"], [data-page="training"], [data-page="crewlab"]) :global(.ec-head h2),
-  .static-page:is([data-page="about"], [data-page="training"], [data-page="crewlab"]) :global(.ec-cta h2) {
-    margin: 0;
-    font-size: 1.3rem;
-  }
-  /* Bare header glyph: a touch larger than inline so it anchors the title */
-  .static-page:is([data-page="about"], [data-page="training"], [data-page="crewlab"]) :global(.ec-head .ec-glyph) {
-    inline-size: 1.6rem;
-    block-size: 1.6rem;
-  }
-  .static-page:is([data-page="about"], [data-page="training"], [data-page="crewlab"]) :global(.section-body > :first-child) {
-    margin-block-start: 0;
-  }
-
   /* The icon primitives (.ec-icon bare glyph, .ec-chip tile) and the caution
      subtle alert (.ec-alert) live globally in app.css. Below: About-only tuning. */
 
