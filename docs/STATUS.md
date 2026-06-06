@@ -1,5 +1,18 @@
 # ecnordic.ski: Project Status
 
+**Current initiative: global component layer (plan ready, 2026-06-05).** The Training-page redesign
+and the sitewide theme polish shipped to production in commit `931e644`. The follow-up is a
+component-system consolidation. Lift the reusable `.ec-*` styles out of the page-scoped route block
+into the global stylesheet so every component renders the same everywhere, fix the Volunteers page
+(its `split`/`panel` and grid head render unstyled today), generalize the entrance cascade to all
+static pages, and add gloss footnotes to About and Volunteers. The design spec is at
+`docs/superpowers/specs/2026-06-05-global-component-layer-design.md`, and the eight-task plan is at
+`docs/superpowers/plans/2026-06-05-global-component-layer.md`. Execute it via
+`subagent-driven-development`, one implementer per task, in a fresh session. Do not push; a push to
+`main` deploys live.
+
+---
+
 **Site refresh initiative: ALL THREE PLANS DONE (2026-06-04).** A full content rebuild to the
 brief's six-page IA (Home, About, Training, Volunteers & Coaches, CrewLAB, Contact, plus a utility
 Archives). The design spec is committed at `docs/superpowers/specs/2026-06-04-site-refresh-design.md`; it
