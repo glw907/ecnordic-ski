@@ -17,6 +17,10 @@
 
 ## Low
 
+- [ ] **#27** Give 907.life the shared web-content method routing `#improvement` `#ecnordic` *(2026-06-06)*
+  Add a `docs/content-guide.md` and a `.claude/rules/content.md` to the 907.life repo that point at the same shared web-content method (`~/.claude/docs/web-content-method.md`), so the second site gets the same `content-draft`/`content-review` routing by copying two small local files. The method, the two skills, and the widened `prose-guard` lexicon already live in the dotfiles, so 907.life needs only its own voice guide plus the router rule. This is the spec's out-of-scope item "A 907.life content-guide.md that points at the same shared method."
+- [ ] **#26** Retroactive rubric audit of the existing site pages `#improvement` `#ecnordic` *(2026-06-06)*
+  Run `content-review` over each published page in `src/content/pages/` and record the band and score for each, as a one-time content-quality audit. The smoke test in the web-content authoring initiative scored About at Publish (93); the rest of the pages have not been run through the rubric. Capture the bands and scores, then hold or redraft any page that lands below Publish. This is the spec's out-of-scope item "Applying the rubric retroactively to the existing pages as a content audit."
 - [ ] **#23** Adopt the `toc` component once cairn-cms ships a post-rehype hook `#improvement` `#ecnordic` *(2026-06-04)*
   The Training page keeps a hand-maintained `<nav class="page-toc">` because cairn-cms `^0.24.0` has no hook for a render pass that runs after `rehypeSlug`, which the toc needs to read the rendered `<h2>` slug ids. See `docs/cairn-dx-findings.md` finding 18. When the engine adds a post-rehype hook, build the `toc` directive (a `:::toc` placeholder component plus a rehype plugin that collects `<h2 id>` and fills it) and replace the hand-maintained nav.
 - [ ] **#22** Pre-publish: confirm the CrewLAB join link, self-signing, and donation collection are current `#improvement` `#ecnordic` *(2026-06-04)*

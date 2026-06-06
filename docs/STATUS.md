@@ -1,15 +1,27 @@
 # ecnordic.ski: Project Status
 
-**Current initiative: web-content authoring infrastructure (plan ready, 2026-06-06).** Build an
-audience-first web-content authoring track: a shared method doc, a `content-draft` skill, a scored
-`content-review` skill, a widened `prose-guard` lexicon, and the routing that selects the
-web-content register by context. The technical writing voice stays intact. The work spans two repos:
-the dotfiles (`~/.dotfiles`, holding the shared method, the two skills, and `prose-guard`) and this
-repo (the content guide, the routing rule, the reminder hook, the retirement of `content-cleanup`).
-The design spec is at `docs/superpowers/specs/2026-06-05-web-content-authoring-design.md`, and the
-eight-task plan is at `docs/superpowers/plans/2026-06-06-web-content-authoring.md`. Execute it via
-`subagent-driven-development`, one implementer per task, in a fresh session. Each task names its
-repo. Do not push; a push to `main` deploys live, and the dotfiles push is the user's call.
+**Shipped: web-content authoring infrastructure (2026-06-06).** The audience-first web-content
+authoring track is built and verified, across all eight plan tasks. What shipped: the shared method
+doc (`web-content-method.md`), the `content-draft` and `content-review` skills, the widened
+`prose-guard` general-tier lexicon, the ecnordic routing (the `content.md` router, the `CLAUDE.md`
+pointer, the reminder hook), the content-guide pointer plus trailhead exemplars, and the retirement
+of `content-cleanup`. The technical writing voice stays intact. The work spanned two repos: the
+dotfiles (`~/.dotfiles`, holding the shared method, the two skills, and `prose-guard`) and this repo
+(the content guide, the routing rule, the reminder hook, the `content-cleanup` retirement). The
+design spec is at `docs/superpowers/specs/2026-06-05-web-content-authoring-design.md`, and the
+eight-task plan is at `docs/superpowers/plans/2026-06-06-web-content-authoring.md`.
+
+End-to-end verification passed. `prose-guard` blocks `embark` and advises on `vital` and `journey` in
+the general tier, the docs tier still does not block on `robust` or `comprehensive`, and the suite is
+90 green. A live `content-review` smoke test on `src/content/pages/about.md` loaded the method doc,
+ran the rubric, and returned a Publish band (93) with a full score table and per-sentence findings.
+
+The dotfiles changes are committed in `~/.dotfiles`, unpushed. The ecnordic changes are committed on
+local `main`, unpushed, because a push to `main` deploys live. One operational note: the dotfiles side
+needed a re-stow of the `claude` package (`stow -R claude`) so the new
+`~/.claude/docs/web-content-method.md` symlink exists, and that was done. What remains for the human:
+push both repos when ready, then smoke-test by drafting a short post with `content-draft` and reviewing
+it with `content-review`. The two out-of-scope follow-ups are filed in `BACKLOG.md` (#26 and #27).
 
 **Shipped: global component layer (2026-06-06).** The `.ec-*` component styles moved to the global
 stylesheet, the Volunteers page is fixed, the entrance cascade now covers every static page, and
