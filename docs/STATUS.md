@@ -1,15 +1,21 @@
 # ecnordic.ski: Project Status
 
-**Current initiative: global component layer (plan ready, 2026-06-05).** The Training-page redesign
-and the sitewide theme polish shipped to production in commit `931e644`. The follow-up is a
-component-system consolidation. Lift the reusable `.ec-*` styles out of the page-scoped route block
-into the global stylesheet so every component renders the same everywhere, fix the Volunteers page
-(its `split`/`panel` and grid head render unstyled today), generalize the entrance cascade to all
-static pages, and add gloss footnotes to About and Volunteers. The design spec is at
-`docs/superpowers/specs/2026-06-05-global-component-layer-design.md`, and the eight-task plan is at
-`docs/superpowers/plans/2026-06-05-global-component-layer.md`. Execute it via
-`subagent-driven-development`, one implementer per task, in a fresh session. Do not push; a push to
-`main` deploys live.
+**Current initiative: web-content authoring infrastructure (plan ready, 2026-06-06).** Build an
+audience-first web-content authoring track: a shared method doc, a `content-draft` skill, a scored
+`content-review` skill, a widened `prose-guard` lexicon, and the routing that selects the
+web-content register by context. The technical writing voice stays intact. The work spans two repos:
+the dotfiles (`~/.dotfiles`, holding the shared method, the two skills, and `prose-guard`) and this
+repo (the content guide, the routing rule, the reminder hook, the retirement of `content-cleanup`).
+The design spec is at `docs/superpowers/specs/2026-06-05-web-content-authoring-design.md`, and the
+eight-task plan is at `docs/superpowers/plans/2026-06-06-web-content-authoring.md`. Execute it via
+`subagent-driven-development`, one implementer per task, in a fresh session. Each task names its
+repo. Do not push; a push to `main` deploys live, and the dotfiles push is the user's call.
+
+**Shipped: global component layer (2026-06-06).** The `.ec-*` component styles moved to the global
+stylesheet, the Volunteers page is fixed, the entrance cascade now covers every static page, and
+About and Volunteers carry gloss footnotes. Eight commits (`fd3c90e` through `5745aa8`), pushed to
+production. Each CSS task kept the 54 characterization snapshots green; the two content tasks updated
+their own page snapshots.
 
 ---
 
