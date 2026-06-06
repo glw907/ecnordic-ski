@@ -2,6 +2,12 @@
 
 Editorial standards for ecnordic.ski. These guidelines ensure consistency and quality while maintaining the voice of a friendly, competent coach writing to high school athletes and their parents.
 
+This guide is the ecnordic voice. The shared, site-agnostic method (the audience-first drafting
+steps, the full Signs-of-AI-writing catalog, the scoring rubric, and the calibration set) lives at
+`~/.claude/docs/web-content-method.md`. Draft with the `content-draft` skill and review with
+`content-review`. This guide holds what is specific to EC Nordic: the trailhead voice, the local
+features, and the exemplars below.
+
 This guide covers two types of content:
 - **Posts:** Training updates, race results, event recaps, and announcements
 - **Pages:** About, Summer Training, Talkeetna Camp, Resources, Contact, and other static sections
@@ -28,6 +34,32 @@ Guidelines for static pages: About, Summer Training, Talkeetna Camp, Resources, 
 **Tone: warm but not gushing. Encouraging but not performative.**
 - ✓ "This is hard work. It's also worth it."
 - ✗ "An amazing opportunity to experience the thrill of Nordic skiing!"
+
+### Concrete, local, and credible
+
+Write as a coach talking to teenagers and their parents at a trailhead. Be specific about places,
+workouts, conditions, and gear. The audience spots AI-generated school communications on sight, so
+concrete writing reads as credible and abstraction reads as suspect. Name real local features when
+natural: the Service High parking lot, the Coastal Trail, Kincaid, the Hillside trails, specific
+dates, specific weather.
+
+The off-voice halves below carry the words the guard blocks, so they sit in a three-backtick fence:
+
+```
+Off-voice (AI or program marketing): "East Community Nordic offers a comprehensive summer training
+experience that empowers young athletes to navigate their journey toward elite Nordic skiing
+performance, fostering a vibrant community of passionate skiers."
+
+Off-voice: "Whether you're a beginner or a seasoned racer, our experienced volunteer coaches
+provide expert guidance in a supportive environment, helping you take your skiing to the next level."
+```
+
+On-voice (a coach): "We run, ride mountain bikes, and roller-ski together through the summer.
+Tuesday evenings we usually meet at the Service High parking lot. Most weeks include one strength
+session when the gym is open."
+
+On-voice: "Returning racers and first-summer kids both come. The pace is whatever the group can
+hold together. Bring trail shoes, a water bottle, and bug spray."
 
 ## Audience Split
 
