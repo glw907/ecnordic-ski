@@ -392,6 +392,15 @@ html { scroll-behavior: smooth; }
   }
 }
 
+/* The CTA button keeps a small top margin; the titled prose passage gets a hair of
+   inline padding so its text aligns with the bordered modules above and below. */
+.ec-cta .btn {
+  margin-block-start: 0.5rem;
+}
+.ec-passage {
+  padding-inline: 0.25rem;
+}
+
 /* ─── Call to action: `.ec-cta` ──────────────────────────────
    A compact, left-aligned action card. Crimson is the action colour, so it carries a
    quiet crimson wash and edge; the head row is icon + title, then a short note and the

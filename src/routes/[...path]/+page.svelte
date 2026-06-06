@@ -180,22 +180,9 @@
   .static-page :global([data-rise="9"]) { animation-delay: 0.52s; }
   .static-page :global([data-rise="10"]) { animation-delay: 0.56s; }
   .static-page :global([data-rise="11"]) { animation-delay: 0.60s; }
-  /* A titled prose passage carries the section head + body at full page width,
-     with no card border/wash. Prose is the kit's default (see design doc). */
-  .static-page[data-page="crewlab"] :global(.ec-passage) {
-    padding-inline: 0.25rem;
-  }
   @keyframes module-rise {
     from { opacity: 0; transform: translateY(14px); }
     to { opacity: 1; transform: none; }
-  }
-
-  /* The icon primitives (.ec-icon bare glyph, .ec-chip tile) and the caution
-     subtle alert (.ec-alert) live globally in app.css. Below: About-only tuning. */
-
-  /* Single call to act */
-  .static-page:is([data-page="about"], [data-page="training"], [data-page="crewlab"]) :global(.ec-cta .btn) {
-    margin-block-start: 0.5rem;
   }
 
   @keyframes page-rise {
