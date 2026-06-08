@@ -1,5 +1,47 @@
 # ecnordic.ski: Project Status
 
+## Queued: upgrade to cairn-cms 0.33.0 (admin stands alone)
+
+cairn-cms published `0.33.0` on 2026-06-08 (registry `latest`), folding the admin-stands-alone initiative
+across `0.30.0` through `0.33.0` over the prior `0.29.0`. This site pins `^0.24.0`, and a caret on a `0.x`
+version locks the minor, so the range will not pull `0.33.0` on its own. Run this as a `site-pass`. The
+full per-version action list is in `../cairn-cms/docs/guides/upgrade-cairn.md`; the three items below are
+the ones that touch this site, verified against its code on 2026-06-08.
+
+1. **Bump the dependency.** Set `@glw907/cairn-cms` to `^0.33.0` in `package.json`, reinstall, and
+   regenerate the committed manifest (`npm run cairn:manifest`). Confirm `scripts/build-manifest.mjs`
+   still resolves its engine imports: the `0.27.0` surface-narrowing moved the delivery read surface off
+   the root barrel, and the `0.26.0` DX-B pass added a `cairnManifest()` Vite plugin that can replace the
+   hand-rolled script. Repoint the imports or adopt the plugin if the script breaks.
+
+2. **Fix the `composeRuntime` call.** `src/lib/cairn.server.ts:14` uses the old positional form
+   `composeRuntime(cairn, [], urlPolicyFrom(siteConfig))`. The object form landed at `0.25.0`. Change it
+   to `composeRuntime({ adapter: cairn, siteConfig })` and drop the now-unused `urlPolicyFrom` import. This
+   break is already latent against the current `^0.24.0` pin.
+
+3. **Move host chrome out of `/admin`.** The root `src/routes/+layout.svelte` imports `../app.css` and
+   renders `<Nav>`, `<SearchModal>`, a width-constraining `<main class="container ... max-w-5xl">`, and a
+   `<footer>`. All of it wraps `/admin` today. Create a `src/routes/(site)/+layout.svelte` group that holds
+   the `app.css` import, the Nav, the SearchModal, the `<main>` wrapper, and the footer, then move the
+   public routes into the group: `+page.svelte`, `+page.server.ts`, `[...path]`, `archives`, `contact`,
+   `tags`, `waiver` (and `+layout.server.ts` if it loads chrome data). Leave the root layout bare
+   (`{@render children()}`, plus the `<svelte:head>` feed links if you keep them there). Keep `admin/` and
+   the endpoints (`feed.xml`, `feed.json`, `sitemap.xml`, `robots.txt`, `healthz`) at the route root. Group
+   folders do not change any URL. A dev-only guard in the admin logs a console error until the root layout
+   is chrome-free.
+
+**Not affected, skip:** the `0.30.0` render-authoring import moves and the `rehypeDispatch` removal (this
+site imports neither). `0.31.0` and `0.32.0` are additive. One quick check: `0.30.0` makes `defineRegistry`
+fail a component that sets `defaultIconByRole` with no `type:'icon'` attribute; this site defines
+`ICON_ATTR` (`type:'icon'`) in `src/lib/markdown/components.ts`, so confirm each component that sets
+`defaultIconByRole` lists `ICON_ATTR` in its attributes.
+
+**Verify:** `npm run check` 0/0, `npm run build` exit 0, and an admin smoke (sign in at `/admin`, confirm
+the admin renders full-bleed with no site nav or footer around it, create and preview a post). The public
+pages must look unchanged, since the chrome only moved.
+
+---
+
 **Shipped: web-content authoring infrastructure (2026-06-06).** The audience-first web-content
 authoring track is built and verified, across all eight plan tasks. What shipped: the shared method
 doc (`web-content-method.md`), the `content-draft` and `content-review` skills, the widened
