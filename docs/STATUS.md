@@ -50,7 +50,8 @@ No engineering pass is queued. The next work is the pre-publish checklist below,
 
 The pre-publish checklist is the gate before announcing the site:
 
-- **Force HTTPS at the Cloudflare edge** (Always Use HTTPS), now required by cairn for the magic-link login.
+- **Admin login is blocked (#29).** cairn 403s a login POST that carries no `Origin` header (a
+  privacy-browser CSRF case; HTTPS at the edge is forced but does not cover it). Fix lands in cairn-cms.
 - Attorney review of the waiver.
 - CrewLAB confirmations: join link and signing flow (#22), collection model (#21, live `PLACEHOLDER` on page).
 - Launch-time redirects: `/resources` and `/waiver` to CrewLAB (#18), `/home` to `/` (#17).
