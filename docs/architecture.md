@@ -177,8 +177,9 @@ directive vocabulary is documented in `docs/design-language.md`; the pipeline is
 The design-language kit is two layers, and only one is markdown-coupled: **style**
 lives once in `src/app.css` (`@theme` tokens + global classes like `.page-title`,
 `.post-body`, `.post-tags`, `.back-link`), and **markup** is built by whichever tool
-fits the surface. Markdown prose gets kit markup from `rehype-ec-primitives.ts`
-(`{@html}`, prerendered); the interactive/data-driven shells (contact form, tag cloud,
+fits the surface. Markdown prose gets kit markup from the engine's `createRenderer`,
+which dispatches the directive `ComponentDef`s in `components.ts` (`{@html}`,
+prerendered); the interactive/data-driven shells (contact form, tag cloud,
 archive list, post chrome) are Svelte components. The two markup builders are not unified: Svelte can't mount inside `{@html}`, and
 recompiling markdown→Svelte would add client JS for no gain. **The class-name contract
 is the shared interface**; Svelte pages consume the global CSS directly rather than
@@ -186,8 +187,8 @@ re-implementing primitives as `<Card>`/etc. components (that path was rejected, 
 it would create two definitions of one primitive and invite drift).
 
 **Shared entrance cascade.** The per-module rise delay is one function, `riseStyle(idx)`
-in `src/lib/motion.ts` (`0.16 + idx*0.04s`, two decimals), imported by both the rehype
-builder and every component page. Its keyframes (`page-rise`, `module-rise`) live
+in `src/lib/motion.ts` (`0.16 + idx*0.04s`, two decimals), imported by both the
+directive component builders and every component page. Its keyframes (`page-rise`, `module-rise`) live
 globally in `app.css`. Each page scopes its own `.X` / `.X-module` animation rules and
 its own `prefers-reduced-motion` reset (no global animation-disabling rule, to avoid
 reaching into unrelated components); the duplication of that small per-surface block is
@@ -266,6 +267,13 @@ GitHub Actions secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
 
 ### Build toolchain notes
 
+- **The site declares a thin dependency surface.** cairn-cms owns the markdown pipeline and
+  the magic-link auth store. `createRenderer` bundles remark, rehype, and unified, so the site
+  declares none of them. Auth state lives in the `AUTH_DB` D1 in cairn's own `editor`,
+  `magic_token`, and `session` tables, provisioned from the engine's shipped
+  `migrations/0000_auth.sql`. The earlier better-auth and drizzle dependencies, the generated
+  drizzle migration, and the `mint-session.mjs` smoke helper were removed in the 0.34 upgrade,
+  once cairn owned auth end to end.
 - **Node 24** is the build runtime (`.nvmrc`, `engines.node >=22`, CI). wrangler ≥4.93
   requires Node ≥22.
 - **Vite 8 uses the Rolldown bundler**, which resolves absolute dynamic imports eagerly.
