@@ -274,6 +274,13 @@ GitHub Actions secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
   `migrations/0000_auth.sql`. The earlier better-auth and drizzle dependencies, the generated
   drizzle migration, and the `mint-session.mjs` smoke helper were removed in the 0.34 upgrade,
   once cairn owned auth end to end.
+- **cairn owns admin CSRF, so `svelte.config.js` sets `csrf: { checkOrigin: false }`.** As of cairn 0.35
+  the engine guard is the single CSRF authority for `/admin`. It validates a `__Host-cairn_csrf`
+  double-submit token on every admin form POST, tolerates a missing `Origin` (so a privacy browser can
+  sign in), and restores the strict `Origin` check for the site's own non-admin POSTs. The framework's
+  global check has to be off for that, hence the config line. SvelteKit has deprecated `checkOrigin` in
+  favour of `csrf.trustedOrigins`, which is an allowlist, not an off switch, so it is not a drop-in
+  replacement; revisit when cairn's upgrade guide moves off `checkOrigin`.
 - **Node 24** is the build runtime (`.nvmrc`, `engines.node >=22`, CI). wrangler ≥4.93
   requires Node ≥22.
 - **Vite 8 uses the Rolldown bundler**, which resolves absolute dynamic imports eagerly.
