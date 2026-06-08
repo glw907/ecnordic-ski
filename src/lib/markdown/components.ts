@@ -11,20 +11,14 @@
 // slug id the old `## heading` produced. The body slot carries the unmarked content.
 import { h } from 'hastscript';
 import type { Element, ElementContent } from 'hast';
-import {
-	defineRegistry,
-	glyph,
-	iconSpan,
-	cardShell,
-	type ComponentDef,
-	type MakeIcon,
-} from '@glw907/cairn-cms';
+import { defineRegistry, glyph, type ComponentDef } from '@glw907/cairn-cms';
+import { iconSpan, cardShell, type MakeIcon } from '@glw907/cairn-cms/render';
 import { ICON_PATHS } from './icons';
 
-// Two small hast helpers this registry relies on. The engine used to re-export them
-// from its root barrel, but the 0.27.0 surface narrowing classed them as internal
-// engine plumbing and dropped them. They are pure (hast plus hastscript, both already
-// site deps), so the site owns its copies rather than reach into engine internals.
+// Two small hast helpers this registry relies on. The 0.27.0 surface narrowing dropped
+// isElement from the root barrel; 0.30.0 re-homed it under /render. The site keeps its own
+// copies here because it also needs markFirstList, which the engine does not export, and both
+// are pure (hast plus hastscript, already site deps).
 function isElement(node: ElementContent | undefined): node is Element {
 	return !!node && node.type === 'element';
 }

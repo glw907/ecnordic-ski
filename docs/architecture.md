@@ -53,6 +53,18 @@ cutover nor the 0.21 migration moved a live URL. SvelteKit ranks the explicit ro
 catch-all, so `/tags`, `/contact`, the feeds, and the rest keep their own routes; the catch-all
 serves only posts and pages.
 
+**Host chrome lives in a `(site)` route group.** The public routes (`+page`, `[...path]`, `archives`,
+`contact`, `tags`, `waiver`, and the `+page.server`/`+layout.server` that go with them) sit under
+`src/routes/(site)/`. That group's `+layout.svelte` holds the public chrome: the `app.css` import, the
+Nav, the SearchModal, the width-constrained `<main>`, the footer, and the feed-discovery `<svelte:head>`
+links. The root `src/routes/+layout.svelte` is a bare `{@render children()}` passthrough. A group folder
+changes no URL, so the public pages keep their paths, and `/admin` (outside the group) renders standalone
+with no site nav or footer around it. cairn-cms 0.33.0 added a dev-only guard that logs a console error
+if the root layout wraps the admin in host chrome; the bare root layout keeps it quiet. The `prerender =
+true` default moved into the group with the public routes, so it scopes to public pages. `/admin` and
+`/healthz` keep their own `prerender = false`, and the feed, sitemap, and robots endpoints keep their own
+`prerender = true`.
+
 ---
 
 ## Content Pipeline
@@ -113,19 +125,23 @@ that disagrees with its filename.
 
 A committed manifest at `src/content/.cairn/index.json` is a build-verified projection of the corpus: one
 entry per post and page with its id, concept, title, permalink, draft flag, and outbound `cairn:` links.
-`scripts/build-manifest.mjs` (run as `npm run cairn:manifest`) regenerates it. `src/lib/content.ts` calls
-`verifyManifest(buildSiteManifest(...), manifestRaw)` at module load, so a build fails if the committed
-manifest drifted from the corpus (a raw-git content edit cannot ship a stale graph).
+The `cairnManifest()` Vite plugin (`@glw907/cairn-cms/vite`, wired in `vite.config.ts`) owns the build-time
+check. It evaluates the manifest through a nested Vite SSR load in `buildStart`, so a build fails if the
+committed manifest drifted from the corpus (a raw-git content edit cannot ship a stale graph). The check
+runs outside the prerender lifecycle, so the drift is fatal regardless of the `handleHttpError` policy. The
+shipped `cairn-manifest` bin (run as `npm run cairn:manifest`) regenerates the manifest, reading its options
+off the same plugin instance. This replaced the old hand-rolled `scripts/build-manifest.mjs` plus in-graph
+`verifyManifest` call at cairn-cms 0.33.0.
 
 Internal links between content use the `cairn:<concept>/<id>` token rather than a hardcoded path, so a link
 survives a future slug change. The welcome post links to the CrewLAB page as `cairn:pages/crewlab`, which
 the render resolver rewrites to the live `/crewlab` permalink on the page and to the absolute URL in the
 feeds. The token resolves content concepts only (posts and pages), not `+page.svelte` routes, so the
 post's `/waiver` link stays an absolute path (the waiver is a hand-built route, not a content page). A
-dangling token throws `cairn link target not found` at prerender. The build does not currently go red on
-it, because `svelte.config.js` carries `prerender.handleHttpError: 'warn'` (inherited from the scaffold),
-which downgrades the prerender 500 to a warning; the broken link still never ships (the page 500s), but the
-build exits 0. Tightening this to a fatal build error is a recorded follow-up (DX finding 16, BACKLOG).
+dangling token throws `cairn link target not found` at prerender. The build still carries
+`prerender.handleHttpError: 'warn'` in `svelte.config.js`, so a dangling token downgrades to a warning at
+prerender (the broken link never ships, since the page 500s, but the build exits 0). The manifest-drift
+check is now fatal; the dangling-token check stays a warning (DX finding 16, BACKLOG).
 
 The admin edit route (`src/routes/admin/(app)/[concept]/[id]/+page.server.ts`) registers `save`, `delete`,
 and `rename` actions off the engine runtime, and `editLoad` ships the editor link picker's targets from the

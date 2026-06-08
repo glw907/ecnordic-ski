@@ -8,6 +8,10 @@ import { markdownToHtml } from './utils.js';
 import { ICON_PATHS } from './markdown/icons.js';
 import { POST_TAGS, siteConfig, siteEmail } from './config.js';
 
+// The cairnManifest() Vite plugin and the cairn-manifest bin read the adapter and the parsed site
+// config off one module. Re-export siteConfig here so this file is that single configModule.
+export { siteConfig };
+
 export const cairn = defineAdapter({
   siteName: siteConfig.siteName ?? 'EC Nordic',
   content: {

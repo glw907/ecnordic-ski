@@ -9,7 +9,7 @@
     "dev": "vite dev",
     "build": "vite build",
     "build:search": "vite build && npx pagefind --site .svelte-kit/cloudflare",
-    "cairn:manifest": "node scripts/build-manifest.mjs",
+    "cairn:manifest": "cairn-manifest",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
@@ -37,7 +37,7 @@
     "wrangler": "^4.93.1"
   },
   "dependencies": {
-    "@glw907/cairn-cms": "^0.24.0",
+    "@glw907/cairn-cms": "^0.33.0",
     "better-auth": "^1.6",
     "drizzle-orm": "^0.45",
     "gray-matter": "^4",

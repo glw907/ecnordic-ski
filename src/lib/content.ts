@@ -2,17 +2,17 @@
 // the catch-all route) reads content through here. It globs the markdown and hands the
 // adapter to createSiteIndexes, which builds the typed per-concept indexes and the site
 // resolver, and exposes a link resolver for the cairn: tokens the renderer threads.
+//
+// The committed manifest is verified by the cairnManifest() Vite plugin in vite.config.ts. It
+// runs outside the prerender lifecycle, so a stale manifest fails the build red regardless of the
+// inherited handleHttpError policy. Regenerate the manifest with `npm run cairn:manifest`.
 import {
   createSiteIndexes,
   buildLinkResolver,
-  buildSiteManifest,
   type FeedItem,
 } from '@glw907/cairn-cms/delivery';
-import { parseSiteConfig, verifyManifest } from '@glw907/cairn-cms';
 import { cairn } from './cairn.config.js';
-import siteYaml from './site.config.yaml?raw';
-import manifestRaw from '/src/content/.cairn/index.json?raw';
-import { SITE_URL, SITE_DESCRIPTION as DESC, FEED_MAX_ITEMS } from './config.js';
+import { SITE_URL, SITE_DESCRIPTION as DESC, FEED_MAX_ITEMS, siteConfig } from './config.js';
 
 const postsRaw = import.meta.glob('/src/content/posts/*.md', {
   query: '?raw',
@@ -25,12 +25,7 @@ const pagesRaw = import.meta.glob('/src/content/pages/*.md', {
   eager: true,
 }) as Record<string, string>;
 
-const siteConfig = parseSiteConfig(siteYaml);
 const indexes = createSiteIndexes(cairn, siteConfig, { posts: postsRaw, pages: pagesRaw });
-
-// Fail the build if the committed manifest drifted from the corpus. Regenerate with
-// `npm run cairn:manifest`.
-verifyManifest(buildSiteManifest(cairn, siteConfig, { posts: postsRaw, pages: pagesRaw }), manifestRaw);
 
 export const site = indexes.site;
 export const posts = indexes.posts;
