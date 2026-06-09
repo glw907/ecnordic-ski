@@ -19,14 +19,8 @@ classes, and the hero asset. Gate green: check 0/0, test 54, build 0.
 
 > **Goal.** Design the ECXC brand mark: a four-spot grid monogram, "EC" over "XC".
 >
-> **Scope.** The wordmark in `Nav.svelte` (replacing the Rename 1 "ECXC" text placeholder) and a
-> matching SVG favicon (`static/` has none today). Visual design only, no infra.
->
-> **Settled (do not re-brainstorm):** Four-spot grid, "EC" over "XC", the two C's stacking on the
-> right. Color from the existing theme tokens, no abstract motifs.
->
-> **Still open, brainstorm these:** Grid geometry and weight, and how the mark scales from a 32px
-> favicon up to the nav.
+> **Plan (brainstormed, pre-baked):** `docs/superpowers/plans/2026-06-09-rename-5-brand-mark.md`,
+> spec at `docs/superpowers/specs/2026-06-09-ecxc-brand-mark-design.md`. Execute task-by-task.
 >
 > **Approach.** Invoke site-pass, design through `frontend-design`. Standard pass-end checklist applies.
 
