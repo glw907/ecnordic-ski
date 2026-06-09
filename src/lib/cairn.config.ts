@@ -34,7 +34,7 @@ export const cairn = defineAdapter({
   },
   backend: {
     owner: 'glw907',
-    repo: 'ecnordic-ski',
+    repo: 'ecxc-ski',
     branch: 'main',
     appId: '3847496',
     installationId: '135372268',

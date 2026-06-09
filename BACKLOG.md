@@ -4,74 +4,74 @@
 
 ## Medium
 
-- [ ] **#30** Raster favicon fallback for Safari `#improvement` `#ecnordic` *(2026-06-09)*
+- [ ] **#30** Raster favicon fallback for Safari `#improvement` `#ecxc` *(2026-06-09)*
   Safari does not load SVG favicons, so it falls back to requesting `/favicon.ico` and gets a 404 (nothing ships at that path). Render a 32px PNG fallback and an `apple-touch-icon` from `static/favicon.svg`'s crimson tile and link both from `src/app.html`. Pre-launch polish, surfaced by the Rename 5 review fan-out.
-- [ ] **#20** Add a global `.ec-head` flex rule so `aside`/`gallery` heads work off the three directive pages `#bug` `#ecnordic` *(2026-06-04)*
+- [ ] **#20** Add a global `.ec-head` flex rule so `aside`/`gallery` heads work off the three directive pages `#bug` `#ecxc` *(2026-06-04)*
   The `.ec-head` flex layout (icon and title inline with a gap, larger glyph) is page-scoped to the about/training/crewlab routes in `src/routes/[...path]/+page.svelte`. A titled or icon-only `aside`, or a titled `gallery`, used on Home, Contact, Archives, or inside a post body renders its head block-stacked with no gap and a default-size glyph, since the scoped rule does not reach those routes. Add a global `.ec-aside .ec-head` and gallery `.ec-head` rule (in `app.css`) so these directives are self-contained anywhere they appear, not only on the three directive pages. Found in the Plan 1 Task 2 code-quality review.
-- [ ] **#16** Restore a build-time frontmatter validation gate for content `#improvement` `#ecnordic` *(2026-06-01, updated 2026-06-02)*
+- [ ] **#16** Restore a build-time frontmatter validation gate for content `#improvement` `#ecxc` *(2026-06-01, updated 2026-06-02)*
   The cairn-cms content layer (`src/lib/content.ts` through `createSiteIndexes`) parses frontmatter but does not re-validate on the delivery read path; validation fires only on the admin save path, through the adapter's `defineFields` schema. The old `posts.ts`/`pages.ts` threw on bad frontmatter at build, so hand-committed content lost that gate: a missing `title` or `description` no longer fails the build. The 0.21 migration widened this: the schema contract dropped four rules the old `validatePostFrontmatter` enforced (a real calendar date, a `YYYY-MM-DD` format, the closed `POST_TAGS` vocabulary as a hard constraint, and an at-least-one-tag minimum). See `docs/cairn-dx-findings.md` finding 5 and `cairn-cms/docs/dx-backlog-ecnordic-migration.md` item 10; the durable fix is declarative engine field options, not a site-local re-add. The `url-inventory` test still catches a post whose date disagrees with its filename. Interim option: a build-time test that runs the schema over every file.
-- [ ] **#15** Fix the h1 to h3 heading skip in `ArchiveList` `#bug` `#ecnordic` *(2026-06-01)*
+- [ ] **#15** Fix the h1 to h3 heading skip in `ArchiveList` `#bug` `#ecxc` *(2026-06-01)*
   `src/lib/components/ArchiveList.svelte` emits `<h3 class="year-heading">` directly under the page `<h1>` with no intervening `<h2>`, which skips a heading level (WCAG 2.2 1.3.1). The same shape appears on the home page. Surfaced by the Pass 1b a11y review and deferred because the fix changes rendered structure and the pass's contract was zero output change. Promote the year heading to `<h2>`; there is no competing `<h2>` styling on those routes.
-- [ ] **#12** Tokenize the waiver page's hardcoded `--w-*` color palette `#improvement` `#ecnordic` *(2026-05-24)*
+- [ ] **#12** Tokenize the waiver page's hardcoded `--w-*` color palette `#improvement` `#ecxc` *(2026-05-24)*
   `src/routes/waiver/+page.svelte` defines a self-contained print/paper palette in raw hex + `rgba()` (`--w-red`, `--w-blue`, `--w-ink`, etc.), which violates the design system (`rules/design-system.md`: oklch + `--color-*` tokens only). Surfaced by the Pass 7 Tailwind/DaisyUI audit. Deferred from Pass 7 because faithfully porting sRGB hex to `oklch()` shifts rendered pixels, and the pass's contract was zero visual change. Do it as a deliberate, visually-reviewed migration (adopt site tokens, or keep a distinct waiver palette expressed as oklch `@theme` tokens).
-- [ ] **#1** Flip prerender options back to `'fail'` once content is real `#improvement` `#ecnordic` *(2026-05-20, updated 2026-06-02)*
+- [ ] **#1** Flip prerender options back to `'fail'` once content is real `#improvement` `#ecxc` *(2026-05-20, updated 2026-06-02)*
   `svelte.config.js` sets handleUnseenRoutes, handleHttpError, and handleMissingId to `'warn'` to allow building with no content. Flip to `'fail'` so CI catches broken links. The 0.21 content graph gave this a concrete consequence: a dangling `cairn:` token throws `cairn link target not found` at prerender, but `handleHttpError: 'warn'` downgrades the 500 to a warning, so `npm run build` exits 0 and the content-graph backstop is not fatal (the broken link still never ships, since the page 500s). At minimum, pair `'warn'` with a targeted `handleHttpError` that re-throws a `cairn link target not found`. See `docs/cairn-dx-findings.md` finding 16.
 
 ## Low
 
-- [ ] **#31** Migrate `Nav.svelte` off the deprecated `$app/stores` page import `#improvement` `#ecnordic` *(2026-06-09)*
+- [ ] **#31** Migrate `Nav.svelte` off the deprecated `$app/stores` page import `#improvement` `#ecxc` *(2026-06-09)*
   `src/lib/components/Nav.svelte` imports `page` from `$app/stores`, deprecated since SvelteKit 2.12 in favor of `page` from `$app/state`. Pre-existing, flagged by the Rename 5 svelte-reviewer; migrate when the nav is next touched.
-- [ ] **#27** Give 907.life the shared web-content method routing `#improvement` `#ecnordic` *(2026-06-06)*
+- [ ] **#27** Give 907.life the shared web-content method routing `#improvement` `#ecxc` *(2026-06-06)*
   Add a `docs/content-guide.md` and a `.claude/rules/content.md` to the 907.life repo that point at the same shared web-content method (`~/.claude/docs/web-content-method.md`), so the second site gets the same `content-draft`/`content-review` routing by copying two small local files. The method, the two skills, and the widened `prose-guard` lexicon already live in the dotfiles, so 907.life needs only its own voice guide plus the router rule. This is the spec's out-of-scope item "A 907.life content-guide.md that points at the same shared method."
-- [ ] **#26** Retroactive rubric audit of the existing site pages `#improvement` `#ecnordic` *(2026-06-06)*
+- [ ] **#26** Retroactive rubric audit of the existing site pages `#improvement` `#ecxc` *(2026-06-06)*
   Run `content-review` over each published page in `src/content/pages/` and record the band and score for each, as a one-time content-quality audit. The smoke test in the web-content authoring initiative scored About at Publish (93); the rest of the pages have not been run through the rubric. Capture the bands and scores, then hold or redraft any page that lands below Publish. This is the spec's out-of-scope item "Applying the rubric retroactively to the existing pages as a content audit."
-- [ ] **#23** Adopt the `toc` component once cairn-cms ships a post-rehype hook `#improvement` `#ecnordic` *(2026-06-04)*
+- [ ] **#23** Adopt the `toc` component once cairn-cms ships a post-rehype hook `#improvement` `#ecxc` *(2026-06-04)*
   The Training page keeps a hand-maintained `<nav class="page-toc">` because cairn-cms `^0.24.0` has no hook for a render pass that runs after `rehypeSlug`, which the toc needs to read the rendered `<h2>` slug ids. See `docs/cairn-dx-findings.md` finding 18. When the engine adds a post-rehype hook, build the `toc` directive (a `:::toc` placeholder component plus a rehype plugin that collects `<h2 id>` and fills it) and replace the hand-maintained nav.
-- [ ] **#22** Pre-publish: confirm the CrewLAB join link, self-signing, and donation collection are current `#improvement` `#ecnordic` *(2026-06-04)*
+- [ ] **#22** Pre-publish: confirm the CrewLAB join link, self-signing, and donation collection are current `#improvement` `#ecxc` *(2026-06-04)*
   Before beta launch, check against the live CrewLAB setup that the join deep link (`crewlab.app.link/5g7vhhYEn3b`) still resolves, that guardian-for-minor and adult-self signing of the waiver both work as the CrewLAB and About pages describe, and that ECXC actually collects donations through the app. Plan 2 states these as current in `src/content/pages/crewlab.md` and `about.md`; they need a real-world check before they ship.
-- [ ] **#21** Confirm what ECXC collects through CrewLAB and replace the placeholder `#improvement` `#ecnordic` *(2026-06-04)*
+- [ ] **#21** Confirm what ECXC collects through CrewLAB and replace the placeholder `#improvement` `#ecxc` *(2026-06-04)*
   The "For parents & supporters" section of `src/content/pages/crewlab.md` carries `[PLACEHOLDER: confirm what ECXC collects through CrewLAB, whether camp cost-share, dues, or donations.]`. Decide what the program actually collects through the app, then replace the placeholder with the real answer before publish.
-- [ ] **#19** Defer the `roster` directive until real coach photos exist `#improvement` `#ecnordic` *(2026-06-04)*
+- [ ] **#19** Defer the `roster` directive until real coach photos exist `#improvement` `#ecxc` *(2026-06-04)*
   A `roster` directive (a grid of coach or volunteer headshot cards) waits on real photos. The Volunteers & Coaches page in Plan 2 uses the existing `split`/`panel` directives for the bios in the meantime, so the page ships without the roster grid. Add `roster` to the registry (`src/lib/markdown/components.ts`) and convert the Volunteers bios to it once headshots are in hand.
-- [ ] **#18** Launch-time redirects: `/resources` -> CrewLAB, `/waiver` -> CrewLAB `#improvement` `#ecnordic` *(2026-06-04, updated 2026-06-04)*
+- [ ] **#18** Launch-time redirects: `/resources` -> CrewLAB, `/waiver` -> CrewLAB `#improvement` `#ecxc` *(2026-06-04, updated 2026-06-04)*
   Two redirects to add at launch, both now pointing at CrewLAB. Plan 2 folded the Resources waiver-and-forms content into CrewLAB and deleted `src/content/pages/resources.md`, so `/resources` -> `/crewlab` is the settled destination. The `/waiver` route still exists as a hand-built route (`src/routes/waiver/+page.svelte`), but content references now point at CrewLAB, so a `/waiver` -> CrewLAB redirect keeps old links working once the standalone route retires. Wire both at launch.
-- [ ] **#17** Launch-time redirect `/home` -> `/` `#bug` `#ecnordic` *(2026-06-04)*
+- [ ] **#17** Launch-time redirect `/home` -> `/` `#bug` `#ecxc` *(2026-06-04)*
   The editable Home copy moved into a routed content page (`src/content/pages/home.md`, Plan 1 Task 5), and `pages` is a routed concept, so the entry also answers at `/home`, a redundant public URL that duplicates `/`. Accepted for beta. Add a `/home` -> `/` redirect at launch so the duplicate URL does not ship to production. The underlying gap (cairn has no route-less content fragment) is a DX finding, not a site fix; see `docs/cairn-dx-findings.md` finding 17.
-- [ ] **#14** Dedup the catch-all cascade keyframes against the global ones `#cleanup` `#ecnordic` *(2026-05-24)*
+- [ ] **#14** Dedup the catch-all cascade keyframes against the global ones `#cleanup` `#ecxc` *(2026-05-24)*
   `page-rise`/`module-rise` now live globally in `app.css` (Pass 8). `src/routes/[...path]/+page.svelte` carries its own scoped copies, inherited verbatim from the old `[slug]` route during the Pass 1b cutover; remove them and reference the globals when the directive pages are next reworked. Zero-output-change refactor (CSS-only).
-- [ ] **#5** Replace @schedule-x with a custom Svelte calendar component `#improvement` `#ecnordic` *(2026-05-20)*
+- [ ] **#5** Replace @schedule-x with a custom Svelte calendar component `#improvement` `#ecxc` *(2026-05-20)*
   Do this when migrating to cairn-cms.
 ## Done
 
-- [x] **#29** Admin login 403s for a browser that sends no `Origin` header (cairn missing-Origin CSRF) `#bug` `#ecnordic` *(2026-06-08 → 2026-06-08)*
+- [x] **#29** Admin login 403s for a browser that sends no `Origin` header (cairn missing-Origin CSRF) `#bug` `#ecxc` *(2026-06-08 → 2026-06-08)*
   Fixed in cairn-cms `0.35.0`: cairn owns admin CSRF through a `__Host-cairn_csrf` double-submit token that tolerates a missing `Origin`, so the JS-free magic-link login works from a privacy browser. A failed check now serves a branded "Security check · Cairn" 403 in place of the raw SvelteKit text. ecnordic upgraded to `^0.35.0` and set `csrf: { checkOrigin: false }` in `svelte.config.js` (Pass 0.35). Verified on local dev: the login GET issues the token cookie + hidden `csrf` field, a no-`Origin` POST carrying a valid token passes the CSRF gate (reaches the editor lookup), and a POST with a missing or wrong token gets the branded 403. The original diagnosis lived at `~/Projects/cairn-cms/docs/cairn-dx-feedback-2026-06-08-ecnordic-login-csrf-missing-origin.md`.
-- [x] **#28** Force HTTPS at the Cloudflare edge (cairn 0.34 deploy requirement) `#improvement` `#ecnordic` *(2026-06-08 → 2026-06-08)*
+- [x] **#28** Force HTTPS at the Cloudflare edge (cairn 0.34 deploy requirement) `#improvement` `#ecxc` *(2026-06-08 → 2026-06-08)*
   cairn-cms `^0.34.0` makes this a hard deploy requirement, so the magic-link login POST always carries an https scheme. Verified already configured on the ecnordic.ski zone (id `ee6d947a...`): "Always Use HTTPS" is `on`, HSTS is enabled (`max-age=63072000`, `includeSubDomains`), and `http://ecnordic.ski/admin/login` returns `301` to https. This closes the cross-scheme CSRF path from the 2026-06-07 DX report, but it did **not** make login work: the live failure is a missing-`Origin` header, a separate cause tracked as #29.
-- [x] **#25** Finalize the Talkeetna camp packing list `#improvement` `#ecnordic` *(2026-06-04 → 2026-06-05)*
+- [x] **#25** Finalize the Talkeetna camp packing list `#improvement` `#ecxc` *(2026-06-04 → 2026-06-05)*
   The real packing list replaced the `[PLACEHOLDER]` and draft list in the camp "What to pack" section of `src/content/pages/training.md`: sleeping bag and pillow, training clothes for cool and warm weather, rain gear, hang-out clothes, sock and clothing changes, a swimsuit and towel, running shoes, hill bounding poles, roller-ski kit (boots, skis, poles, helmet) if applicable, a water bottle with a carrier, hygiene items, daily medications, and optional personal food and snacks.
-- [x] **#24** Confirm loaner equipment and fill the Training "What to bring" placeholder `#improvement` `#ecnordic` *(2026-06-04 → 2026-06-05)*
+- [x] **#24** Confirm loaner equipment and fill the Training "What to bring" placeholder `#improvement` `#ecxc` *(2026-06-04 → 2026-06-05)*
   ECXC can lend roller skis, poles, and other gear to any athlete who needs it; the athlete just tells a coach. The `[PLACEHOLDER]` in the "What to bring" list and the "not provided" line in the Common questions FAQ were both replaced with that policy in `src/content/pages/training.md`.
-- [x] **#6** Replace placeholder page content (about, resources) `#improvement` `#ecnordic` *(2026-05-20 → 2026-06-04)*
+- [x] **#6** Replace placeholder page content (about, resources) `#improvement` `#ecxc` *(2026-05-20 → 2026-06-04)*
   About was rewritten to the canonical facts in site-refresh Plan 2: the origin story, the full eligibility range, the schedule and camp dates, and the CrewLAB waiver, replacing the old placeholder copy. Resources was retired in the same plan, its waiver-and-forms content folded into CrewLAB and the page deleted. Both named pages are resolved. The Training page is still placeholder and is tracked with Plan 3; the one remaining CrewLAB collection placeholder is #21.
 
-- [x] **#4** Add Sveltia CMS config for web-based editing by volunteers `#feature` `#ecnordic` *(2026-05-20 → 2026-05-25)*
+- [x] **#4** Add Sveltia CMS config for web-based editing by volunteers `#feature` `#ecxc` *(2026-05-20 → 2026-05-25)*
   Superseded by cairn-cms. Sveltia was never wired in; the dead `static/admin/` was removed
   in cairn Pass A (it shadowed the new `/admin` route as a static asset), and the magic-link
   cairn admin (passes A–C) is the web-editing surface now. Resolved by removal, not wiring.
 
-- [x] **#11** Rename the welcome post file to drop the day `#improvement` `#ecnordic` *(2026-05-24 → 2026-05-24)*
+- [x] **#11** Rename the welcome post file to drop the day `#improvement` `#ecxc` *(2026-05-24 → 2026-05-24)*
   Renamed `2026-05-14-welcome.md` → `2026-05-welcome.md` (URL `/2026/05/14-welcome` → `/2026/05/welcome`). Reconciled the filename convention: code (`posts.ts` `parseFilepath`) and CLAUDE.md use `YYYY-MM-slug`; fixed the contradicting `YYYY-MM-DD-slug` in `.claude/rules/content.md`.
-- [x] **#10** Sveltia CMS config points at the wrong repo `#bug` `#ecnordic` *(2026-05-24 → 2026-05-24)*
+- [x] **#10** Sveltia CMS config points at the wrong repo `#bug` `#ecxc` *(2026-05-24 → 2026-05-24)*
   Fixed `backend.repo` → `glw907/ecnordic-ski` and the `slug` template → `{{year}}-{{month}}-{{slug}}` (was the wrong day-bearing form). CMS still unwired; that's #4.
-- [x] **#9** Remove unused font files from `static/fonts/` `#improvement` `#ecnordic` *(2026-05-20 → 2026-05-24)*
+- [x] **#9** Remove unused font files from `static/fonts/` `#improvement` `#ecxc` *(2026-05-20 → 2026-05-24)*
   Deleted 22 unreferenced woff2 files (Cormorant, ETBook, iA Quattro, Iosevka, Karla, Lora, Monaspace, Spectral, + stray iA Mono italics). Kept only the 6 `@font-face`'d files: AlegreyaSans ×4, iAWriterMonoS Bold/Regular. (Nunito loads from Google.)
 
-- [x] **#13** Remote-functions spike (`form()`) `#feature` `#ecnordic` *(2026-05-24 → 2026-05-24)*
+- [x] **#13** Remote-functions spike (`form()`) `#feature` `#ecxc` *(2026-05-24 → 2026-05-24)*
   Pass 9. Converted the contact form to a `form()` remote function (`src/lib/contact.remote.ts`, Valibot schema, Turnstile + Email Workers intact). Verified end-to-end on adapter-cloudflare (JS + no-JS paths) via `wrangler dev`. **Verdict: DEFER.** Works and ergonomically wins, but the API is experimental ("subject to change", no stable date) and additive per the core team. Contact stays the proving ground; don't migrate other surfaces until stable. See `docs/architecture.md`.
 
-- [x] **#8** Replace regex-based HTML rewriting with a remark plugin `#improvement` `#ecnordic` *(2026-05-20 → 2026-05-24)*
+- [x] **#8** Replace regex-based HTML rewriting with a remark plugin `#improvement` `#ecxc` *(2026-05-20 → 2026-05-24)*
   Resolved by the Pass 5/6 directive pipeline: the `decorateAbout`/`wrapSections` regex surgery is deleted; rendering is now a remark/rehype AST pipeline (`src/lib/markdown/`).
-- [x] **#7** Move the static-page HTML transform into the load/build layer `#improvement` `#ecnordic` *(2026-05-20 → 2026-05-24)*
+- [x] **#7** Move the static-page HTML transform into the load/build layer `#improvement` `#ecxc` *(2026-05-20 → 2026-05-24)*
   Resolved by the Pass 5/6 directive pipeline: the transform runs at build inside `renderMarkdown` (called from `getPage`), not on client render. The old per-render `decorate*` functions are gone.
-- [x] **#3** Set real Turnstile site key after domain is live `#improvement` `#ecnordic` *(2026-05-20 → 2026-05-20)*
-- [x] **#2** Full visual design pass (Pass 3: Nunito font, crimson/cobalt palette, hero grid, nav, news cards) `#improvement` `#ecnordic` *(2026-05-20)*
+- [x] **#3** Set real Turnstile site key after domain is live `#improvement` `#ecxc` *(2026-05-20 → 2026-05-20)*
+- [x] **#2** Full visual design pass (Pass 3: Nunito font, crimson/cobalt palette, hero grid, nav, news cards) `#improvement` `#ecxc` *(2026-05-20)*

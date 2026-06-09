@@ -278,6 +278,10 @@ Push to `main` → GitHub Actions (`.github/workflows`) → `npm run build` + `n
 (adapter-cloudflare v7 output path); Pagefind indexes the prerendered HTML there.
 GitHub Actions secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
 
+The repo is `glw907/ecxc-ski` (renamed from `ecnordic-ski` in Rename 6, 2026-06-09; GitHub
+redirects the old name). The cairn `backend.repo` in `src/lib/cairn.config.ts` names the same
+repo, since admin saves commit through the GitHub App; the App installation survived the rename.
+
 ### Domain and email routing
 
 The live domain is `ecxc.ski`, served by the `ecxc` Worker through a Cloudflare custom

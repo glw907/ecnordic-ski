@@ -1,4 +1,4 @@
-# ecnordic.ski
+# ecxc.ski
 
 East Community Cross Country. SvelteKit + TypeScript, deployed to Cloudflare Workers.
 

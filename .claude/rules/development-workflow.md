@@ -1,6 +1,6 @@
 When the user says "continue development", "next pass", "start the
 next pass", "finish pass", "ship pass", or "continue" in the context
-of ecnordic-ski's own roadmap, invoke the `site-pass` skill. It handles
+of ecxc-ski's own roadmap, invoke the `site-pass` skill. It handles
 both pass start (read STATUS, read plan, execute) and pass end (the
 consolidation ritual: code-simplifier, quality gate, reviewer fan-out,
 STATUS update, plan archival, commit + push, then roll into the next
