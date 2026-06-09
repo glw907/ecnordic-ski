@@ -319,6 +319,12 @@ destination, which is unchanged.
   global check has to be off for that, hence the config line. SvelteKit has deprecated `checkOrigin` in
   favour of `csrf.trustedOrigins`, which is an allowlist, not an off switch, so it is not a drop-in
   replacement; revisit when cairn's upgrade guide moves off `checkOrigin`.
+- **cairn's structured log events flow to Workers Logs.** `wrangler.toml` sets
+  `observability.enabled = true` (Pass 0.37, engine `^0.37.1`), so the engine's JSON diagnostic
+  records (auth flow, commit pipeline, admin-guard refusals) index in the Cloudflare dashboard
+  and stream in `wrangler tail`. Event vocabulary: cairn's `docs/reference/log-events.md`. A
+  successful magic-link send shows `auth.link.requested` then `auth.token.minted` with no
+  `auth.link.send_failed`; the vocabulary has no send-success event.
 - **Node 24** is the build runtime (`.nvmrc`, `engines.node >=22`, CI). wrangler ≥4.93
   requires Node ≥22.
 - **Vite 8 uses the Rolldown bundler**, which resolves absolute dynamic imports eagerly.

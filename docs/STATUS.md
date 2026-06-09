@@ -12,9 +12,14 @@ memory carried to the new path slug. Swept the live repo-name references: cairn 
 `package.json` name, the CLAUDE.md header, the workflow rule, and the backlog domain tag
 (`#ecnordic` to `#ecxc`).
 
-**Pending (user):** confirm magic-link login on `ecxc.ski` (blocked on a verified Email Routing
-destination or a provider sender; see the cairn DX escalation), then delete the old
-`cairn-ecnordic-auth` D1.
+**Pass 0.37 (cairn upgrade), done 2026-06-09.** Engine bumped to `^0.37.1` (additive window: 0.36
+structured logging, 0.37 login-confirmation panel, 0.37.1 internal diagnostics foundation) and
+Workers Logs observability enabled. The send outage was fixed upstream (the `ecxc.ski` sending
+domain is onboarded). Verified live: a login POST logged `auth.link.requested` and
+`auth.token.minted` with no `auth.link.send_failed`, so the magic link delivered.
+
+**Pending (user):** click the delivered magic link to confirm end-to-end login on `ecxc.ski`,
+then delete the old `cairn-ecnordic-auth` D1.
 
 ### Next starter prompt
 
@@ -31,15 +36,16 @@ destination or a provider sender; see the cairn DX escalation), then delete the 
 - **Rename 1–6 (2026-06-08/09).** Full ECXC rebrand: identity sweep, audience broadening, new
   `cairn-ecxc-auth` D1, domain cutover with 301, brand mark (grid monogram + SVG favicon), and
   the repo/directory rename to `ecxc-ski`.
-- **cairn-cms 0.33–0.35 (2026-06-07/08).** Admin isolated in a `(site)` route group, dep surface
-  pruned, HTTPS forced at the edge (#28), admin-login CSRF fixed in 0.35 (cairn owns the token).
+- **cairn-cms 0.33–0.37 (2026-06-07/09).** Admin isolated in a `(site)` route group, dep surface
+  pruned, HTTPS forced at the edge (#28), admin-login CSRF fixed in 0.35 (cairn owns the token),
+  structured logging + login-confirmation panel picked up in 0.37.1 with observability on.
 - **Earlier (2026-06-02/06).** Web-content authoring skills, global component layer, six-page refresh.
 
 ## Passes
 
 | Pass | Goal | Status |
 |------|------|--------|
-| 1–9, 0.10–0.35 | Scaffold through cairn upgrades | ✓ Done |
+| 1–9, 0.10–0.37 | Scaffold through cairn upgrades | ✓ Done |
 | Refresh 1–3 | Six-page content rebuild | ✓ Done |
 | Rename 1–6 | Full ECXC rebrand through repo rename | ✓ Done |
 
