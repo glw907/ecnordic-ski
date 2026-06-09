@@ -4,6 +4,8 @@
 
 ## Medium
 
+- [ ] **#30** Raster favicon fallback for Safari `#improvement` `#ecnordic` *(2026-06-09)*
+  Safari does not load SVG favicons, so it falls back to requesting `/favicon.ico` and gets a 404 (nothing ships at that path). Render a 32px PNG fallback and an `apple-touch-icon` from `static/favicon.svg`'s crimson tile and link both from `src/app.html`. Pre-launch polish, surfaced by the Rename 5 review fan-out.
 - [ ] **#20** Add a global `.ec-head` flex rule so `aside`/`gallery` heads work off the three directive pages `#bug` `#ecnordic` *(2026-06-04)*
   The `.ec-head` flex layout (icon and title inline with a gap, larger glyph) is page-scoped to the about/training/crewlab routes in `src/routes/[...path]/+page.svelte`. A titled or icon-only `aside`, or a titled `gallery`, used on Home, Contact, Archives, or inside a post body renders its head block-stacked with no gap and a default-size glyph, since the scoped rule does not reach those routes. Add a global `.ec-aside .ec-head` and gallery `.ec-head` rule (in `app.css`) so these directives are self-contained anywhere they appear, not only on the three directive pages. Found in the Plan 1 Task 2 code-quality review.
 - [ ] **#16** Restore a build-time frontmatter validation gate for content `#improvement` `#ecnordic` *(2026-06-01, updated 2026-06-02)*
@@ -17,6 +19,8 @@
 
 ## Low
 
+- [ ] **#31** Migrate `Nav.svelte` off the deprecated `$app/stores` page import `#improvement` `#ecnordic` *(2026-06-09)*
+  `src/lib/components/Nav.svelte` imports `page` from `$app/stores`, deprecated since SvelteKit 2.12 in favor of `page` from `$app/state`. Pre-existing, flagged by the Rename 5 svelte-reviewer; migrate when the nav is next touched.
 - [ ] **#27** Give 907.life the shared web-content method routing `#improvement` `#ecnordic` *(2026-06-06)*
   Add a `docs/content-guide.md` and a `.claude/rules/content.md` to the 907.life repo that point at the same shared web-content method (`~/.claude/docs/web-content-method.md`), so the second site gets the same `content-draft`/`content-review` routing by copying two small local files. The method, the two skills, and the widened `prose-guard` lexicon already live in the dotfiles, so 907.life needs only its own voice guide plus the router rule. This is the spec's out-of-scope item "A 907.life content-guide.md that points at the same shared method."
 - [ ] **#26** Retroactive rubric audit of the existing site pages `#improvement` `#ecnordic` *(2026-06-06)*

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- ECXC four-spot grid mark. Glyph paths are a copy of the nav mark in src/lib/components/Nav.svelte.
+       Colors mirror the light theme's primary / primary-content tokens in src/app.css. -->
+  <rect width="64" height="64" rx="14" fill="oklch(54% 0.26 18)" />
+  <g transform="translate(12 12) scale(0.4)" fill="oklch(99% 0.003 18)">
+    <path d="M0 0H46V11H11V17.5H46V28.5H11V35H46V46H0Z" />
+    <path d="M54 0H100V11H65V35H100V46H54Z" />
+    <path d="M0 54H17L46 83V100H29L0 71Z M29 54H46V71L17 100H0V83Z" />
+    <path d="M54 54H100V65H65V89H100V100H54Z" />
+  </g>
+</svg>

@@ -255,6 +255,18 @@ so there's no flash. The nav toggle writes both cookie and localStorage. DaisyUI
 configured with `ecxc --default` and `ecxc-dark --prefersdark` (renamed from `ecn`/`ecn-dark`
 in Rename 4.5). See `docs/design-language.md`.
 
+### Brand mark (Rename 5, 2026-06-09)
+
+The ECXC mark is a four-spot grid monogram, "EC" over "XC", drawn as four rectilinear SVG
+paths on a 100x100 viewBox (46-unit cells, 8-unit gutters, 11-unit strokes, 12 on the X's
+diagonals). One geometry, two presentations: `Nav.svelte` inlines the paths at 2.25rem
+filled with `currentColor` so each theme supplies its own primary crimson, and
+`static/favicon.svg` embeds a copy knocked out white on a crimson rounded square (hardcoded
+`oklch()` mirroring the light theme's primary tokens, since a static asset cannot read CSS
+variables). A glyph-sync test in `src/tests/brand-mark.test.ts` pins the duplication.
+Spec: `docs/superpowers/archive/specs/2026-06-09-ecxc-brand-mark-design.md`. Safari ignores
+SVG favicons; the PNG fallback is backlog #30.
+
 ---
 
 ## Deployment

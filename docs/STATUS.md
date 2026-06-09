@@ -11,18 +11,21 @@ record (the deploy token can't edit the Rulesets API). Email Routing is enabled 
 magic links sign from `noreply@ecxc.ski`. The old `ecnordic` Worker and its custom domain are gone.
 **Pending:** delete the `cairn-ecnordic-auth` D1 once magic-link login is confirmed on `ecxc.ski`.
 
-**Rename 4.5 (identity cleanup), done.** Swept the `ecn`/`ecn-dark` DaisyUI themes to
-`ecxc`/`ecxc-dark`, the `ecnordicRegistry` identifier to `ecxcRegistry`, the waiver wordmark
-classes, and the hero asset. Gate green: check 0/0, test 54, build 0.
+**Rename 5 (brand mark), done.** Four-spot grid monogram (EC over XC, rectilinear paths) in
+`Nav.svelte` via `currentColor`, plus `static/favicon.svg` (white glyphs on a crimson tile) wired
+in `app.html`. A glyph-sync test pins the two path copies. Gate green: check 0/0, test 59, build 0.
+Follow-ups logged: #30 Safari PNG favicon fallback, #31 `$app/state` migration.
 
-### Next starter prompt (Rename 5)
+### Next starter prompt (Rename 6)
 
-> **Goal.** Design the ECXC brand mark: a four-spot grid monogram, "EC" over "XC".
+> **Goal.** Rename the repo and local directory: `ecnordic-ski` becomes `ecxc-ski`.
 >
-> **Plan (brainstormed, pre-baked):** `docs/superpowers/plans/2026-06-09-rename-5-brand-mark.md`,
-> spec at `docs/superpowers/specs/2026-06-09-ecxc-brand-mark-design.md`. Execute task-by-task.
+> **Scope.** `gh repo rename ecxc-ski`, update the git remote, `mv ~/Projects/ecnordic-ski
+> ~/Projects/ecxc-ski`, carry the per-project Claude memory dir to the new path slug, and sweep
+> stale repo-name references (Sveltia config, docs, workflows). Runs last because it moves the
+> working directory out from under the session; resume in the new directory.
 >
-> **Approach.** Invoke site-pass, design through `frontend-design`. Standard pass-end checklist applies.
+> **Approach.** Invoke site-pass. Standard pass-end checklist applies.
 
 ---
 
@@ -43,7 +46,8 @@ classes, and the hero asset. Gate green: check 0/0, test 54, build 0.
 | Rename 1–3 | Identity sweep, audience, new auth D1 | ✓ Done |
 | Rename 4 | Domain cutover + 301 redirect | ✓ Done |
 | Rename 4.5 | ecn-to-ecxc code identity cleanup | ✓ Done |
-| Rename 5–6 | Brand logo, repo rename | Queued |
+| Rename 5 | Brand logo (grid monogram + favicon) | ✓ Done |
+| Rename 6 | Repo and directory rename | Queued |
 
 ### Pre-publish checklist (gate before announcing)
 

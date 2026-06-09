@@ -67,8 +67,14 @@
 
 <header class="site-header">
   <nav class="nav-inner">
-    <a href="/" class="site-logo" onclick={closeMobile}>
-      <span class="logo-ecxc">ECXC</span>
+    <a href="/" class="site-logo" aria-label="ECXC home" onclick={closeMobile}>
+      <!-- Four-spot grid monogram. static/favicon.svg embeds a copy of these paths. -->
+      <svg class="logo-mark" viewBox="0 0 100 100" fill="currentColor" aria-hidden="true">
+        <path d="M0 0H46V11H11V17.5H46V28.5H11V35H46V46H0Z" />
+        <path d="M54 0H100V11H65V35H100V46H54Z" />
+        <path d="M0 54H17L46 83V100H29L0 71Z M29 54H46V71L17 100H0V83Z" />
+        <path d="M54 54H100V65H65V89H100V100H54Z" />
+      </svg>
     </a>
 
     <!-- Desktop links -->
@@ -153,20 +159,18 @@
 
   .site-logo {
     display: flex;
-    align-items: baseline;
-    gap: 0.35rem;
+    align-items: center;
     text-decoration: none;
+    color: var(--color-primary);
     transition: opacity 0.2s ease;
   }
-  .site-logo:hover { opacity: 0.75; }
+  /* 0.85 keeps the mark above the 3:1 non-text contrast bar in the light theme. */
+  .site-logo:hover { opacity: 0.85; }
 
-  /* Placeholder wordmark. The four-spot grid logo (EC over XC) lands in the brand pass. */
-  .logo-ecxc {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 1.6rem;
-    letter-spacing: -0.01em;
-    color: var(--color-primary);
+  .logo-mark {
+    width: 2.25rem;
+    height: 2.25rem;
+    display: block;
   }
 
   /* Desktop nav */
