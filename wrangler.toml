@@ -24,6 +24,10 @@ binding = "AUTH_DB"
 database_name = "cairn-ecxc-auth"
 database_id = "a47c56d2-25ef-4131-a505-8c9fd5a92f1f"
 
+# cairn-cms 0.36+: ship cairn's structured log events to Workers Logs.
+[observability]
+enabled = true
+
 [vars]
 # Site origin, used to build magic links. Dev overrides via PUBLIC_ORIGIN in .dev.vars.
 PUBLIC_ORIGIN = "https://ecxc.ski"
