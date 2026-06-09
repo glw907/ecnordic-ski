@@ -10,8 +10,8 @@
   <div class="page">
     <div class="doc-header">
       <div class="doc-header-left">
-        <div class="doc-logo"><span class="ecn">EC</span><span class="nordic">Nordic</span></div>
-        <div class="doc-subtitle">ecnordic.ski · Summer Training Program · Anchorage, Alaska</div>
+        <div class="doc-logo"><span class="ecn">EC</span><span class="nordic">XC</span></div>
+        <div class="doc-subtitle">ecxc.ski · Summer Training Program · Anchorage, Alaska</div>
       </div>
       <div class="doc-title-block">
         <div class="doc-title">Waiver and Release of Liability<br>Assumption of Risk &amp; Medical Authorization</div>
@@ -26,7 +26,7 @@
         <div class="section-rule"></div>
       </div>
       <div class="not-affiliated">
-        This is an <strong>informal, free, community-run training group</strong> for high school athletes operating as <strong>East Community Cross Country</strong> (ecnordic.ski). The group is <strong>NOT</strong> affiliated with, sponsored by, endorsed by, or connected to the Anchorage School District, East High School, any other school, any club, or any business or commercial entity. Coaches and adult chaperones are unpaid volunteers and are <strong>not acting as paid professionals, certified instructors, licensed guides, or commercial trip leaders</strong>.
+        This is an <strong>informal, free, community-run training group</strong> for high school athletes operating as <strong>East Community Cross Country</strong> (ecxc.ski). The group is <strong>NOT</strong> affiliated with, sponsored by, endorsed by, or connected to the Anchorage School District, East High School, any other school, any club, or any business or commercial entity. Coaches and adult chaperones are unpaid volunteers and are <strong>not acting as paid professionals, certified instructors, licensed guides, or commercial trip leaders</strong>.
       </div>
       <p class="body-text">No fee is charged for participation. Voluntary donations may be accepted to offset shared expenses (gas, campground fees, group equipment), but no participant is required to donate. Many participants are under 18 and will not always be in the immediate presence of their parents during training sessions, travel, or the multi-day camp. Volunteer adults will be responsible for supervision during scheduled activities and require parental authorization to obtain medical care if necessary.</p>
     </div>
@@ -98,7 +98,7 @@
     </div>
 
     <div class="doc-footer">
-      <span>East Community Cross Country · ecnordic.ski · Summer Training Program</span>
+      <span>East Community Cross Country · ecxc.ski · Summer Training Program</span>
       <span>Page 1 of 3</span>
     </div>
   </div>
@@ -107,7 +107,7 @@
   <div class="page pb">
     <div class="doc-header">
       <div class="doc-header-left">
-        <div class="doc-logo"><span class="ecn">EC</span><span class="nordic">Nordic</span></div>
+        <div class="doc-logo"><span class="ecn">EC</span><span class="nordic">XC</span></div>
         <div class="doc-subtitle">Waiver, Release &amp; Medical Authorization</div>
       </div>
       <div class="doc-title-block">
@@ -173,7 +173,7 @@
     </div>
 
     <div class="doc-footer">
-      <span>East Community Cross Country · ecnordic.ski · Summer Training Program</span>
+      <span>East Community Cross Country · ecxc.ski · Summer Training Program</span>
       <span>Page 2 of 3</span>
     </div>
   </div>
@@ -182,7 +182,7 @@
   <div class="page pb">
     <div class="doc-header">
       <div class="doc-header-left">
-        <div class="doc-logo"><span class="ecn">EC</span><span class="nordic">Nordic</span></div>
+        <div class="doc-logo"><span class="ecn">EC</span><span class="nordic">XC</span></div>
         <div class="doc-subtitle">Waiver, Release &amp; Medical Authorization</div>
       </div>
       <div class="doc-title-block">
@@ -270,11 +270,11 @@
         <div class="section-title blue-title">Questions</div>
         <div class="section-rule"></div>
       </div>
-      <p class="body-text">Submit questions through the contact form at <strong>ecnordic.ski</strong>. A completed and signed form must be returned to Geoffrey Wright before the Minor's first day of participation.</p>
+      <p class="body-text">Submit questions through the contact form at <strong>ecxc.ski</strong>. A completed and signed form must be returned to Geoffrey Wright before the Minor's first day of participation.</p>
     </div>
 
     <div class="doc-footer">
-      <span>East Community Cross Country · ecnordic.ski · Summer Training Program</span>
+      <span>East Community Cross Country · ecxc.ski · Summer Training Program</span>
       <span>Page 3 of 3</span>
     </div>
   </div>

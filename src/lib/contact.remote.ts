@@ -4,7 +4,7 @@ import { form, getRequestEvent } from '$app/server';
 import { createMimeMessage } from 'mimetext';
 import { siteEmail } from './config';
 
-const SENDER = siteEmail.sender ?? 'noreply@ecnordic.ski';
+const SENDER = siteEmail.sender ?? 'noreply@ecxc.ski';
 
 async function verifyTurnstile(token: string, ip: string, secret: string): Promise<boolean> {
   const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {

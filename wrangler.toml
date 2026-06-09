@@ -1,4 +1,4 @@
-name = "ecnordic"
+name = "ecxc"
 compatibility_date = "2025-05-05"
 compatibility_flags = ["nodejs_compat"]
 
@@ -26,8 +26,8 @@ database_id = "a47c56d2-25ef-4131-a505-8c9fd5a92f1f"
 
 [vars]
 # Site origin, used to build magic links. Dev overrides via PUBLIC_ORIGIN in .dev.vars.
-PUBLIC_ORIGIN = "https://ecnordic.ski"
+PUBLIC_ORIGIN = "https://ecxc.ski"
 
 [[routes]]
-pattern = "ecnordic.ski"
+pattern = "ecxc.ski"
 custom_domain = true

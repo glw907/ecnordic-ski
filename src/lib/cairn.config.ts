@@ -1,4 +1,4 @@
-// ecnordic.ski's cairn adapter. The site-specific half of the CMS: which repo to commit to, the
+// ecxc.ski's cairn adapter. The site-specific half of the CMS: which repo to commit to, the
 // editable concepts and their schema, the directive component registry, and the engine render the
 // editor preview mirrors. One defineFields declaration per concept is the single source of truth
 // for the editor form, the validator, and the inferred frontmatter type.
@@ -39,7 +39,7 @@ export const cairn = defineAdapter({
     appId: '3847496',
     installationId: '135372268',
   },
-  sender: { from: siteEmail.sender ?? 'noreply@ecnordic.ski' },
+  sender: { from: siteEmail.sender ?? 'noreply@ecxc.ski' },
   render: (md, opts) => markdownToHtml(md, opts),
   registry: ecnordicRegistry,
   icons: ICON_PATHS,

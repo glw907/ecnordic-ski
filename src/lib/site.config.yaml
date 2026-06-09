@@ -1,7 +1,7 @@
 siteName: ECXC
 description: "East Community Cross Country: year-round training for high school skiers and runners in Anchorage, Alaska."
 author: ECXC
-url: https://ecnordic.ski
+url: https://ecxc.ski
 locale: en-US
 
 content:
@@ -19,7 +19,7 @@ menus:
     - { label: Contact, url: /contact }
 
 email:
-  sender: noreply@ecnordic.ski
+  sender: noreply@ecxc.ski
   senderName: ECXC Contact
 
 footer:
