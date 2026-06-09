@@ -2,7 +2,7 @@
 title: "About East Community Cross Country"
 ---
 
-East Community Cross Country is a free, volunteer-run summer training group for Anchorage high school Nordic skiers and cross-country runners. We build the fitness, skills, and outdoor habits that carry kids through the ski season and past graduation.
+East Community Cross Country is a free, volunteer-run summer training group for Anchorage high school Nordic skiers and cross-country runners. We build the fitness, skills, and outdoor habits that carry kids through their race seasons and past graduation.
 
 The group is informal and volunteer-run. The volunteers are unpaid: parents, former racers, and local athletes who want to keep kids on snow and on trails. We are not affiliated with the Anchorage School District, East High School, or any other school, club, or business. The name refers to East Anchorage, where the program is based, not to any institutional connection. Athletes are welcome from anywhere in the area, whether they go to a public school, a private school, or homeschool.
 
@@ -15,7 +15,7 @@ Anchorage's two storied cross-country ski clubs. Both run year-round professiona
 :::
 
 ::::card[What we do]{icon="path"}
-The high school ski season is short, about four months. The eight months around it are where most of the fitness gets built or lost.
+High school race seasons are short. Running comes in the fall, skiing in the winter, and the months around them are where most of the fitness gets built or lost.
 
 ECXC's summer training program runs from June 1 to August 19, 2026. We meet three mornings a week, Monday, Wednesday, and Friday. Running and strength training are the weekly core, with mountain biking and roller-skiing mixed in on some days. We train across the usual Anchorage spots: East High, the Hillside trails, Kincaid Park, Bartlett, and the Chugach front range. The weekly plan also includes workouts to do on your own between group sessions. Full details on the [training page](/training).
 
@@ -27,7 +27,7 @@ Running, mountain biking, roller-skiing, and strength training all carry inheren
 ::::
 
 ::::card[Who can join]{icon="users-three" role="secondary"}
-The group is open to students entering high school (rising 9th graders) through 12th grade, plus high school graduates home from college for the summer. Graduates can train with us, and we encourage them into volunteer team leadership. Training is designed around Nordic skiing, and the same work benefits cross-country runners and any high school athlete trying to stay in shape over the summer.
+The group is open to students entering high school (rising 9th graders) through 12th grade, plus high school graduates home from college for the summer. Graduates can train with us, and we encourage them into volunteer team leadership. The training base serves cross-country runners and Nordic skiers alike, along with any high school athlete trying to stay in shape over the summer.
 
 The program is need-blind. Donations and ability to pay do not affect who can join, and we do our best to make room for any athlete who fully commits to their training.
 
@@ -46,7 +46,7 @@ Five core principles guide our program design and the decisions we make for ever
 - **Total person first.** A solid sleep schedule, good food, academic success, and community engagement are not tradeoffs against athletic ambition. They are core ingredients for both athletic success and a healthy, meaningful life. We help athletes build the habits that let them succeed in sport and in the rest of their lives.
 - **Open to any committed athlete.** The program is free and need-blind. Donations and ability to pay do not affect who can join. Anyone who needs help affording camp, gear, or a ride can ask, with no questions about family finances. All we ask in return is a strong commitment to training and a willingness to give back to the community.
 - **High school sports matter.** Being on a high school team is a once-in-a-lifetime opportunity that sets the stage for a better, healthier life. ECXC aims to complement that opportunity. We provide training, knowledge, and support to help students make the most of their high school teams.
-- **A lasting bond with trails and skiing.** We want to help athletes find competitive success in high school and beyond, but our larger mission is to help teens develop a lifelong love for skiing, trails, and the outdoors. We work hard in training, and we also strive to find joy and community every day.
+- **A lasting bond with the outdoors.** We want to help athletes find competitive success in high school and beyond, but our larger mission is to help teens develop a lifelong love for running, skiing, and trails. We work hard in training, and we also strive to find joy and community every day.
 - **Support the community that supports you.** Our athletes are expected to perform community service as part of their membership in ECXC, including trail work and helping at community events and races. Our volunteers organize structured opportunities to give back as a team, and we encourage athletes to find ways to give back that are meaningful to them.
 ::::
 

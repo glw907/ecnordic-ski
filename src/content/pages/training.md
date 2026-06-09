@@ -8,7 +8,7 @@ Have a question? The [frequently asked questions](#frequently-asked-questions) c
 
 ::::programs
 :::program[Summer training]{icon="person-simple-run" href="#summer-training" meta="Jun 1–Aug 19 · 3 mornings a week" cta="See summer training"}
-Run, lift, roller-ski, and ride with the group. The weekly base for your Nordic season.
+Run, lift, roller-ski, and ride with the group. The weekly base for your fall and winter seasons.
 :::
 
 :::program[Talkeetna camp]{icon="tent" href="#talkeetna-camp" meta="Jul 21–24 · 4 days, 3 nights" cta="See the camp" role="secondary"}
@@ -78,7 +78,7 @@ The development group. Younger or newer athletes who already have some organized
 :::
 
 :::zone[Comp]
-The competition group. Experienced older athletes with a high-level background, aiming for state teams and the Besh Cup[†](#gloss-besh-cup) series.
+The competition group. Experienced older athletes with a high-level background, aiming for state meets and the Besh Cup[†](#gloss-besh-cup) series.
 :::
 ::::
 
