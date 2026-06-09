@@ -27,8 +27,8 @@ tokens in the `@theme` block in `src/app.css` and reference via
 
 ## DaisyUI themes
 
-- Light: `ecn` (default)
-- Dark: `ecn-dark` (prefers-dark)
+- Light: `ecxc` (default)
+- Dark: `ecxc-dark` (prefers-dark)
 
 Theme names are referenced in `@plugin "daisyui"` in `src/app.css`.
 Overrides use `@plugin "daisyui/theme"`, not raw `[data-theme]` blocks.

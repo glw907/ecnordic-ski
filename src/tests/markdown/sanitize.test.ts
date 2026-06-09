@@ -2,11 +2,11 @@ import { describe, it, expect } from 'vitest';
 import { renderMarkdown } from '$lib/markdown/render';
 
 // The engine render now applies the sanitize floor itself (after rehype-raw, before the
-// component dispatch). ecnordic extends that floor with one author attribute (ariaLabel) via
+// component dispatch). ECXC extends that floor with one author attribute (ariaLabel) via
 // ecSanitizeSchema. These tests render real content through renderMarkdown and assert the floor
-// strips hostile markup while keeping the directive output and the author HTML ecnordic relies on.
+// strips hostile markup while keeping the directive output and the author HTML ECXC relies on.
 
-describe('engine sanitize floor (ecnordic schema)', () => {
+describe('engine sanitize floor (ECXC schema)', () => {
   it('drops a script and an event-handler attribute in authored raw HTML', async () => {
     const out = await renderMarkdown('Intro.\n\n<p onclick="x()">hi</p>\n\n<script>alert(1)</script>\n');
     expect(out).not.toContain('<script');

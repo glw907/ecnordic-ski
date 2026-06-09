@@ -12,7 +12,7 @@
   <!-- Welcome card -->
   <div class="welcome-card">
     <div class="welcome-photo">
-      <img src="/images/ec-nordic-hero.webp" alt="ECXC athletes training" />
+      <img src="/images/ec-xc-hero.webp" alt="ECXC athletes training" />
     </div>
     <div class="welcome-body">
       <h2 class="welcome-heading">Welcome</h2>

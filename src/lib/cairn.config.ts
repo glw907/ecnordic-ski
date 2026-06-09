@@ -3,7 +3,7 @@
 // editor preview mirrors. One defineFields declaration per concept is the single source of truth
 // for the editor form, the validator, and the inferred frontmatter type.
 import { defineAdapter, defineFields } from '@glw907/cairn-cms';
-import { ecnordicRegistry } from './markdown/components.js';
+import { ecxcRegistry } from './markdown/components.js';
 import { markdownToHtml } from './utils.js';
 import { ICON_PATHS } from './markdown/icons.js';
 import { POST_TAGS, siteConfig, siteEmail } from './config.js';
@@ -41,7 +41,7 @@ export const cairn = defineAdapter({
   },
   sender: { from: siteEmail.sender ?? 'noreply@ecxc.ski' },
   render: (md, opts) => markdownToHtml(md, opts),
-  registry: ecnordicRegistry,
+  registry: ecxcRegistry,
   icons: ICON_PATHS,
   navMenu: {
     configPath: 'src/lib/site.config.yaml',

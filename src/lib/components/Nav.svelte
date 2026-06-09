@@ -5,12 +5,12 @@
 
   let { onSearchOpen }: { onSearchOpen: () => void } = $props();
 
-  let dark = $state(browser && document.documentElement.getAttribute('data-theme') === 'ecn-dark');
+  let dark = $state(browser && document.documentElement.getAttribute('data-theme') === 'ecxc-dark');
   let mobileOpen = $state(false);
 
   function toggleTheme() {
     dark = !dark;
-    const theme = dark ? 'ecn-dark' : 'ecn';
+    const theme = dark ? 'ecxc-dark' : 'ecxc';
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
     document.cookie = `theme=${theme}; max-age=${60 * 60 * 24 * 365}; path=/; SameSite=Lax`;

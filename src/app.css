@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: ecn --default, ecn-dark --prefersdark;
+  themes: ecxc --default, ecxc-dark --prefersdark;
 }
 
 @font-face {
@@ -88,7 +88,7 @@
 }
 
 @plugin "daisyui/theme" {
-  name: "ecn";
+  name: "ecxc";
   default: true;
   color-scheme: light;
   --color-base-100: oklch(99% 0.003 60);
@@ -117,7 +117,7 @@
 }
 
 @plugin "daisyui/theme" {
-  name: "ecn-dark";
+  name: "ecxc-dark";
   prefersdark: true;
   color-scheme: dark;
   --color-base-100: oklch(16% 0.015 255);

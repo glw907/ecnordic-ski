@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import { renderMarkdown } from '$lib/markdown/render';
-import { ecnordicRegistry } from '$lib/markdown/components';
+import { ecxcRegistry } from '$lib/markdown/components';
 
-describe('ecnordicRegistry', () => {
+describe('ecxcRegistry', () => {
 	it('registers the primitives in document order', () => {
-		expect(ecnordicRegistry.names).toEqual([
+		expect(ecxcRegistry.names).toEqual([
 			'card', 'grid', 'alert', 'cta', 'split', 'panel', 'passage', 'aside', 'section',
 			'programs', 'program', 'week', 'day', 'spectrum', 'zone', 'figure', 'gallery',
 			'checklist', 'faq',

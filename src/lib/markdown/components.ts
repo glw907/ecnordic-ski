@@ -496,4 +496,4 @@ const components: ComponentDef[] = [
 	},
 ];
 
-export const ecnordicRegistry = defineRegistry({ components });
+export const ecxcRegistry = defineRegistry({ components });

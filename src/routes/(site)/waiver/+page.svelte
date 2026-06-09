@@ -10,7 +10,7 @@
   <div class="page">
     <div class="doc-header">
       <div class="doc-header-left">
-        <div class="doc-logo"><span class="ecn">EC</span><span class="nordic">XC</span></div>
+        <div class="doc-logo"><span class="ec">EC</span><span class="xc">XC</span></div>
         <div class="doc-subtitle">ecxc.ski · Summer Training Program · Anchorage, Alaska</div>
       </div>
       <div class="doc-title-block">
@@ -107,7 +107,7 @@
   <div class="page pb">
     <div class="doc-header">
       <div class="doc-header-left">
-        <div class="doc-logo"><span class="ecn">EC</span><span class="nordic">XC</span></div>
+        <div class="doc-logo"><span class="ec">EC</span><span class="xc">XC</span></div>
         <div class="doc-subtitle">Waiver, Release &amp; Medical Authorization</div>
       </div>
       <div class="doc-title-block">
@@ -182,7 +182,7 @@
   <div class="page pb">
     <div class="doc-header">
       <div class="doc-header-left">
-        <div class="doc-logo"><span class="ecn">EC</span><span class="nordic">XC</span></div>
+        <div class="doc-logo"><span class="ec">EC</span><span class="xc">XC</span></div>
         <div class="doc-subtitle">Waiver, Release &amp; Medical Authorization</div>
       </div>
       <div class="doc-title-block">
@@ -353,8 +353,8 @@
     line-height: 1;
     margin-bottom: 2px;
   }
-  .ecn { color: var(--w-red); }
-  .nordic { color: var(--w-blue); font-size: 12pt; font-weight: 700; }
+  .ec { color: var(--w-red); }
+  .xc { color: var(--w-blue); font-size: 12pt; font-weight: 700; }
   .doc-subtitle {
     font-size: 7.5pt;
     color: var(--w-muted);
