@@ -63,7 +63,7 @@
       <span class="footer-label">archives</span>
     </a>
   </div>
-  <p class="footer-name">© {new Date().getFullYear()} {siteFooter.copyrightName ?? 'East Community Nordic'}</p>
+  <p class="footer-name">© {new Date().getFullYear()} {siteFooter.copyrightName ?? 'East Community Cross Country'}</p>
 </footer>
 
 <style>

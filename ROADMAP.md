@@ -4,7 +4,7 @@
 
 ## Active
 
-### ECN Nordic standalone site `ecnordic-standalone`
+### ECXC standalone site `ecnordic-standalone`
 Build ecnordic.ski as a standalone SvelteKit site forked from 907.life, with a new ECN
 theme, to get it live in the near term. Will be migrated into cairn-cms as a site
 package once the engine is battle-ready.

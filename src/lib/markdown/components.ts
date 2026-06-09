@@ -1,4 +1,4 @@
-// EC Nordic's component registry. This site's half of the render engine. Each
+// ECXC's component registry. This site's half of the render engine. Each
 // ComponentDef reproduces the directive→hast build that lived in the old
 // rehype-ec-primitives.ts, now composed from cairn-cms's shared helpers
 // (cardShell/markFirstList/iconSpan) + this site's icon set + class names.

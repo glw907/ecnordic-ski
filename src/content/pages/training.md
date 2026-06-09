@@ -2,7 +2,7 @@
 title: "Training"
 ---
 
-East Community Nordic runs two summer programs for Anchorage high school athletes: a dryland training program three mornings a week, and a four-day camp near Talkeetna in July. The two are built to go together, and most athletes will do both. You can also do just one. Both are free, with need-blind donations, and both welcome any high schooler whatever your experience.
+East Community Cross Country runs two summer programs for Anchorage high school athletes: a dryland training program three mornings a week, and a four-day camp near Talkeetna in July. The two are built to go together, and most athletes will do both. You can also do just one. Both are free, with need-blind donations, and both welcome any high schooler whatever your experience.
 
 Have a question? The [frequently asked questions](#frequently-asked-questions) cover cost, gear, and who can join.
 
@@ -35,7 +35,7 @@ Over-distance[†](#gloss-spenst-od) mountain running.
 
 **Tuesday, Thursday, and weekends**
 
-We have independent workouts scheduled for the days we're not meeting as a team, with options for biking and roller-skiing. You can find these in CrewLAB. You can do them solo, but it is more fun with teammates, so grab an EC Nordic training partner when you can!
+We have independent workouts scheduled for the days we're not meeting as a team, with options for biking and roller-skiing. You can find these in CrewLAB. You can do them solo, but it is more fun with teammates, so grab an ECXC training partner when you can!
 ::::
 
 :::aside[Spenst & Over-distance]{id="gloss-spenst-od"}

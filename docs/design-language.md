@@ -1,6 +1,6 @@
-# EC Nordic: Design Language
+# ECXC: Design Language
 
-Living reference for the EC Nordic component kit, palette, and icon system.
+Living reference for the ECXC component kit, palette, and icon system.
 Keep it current as the language evolves.
 
 **Last updated:** 2026-05-24. Page styling is now selected by inline container directives in markdown (not slug inference); the `decorate*()` functions are deleted; all five content pages carry directives in `src/content/pages/*.md` and render through `markdownToHtml` → `renderMarkdown` (the unified pipeline in `src/lib/markdown/*`). Previously (2026-05-23): type scale is one sitewide standard (body 0.92rem set once on `.post-body`; card-body inherits it; lede 1.0rem and grid cells 0.85rem the only deviations, uniform across pages, no per-page font sizing); added *Choosing a primitive* (prose is the default; cards for self-contained units and to chunk long prose); flagged candidate primitives to build when needed (the kit is open); CrewLAB added as the prose-plus-selective-cards worked example.

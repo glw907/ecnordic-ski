@@ -1,6 +1,6 @@
 # ecnordic.ski Architecture
 
-System architecture for the East Community Nordic site. Design decisions (color,
+System architecture for the East Community Cross Country site. Design decisions (color,
 type, the kit primitives) live in `docs/design-language.md`; current build state and
 the pass log live in `docs/STATUS.md`. This file covers the stack, routing, content
 pipeline, and deployment.

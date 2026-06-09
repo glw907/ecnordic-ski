@@ -2,7 +2,7 @@
 title: "Volunteers & Coaches"
 ---
 
-EC Nordic runs entirely on unpaid volunteers: parents, former racers, and local athletes who want to keep Anchorage kids on snow and on trails. This page lists who is running the program this summer and how you can help.
+ECXC runs entirely on unpaid volunteers: parents, former racers, and local athletes who want to keep Anchorage kids on snow and on trails. This page lists who is running the program this summer and how you can help.
 
 ::::split[This summer's coaches]
 :::panel{icon="person-simple-run"}

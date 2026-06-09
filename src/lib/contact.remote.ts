@@ -39,7 +39,7 @@ export const sendMessage = form(
     }
 
     const msg = createMimeMessage();
-    msg.setSender({ name: siteEmail.senderName ?? 'ECN Nordic Contact', addr: SENDER });
+    msg.setSender({ name: siteEmail.senderName ?? 'ECXC Contact', addr: SENDER });
     msg.setRecipient(contactEmail);
     msg.setSubject(`Contact from ${name}`);
     msg.addMessage({ contentType: 'text/plain', data: `From: ${name} <${email}>\n\n${message}` });

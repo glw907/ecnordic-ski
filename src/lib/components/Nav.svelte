@@ -68,7 +68,7 @@
 <header class="site-header">
   <nav class="nav-inner">
     <a href="/" class="site-logo" onclick={closeMobile}>
-      <span class="logo-ecn">EC</span> <span class="logo-nordic">Nordic</span>
+      <span class="logo-ecxc">ECXC</span>
     </a>
 
     <!-- Desktop links -->
@@ -160,20 +160,13 @@
   }
   .site-logo:hover { opacity: 0.75; }
 
-  .logo-ecn {
+  /* Placeholder wordmark. The four-spot grid logo (EC over XC) lands in the brand pass. */
+  .logo-ecxc {
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: 1.75rem;
-    letter-spacing: -0.02em;
+    font-size: 1.6rem;
+    letter-spacing: -0.01em;
     color: var(--color-primary);
-  }
-  .logo-nordic {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1.15rem;
-    letter-spacing: 0.01em;
-    color: var(--color-secondary);
-    margin-left: 0;
   }
 
   /* Desktop nav */

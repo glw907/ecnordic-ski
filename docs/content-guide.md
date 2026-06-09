@@ -1,11 +1,11 @@
-# EC Nordic Website Content Guide
+# ECXC Website Content Guide
 
 Editorial standards for ecnordic.ski. These guidelines ensure consistency and quality while maintaining the voice of a friendly, competent coach writing to high school athletes and their parents.
 
 This guide is the ecnordic voice. The shared, site-agnostic method (the audience-first drafting
 steps, the full Signs-of-AI-writing catalog, the scoring rubric, and the calibration set) lives at
 `~/.claude/docs/web-content-method.md`. Draft with the `content-draft` skill and review with
-`content-review`. This guide holds what is specific to EC Nordic: the trailhead voice, the local
+`content-review`. This guide holds what is specific to ECXC: the trailhead voice, the local
 features, and the exemplars below.
 
 This guide covers two types of content:
@@ -46,7 +46,7 @@ dates, specific weather.
 The off-voice halves below carry the words the guard blocks, so they sit in a three-backtick fence:
 
 ```
-Off-voice (AI or program marketing): "East Community Nordic offers a comprehensive summer training
+Off-voice (AI or program marketing): "East Community Cross Country offers a comprehensive summer training
 experience that empowers young athletes to navigate their journey toward elite Nordic skiing
 performance, fostering a vibrant community of passionate skiers."
 
@@ -116,7 +116,9 @@ One page serves both. Write the main content for athletes, include the practical
 
 ## Word Choices
 
-**"EC Nordic" as the short form:** Write "East Community Nordic" on first reference, then "EC Nordic" after that. Never abbreviate to "ECN."
+**"ECXC" as the short form:** Write "East Community Cross Country" on first reference, then "ECXC" after that.
+
+**Write to runners and skiers both.** East Community Cross Country trains high school cross-country runners and skiers together, and the name is meant to welcome both. Frame the program for runners and skiers, not skiers alone. The sport word stays flexible: "nordic skiing", "cross-country skiing", and "XC skiing" all work, varied by context.
 
 **Define any acronyms on first use.** For example: "roller-skiing (roller skis with poles on pavement)". Explain the activity when the audience might not know it.
 
@@ -140,7 +142,7 @@ Every page starts with a short intro paragraph that sets context for the whole p
 - Use conversational tone
 
 **Example (Summer Training):**
-"East Community Nordic runs a free summer dryland training program for high school athletes in Anchorage. We train Monday, Wednesday, and Friday, and build toward the Talkeetna camp at the end of the season."
+"East Community Cross Country runs a free summer dryland training program for high school athletes in Anchorage. We train Monday, Wednesday, and Friday, and build toward the Talkeetna camp at the end of the season."
 
 ### Tables vs. Paragraphs
 
@@ -325,7 +327,7 @@ These aren't forbidden. They become tells when they appear at a fixed rate regar
 
 ## Banned Words and Phrases
 
-These appear in EC Nordic content at above-normal frequency and register as AI-generated. Avoid:
+These appear in ECXC content at above-normal frequency and register as AI-generated. Avoid:
 
 *Words:* seamless, transformative, robust, pivotal, foster, leverage (figurative), elevate (figurative), comprehensive, thriving, curated, tailored, dedicated, meticulous, nuanced
 

@@ -1,6 +1,6 @@
-siteName: EC Nordic
-description: "East Community Nordic — year-round training for junior skiers in Anchorage, Alaska."
-author: EC Nordic
+siteName: ECXC
+description: "East Community Cross Country: year-round training for high school skiers and runners in Anchorage, Alaska."
+author: ECXC
 url: https://ecnordic.ski
 locale: en-US
 
@@ -20,10 +20,10 @@ menus:
 
 email:
   sender: noreply@ecnordic.ski
-  senderName: ECN Nordic Contact
+  senderName: ECXC Contact
 
 footer:
-  copyrightName: East Community Nordic
+  copyrightName: East Community Cross Country
 
 settings:
   feedMaxItems: 20

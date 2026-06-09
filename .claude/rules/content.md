@@ -28,9 +28,9 @@ when adding or changing a directive.
 
 ## Quick Reference
 
-**Voice:** Friendly, competent coach. Second person ("you") for reader, "we" for EC Nordic.
-**Audience:** High school athletes and their parents. Write to both at once.
-**Short form:** "East Community Nordic" on first reference, "EC Nordic" after. Never "ECN."
+**Voice:** Friendly, competent coach. Second person ("you") for reader, "we" for ECXC.
+**Audience:** High school cross-country runners and skiers, and their parents. Write to all at once.
+**Short form:** "East Community Cross Country" on first reference, "ECXC" after.
 **Cost:** Always state clearly. Training is free; donations are optional.
 
 ## Avoiding AI Rhythm

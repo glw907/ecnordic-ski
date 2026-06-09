@@ -60,7 +60,7 @@
   --default-font-family: 'Alegreya Sans', system-ui, sans-serif;
   --default-mono-font-family: 'iA Writer Mono S', ui-monospace, monospace;
 
-  /* ECN color tokens */
+  /* ECXC color tokens */
   --color-heading: oklch(16% 0.020 15);
   --color-body: oklch(26% 0.012 15);
   /* Supporting prose: one measured step from body toward muted. Used for

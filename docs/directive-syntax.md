@@ -1,6 +1,6 @@
 # Directive syntax for page content
 
-EC Nordic pages use container directives to lay out cards, grids, callouts, and split sections. This
+ECXC pages use container directives to lay out cards, grids, callouts, and split sections. This
 is the markdown extension the render pipeline understands. Posts are plain markdown; directives are a
 page-content tool.
 
@@ -13,7 +13,7 @@ that already exist.
 ## How a container directive is written
 
 A container directive opens with a colon fence and a name, and closes with a matching fence. The
-syntax accepts three or more colons. EC Nordic's pages standardize on four at the top level, so any
+syntax accepts three or more colons. ECXC's pages standardize on four at the top level, so any
 block can host a nested one without a fence collision. Match that convention when you draft:
 
 ```

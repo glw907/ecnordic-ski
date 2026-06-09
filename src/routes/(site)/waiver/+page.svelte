@@ -1,5 +1,5 @@
 <svelte:head>
-  <title>Waiver &amp; Release — EC Nordic</title>
+  <title>Waiver &amp; Release · ECXC</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Nunito+Sans:wght@400;600&display=swap" rel="stylesheet">
 </svelte:head>
@@ -26,7 +26,7 @@
         <div class="section-rule"></div>
       </div>
       <div class="not-affiliated">
-        This is an <strong>informal, free, community-run training group</strong> for high school athletes operating as <strong>East Community Nordic</strong> (ecnordic.ski). The group is <strong>NOT</strong> affiliated with, sponsored by, endorsed by, or connected to the Anchorage School District, East High School, any other school, any club, or any business or commercial entity. Coaches and adult chaperones are unpaid volunteers and are <strong>not acting as paid professionals, certified instructors, licensed guides, or commercial trip leaders</strong>.
+        This is an <strong>informal, free, community-run training group</strong> for high school athletes operating as <strong>East Community Cross Country</strong> (ecnordic.ski). The group is <strong>NOT</strong> affiliated with, sponsored by, endorsed by, or connected to the Anchorage School District, East High School, any other school, any club, or any business or commercial entity. Coaches and adult chaperones are unpaid volunteers and are <strong>not acting as paid professionals, certified instructors, licensed guides, or commercial trip leaders</strong>.
       </div>
       <p class="body-text">No fee is charged for participation. Voluntary donations may be accepted to offset shared expenses (gas, campground fees, group equipment), but no participant is required to donate. Many participants are under 18 and will not always be in the immediate presence of their parents during training sessions, travel, or the multi-day camp. Volunteer adults will be responsible for supervision during scheduled activities and require parental authorization to obtain medical care if necessary.</p>
     </div>
@@ -98,7 +98,7 @@
     </div>
 
     <div class="doc-footer">
-      <span>East Community Nordic · ecnordic.ski · Summer Training Program</span>
+      <span>East Community Cross Country · ecnordic.ski · Summer Training Program</span>
       <span>Page 1 of 3</span>
     </div>
   </div>
@@ -173,7 +173,7 @@
     </div>
 
     <div class="doc-footer">
-      <span>East Community Nordic · ecnordic.ski · Summer Training Program</span>
+      <span>East Community Cross Country · ecnordic.ski · Summer Training Program</span>
       <span>Page 2 of 3</span>
     </div>
   </div>
@@ -274,7 +274,7 @@
     </div>
 
     <div class="doc-footer">
-      <span>East Community Nordic · ecnordic.ski · Summer Training Program</span>
+      <span>East Community Cross Country · ecnordic.ski · Summer Training Program</span>
       <span>Page 3 of 3</span>
     </div>
   </div>

@@ -1,6 +1,6 @@
 # ecnordic.ski
 
-East Community Nordic. SvelteKit + TypeScript, deployed to Cloudflare Workers.
+East Community Cross Country. SvelteKit + TypeScript, deployed to Cloudflare Workers.
 
 @docs/STATUS.md
 

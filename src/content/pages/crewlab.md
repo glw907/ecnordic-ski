@@ -2,7 +2,7 @@
 title: "CrewLAB"
 ---
 
-EC Nordic runs on CrewLAB, a free app that holds the schedule, team chat, workouts, and the day-to-day of training. If you are with us this summer, you will use it most days. It is also built to meet SafeSport standards.
+ECXC runs on CrewLAB, a free app that holds the schedule, team chat, workouts, and the day-to-day of training. If you are with us this summer, you will use it most days. It is also built to meet SafeSport standards.
 
 :::aside[SafeSport]
 SafeSport is the national framework, set by the U.S. Center for SafeSport, for protecting young athletes from abuse and misconduct in sport. In practice it means our communication stays out in the open. Volunteers can see every channel, and there is no private one-on-one messaging between an adult and an athlete.
@@ -25,7 +25,7 @@ CrewLAB is where your training week lives: the schedule, workouts, team chat, an
 ::::card[For parents & supporters]{icon="users-three" role="secondary"}
 For parents and supporters, CrewLAB keeps you current on where the team needs to be, without putting you in the middle of the athletes' day. You get the calendar, announcements, and logistics. This is what it looks like from your side.
 
-- **What you can see and do.** The team calendar, the supporters' channel, and program announcements. You sign the waiver as guardian and pay here too. [PLACEHOLDER: confirm what EC Nordic collects through CrewLAB, whether camp cost-share, dues, or donations.] CrewLAB takes cards, bank transfer, Apple Pay, and Google Pay.
+- **What you can see and do.** The team calendar, the supporters' channel, and program announcements. You sign the waiver as guardian and pay here too. [PLACEHOLDER: confirm what ECXC collects through CrewLAB, whether camp cost-share, dues, or donations.] CrewLAB takes cards, bank transfer, Apple Pay, and Google Pay.
 - **Organize and pitch in.** Message the volunteers directly, and use the supporters' channel to organize carpools to camp, trail work, and team meals.
 - **What stays private.** You will not see daily check-ins, workout logs, volunteer feedback, or the athletes' own chat. That is deliberate. It gives athletes their own space and keeps us SafeSport-compliant.
 - **Notifications and logistics.** Turn on the supporters' channel. Weather moves, camp packing lists, and travel plans all land there.
@@ -42,5 +42,5 @@ The parent handbook and the gear and vendor list also live in CrewLAB, so the ve
 ::::cta[Getting started]{icon="flag"}
 Getting on takes about two minutes, athlete or parent. Download CrewLAB from the App Store or Google Play, or open app.crewlab.io, then tap the invite below and pick your account type when you sign up. Parents, link to your athlete to connect. For athletes under 18, that link is what lets volunteers message them under SafeSport rules. Questions first? [Contact us](/contact).
 
-<a href="https://crewlab.app.link/5g7vhhYEn3b" class="download-link" target="_blank" rel="noopener">Join EC Nordic on CrewLAB →</a>
+<a href="https://crewlab.app.link/5g7vhhYEn3b" class="download-link" target="_blank" rel="noopener">Join ECXC on CrewLAB →</a>
 ::::

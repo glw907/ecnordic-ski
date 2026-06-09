@@ -100,7 +100,7 @@
     animation: page-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.06s both;
   }
 
-  /* ─── About: worked example of the EC Nordic design language ──────
+  /* ─── About: worked example of the ECXC design language ──────
      The page is built from a small, reusable kit (see the Pass-4 design
      spec). Each primitive maps to a DaisyUI component so it's idiomatic
      and portable; the scoped CSS here only tunes spacing and the one

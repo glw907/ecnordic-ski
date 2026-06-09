@@ -13,7 +13,7 @@ import { POST_TAGS, siteConfig, siteEmail } from './config.js';
 export { siteConfig };
 
 export const cairn = defineAdapter({
-  siteName: siteConfig.siteName ?? 'EC Nordic',
+  siteName: siteConfig.siteName ?? 'ECXC',
   content: {
     posts: {
       dir: 'src/content/posts',

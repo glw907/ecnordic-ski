@@ -2,7 +2,7 @@ import { createRenderer } from '@glw907/cairn-cms';
 import { ecnordicRegistry } from './components';
 import { ecSanitizeSchema } from './sanitize';
 
-// The render pipeline now lives in cairn-core; this composes it from EC Nordic's
+// The render pipeline now lives in cairn-core; this composes it from ECXC's
 // component registry. `stagger` makes the engine stamp a `data-rise` ordinal on each
 // top-level module, which the page CSS maps to the entrance-cascade delay. `sanitizeSchema`
 // extends the engine sanitize floor with the one author raw-HTML attribute ecnordic needs.
