@@ -21,8 +21,8 @@ remote = true
 # cairn-cms: self-owned magic-link auth store (editor allowlist, magic_token, session tables).
 [[d1_databases]]
 binding = "AUTH_DB"
-database_name = "cairn-ecnordic-auth"
-database_id = "83178db3-0aae-4c1d-b6ad-1626193ebefd"
+database_name = "cairn-ecxc-auth"
+database_id = "a47c56d2-25ef-4131-a505-8c9fd5a92f1f"
 
 [vars]
 # Site origin, used to build magic links. Dev overrides via PUBLIC_ORIGIN in .dev.vars.

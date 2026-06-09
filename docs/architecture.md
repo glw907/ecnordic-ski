@@ -271,7 +271,10 @@ GitHub Actions secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
   the magic-link auth store. `createRenderer` bundles remark, rehype, and unified, so the site
   declares none of them. Auth state lives in the `AUTH_DB` D1 in cairn's own `editor`,
   `magic_token`, and `session` tables, provisioned from the engine's shipped
-  `migrations/0000_auth.sql`. The earlier better-auth and drizzle dependencies, the generated
+  `migrations/0000_auth.sql`. The `AUTH_DB` binding points at `cairn-ecxc-auth` as of Rename 3
+  (2026-06-08); the schema was re-applied to the fresh database and the `geoff@907.life` owner
+  re-seeded. The prior `cairn-ecnordic-auth` store stays until the Rename 4 cutover, then is
+  decommissioned. The earlier better-auth and drizzle dependencies, the generated
   drizzle migration, and the `mint-session.mjs` smoke helper were removed in the 0.34 upgrade,
   once cairn owned auth end to end.
 - **cairn owns admin CSRF, so `svelte.config.js` sets `csrf: { checkOrigin: false }`.** As of cairn 0.35
