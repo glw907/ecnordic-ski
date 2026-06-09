@@ -1,4 +1,4 @@
-# ecnordic.ski Architecture
+# ecxc.ski Architecture
 
 System architecture for the East Community Cross Country site. Design decisions (color,
 type, the kit primitives) live in `docs/design-language.md`; current build state and
@@ -150,7 +150,7 @@ manifest.
 ### Directive render pipeline: `src/lib/markdown/`
 
 As of 0.21, the render pipeline is the engine's `createRenderer`, not a site-owned unified
-processor. `render.ts` calls `createRenderer(ecnordicRegistry, { stagger: true, sanitizeSchema:
+processor. `render.ts` calls `createRenderer(ecxcRegistry, { stagger: true, sanitizeSchema:
 ecSanitizeSchema })` once and re-exports its `renderMarkdown`; `markdownToHtml(md, opts)` in
 `utils.ts` is a thin delegate that threads the optional `resolve` (the `cairn:` link resolver)
 through. The seven directive components (`card/grid/alert/cta/split/panel/passage`) live in
@@ -252,7 +252,8 @@ The bundle does not exist at compile time, so it is imported dynamically and kep
 Cookie-based (`theme` cookie). `hooks.server.ts` injects `data-theme` into the SSR HTML;
 an inline script in `app.html` resolves cookie → localStorage → `prefers-color-scheme`
 so there's no flash. The nav toggle writes both cookie and localStorage. DaisyUI is
-configured with `silk --default` and `dim --prefersdark`. See `docs/design-language.md`.
+configured with `ecxc --default` and `ecxc-dark --prefersdark` (renamed from `ecn`/`ecn-dark`
+in Rename 4.5). See `docs/design-language.md`.
 
 ---
 
@@ -265,6 +266,24 @@ Push to `main` → GitHub Actions (`.github/workflows`) → `npm run build` + `n
 (adapter-cloudflare v7 output path); Pagefind indexes the prerendered HTML there.
 GitHub Actions secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
 
+### Domain and email routing
+
+The live domain is `ecxc.ski`, served by the `ecxc` Worker through a Cloudflare custom
+domain (Rename 4, 2026-06-08). The old `ecnordic.ski` 301-redirects to `ecxc.ski` with the
+path and query preserved.
+
+The redirect is a Page Rule forwarding URL, not a dynamic Single Redirect. The deploy API
+token can edit Workers, DNS, Page Rules, and Email Routing, but not the Rulesets API, so the
+dynamic-redirect phase is out of reach. The Page Rule (`*ecnordic.ski/*` → `https://ecxc.ski/$2`)
+needs a request that reaches the edge, so the apex keeps a proxied `AAAA 100::` placeholder.
+A Worker custom domain outranks a Page Rule, so the old Worker and its `ecnordic.ski` custom
+domain were removed first; the redirect runs on the placeholder record alone.
+
+Magic-link mail signs from `noreply@ecxc.ski`, so Email Routing is enabled on the `ecxc.ski`
+zone (the `send_email` binding requires the sender domain to have Email Routing active). The
+old `ecnordic.ski` zone keeps its own Email Routing for the `contact@ecnordic.ski` contact-form
+destination, which is unchanged.
+
 ### Build toolchain notes
 
 - **The site declares a thin dependency surface.** cairn-cms owns the markdown pipeline and
@@ -273,8 +292,8 @@ GitHub Actions secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
   `magic_token`, and `session` tables, provisioned from the engine's shipped
   `migrations/0000_auth.sql`. The `AUTH_DB` binding points at `cairn-ecxc-auth` as of Rename 3
   (2026-06-08); the schema was re-applied to the fresh database and the `geoff@907.life` owner
-  re-seeded. The prior `cairn-ecnordic-auth` store stays until the Rename 4 cutover, then is
-  decommissioned. The earlier better-auth and drizzle dependencies, the generated
+  re-seeded. The prior `cairn-ecnordic-auth` store is decommissioned at the Rename 4 cutover
+  once magic-link login is confirmed on `ecxc.ski`. The earlier better-auth and drizzle dependencies, the generated
   drizzle migration, and the `mint-session.mjs` smoke helper were removed in the 0.34 upgrade,
   once cairn owned auth end to end.
 - **cairn owns admin CSRF, so `svelte.config.js` sets `csrf: { checkOrigin: false }`.** As of cairn 0.35
