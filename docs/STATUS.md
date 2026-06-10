@@ -25,13 +25,16 @@ is days old, so this is new-domain blocklisting and ages out on its own; Gmail a
 (cross-check landed in INBOX, auth passing). Re-request a login link in a day or two, confirm
 sign-in, then delete the old `cairn-ecnordic-auth` D1.
 
-### Next starter prompt
+### Next starter prompt (coach voice drafting system)
 
-> **Goal.** Open. The rebrand initiative is done; remaining work is the pre-publish checklist
-> below (mostly user-gated) and the backlog. Nearest dev-shaped items: #30 raster favicon
-> fallback, #26 retroactive content rubric audit, #15 ArchiveList heading skip.
+> **Goal.** Build the generative drafting system and rewrite all five pages through it for
+> Geoff's final edit.
 >
-> **Approach.** Pick the next initiative with the user, then invoke site-pass.
+> **Plan (approved, pre-baked):** `docs/superpowers/plans/2026-06-09-coach-voice-drafting-system.md`,
+> spec at `docs/superpowers/specs/2026-06-09-coach-voice-drafting-system-design.md`. Execute
+> task-by-task; spans this repo and the dotfiles (skills + method).
+>
+> **Approach.** Invoke site-pass. Standard pass-end checklist applies.
 
 ---
 
