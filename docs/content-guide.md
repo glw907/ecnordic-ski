@@ -47,7 +47,10 @@ Break one of these and the prose reads wrong, whatever else it does well.
 7. **Fit the container.** Budgets below. Site copy renders into fixed UI elements, and overflow
    breaks the page, so the budget is part of the recipe, not a suggestion.
 8. **When the facts end, stop.** No closing tagline, no motivational send-off, no sentence that
-   restates the section. The CTA is the only ending a page needs.
+   restates the section. The CTA is the only ending a page needs. And when a closing line gets
+   flagged, the fix is deletion, not a better closer: constructing a replacement regenerates the
+   slop in a new shape (calibration N6 to N7 is the proof pair). The paragraph already ended at
+   its last fact.
 9. **Write the flat version first.** State a rule the way a coach would type it in an email, then
    stop. At most one shaped sentence per section (an inversion, a fragment, a dry punch), and
    only where the stakes earn it; helmets earn one, the waiver does not. When every sentence has

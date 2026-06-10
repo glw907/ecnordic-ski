@@ -67,6 +67,16 @@ free: coached practice three mornings a week, a plan for the days between, and a
 club gives you far more. A free summer with a team around you still goes a long way.
 ```
 
+**N7, the antithesis close, and the replacement reflex (flagged 2026-06-09).** This was the
+*fix* for N6, which is the lesson: repairing a flagged closer by constructing a better closer
+regenerates the slop in a new shape. Here the shape is a balanced antithesis pair performing
+humility. The default fix for a flagged closing line is deletion; the paragraph already ended at
+its last fact.
+
+```
+We can't offer what a club offers, and we don't try to. We cover the summer.
+```
+
 ## Positive set (approved)
 
 **P1, the camp passage ("drastically better", approved verbatim).** Same facts as N5. A reply to

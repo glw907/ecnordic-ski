@@ -7,7 +7,7 @@ East Community Cross Country is a free summer training group for high school cro
 The "East" is East Anchorage, where we're based, not East High School. We have no connection to any school, district, club, or business, and our athletes come from public schools, private schools, and homeschools all over the city.
 
 :::passage[Why we started]
-Amy Purevsuren and Geoff Wright started ECXC in 2026. Anchorage has two of the best ski clubs in the country, APU Nordic and Alaska Winter Stars[†](#gloss-anchorage-clubs), and their year-round coaching is worth every penny for the families who can manage it. Many can't. So we organized summer training ourselves and made it free. Volunteers coach three mornings a week, post workouts for the days between, and run a camp in July. We can't offer what a club offers, and we don't try to. We cover the summer.
+Amy Purevsuren and Geoff Wright started ECXC in 2026. Anchorage has two of the best ski clubs in the country, APU Nordic and Alaska Winter Stars[†](#gloss-anchorage-clubs), and their year-round coaching is worth every penny for the families who can manage it. Many can't. So we organized summer training ourselves and made it free. Volunteers coach three mornings a week, post workouts for the days between, and run a camp in July.
 :::
 
 :::aside[APU Nordic & Alaska Winter Stars]{id="gloss-anchorage-clubs"}
