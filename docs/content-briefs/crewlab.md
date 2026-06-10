@@ -3,11 +3,14 @@
 ## Facts
 
 - ECXC runs on CrewLAB, a free app: schedule, team chat, workouts, daily check-in, video.
-- SafeSport facts (corrected by Geoff 2026-06-09): CrewLAB the app is SafeSport certified. ECXC
-  is NOT certified and makes no compliance claim; it is an informal volunteer group, nothing to
-  certify. We use the app as designed: every channel visible to volunteers, no private
-  one-on-one adult-athlete messaging. Anchor every SafeSport mention to the app, never to ECXC.
-  SafeSport: the U.S. Center for SafeSport's framework for protecting young athletes.
+- SafeSport facts (Geoff 2026-06-09, then verified against CrewLAB's own FAQ,
+  crewlab.io/faqs/security-privacy-and-compliance/): CrewLAB's exact claim is that its
+  "communication structure was designed in alignment with SafeSport guidelines"; it "enforces
+  group-only communication," team-wide or one coach plus at least two other members, and all
+  communication is coach-accessible with a full audit trail. Use that wording, not "certified"
+  (their marketing pages say "SafeSport-compliant"; the FAQ is the careful source). ECXC is NOT
+  certified and makes no compliance claim; informal volunteer group, nothing to certify. Anchor
+  every SafeSport mention to the app, never to ECXC.
 - Why one app: schedule changes (rained-out session) arrive as notifications; volunteers post
   workouts and watch recovery; parents see where to be; conversation happens where responsible
   adults can see it.
@@ -30,8 +33,10 @@
 - Parent handbook and gear/vendor list live in CrewLAB (always the current version).
 - Joining: App Store, Google Play, or app.crewlab.io; invite link; pick account type; parents
   link to their athlete. (REMOVED 2026-06-09: "the link is what lets volunteers message an
-  under-18 athlete" was an AI invention from the first Opus draft, carried here by extraction;
-  Geoff never made that claim. State no mechanic for the parent link beyond the instruction.)
+  under-18 athlete" was an AI distortion from the first Opus draft, carried here by extraction;
+  Geoff never made that claim. The verified mechanic, per CrewLAB's FAQ, is group-only
+  messaging enforcement, with no role stated for the parent link. State no mechanic for the
+  link beyond the instruction.)
 - Join link: https://crewlab.app.link/5g7vhhYEn3b
 
 ## Audience questions

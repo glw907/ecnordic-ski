@@ -5,11 +5,11 @@ title: "CrewLAB"
 ECXC runs on CrewLAB, a free phone app. If you want to know when practice is or what a coach just posted, that's where you look. Athletes check it most days. Parents get the calendar and announcements without sitting in the team chat.
 
 ::::passage[Why one app]{icon="chat-circle"}
-Because group texts scatter and email gets ignored. When rain moves practice, one notification reaches everyone at once, instead of a text thread half the parents never joined. And every channel is visible to the volunteers, so the conversations around your athlete happen where responsible adults can read them. The app itself is SafeSport[†](#gloss-safesport) certified and built around exactly that kind of openness.
+Because group texts scatter and email gets ignored. When rain moves practice, one notification reaches everyone at once, instead of a text thread half the parents never joined. And every channel is visible to the volunteers, so the conversations around your athlete happen where responsible adults can read them. CrewLAB designed its messaging around SafeSport[†](#gloss-safesport) guidelines and enforces the openness: messages are group-only, never one adult to one athlete.
 ::::
 
 :::aside[SafeSport]{id="gloss-safesport"}
-The U.S. Center for SafeSport sets the national rules for protecting young athletes from abuse and misconduct. CrewLAB the app is SafeSport certified. ECXC is an informal volunteer group, not a certified organization; we simply use the app as designed, with every channel open to volunteers and no private adult-athlete messaging.
+The U.S. Center for SafeSport sets the national rules for protecting young athletes from abuse and misconduct. CrewLAB designed its communication structure in alignment with those guidelines, and it enforces group-only messaging. ECXC is an informal volunteer group, nothing to certify; we use the app as designed.
 :::
 
 ::::grid[For athletes]{icon="person-simple-run"}

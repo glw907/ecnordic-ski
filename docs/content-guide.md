@@ -60,7 +60,15 @@ Break one of these and the prose reads wrong, whatever else it does well.
    don't, and they obviously do, five-plus days a week. Before a section lands, read it as the
    most knowledgeable, least charitable reader it will ever get (a club parent, a rival coach)
    and ask what they would object to. Failure at this level should be falling-off-a-log easy to
-   catch, so catch it. (Geoff, 2026-06-09.)
+   catch, so catch it. And verify, never recall: an externally checkable claim about a third
+   party (an app's compliance status, an organization's rules, a race's history) gets checked
+   online against a primary, careful source (the org's own FAQ or legal page over its marketing
+   copy) before it ships. Model memory is not a source, and neither is Geoff for third-party
+   facts: he is authoritative on the program (schedules, costs, names, intent) and has asked,
+   in his words, for help when he is "sloppy with language or facts", so a checkable claim he
+   supplies still gets verified and the source's careful wording wins. (Geoff, 2026-06-09; his
+   "CrewLAB is SafeSport certified" became the FAQ's "designed in alignment with SafeSport
+   guidelines" by exactly this path.)
 10. **Write the flat version first.** State a rule the way a coach would type it in an email, then
    stop. At most one shaped sentence per section (an inversion, a fragment, a dry punch), and
    only where the stakes earn it; helmets earn one, the waiver does not. When every sentence has
