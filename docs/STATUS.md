@@ -25,16 +25,21 @@ is days old, so this is new-domain blocklisting and ages out on its own; Gmail a
 (cross-check landed in INBOX, auth passing). Re-request a login link in a day or two, confirm
 sign-in, then delete the old `cairn-ecnordic-auth` D1.
 
-### Next starter prompt (coach voice drafting system)
+**Coach voice drafting system, done 2026-06-09.** Generative guide (rules, budgets, recipes),
+briefs per page, corpus + harvest loop, reply-stance drafting with a humanize pass; the spec
+amendment records the five-failure post-mortem that produced the stance correction. All five
+pages rewritten through it and live; Geoff final-edits from here.
 
-> **Goal.** Build the generative drafting system and rewrite all five pages through it for
-> Geoff's final edit.
+### Next starter prompt
+
+> **Goal.** Harvest Geoff's first edits. After he edits any rewritten page, run the corpus
+> harvest ("feed my edits back"): diff against the draft commit, promote the strongest passages
+> to First-party gold, and turn any twice-made fix into a guide rule.
 >
-> **Plan (approved, pre-baked):** `docs/superpowers/plans/2026-06-09-coach-voice-drafting-system.md`,
-> spec at `docs/superpowers/specs/2026-06-09-coach-voice-drafting-system-design.md`. Execute
-> task-by-task; spans this repo and the dotfiles (skills + method).
+> **Also open:** the pre-publish checklist below, and backlog #21 (the crewlab payment `[ASK]`
+> shipped visibly in the page), #30 favicon fallback, #15 heading skip.
 >
-> **Approach.** Invoke site-pass. Standard pass-end checklist applies.
+> **Approach.** Harvest is a small pass, no plan needed. For new initiatives, invoke site-pass.
 
 ---
 

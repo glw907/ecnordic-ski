@@ -255,6 +255,18 @@ so there's no flash. The nav toggle writes both cookie and localStorage. DaisyUI
 configured with `ecxc --default` and `ecxc-dark --prefersdark` (renamed from `ecn`/`ecn-dark`
 in Rename 4.5). See `docs/design-language.md`.
 
+### Content drafting system (2026-06-09)
+
+Site prose is produced through a generative system modeled on cairn's admin design system:
+`docs/content-guide.md` carries load-bearing rules, container word budgets, and per-type recipes;
+`docs/content-briefs/` holds one durable brief per page (facts, audience questions, next step,
+container plan); `docs/coach-voice-corpus.md` is the exemplar library, with a First-party gold
+section that harvests Geoff's edit diffs. Drafting is reply-stance (each section answers an
+imagined reader's question; facts are reference, not a checklist) with a humanize audit pass
+before landing; the archived spec's amendment records why fact-coverage drafting failed.
+`content-review` reports the four hard gates plus findings; scores only on request. The
+characterization snapshots pin page HTML, so any content edit regenerates them (`vitest run -u`).
+
 ### Brand mark (Rename 5, 2026-06-09)
 
 The ECXC mark is a four-spot grid monogram, "EC" over "XC", drawn as four rectilinear SVG
