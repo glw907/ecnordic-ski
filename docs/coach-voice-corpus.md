@@ -19,12 +19,14 @@ program's phrasing lifted onto ecxc.ski would be obvious. Study the stance; writ
 
 ## Provenance and honesty
 
-Each excerpt is quoted from the live site at the URL given, retrieved 2026-06-09 via automated
-fetch, and may be lightly truncated. These are short excerpts held for internal voice study, not
-content to republish. Quoted passages sit in fenced blocks because they carry punctuation and
-vocabulary the prose guard blocks in our own writing; the annotation under each is the payload.
-Verify a passage against its source before leaning on it. The corpus grows over time as Geoff adds
-his own edited ECXC content (see First-party gold at the end).
+Each excerpt is quoted from the live site at the URL given, retrieved 2026-06-09, and every entry
+was spot-verified verbatim against the raw page text the same day. Source typos are preserved
+deliberately ("if its Grandpa's birthday", "rowing is water sport", "we are all RUN the same
+course"); do not correct them, since they are part of the verbatim record and arguably part of the
+charm. These are short excerpts held for internal voice study, not content to republish. Quoted
+passages sit in fenced blocks because they carry punctuation and vocabulary the prose guard blocks
+in our own writing; the annotation under each is the payload. The corpus grows over time as Geoff
+adds his own edited ECXC content (see First-party gold at the end).
 
 ## Lessons index
 
@@ -60,8 +62,8 @@ away from the sport."
 ```
 
 Trusts the athlete's agency and puts real life above rigid rules. The second passage answers a
-parent's worry by naming ordinary situations (homework, a birthday, a sore leg) instead of stating
-a policy. Concrete cases read as permission; an abstract rule reads as fine print.
+parent's worry by naming ordinary situations (homework, a birthday, an off stomach) instead of
+stating a policy. Concrete cases read as permission; an abstract rule reads as fine print.
 
 ### Run Waconia, 7-12 XC Basics
 
