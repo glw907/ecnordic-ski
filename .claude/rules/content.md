@@ -25,6 +25,11 @@ Drafting is brief-first: every page or post drafts from a durable brief in
 `docs/content-briefs/<piece>.md` (facts, audience questions, the next step, the container plan),
 with `[ASK: question]` markers for gaps. The guide's container budgets are layout constraints.
 
+The voice calibration set is `docs/voice-calibration.md`: flagged and approved passages that
+prime the independent humanize critic and regression-test any change to the guide, method, or
+skills (eval procedure at the bottom of that file). New flags and praise from Geoff get added
+there with the date.
+
 When drafting or editing **page** content that uses container directives (cards, grids, alerts,
 callouts, split sections), also read the directive syntax reference:
 

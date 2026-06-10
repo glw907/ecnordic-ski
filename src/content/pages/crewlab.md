@@ -2,10 +2,10 @@
 title: "CrewLAB"
 ---
 
-Everything ECXC schedules, posts, and discusses happens in CrewLAB, a free phone app. Athletes check it most days. Parents get the calendar and announcements without sitting in the team chat.
+ECXC runs on CrewLAB, a free phone app. If you want to know when practice is or what a coach just posted, that's where you look. Athletes check it most days. Parents get the calendar and announcements without sitting in the team chat.
 
 ::::passage[Why one app]{icon="chat-circle"}
-Because group texts scatter and email gets ignored. When rain moves practice, one notification reaches everyone. When a coach posts the week's plan, everyone sees the same plan. And every channel is visible to the volunteers, so the conversations around your athlete happen where responsible adults can read them. That's also how we follow SafeSport[†](#gloss-safesport) rules.
+Because group texts scatter and email gets ignored. When rain moves practice, one notification reaches everyone at once, instead of a text thread half the parents never joined. And every channel is visible to the volunteers, so the conversations around your athlete happen where responsible adults can read them. That's also how we follow SafeSport[†](#gloss-safesport) rules.
 ::::
 
 :::aside[SafeSport]{id="gloss-safesport"}
@@ -13,9 +13,9 @@ The U.S. Center for SafeSport sets the national rules for protecting young athle
 :::
 
 ::::grid[For athletes]{icon="person-simple-run"}
-Day to day, the app asks five things of you.
+Day to day, you'll use it for five things.
 
-- **RSVP to practice.** Open the event on the calendar and tap yes or no; a no asks for a reason. Do it before each session, and leave notifications on, because weather changes show up there first.
+- **RSVP to practice.** Open the event on the calendar and tap yes or no before each session. If it's a no, you'll have to say why. And leave notifications on; when weather moves a practice, you'd rather not find out at the trailhead.
 - **Read the chat.** Plans, changes, and questions go through the team and squad channels. Post whenever you like. Volunteers can read everything, so it stays a team space.
 - **Log your workouts.** After you train, tap the yellow plus, pick Workout, and write down what you did and how it felt. If you have a Garmin or a Concept2, connect it under Settings, then Integrations, and the logging takes care of itself.
 - **Do the daily check-in.** It asks how you slept and how you're feeling. Only the coaches see your answers, and there's a catch-up button on the Home tab if you miss a day. This is how we spot an athlete who needs an easier week, so tell it the truth.
@@ -23,7 +23,7 @@ Day to day, the app asks five things of you.
 ::::
 
 ::::card[For parents & supporters]{icon="users-three" role="secondary"}
-Your account gets the team calendar, announcements, and the supporters' channel, where carpools to camp, trail work, and team meals get organized. You can message the volunteers directly whenever something needs an adult answer.
+Your account gets the team calendar, the announcements, and the supporters' channel, which is where the practical side of the team happens. The carpool your athlete needs to get to camp probably starts as a message there. You can message the volunteers directly whenever something needs an adult answer.
 
 What you won't see: your athlete's check-ins, workout log, coach feedback, or the team chat. That's deliberate. Kids get a team space of their own, and adult contact stays inside the SafeSport rules.
 
@@ -33,7 +33,7 @@ Guardians sign the waiver from their own account, and payments run through the a
 ::::card[Waiver and forms]{icon="flag"}
 Sign the waiver in CrewLAB; if you're looking for a paper version, there isn't one. A parent or guardian signs for an athlete under 18, adult athletes sign for themselves, and it has to be on file before the first practice. Camp checks for it too.
 
-The parent handbook and the gear and vendor list are in the app as well, so you're always reading the current version. Donations are need-blind: what a family gives or doesn't has no effect on who joins.
+The parent handbook and the gear and vendor list are in the app as well, so you're always reading the current version. What a family gives, or doesn't, has no effect on who joins. Nobody checks.
 ::::
 
 ::::cta[Getting started]{icon="flag"}
