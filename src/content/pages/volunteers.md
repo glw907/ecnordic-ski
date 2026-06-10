@@ -1,8 +1,10 @@
 ---
-title: "Volunteers & Coaches"
+title: Volunteers & Coaches
 ---
 
-Nobody at ECXC draws a paycheck. The coaches and helpers are parents, former racers, and local athletes, and we can always use more of them. Here's who's running things this summer, and how to pitch in.
+Everybody that makes ECXC happen is a volunteer. The coaches and helpers are parents, former racers, and local athletes, and we can always use more of them! We all deeply believe that every althete deserver a chance to train, 
+
+Here's who's running things this summer, and how to pitch in.
 
 ::::split[This summer's coaches]
 :::panel{icon="person-simple-run"}
@@ -10,11 +12,11 @@ Geoff Wright leads the summer session. He's coached NSAA's[†](#gloss-nsaa) Jun
 :::
 
 :::panel{icon="person-simple-run"}
-Amy Purevsuren runs the Talkeetna camp and is the head nordic coach at Bettye Davis East High School. She raced for Western Colorado, where she was a seven-time All-American and won the 1997 national title in the 15K freestyle, the first individual skiing championship in school history. The day job is high school English, a career that started in the Peace Corps in Mongolia and has included 11 years in rural Alaska turning students into lifelong readers. She lives in Anchorage with her husband and three kids, and the family reads, camps, and gets outside together.
+Amy Purevsuren runs the Talkeetna camp and is the head XC ski coach at Bettye Davis East High School. She raced for Western Colorado, where she was a seven-time All-American and won the 1997 national title in the 15K freestyle, the first individual skiing championship in school history. The day job is high school English, a career that started in the Peace Corps in Mongolia and has included 11 years in rural Alaska turning students into lifelong readers. She lives in Anchorage with her husband and three kids, and the family reads, camps, and gets outside together.
 :::
 
 :::panel{icon="person-simple-run"}
-Duncan Wright, Geoff's oldest, coaches the Friday distance sessions. He's a competitive mountain runner, cyclist, and skier: top-10 at Crow Pass and at the Kesugi Ridge 50K, where he was the youngest in the field, and second at the Kenai 250, a 250-mile mountain bike race. His APU degree is in Outdoor Studies with a snow-science concentration. Away from racing he reads science fiction, builds bikes, works on trails, and makes things out of wood.
+Duncan Wright, Geoff's oldest, coaches the Friday distance sessions. He's a competitive mountain runner, cyclist, and skier: top-10 at Crow Pass and at the Kesugi Ridge 50K, where he was the youngest in the field, and second at the Kenai 250, a 250-mile mountain bike race. He has an Outdoor Studies degree from APU, where he also trained for a year with the Elite XC ski team. Away from racing he reads science fiction, builds bikes, works on trails, and builds beautifual things out of wood.
 :::
 ::::
 
