@@ -77,6 +77,16 @@ its last fact.
 We can't offer what a club offers, and we don't try to. We cover the summer.
 ```
 
+**N8, the false frame (flagged 2026-06-09).** A different axis from N1 through N7: not style but
+logic. The why-we-started frame implied the clubs leave summer uncovered; they train straight
+through it, five-plus days a week, so the paragraph "doesn't even make logical sense" to anyone
+who knows the local scene. No single sentence was false; the implication was. Caught by no
+pipeline step, which is why the skeptic pass now exists (guide rule 9, the critic's second job).
+
+```
+We can't offer what a club offers, and we don't try to. We cover the summer.
+```
+
 ## Positive set (approved)
 
 **P1, the camp passage ("drastically better", approved verbatim).** Same facts as N5. A reply to

@@ -51,7 +51,13 @@ Break one of these and the prose reads wrong, whatever else it does well.
    flagged, the fix is deletion, not a better closer: constructing a replacement regenerates the
    slop in a new shape (calibration N6 to N7 is the proof pair). The paragraph already ended at
    its last fact.
-9. **Write the flat version first.** State a rule the way a coach would type it in an email, then
+9. **The frame has to be true too.** Implications are facts. A tidy narrative can assert
+   something false that no single sentence states: "we cover the summer" implied the clubs
+   don't, and they obviously do, five-plus days a week. Before a section lands, read it as the
+   most knowledgeable, least charitable reader it will ever get (a club parent, a rival coach)
+   and ask what they would object to. Failure at this level should be falling-off-a-log easy to
+   catch, so catch it. (Geoff, 2026-06-09.)
+10. **Write the flat version first.** State a rule the way a coach would type it in an email, then
    stop. At most one shaped sentence per section (an inversion, a fragment, a dry punch), and
    only where the stakes earn it; helmets earn one, the waiver does not. When every sentence has
    a designed rhythm (an only-X opener, a negation restating the previous clause, a balanced

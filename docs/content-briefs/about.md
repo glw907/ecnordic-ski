@@ -8,9 +8,12 @@
 - "East" = East Anchorage, where the program is based. Not affiliated with the Anchorage School
   District, East High School, or any school, club, or business.
 - Open to athletes from anywhere in the area: public school, private school, homeschool.
-- Context: APU Nordic and Alaska Winter Stars run year-round professional coaching in Anchorage;
-  that coaching is out of reach for many families. ECXC fills part of that gap with structured
-  summer training. It does not replace those clubs and does not match their level of support.
+- Context, and the why-frame's actual logic (corrected 2026-06-09 after a Geoff flag): school
+  teams cover the racing seasons (XC running in fall, skiing in winter), so summer is
+  unstructured for any athlete not in a club. APU Nordic and Alaska Winter Stars train
+  year-round INCLUDING all summer, 5+ days a week; the gap ECXC fills is affordability, never
+  seasonality. Do not write anything implying clubs leave summer uncovered. ECXC does not
+  replace those clubs and does not match their level of support.
 - Summer program: June 1 to August 19, 2026, Monday/Wednesday/Friday mornings. Running and
   strength are the weekly core; mountain biking and roller-skiing mix in. Locations: East High,
   Hillside trails, Kincaid Park, Bartlett, Chugach front range. Independent workouts posted for
