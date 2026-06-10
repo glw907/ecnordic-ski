@@ -2,66 +2,56 @@
 title: "About East Community Cross Country"
 ---
 
-East Community Cross Country is a free, volunteer-run summer training group for Anchorage high school Nordic skiers and cross-country runners. We build the fitness, skills, and outdoor habits that carry kids through their race seasons and past graduation.
+East Community Cross Country is a free summer training group for high school cross-country runners and Nordic skiers in Anchorage. Nobody here is paid. The coaches and helpers are parents, former racers, and local athletes who want more kids on the trails.
 
-The group is informal and volunteer-run. The volunteers are unpaid: parents, former racers, and local athletes who want to keep kids on snow and on trails. We are not affiliated with the Anchorage School District, East High School, or any other school, club, or business. The name refers to East Anchorage, where the program is based, not to any institutional connection. Athletes are welcome from anywhere in the area, whether they go to a public school, a private school, or homeschool.
+The "East" is East Anchorage, where we're based, not East High School. We have no connection to any school, district, club, or business, and our athletes come from public schools, private schools, and homeschools all over the city.
 
 :::passage[Why we started]
-East Community Cross Country was founded in 2026 by Amy Purevsuren and Geoff Wright. Anchorage is home to two of the most storied Nordic ski clubs in the country, APU Nordic and Alaska Winter Stars[†](#gloss-anchorage-clubs), whose athletes have cemented Alaska's reputation for producing extraordinary Nordic skiers. But year-round professional coaching is out of reach for many families. ECXC exists to help fill that gap. We're not trying to replace APU or Winter Stars, and we can't match that level of support. What we offer is structured summer training and coaching, open to any athlete who's driven enough to put in their own work, regardless of ability to pay. For a committed skier or runner, a strong summer is the base the season is built on.
+Amy Purevsuren and Geoff Wright started ECXC in 2026. Anchorage has two of the best ski clubs in the country, APU Nordic and Alaska Winter Stars[†](#gloss-anchorage-clubs), and their year-round coaching is worth every penny for the families who can manage it. Many can't. So we built the summer piece, the ten weeks where a racer's base actually gets made, and made it free: coached practice three mornings a week, a plan for the days between, and a camp in July. A club gives you far more. A free summer with a team around you still goes a long way.
 :::
 
 :::aside[APU Nordic & Alaska Winter Stars]{id="gloss-anchorage-clubs"}
 Anchorage's two storied cross-country ski clubs. Both run year-round professional coaching and have a long record of developing skiers who reach the national level and beyond.
 :::
 
-::::card[What we do]{icon="path"}
-High school race seasons are short. Running comes in the fall, skiing in the winter, and the months around them are where most of the fitness gets built or lost.
+::::card[The summer at a glance]{icon="path"}
+Group practice is Monday, Wednesday, and Friday mornings, June 1 to August 19. We run and do strength work most days, and some days the mountain bikes or roller skis come out. Monday is at East High; the other days we meet at Hillside, Kincaid, Bartlett, or out on the Chugach front range.
 
-ECXC's summer training program runs from June 1 to August 19, 2026. We meet three mornings a week, Monday, Wednesday, and Friday. Running and strength training are the weekly core, with mountain biking and roller-skiing mixed in on some days. We train across the usual Anchorage spots: East High, the Hillside trails, Kincaid Park, Bartlett, and the Chugach front range. The weekly plan also includes workouts to do on your own between group sessions. Full details on the [training page](/training).
-
-Each summer includes a four-day camp near Talkeetna in July, July 21 to 24 in 2026. The team trains twice a day and stays in cabins on a lake. Full details in the [Talkeetna Camp section](/training#talkeetna-camp) of the training page.
-::::
-
-::::alert[Risks]{role="caution"}
-Running, mountain biking, roller-skiing, and strength training all carry inherent risks. Falls, collisions, equipment failure, and wildlife encounters are all possible, and no amount of care from volunteers or participants removes them. A signed liability waiver must be on file before any athlete's first session. It lays out the activities and risks in full, and it is signed in CrewLAB. A guardian signs for an athlete under 18. An adult athlete signs for themselves. Sign the [liability waiver](cairn:pages/crewlab) in CrewLAB.
+In late July the whole team goes to a lake near Talkeetna for four days of camp. The [training page](/training) has the times, the gear list, and sign-up.
 ::::
 
 ::::card[Who can join]{icon="users-three" role="secondary"}
-The group is open to students entering high school (rising 9th graders) through 12th grade, plus high school graduates home from college for the summer. Graduates can train with us, and we encourage them into volunteer team leadership. The training base serves cross-country runners and Nordic skiers alike, along with any high school athlete trying to stay in shape over the summer.
-
-The program is need-blind. Donations and ability to pay do not affect who can join, and we do our best to make room for any athlete who fully commits to their training.
-
-Athletes aiming at Junior Nationals or Arctic Winter Games[†](#gloss-jn-awg) team selections train alongside kids who have never followed a structured workout before. The weekly plan accommodates both: personalized guidance for athletes chasing specific competitive goals, and a clear starting point for kids new to year-round endurance training.
-
-Athletes train at their own pace. The spread across the group can be wide, particularly on endurance days, and adult volunteers come along to run, ride, or ski with both the faster and the slower kids.
+Anyone entering 9th through 12th grade, plus graduates home from college for the summer. You don't have to be a skier; runners and athletes from other sports train right alongside. Some kids here are chasing Junior Nationals or Arctic Winter Games[†](#gloss-jn-awg) spots, and some have never followed a training plan. The groups are sorted by pace, with an adult to run or ride with each one, so nobody is left chasing the fast kids.
 ::::
 
 :::aside[Junior Nationals & Arctic Winter Games]{id="gloss-jn-awg"}
 Junior Nationals is the U.S. national championship for junior cross-country skiers. The Arctic Winter Games is a circumpolar youth sports festival held in even years. Team Alaska selects athletes for both from in-state race results.
 :::
 
-::::grid[Program philosophy]{icon="compass"}
-Five core principles guide our program design and the decisions we make for every athlete:
+::::grid[What we ask]{icon="compass"}
+We ask three things of every athlete:
 
-- **Total person first.** A solid sleep schedule, good food, academic success, and community engagement are not tradeoffs against athletic ambition. They are core ingredients for both athletic success and a healthy, meaningful life. We help athletes build the habits that let them succeed in sport and in the rest of their lives.
-- **Open to any committed athlete.** The program is free and need-blind. Donations and ability to pay do not affect who can join. Anyone who needs help affording camp, gear, or a ride can ask, with no questions about family finances. All we ask in return is a strong commitment to training and a willingness to give back to the community.
-- **High school sports matter.** Being on a high school team is a once-in-a-lifetime opportunity that sets the stage for a better, healthier life. ECXC aims to complement that opportunity. We provide training, knowledge, and support to help students make the most of their high school teams.
-- **A lasting bond with the outdoors.** We want to help athletes find competitive success in high school and beyond, but our larger mission is to help teens develop a lifelong love for running, skiing, and trails. We work hard in training, and we also strive to find joy and community every day.
-- **Support the community that supports you.** Our athletes are expected to perform community service as part of their membership in ECXC, including trail work and helping at community events and races. Our volunteers organize structured opportunities to give back as a team, and we encourage athletes to find ways to give back that are meaningful to them.
+- **Do the work.** Come to practice and follow the plan between sessions. If school or family takes over for a week, tell a coach. We'd rather adjust your plan than watch you disappear.
+- **Give back.** Everyone does some community service with the team, usually trail work or helping at a local race. We set up the chances; you show up.
+- **Take care of yourself.** Sleep, food, and homework come before training, and we mean that. A kid running on five hours of sleep gets a different workout than the one on the schedule.
+::::
+
+::::alert[Risks & waiver]{role="caution"}
+These sports can hurt you. Kids fall, gear breaks, and Anchorage trails come with moose. We manage risk; we can't remove it. Before a first practice, every athlete needs a signed liability waiver on file in [CrewLAB](cairn:pages/crewlab). A parent or guardian signs for anyone under 18, and adults sign for themselves.
 ::::
 
 ::::split[Costs & volunteers]
 :::panel{icon="hand-coins"}
-**Free to join.** Participation is free. Voluntary donations are accepted and go to shared expenses such as gas, campground fees, and group equipment, and to athletes who need gear or transportation to take part. The program is need-blind: donations and ability to pay do not affect who can join.
+**Cost.** Training and camp are free, and money never decides who joins. Families who want to give can; donations buy gas, campground nights, and shared gear, and outfit athletes who need skis or a ride. If cost is in the way of anything, tell a coach. We won't ask about your finances.
 :::
 
 :::panel{icon="handshake" role="secondary"}
-**Lend a hand.** Unpaid volunteers run the program: parents, former racers, and others. The [Volunteers page](/volunteers) lists who is running things this summer, and how to pitch in if you would like to help. No certification or background required.
+**Volunteers.** Adults make this work, drivers most of all, since practice moves between trailheads. The [Volunteers page](/volunteers) has this summer's coaches and the jobs we need filled. You don't need a coaching certificate or a ski background.
 :::
 ::::
 
 ::::cta[Getting started]{icon="flag"}
-Join ECXC on CrewLAB. You sign the liability waiver there and pick up the schedule. A signed waiver has to be on file before your first session. Questions are welcome through the [contact form](/contact).
+Sign up in CrewLAB; the waiver and the schedule are there once you're in. If you want to ask something first, use the [contact form](/contact).
 
 <a href="/crewlab" class="download-link">Get started on CrewLAB →</a>
 ::::
