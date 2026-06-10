@@ -55,6 +55,18 @@ Camp is July 21 to 24. The whole team goes to a lake near Talkeetna, stays in ca
 twice a day. Times, gear lists, and sign-up details are on the training page.
 ```
 
+**N6, the pitch turn (flagged 2026-06-09, post-rebuild).** Mid-paragraph the prose stops
+informing and starts selling: product-speak ("the summer piece"), a mythologizing appositive
+("where a racer's base actually gets made"), and a value-proposition couplet as the close, which
+is a tagline that survived rule 8 by sounding like a concession. Shipped from the corrected
+reply-stance system, so the stance alone does not prevent it.
+
+```
+So we built the summer piece, the ten weeks where a racer's base actually gets made, and made it
+free: coached practice three mornings a week, a plan for the days between, and a camp in July. A
+club gives you far more. A free summer with a team around you still goes a long way.
+```
+
 ## Positive set (approved)
 
 **P1, the camp passage ("drastically better", approved verbatim).** Same facts as N5. A reply to

@@ -259,6 +259,14 @@ gets you on", "a few taps and you're done"), which is app-marketing register, no
 and the metaphor payoff ("completes the SafeSport picture"). A coach gives the steps and lets
 them be easy or not.
 
+Flagged 2026-06-09 after the rebuild (calibration N6): the pitch turn, where prose stops
+informing and starts selling mid-paragraph. Its parts: product-speak ("the summer piece"),
+mythologizing appositives ("the ten weeks where a racer's base actually gets made"), and the
+value-proposition couplet close ("A club gives you far more. A free summer still goes a long
+way."), a tagline wearing a concession's clothes. Rule 8 covers it once you see it; the test is
+whether a sentence states what the program does or asserts what it is worth. Worth-assertions
+get cut.
+
 Also flagged 2026-06-09, the register failure under all of these: explainer gloss. Cute verbs
 animating inanimate things ("the calendar holds each session", "channels carry the day-to-day",
 "the yellow plus button takes notes"), semicolon-spliced compressed instructions, and aphorism
