@@ -4,8 +4,9 @@
 
 - Two offerings, separate sign-ups, most athletes do both, either alone is fine. Both free,
   donations optional and need-blind.
-- Summer training: June 1 to August 19, 2026. Monday/Wednesday/Friday. Practice starts 10:30 AM
-  sharp; late arrivals miss the group.
+- Summer training: June 1 to August 19, 2026. Monday/Wednesday/Friday, EXCEPT camp week (July
+  21 to 24), when there is no practice (Geoff, 2026-06-09). Practice starts 10:30 AM sharp; late
+  arrivals miss the group.
   - Mon 10:30–12:15, East High, no carpool: strength, core, spenst, some running.
   - Wed 10:30–12:15: hill intervals and bounding.
   - Fri 10:30–12:30: over-distance mountain running.

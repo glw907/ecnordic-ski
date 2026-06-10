@@ -18,7 +18,7 @@ Four days at a lake, two workouts a day, swimming and a sauna in between. Regist
 
 :::::section[Summer training]{icon="person-simple-run" meta="Jun 1–Aug 19 · 3 mornings a week"}
 
-We meet Monday, Wednesday, and Friday. Practice starts at 10:30, and the group leaves the lot at 10:30, so give yourself time to get there.
+We meet Monday, Wednesday, and Friday, except camp week, July 21 to 24, when there is no practice. Practice starts at 10:30, and the group leaves the lot at 10:30, so give yourself time to get there.
 
 ### The week
 

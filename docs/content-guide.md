@@ -8,7 +8,11 @@ the review gates enforce it, so it is not the working memory a draft is written 
 How drafting works: build the brief first (`docs/content-briefs/<page>.md`: the verifiable facts,
 the audience questions, the one next step, the container plan), then draft each section as a
 reply to the brief's audience questions, with the facts as reference, and finish with a humanize
-pass that hunts the could-be-anyone sentences. The shared method
+pass that hunts the could-be-anyone sentences. Brief facts have provenance: a fact extracted
+from a previous AI draft is not verified, it is inherited, and inherited inventions survive
+rewrites (the CrewLAB parent-link mechanic did exactly that on 2026-06-09). When extracting a
+brief from an existing AI-drafted page, mark any mechanism or claim that did not come from
+Geoff's outline as `[ASK]` until he confirms it. The shared method
 (`~/.claude/docs/web-content-method.md`) carries the full procedure; the real-world exemplar
 library is `docs/coach-voice-corpus.md`. Draft with the `content-draft` skill, gate-check with
 `content-review`.

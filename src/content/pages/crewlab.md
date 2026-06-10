@@ -5,11 +5,11 @@ title: "CrewLAB"
 ECXC runs on CrewLAB, a free phone app. If you want to know when practice is or what a coach just posted, that's where you look. Athletes check it most days. Parents get the calendar and announcements without sitting in the team chat.
 
 ::::passage[Why one app]{icon="chat-circle"}
-Because group texts scatter and email gets ignored. When rain moves practice, one notification reaches everyone at once, instead of a text thread half the parents never joined. And every channel is visible to the volunteers, so the conversations around your athlete happen where responsible adults can read them. That's also how we follow SafeSport[†](#gloss-safesport) rules.
+Because group texts scatter and email gets ignored. When rain moves practice, one notification reaches everyone at once, instead of a text thread half the parents never joined. And every channel is visible to the volunteers, so the conversations around your athlete happen where responsible adults can read them. The app itself is SafeSport[†](#gloss-safesport) certified and built around exactly that kind of openness.
 ::::
 
 :::aside[SafeSport]{id="gloss-safesport"}
-The U.S. Center for SafeSport sets the national rules for protecting young athletes from abuse and misconduct. For us it means open communication: volunteers see every channel, and no adult ever messages an athlete in a private one-on-one.
+The U.S. Center for SafeSport sets the national rules for protecting young athletes from abuse and misconduct. CrewLAB the app is SafeSport certified. ECXC is an informal volunteer group, not a certified organization; we simply use the app as designed, with every channel open to volunteers and no private adult-athlete messaging.
 :::
 
 ::::grid[For athletes]{icon="person-simple-run"}
@@ -25,7 +25,7 @@ Day to day, you'll use it for five things.
 ::::card[For parents & supporters]{icon="users-three" role="secondary"}
 Your account gets the team calendar, the announcements, and the supporters' channel, which is where the practical side of the team happens. The carpool your athlete needs to get to camp probably starts as a message there. You can message the volunteers directly whenever something needs an adult answer.
 
-What you won't see: your athlete's check-ins, workout log, coach feedback, or the team chat. That's deliberate. Kids get a team space of their own, and adult contact stays inside the SafeSport rules.
+What you won't see: your athlete's check-ins, workout log, coach feedback, or the team chat. That's deliberate. Kids get a team space of their own, and what adults post stays in the open.
 
 Guardians sign the waiver from their own account, and payments run through the app. [ASK: confirm what ECXC collects through CrewLAB, whether camp cost-share, dues, or donations.] CrewLAB takes cards, bank transfer, Apple Pay, and Google Pay.
 ::::
@@ -37,7 +37,7 @@ The parent handbook and the gear and vendor list are in the app as well, so you'
 ::::
 
 ::::cta[Getting started]{icon="flag"}
-Install CrewLAB from the App Store or Google Play, or use app.crewlab.io in a browser, then tap the invite below and pick athlete or supporter when you sign up. Parents, link your account to your athlete's; until that link exists, volunteers can't message an under-18 athlete at all. If sign-up goes sideways, [contact us](/contact) and a volunteer will sort it out.
+Install CrewLAB from the App Store or Google Play, or use app.crewlab.io in a browser, then tap the invite below and pick athlete or supporter when you sign up. Parents, link your account to your athlete's. If sign-up goes sideways, [contact us](/contact) and a volunteer will sort it out.
 
 <a href="https://crewlab.app.link/5g7vhhYEn3b" class="download-link" target="_blank" rel="noopener">Join ECXC on CrewLAB →</a>
 ::::
