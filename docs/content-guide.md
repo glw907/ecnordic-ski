@@ -2,11 +2,16 @@
 
 Editorial standards for ecnordic.ski. These guidelines ensure consistency and quality while maintaining the voice of a friendly, competent coach writing to high school athletes and their parents.
 
-This guide is the ecnordic voice. The shared, site-agnostic method (the audience-first drafting
+This guide is the ECXC voice. The shared, site-agnostic method (the audience-first drafting
 steps, the full Signs-of-AI-writing catalog, the scoring rubric, and the calibration set) lives at
 `~/.claude/docs/web-content-method.md`. Draft with the `content-draft` skill and review with
 `content-review`. This guide holds what is specific to ECXC: the trailhead voice, the local
 features, and the exemplars below.
+
+For real-world exemplars, read `docs/coach-voice-corpus.md`: attributed passages from working
+running, nordic, and rowing programs that coach teens and parents well. The pairs in this guide are
+self-authored; the corpus is the outside check. Skim it before drafting a page or post and imitate
+the stance, never the wording.
 
 This guide covers two types of content:
 - **Posts:** Training updates, race results, event recaps, and announcements

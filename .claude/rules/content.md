@@ -16,6 +16,11 @@ Before writing or editing any website content (pages, posts, or form copy), read
 
 **`docs/content-guide.md`**
 
+For real-world voice exemplars, also skim the coach voice corpus: attributed passages from working
+endurance-sport programs, annotated for the lesson each teaches.
+
+**`docs/coach-voice-corpus.md`**
+
 When drafting or editing **page** content that uses container directives (cards, grids, alerts,
 callouts, split sections), also read the directive syntax reference:
 
