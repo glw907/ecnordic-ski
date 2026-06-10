@@ -18,8 +18,12 @@ Workers Logs observability enabled. The send outage was fixed upstream (the `ecx
 domain is onboarded). Verified live: a login POST logged `auth.link.requested` and
 `auth.token.minted` with no `auth.link.send_failed`, so the magic link delivered.
 
-**Pending (user):** click the delivered magic link to confirm end-to-end login on `ecxc.ski`,
-then delete the old `cairn-ecnordic-auth` D1.
+**Pending: domain reputation blocks magic-link delivery to the owner.** Fastmail rejects
+at the DATA stage (`451 ... ecxc.ski is blacklisted`, per the Email Sending activity log via the
+`emailSendingAdaptive` GraphQL dataset; the deploy token now has zone Analytics:Read). The domain
+is days old, so this is new-domain blocklisting and ages out on its own; Gmail already delivers
+(cross-check landed in INBOX, auth passing). Re-request a login link in a day or two, confirm
+sign-in, then delete the old `cairn-ecnordic-auth` D1.
 
 ### Next starter prompt
 
