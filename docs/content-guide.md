@@ -197,6 +197,41 @@ State a fact, advance to the next fact. When the facts end, the post ends; no re
   with a space on each side, and never where a period works. En dash for ranges: 4:00–6:00 PM,
   May–August.
 
+## How the system learns
+
+Geoff's feedback is the system's training signal. Five channels, strongest first, each with a
+documented home; route every piece of feedback the moment it arrives, not at session end.
+
+1. **The rewrite delta, the preferred channel.** Geoff replies to a drafted passage with his own
+   improved version. Procedure: diff the two sentence by sentence and classify each change (a
+   stance shift, a fact added or dropped, a rhythm break, a word swap, an opinion inserted);
+   write the pair into `docs/voice-calibration.md` (his version positive, the draft negative)
+   and his version into the corpus's First-party gold, since his rewrite is first-party writing
+   whether or not it has shipped; then state the generalization the delta teaches and encode it
+   as a rule or recipe note here. One delta usually teaches one generalization; resist encoding
+   five rules from one rewrite. Apply his version to the draft verbatim.
+2. **An inline flag** ("this is overt AI writing"). Name the underlying pattern, add the passage
+   to the calibration negative set with the date, and fix the draft. If the pattern is
+   structural rather than lexical, also encode it here: a load-bearing rule if it changes how
+   drafting starts, an avoid-catalog entry if it is a shape to hunt. The 2026-06-09 lesson: a
+   flag usually names one instance of a deeper generator, so look for the generator before
+   adding the rule.
+3. **Praise or approval** ("drastically better", "viable draft"). Add the passage to the
+   calibration positive set with the date. Approved full pages get referenced by commit rather
+   than quoted.
+4. **Shipped edits.** When Geoff edits a published page and says "feed my edits back", run the
+   harvest procedure in `docs/coach-voice-corpus.md`: the batch form of channel 1, diffing
+   against the draft commit, promoting the strongest rewrites to First-party gold, and turning
+   any twice-made fix into a rule here.
+5. **A change to this system** (guide, method, skills, or critic). Before trusting it, run the
+   eval procedure at the bottom of `docs/voice-calibration.md`: redraft the designated section
+   from its brief in a fresh context and judge it against the calibration marks.
+
+Precedence when sources disagree: First-party gold beats the third-party corpus, the corpus
+beats this guide's recipes, and the calibration set is the tiebreaker for "does this read
+generated". The shared method (`~/.claude/docs/web-content-method.md`) carries the site-agnostic
+version of this loop.
+
 ## The avoid-catalog
 
 The enforcement layer, not the drafting layer. prose-guard carries the machine-checkable subset;
