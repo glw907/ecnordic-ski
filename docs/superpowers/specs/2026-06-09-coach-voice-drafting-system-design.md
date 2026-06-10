@@ -62,9 +62,10 @@ for adding a new surface. This spec translates that pattern to prose.
 ## First test: rewrite the site
 
 The new system's acceptance test is rewriting all five pages (`home`, `about`, `training`,
-`crewlab`, `volunteers`) through it: brief extracted from the current page's facts, prose
-regenerated recipe by recipe inside the existing directive scaffolding, budgets respected, hard
-gates checked. Backlog #21's crewlab payment gap ships as an `[ASK]` marker. Geoff final edits,
+`crewlab`, `volunteers`) through it: brief extracted from the current page's facts, then a full
+rewrite. Structure is in scope (per Geoff, 2026-06-09): each brief designs its own container
+plan from the registered directive vocabulary, adding or dropping UI components as the prose
+needs; the budgets apply per container type wherever one is used. Hard gates checked per page. Backlog #21's crewlab payment gap ships as an `[ASK]` marker. Geoff final edits,
 and those edits seed First-party gold via the harvest loop. As dated historical content, the
 welcome post is not rewritten.
 

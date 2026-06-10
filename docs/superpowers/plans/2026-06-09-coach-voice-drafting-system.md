@@ -45,7 +45,7 @@
 
 **Files:** Modify: `src/content/pages/{home,about,training,crewlab,volunteers}.md`.
 
-- [ ] One page at a time, from its brief, recipe by recipe, inside the existing directive scaffolding (frontmatter, slugs, ids, links, icons unchanged). Respect every budget. Specific audit findings to fix by construction: about's philosophy grid rewritten as plain coach commitments (no mission-statement register, no "once-in-a-lifetime" line), the triple-stated need-blind fact said once per page, no negative-parallelism taglines, varied bullet shapes, varied bio closers, home gets a named meeting spot and a sign-up pointer.
+- [ ] One page at a time, from its brief, recipe by recipe. Full rewrite: the brief's container plan governs, drawn from the registered directive vocabulary (`docs/directive-syntax.md`, registry in `src/lib/markdown/components.ts`); add or drop components as the prose needs. Frontmatter and slugs unchanged. Respect every budget. Specific audit findings to fix by construction: about's philosophy grid rewritten as plain coach commitments (no mission-statement register, no "once-in-a-lifetime" line), the triple-stated need-blind fact said once per page, no negative-parallelism taglines, varied bullet shapes, varied bio closers, home gets a named meeting spot and a sign-up pointer.
 - [ ] After each page: `prose-guard <file>` and a hard-gates self-check (facts against the brief, no safety promise, cost correct).
 
 ### Task 6: Gate and visual check

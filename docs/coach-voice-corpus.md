@@ -220,7 +220,21 @@ second pair, cut back to the first.
 
 ## First-party gold
 
-As Geoff edits and ships real ECXC content, the strongest passages get added here as the
-highest-authority exemplars, since they are the actual target voice rather than a neighbor's. Each
-entry: the source page or post, the passage, and the lesson it anchors. Empty for now; the baseline
-above stands in until first-party material exists.
+Geoff's own edited passages, the highest-authority exemplars in this corpus, since they are the
+actual target voice rather than a neighbor's. Empty until the first harvest; the baseline above
+stands in.
+
+### The harvest procedure
+
+Run on request ("feed my edits back"), after Geoff ships an edit to a page or post:
+
+1. Diff the shipped file against the draft it replaced (`git log --follow` the file; the draft is
+   the last commit authored through `content-draft`).
+2. Extract the before/after sentence pairs where he rewrote rather than trimmed. Each pair is a
+   ready-made off-voice/on-voice exemplar in the method's own format.
+3. Add the strongest passages here as gold entries: the source page, the passage, the one-line
+   lesson. Two or three per harvest; this section stays curated, not exhaustive.
+4. Promote any fix he has now made twice into a load-bearing rule or recipe note in
+   `docs/content-guide.md`, naming the pattern it kills.
+5. Where a gold entry teaches the same lesson as a third-party entry above, the gold entry wins;
+   mark the third-party entry as superseded rather than deleting it.

@@ -21,6 +21,10 @@ endurance-sport programs, annotated for the lesson each teaches.
 
 **`docs/coach-voice-corpus.md`**
 
+Drafting is brief-first: every page or post drafts from a durable brief in
+`docs/content-briefs/<piece>.md` (facts, audience questions, the next step, the container plan),
+with `[ASK: question]` markers for gaps. The guide's container budgets are layout constraints.
+
 When drafting or editing **page** content that uses container directives (cards, grids, alerts,
 callouts, split sections), also read the directive syntax reference:
 
