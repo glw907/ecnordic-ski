@@ -82,3 +82,28 @@ welcome post is not rewritten.
 
 Automation of the harvest (a hook or admin surface), the 907.life rollout (backlog #27 carries
 it), and any change to the prose-guard tiers.
+
+## Amendment: the reply stance (2026-06-09, same day)
+
+The first execution failed Geoff's read five times in a row, each flag a different surface
+pattern (summary colon-lists, repeated CTA formulas, ease-claims, manufactured emphasis,
+explainer gloss, even-weighted triplets). Adding each to the catalog did not stop the next one,
+because the generator under all of them was the drafting instruction itself: "draft recipe by
+recipe from the brief" produces even coverage of a fact sheet, and about-prose reads as
+marketing copy no matter how its sentences are shaped. The corpus disproved the first diagnosis
+(that rules cannot produce human texture): its authors are ordinary coaches whose prose breaks
+several catalog rules and still reads human, because it is written as replies to particular
+imagined readers, with uneven attention and small opinions.
+
+Corrections, applied the same day: load-bearing rule 1 is now write-to-someone (the brief's
+audience questions are the generative seed); rule 2 makes the facts reference rather than a
+checklist; rule 3 permits one or two small opinions per page; and the method gains a humanize
+pass, a second read that hunts could-appear-anywhere sentences, imported from the
+community-proven humanizer-skill pattern (draft, audit for AI-isms, rewrite only those).
+External support: the field converges on samples-plus-audit over style descriptions, and recent
+work (arXiv 2509.14543) finds LLMs weak at imitating implicit everyday styles from instructions
+alone, which is the corpus-and-exemplars bet. A dictation workflow was considered and dropped:
+Geoff's writing would land near the corpus register anyway, so the register is attainable in
+generation; the stance was the missing piece, proven by the Talkeetna camp passage Geoff
+approved. Acceptance flow: training.md redrafts first as the test page; the other four pages
+follow only after his read.

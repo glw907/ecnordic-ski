@@ -6,10 +6,12 @@ content type with a real exemplar to imitate. The avoid-catalog sits at the back
 the review gates enforce it, so it is not the working memory a draft is written from.
 
 How drafting works: build the brief first (`docs/content-briefs/<page>.md`: the verifiable facts,
-the audience questions, the one next step, the container plan), then write recipe by recipe from
-the brief. The shared method (`~/.claude/docs/web-content-method.md`) carries the full procedure;
-the real-world exemplar library is `docs/coach-voice-corpus.md`. Draft with the `content-draft`
-skill, gate-check with `content-review`.
+the audience questions, the one next step, the container plan), then draft each section as a
+reply to the brief's audience questions, with the facts as reference, and finish with a humanize
+pass that hunts the could-be-anyone sentences. The shared method
+(`~/.claude/docs/web-content-method.md`) carries the full procedure; the real-world exemplar
+library is `docs/coach-voice-corpus.md`. Draft with the `content-draft` skill, gate-check with
+`content-review`.
 
 The audience, always: high school athletes and their parents, read together. The register: a
 competent coach talking at a trailhead. Write to "you", act as "we".
@@ -20,20 +22,38 @@ competent coach talking at a trailhead. Write to "you", act as "we".
 
 Break one of these and the prose reads wrong, whatever else it does well.
 
-1. **Every sentence carries a fact.** A time, a place, a name, a rule, a price, a thing that
-   happens. If a sentence's only job is to explain why the previous sentence is good, cut it.
-   The reader can see the benefit.
-2. **A gap is an `[ASK]`, never padding.** Missing a fact? Write `[ASK: what time does the
+1. **Write to someone, never about something.** Every section is a reply to a particular
+   imagined reader's question in a particular moment: the nervous first-timer the night before
+   practice, the parent asking what this camp actually is. The brief's audience questions are
+   the generative seed; prose that merely presents the program is marketing copy by
+   construction. Answer in conversation order (concede, qualify, reassure; or rule, then
+   reason), the way the corpus exemplars do. (The 2026-06-09 rewrite failed five times in a row
+   until this rule replaced fact-coverage as the starting point.)
+2. **Facts are reference, not a checklist.** Pull from the brief what the imagined reader needs
+   and spend words unevenly: more where the worry is, less where it isn't, and a brief fact that
+   serves no question can stay in the brief. Even coverage of a fact sheet is the deepest
+   structural tell. Within that, every sentence still carries a fact; a sentence whose only job
+   is to praise the previous sentence gets cut.
+3. **A coach is allowed an opinion.** "Fair warning on the cabins", a dry aside, a hedge like
+   "usually" or "maybe". One or two per page; they are seasoning, not the dish. Never invent a
+   fact or a quote to carry one.
+4. **A gap is an `[ASK]`, never padding.** Missing a fact? Write `[ASK: what time does the
    Tuesday carpool leave?]` and keep going. Abstraction in place of a fact is how slop enters a
    draft, and a visible question is cheaper to fix than a paragraph of filler.
-3. **People do things.** We lend roller skis. You sign the waiver. A coach posts the workout.
+5. **People do things.** We lend roller skis. You sign the waiver. A coach posts the workout.
    Never "the program provides", "CrewLAB keeps you informed", "training builds fitness".
-4. **Say it once.** Each fact lives in one container per page. If two sections both want the
+6. **Say it once.** Each fact lives in one container per page. If two sections both want the
    need-blind line, one of them loses it and links or gestures instead.
-5. **Fit the container.** Budgets below. Site copy renders into fixed UI elements, and overflow
+7. **Fit the container.** Budgets below. Site copy renders into fixed UI elements, and overflow
    breaks the page, so the budget is part of the recipe, not a suggestion.
-6. **When the facts end, stop.** No closing tagline, no motivational send-off, no sentence that
+8. **When the facts end, stop.** No closing tagline, no motivational send-off, no sentence that
    restates the section. The CTA is the only ending a page needs.
+9. **Write the flat version first.** State a rule the way a coach would type it in an email, then
+   stop. At most one shaped sentence per section (an inversion, a fragment, a dry punch), and
+   only where the stakes earn it; helmets earn one, the waiver does not. When every sentence has
+   a designed rhythm (an only-X opener, a negation restating the previous clause, a balanced
+   pair, a dramatic "No athlete trains until..."), the page reads engineered. Uniform punchiness
+   is as much a tell as uniform blandness. (Geoff, 2026-06-09.)
 
 ## Container budgets
 
@@ -194,6 +214,23 @@ participial endings ("...building the fitness that carries a season"); sweeping 
 fabricated social proof; inanimate agency; formal connectors (Moreover, Additionally,
 Furthermore); meta-commentary; reflective endings; "Bold term: explanation" deployed at a fixed
 rate; three-item lists by reflex; every paragraph the same size.
+
+Flagged by Geoff on the 2026-06-09 rewrite, highest priority because they survived the first
+version of this system: the summary colon-list, where a sweeping claim sets up a colon and a
+tidy enumeration pays it off ("Everything starts in CrewLAB: the schedule, the waiver, and
+sign-up"); any CTA or contact formula repeated across pages ("Questions first? Contact us"),
+because a phrase deployed site-wide reads as a template; the chirpy ease-claim ("Two minutes
+gets you on", "a few taps and you're done"), which is app-marketing register, not coaching;
+and the metaphor payoff ("completes the SafeSport picture"). A coach gives the steps and lets
+them be easy or not.
+
+Also flagged 2026-06-09, the register failure under all of these: explainer gloss. Cute verbs
+animating inanimate things ("the calendar holds each session", "channels carry the day-to-day",
+"the yellow plus button takes notes"), semicolon-spliced compressed instructions, and aphorism
+shapes ("an easier week before they need a week off"). Polished compression with zero slack
+reads as marketing copy. Instructions read like a handout: imperative, plain verbs (is, see,
+sign, post, ask, tap), second person doing things, and a little slack. A slightly long plain
+sentence beats a compressed clever one.
 ```
 
 The deeper rhythm problem is uniformity: same sentence length, same paragraph size, same bullet
