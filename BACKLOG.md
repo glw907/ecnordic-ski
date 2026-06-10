@@ -4,8 +4,6 @@
 
 ## Medium
 
-- [ ] **#32** Admin "Could not authenticate with GitHub": ecxc Worker has no secrets `#bug` `#ecxc` *(2026-06-09)*
-  `npx wrangler secret list` on the `ecxc` Worker returns `[]`, so `GITHUB_APP_PRIVATE_KEY_B64` (the GitHub App key cairn signs its JWT with) is missing; the Worker was created fresh at the Rename 4 cutover and the old `ecnordic` Worker's secrets did not carry over. Fix: `npx wrangler secret put GITHUB_APP_PRIVATE_KEY_B64` with the App key per cairn's `docs/guides/rotate-the-github-app-key.md`, then retest an admin save. Also re-set `TURNSTILE_SECRET_KEY` and `CONTACT_EMAIL` if the contact form needs them (same empty list). GitHub-side state is verified good: repo renamed with the redirect active, App installation 135372268 intact.
 - [ ] **#30** Raster favicon fallback for Safari `#improvement` `#ecxc` *(2026-06-09)*
   Safari does not load SVG favicons, so it falls back to requesting `/favicon.ico` and gets a 404 (nothing ships at that path). Render a 32px PNG fallback and an `apple-touch-icon` from `static/favicon.svg`'s crimson tile and link both from `src/app.html`. Pre-launch polish, surfaced by the Rename 5 review fan-out.
 - [ ] **#20** Add a global `.ec-head` flex rule so `aside`/`gallery` heads work off the three directive pages `#bug` `#ecxc` *(2026-06-04)*
@@ -44,6 +42,9 @@
 - [ ] **#5** Replace @schedule-x with a custom Svelte calendar component `#improvement` `#ecxc` *(2026-05-20)*
   Do this when migrating to cairn-cms.
 ## Done
+
+- [x] **#32** Admin "Could not authenticate with GitHub": ecxc Worker has no secrets `#bug` `#ecxc` *(2026-06-09 → 2026-06-09)*
+  `npx wrangler secret list` on the `ecxc` Worker returns `[]`, so `GITHUB_APP_PRIVATE_KEY_B64` (the GitHub App key cairn signs its JWT with) is missing; the Worker was created fresh at the Rename 4 cutover and the old `ecnordic` Worker's secrets did not carry over. Fix: `npx wrangler secret put GITHUB_APP_PRIVATE_KEY_B64` with the App key per cairn's `docs/guides/rotate-the-github-app-key.md`, then retest an admin save. Also re-set `TURNSTILE_SECRET_KEY` and `CONTACT_EMAIL` if the contact form needs them (same empty list). GitHub-side state is verified good: repo renamed with the redirect active, App installation 135372268 intact.
 
 - [x] **#29** Admin login 403s for a browser that sends no `Origin` header (cairn missing-Origin CSRF) `#bug` `#ecxc` *(2026-06-08 → 2026-06-08)*
   Fixed in cairn-cms `0.35.0`: cairn owns admin CSRF through a `__Host-cairn_csrf` double-submit token that tolerates a missing `Origin`, so the JS-free magic-link login works from a privacy browser. A failed check now serves a branded "Security check · Cairn" 403 in place of the raw SvelteKit text. ecnordic upgraded to `^0.35.0` and set `csrf: { checkOrigin: false }` in `svelte.config.js` (Pass 0.35). Verified on local dev: the login GET issues the token cookie + hidden `csrf` field, a no-`Origin` POST carrying a valid token passes the CSRF gate (reaches the editor lookup), and a POST with a missing or wrong token gets the branded 403. The original diagnosis lived at `~/Projects/cairn-cms/docs/cairn-dx-feedback-2026-06-08-ecnordic-login-csrf-missing-origin.md`.
