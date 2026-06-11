@@ -1,10 +1,17 @@
 # ecxc.ski: Project Status
 
-## Current state (2026-06-09)
+## Current state (2026-06-11)
 
 The ECXC rebrand is complete (six passes; spec in `docs/superpowers/archive/specs/`), the engine
 is on cairn `^0.37.1` with Workers Logs observability, and all five pages are rewritten through
 the new coach voice drafting system.
+
+**Visual rebrand, shipped 2026-06-11.** New palette (fireweed pink for actions, mid spruce for
+ambient accents, black spruce ground; header and footer are spruce bands) and a new tile mark
+(Nunito letters knocked out of four rounded tiles, with favicon and crest cuts). Selection
+record: `docs/design/brand-exploration.html`; generator: `docs/design/build-mark.py`; binding
+usage rule: `.claude/rules/design-system.md`. Geoff's first CMS edits (about, volunteers)
+landed 2026-06-11, so the corpus harvest in the starter prompt below is now actionable.
 
 **Coach voice drafting system, done 2026-06-09.** Generative guide (rules, budgets, recipes),
 briefs per page, corpus + harvest loop, reply-stance drafting with a humanize pass; the archived
