@@ -1,8 +1,8 @@
 ---
-title: "About East Community Cross Country"
+title: About East Community Cross Country
 ---
 
-East Community Cross Country is a free summer training group for high school cross-country runners and Nordic skiers in Anchorage. Nobody here is paid. The coaches and helpers are parents, former racers, and local athletes who want more kids on the trails.
+East Community Cross Country is a free summer training group for high school cross-country runners and Nordic skiers in Anchorage. The coaches and helpers are parents, former racers, and local athletes who want more kids on the trails.
 
 The "East" is East Anchorage, where we're based, not East High School. Some of our volunteers coach at East and we practice there on Mondays, but ECXC is not run, sponsored, or governed by East, the Anchorage School District, or any club or business. Our athletes come from public schools, private schools, and homeschools all over the city.
 
