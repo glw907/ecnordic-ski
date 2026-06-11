@@ -10,7 +10,14 @@ Keep it current as the language evolves.
 
 ## What this document is
 
-Pass 3 set the *foundation*: color tokens, fonts, the crimson nav line.
+Pass 3 set the *foundation*: color tokens, fonts, the primary-colored nav line.
+The 2026-06-11 rebrand swapped the anchors from crimson/cobalt to
+fireweed/spruce (selection record: `docs/design/brand-exploration.html`).
+Fireweed is naturally lighter than black spruce, so the usage inverts the
+old model: spruce carries the structural weight (the header and footer
+bands), and fireweed is the accent on top of it. `--color-fireweed` is the
+display pink for marks and accents on spruce surfaces; `primary` is the
+deeper cut that holds 4.5:1 with white text on light surfaces.
 This adds the *content layer*: a small kit of named components, each with
 **one meaning**, that compose into any body page. It is meant to be read by
 a person learning the system, not just applied. Every choice has a reason.
@@ -33,29 +40,46 @@ The guiding ideas, in order of importance:
 
 ## Color system
 
-Two brand anchors define a **warm ↔ cool axis** (they sit nearly opposite on
-the hue wheel, so they balance). Every other color is a measured step off one
-anchor, with matched chroma/lightness in OKLCH so the family harmonizes.
+Three brand colors with a **value hierarchy**, not a hue pair. Fireweed is
+naturally lighter than spruce, so the structure follows the landscape it
+comes from: the forest is everywhere, the flower is rare.
 
-| Token (color) | Hue | Family | Meaning |
-|-------|-----|--------|---------|
-| `primary` (crimson) | ~18° | warm | The program, and the one action |
-| `secondary` (cobalt) | ~260° | cool | People, community, wayfinding |
-| `warning` (amber) | ~72° | warm | Caution |
-| `error` (vermilion) | ~30° | warm | Error / destructive |
-| `success` (pine) | ~155° | cool | Free / confirmed / "go" |
-| `info` (azure) | ~245° | cool | Neutral information |
-| `accent` (teal) | ~195° | cool | Highlights & interactive accents |
-| `neutral` (slate) | ~255° | n/a | Structural UI |
+- **Fireweed** (pink, ~357°) is the flash. It marks **action and brand,
+  nothing else**: prose links, buttons, the CTA card, active nav states, the
+  focus ring, text selection, the logo, and the rules on the header and
+  footer bands. It ships in two cuts: the display cut
+  (`--color-fireweed`, 66%) for marks and accents on spruce surfaces, and
+  the deep cut (`primary` / `--color-link`, 52%) that holds 4.5:1 with
+  white, for anything on a light surface.
+- **Mid spruce** (`--color-spruce-accent`, ~168°) is the working green.
+  Every ambient accent wears it: section icons, chips, band eyebrows, card
+  hover edges, tags, quiet wayfinding links, the DaisyUI `accent` role.
+- **Black spruce** (`secondary`, ~175°, near-black) is the ground. It
+  carries the header and footer bands (`--color-header`) and the dark
+  theme's surfaces. On a light page it reads as black, so it is never an
+  accent color.
 
-**The teachable rule:** *warm = act / attention / care; cool = trust / calm /
-affirm.* Caution and error are warm because they ask you to slow down or stop;
-success and info are cool because they reassure.
+**The teachable rule:** *pink = act, green = ambient, black spruce =
+ground.* If a surface isn't a click-me or the brand mark itself, it does
+not get pink. The old primary/secondary role split for sections is gone;
+`role="secondary"` in content markup is a kept-for-compat no-op.
 
-Defined in `src/app.css` as DaisyUI theme overrides for `ecn` (light) and
-`ecn-dark` (dark), each line annotated with its meaning. Constraints from
+Status hues stay semantic and unchanged in meaning:
+
+| Token (color) | Hue | Meaning |
+|-------|-----|---------|
+| `warning` (amber) | ~72° | Caution |
+| `error` (vermilion) | ~30° | Error / destructive |
+| `success` (pine) | ~147° | Free / confirmed / "go" (hue-separated from spruce) |
+| `info` (azure) | ~245° | Neutral information |
+| `neutral` (spruce-slate) | ~175° | Structural UI |
+
+Defined in `src/app.css` as DaisyUI theme overrides for `ecxc` (light) and
+`ecxc-dark` (dark), each line annotated with its meaning. Constraints from
 Pass 3 still hold: `oklch()` only, no hex/rgb, no hardcoded `oklch()` in
-components; reference `var(--color-*)`.
+components; reference `var(--color-*)`. Mix colors in **oklab**, never
+oklch: cylindrical mixes walk the hue arc (green toward a warm base lands
+on khaki; the old cobalt edge landed on magenta).
 
 **Derived UI tokens** sit alongside the role anchors when a role color needs a
 contrast-safe variant for a specific surface, and they must **flip per theme**.
@@ -179,9 +203,10 @@ reads as a calm stack, not a row of loud boxes.
 ```
 
 ### Icon: `.ec-icon` (bare glyph, the default) / `.ec-chip` (tile, focal only)
-A Phosphor glyph carries a section's meaning at a glance; its **color states
-the role**: default = primary (crimson, program), `.ec-icon-secondary` =
-secondary (cobalt, people).
+A Phosphor glyph carries a section's meaning at a glance. Icons wear the
+working green (`--color-spruce-accent`) everywhere; `.ec-icon-secondary` is
+a kept-for-compat no-op. The one exception is the CTA card, whose icon takes
+fireweed because the card is the action.
 
 The **default treatment is a bare glyph** (`.ec-icon`). A tinted rounded tile
 (`.ec-chip`) repeated down a page reads as visual noise and fights the calm
@@ -362,9 +387,9 @@ Two optional attributes are available on any directive that accepts them:
 
 - `icon=NAME`: a key in `ICON_PATHS` (defined in `src/lib/markdown/icons.ts`).
   Omit when no icon clears the icon checklist (→ *Icon system*).
-- `role=ROLE`: drives the role-color token. Values: `primary` (default), `secondary`,
-  `caution`. Color follows the role table: primary = program/action (crimson), secondary =
-  people/community (cobalt), caution = warning (amber).
+- `role=ROLE`: Values: `primary` (default), `secondary`, `caution`. Since the
+  2026-06-11 rebrand `secondary` renders identically to `primary` (both wear the
+  working green; see *Color system*); only `caution` still changes color (amber).
 
 ### Nesting rule
 

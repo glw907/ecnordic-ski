@@ -72,16 +72,34 @@
   --color-border: oklch(85% 0.006 20);
   --color-border-subtle: oklch(92% 0.004 20);
   --color-surface: oklch(96% 0.006 60);
-  --color-link: oklch(54% 0.26 18);
-  --color-link-hover: oklch(44% 0.28 18);
-  --color-tag: oklch(50% 0.22 18);
+  --color-link: oklch(50% 0.21 357);
+  --color-link-hover: oklch(42% 0.22 357);
+  /* Tags are metadata navigation, so they wear the working green; the
+     fireweed affordance arrives on hover (see .post-tag:hover). */
+  --color-tag: oklch(48% 0.10 168);
   --color-tag-hash: oklch(68% 0.006 20);
-  --color-focus-ring: oklch(54% 0.26 18 / 0.15);
-  --color-success: oklch(52% 0.13 155);
+  --color-focus-ring: oklch(52% 0.21 357 / 0.15);
+  /* Success sits at 147 rather than pine's old 155 so it stays clearly
+     apart from the spruce accent green (168). */
+  --color-success: oklch(52% 0.14 147);
   --color-error: oklch(55% 0.23 30);
   --color-error-bg: oklch(97% 0.008 30);
   --color-error-border: oklch(88% 0.018 30);
-  --color-highlight: oklch(80% 0.14 18 / 0.25);
+  --color-highlight: oklch(80% 0.12 357 / 0.25);
+  /* Display fireweed: the true roadside pink, too light for small text on
+     white (3.5:1) but exactly right on spruce (4.4:1). Carries the logo,
+     the header's active states, and any accent on a dark spruce surface.
+     The darker primary/link fireweed is the contrast-safe cut for white. */
+  --color-fireweed: oklch(66% 0.21 357);
+  /* The header band: black spruce in both themes (the hoodie colorway).
+     ink = resting nav links, ink-strong = hover and the active link. */
+  --color-header: oklch(25% 0.035 175);
+  --color-header-ink: oklch(78% 0.014 175);
+  --color-header-ink-strong: oklch(96% 0.008 175);
+  /* Mid spruce: the visible-green cut of secondary for accents on light
+     surfaces (icons, chips, eyebrows, hover edges), where the black-spruce
+     anchor reads as plain black. Holds 4.5:1 on white for eyebrow text. */
+  --color-spruce-accent: oklch(48% 0.10 168);
   /* Subtle-alert icon amber. Clear amber that holds 3:1 on the faint caution
      wash (icon only; the label is neutral). Flips brighter in dark mode. */
   --color-caution-accent: oklch(58% 0.16 72);
@@ -95,21 +113,26 @@
   --color-base-200: oklch(95% 0.006 60);
   --color-base-300: oklch(90% 0.008 60);
   --color-base-content: oklch(16% 0.020 15);
-  /* Brand anchors: the warm↔cool axis the whole palette derives from */
-  --color-primary: oklch(54% 0.26 18);          /* crimson: the program & the one action */
-  --color-primary-content: oklch(99% 0.003 18);
-  --color-secondary: oklch(48% 0.20 260);       /* cobalt: people, community, wayfinding */
-  --color-secondary-content: oklch(99% 0.003 260);
-  /* Cool family (calm / affirm), stepped off cobalt */
-  --color-accent: oklch(60% 0.13 195);          /* teal: highlights & interactive accents */
-  --color-accent-content: oklch(18% 0.020 195);
-  --color-neutral: oklch(30% 0.015 230);        /* slate: structural UI */
-  --color-neutral-content: oklch(92% 0.006 230);
+  /* Brand anchors: the warm↔cool axis the whole palette derives from.
+     Fireweed + black spruce, chosen 2026-06-11 (docs/design/brand-exploration.html);
+     deliberately clear of East High red/blue, APU blue, Winter Stars red.
+     Fireweed is naturally lighter than spruce, so spruce carries weight
+     (header band, structural UI) and fireweed is the flash on top of it;
+     primary is the deep fireweed cut that holds 4.5:1 with white text. */
+  --color-primary: oklch(52% 0.21 357);         /* deep fireweed: the program & the one action */
+  --color-primary-content: oklch(99% 0.003 357);
+  --color-secondary: oklch(25% 0.035 175);      /* black spruce: people, community, wayfinding */
+  --color-secondary-content: oklch(96% 0.008 175);
+  /* Cool family (calm / affirm), stepped off spruce */
+  --color-accent: oklch(48% 0.10 168);          /* mid spruce: highlights & interactive accents */
+  --color-accent-content: oklch(98% 0.008 168);
+  --color-neutral: oklch(28% 0.025 175);        /* spruce-slate: structural UI */
+  --color-neutral-content: oklch(92% 0.006 175);
   --color-info: oklch(58% 0.16 245);            /* azure: information */
   --color-info-content: oklch(99% 0.003 245);
-  --color-success: oklch(52% 0.13 155);         /* pine: free / confirmed / go */
-  --color-success-content: oklch(99% 0.003 155);
-  /* Warm family (act / attention), stepped off crimson */
+  --color-success: oklch(52% 0.14 147);         /* pine, hue-separated from spruce: free / go */
+  --color-success-content: oklch(99% 0.003 147);
+  /* Warm family (act / attention) */
   --color-warning: oklch(74% 0.17 72);          /* amber: caution */
   --color-warning-content: oklch(20% 0.015 72);
   --color-error: oklch(55% 0.23 30);            /* vermilion: error / destructive */
@@ -120,25 +143,25 @@
   name: "ecxc-dark";
   prefersdark: true;
   color-scheme: dark;
-  --color-base-100: oklch(16% 0.015 255);
-  --color-base-200: oklch(20% 0.018 255);
-  --color-base-300: oklch(25% 0.020 255);
+  --color-base-100: oklch(16% 0.015 175);
+  --color-base-200: oklch(20% 0.018 175);
+  --color-base-300: oklch(25% 0.020 175);
   --color-base-content: oklch(92% 0.006 25);
   /* Brand anchors (brighter for dark surfaces) */
-  --color-primary: oklch(65% 0.26 18);          /* crimson: program & action */
-  --color-primary-content: oklch(12% 0.015 18);
-  --color-secondary: oklch(62% 0.19 260);       /* cobalt: people */
-  --color-secondary-content: oklch(12% 0.010 260);
-  /* Cool family, stepped off cobalt */
-  --color-accent: oklch(70% 0.13 195);          /* teal: highlight */
-  --color-accent-content: oklch(14% 0.020 195);
-  --color-neutral: oklch(24% 0.018 255);        /* slate: structural UI */
+  --color-primary: oklch(70% 0.18 357);         /* fireweed: program & action */
+  --color-primary-content: oklch(14% 0.012 357);
+  --color-secondary: oklch(72% 0.07 170);       /* spruce, lightened: people */
+  --color-secondary-content: oklch(14% 0.010 170);
+  /* Cool family, stepped off spruce */
+  --color-accent: oklch(72% 0.07 170);          /* mid spruce, lightened: highlight */
+  --color-accent-content: oklch(14% 0.010 170);
+  --color-neutral: oklch(24% 0.018 175);        /* spruce-slate: structural UI */
   --color-neutral-content: oklch(82% 0.008 25);
   --color-info: oklch(68% 0.15 245);            /* azure: information */
   --color-info-content: oklch(13% 0.012 245);
-  --color-success: oklch(66% 0.14 155);         /* pine: free / go */
-  --color-success-content: oklch(13% 0.010 155);
-  /* Warm family, stepped off crimson */
+  --color-success: oklch(66% 0.14 147);         /* pine, hue-separated from spruce: free / go */
+  --color-success-content: oklch(13% 0.010 147);
+  /* Warm family */
   --color-warning: oklch(80% 0.17 72);          /* amber: caution */
   --color-warning-content: oklch(18% 0.015 72);
   --color-error: oklch(68% 0.22 30);            /* vermilion: error */
@@ -148,18 +171,26 @@
   --color-body: oklch(82% 0.008 25);
   --color-body-soft: oklch(74% 0.008 25);   /* supporting prose: one step toward muted */
   --color-muted: oklch(60% 0.008 25);
-  --color-faint: oklch(44% 0.006 255);
-  --color-border: oklch(28% 0.018 255);
-  --color-border-subtle: oklch(22% 0.014 255);
-  --color-surface: oklch(20% 0.018 255);
-  --color-link: oklch(68% 0.26 18);
-  --color-link-hover: oklch(78% 0.28 18);
-  --color-tag: oklch(65% 0.22 18);
-  --color-tag-hash: oklch(44% 0.008 255);
-  --color-focus-ring: oklch(65% 0.26 18 / 0.20);
+  --color-faint: oklch(44% 0.006 175);
+  --color-border: oklch(28% 0.018 175);
+  --color-border-subtle: oklch(22% 0.014 175);
+  --color-surface: oklch(20% 0.018 175);
+  --color-link: oklch(72% 0.18 357);
+  --color-link-hover: oklch(80% 0.15 357);
+  --color-tag: oklch(72% 0.07 170);
+  --color-tag-hash: oklch(44% 0.008 175);
+  --color-focus-ring: oklch(70% 0.18 357 / 0.20);
   --color-error-bg: oklch(20% 0.014 30);
   --color-error-border: oklch(32% 0.020 30);
-  --color-highlight: oklch(55% 0.18 18 / 0.35);
+  --color-highlight: oklch(55% 0.14 357 / 0.35);
+  /* Header band: a step lighter than spruce-black base so it separates,
+     fireweed a touch brighter to match the lifted surface. */
+  --color-fireweed: oklch(70% 0.19 357);
+  --color-header: oklch(22% 0.028 175);
+  --color-header-ink: oklch(74% 0.014 175);
+  --color-header-ink-strong: oklch(96% 0.008 175);
+  /* On dark surfaces the lightened secondary is already a visible green. */
+  --color-spruce-accent: oklch(72% 0.07 170);
 }
 
 body {
@@ -193,9 +224,9 @@ body {
 
 /* ─── In-page scrolling ────────────────────────────────────
    Smooth scroll for anchor jumps (program cards, footnotes, the FAQ pointer);
-   anchored targets clear the 3.5rem sticky header with scroll-margin. */
+   anchored targets clear the 3.75rem sticky header with scroll-margin. */
 html { scroll-behavior: smooth; }
-.ec-band, .ec-aside { scroll-margin-block-start: 4.5rem; }
+.ec-band, .ec-aside { scroll-margin-block-start: 4.75rem; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
@@ -277,16 +308,17 @@ html { scroll-behavior: smooth; }
 }
 
 .post-tag:hover {
-  color: var(--color-body);
-  border-color: var(--color-muted);
+  color: var(--color-link);
+  border-color: var(--color-link);
 }
 
 /* ─── Design-language primitives (reusable site-wide) ─────────
    The kit's components are DaisyUI (.card, .alert, .list, .btn, .badge);
-   the icon chip is the one custom atom. A Phosphor glyph in a tinted
-   square whose color states the section's role:
-     default            → primary (crimson): the program / the action
-     .ec-chip-secondary → secondary (cobalt): people / community  */
+   the icon chip is the one custom atom. Under the fireweed/spruce scheme,
+   ambient accents (chips, icons, eyebrows, edges) all wear the working
+   green; fireweed is reserved for actions, so it stays scarce the way the
+   flower is scarce against the forest. `.ec-chip-secondary` in existing
+   markup is now a no-op: both roles wear the same green. */
 .ec-chip {
   flex: 0 0 auto;
   display: inline-flex;
@@ -295,12 +327,8 @@ html { scroll-behavior: smooth; }
   inline-size: 2.4rem;
   block-size: 2.4rem;
   border-radius: 0.75rem;
-  background: color-mix(in oklch, var(--color-primary) 12%, var(--color-base-100));
-  color: var(--color-primary);
-}
-.ec-chip-secondary {
-  background: color-mix(in oklch, var(--color-secondary) 14%, var(--color-base-100));
-  color: var(--color-secondary);
+  background: color-mix(in oklab, var(--color-spruce-accent) 14%, var(--color-base-100));
+  color: var(--color-spruce-accent);
 }
 .ec-chip-sm {
   inline-size: 1.95rem;
@@ -316,17 +344,14 @@ html { scroll-behavior: smooth; }
   block-size: 1.1rem;
 }
 
-/* Bare role-coloured glyph. The default icon treatment. A tinted .ec-chip
-   tile is heavy when repeated down a page, so most section icons are just
-   the glyph in its role colour; reserve the tile for a deliberate focal
-   accent. Colour states the role, same rule as the chip. */
+/* Bare glyph. The default icon treatment. A tinted .ec-chip tile is heavy
+   when repeated down a page, so most section icons are just the glyph in
+   the working green; reserve the tile for a deliberate focal accent.
+   `.ec-icon-secondary` is a no-op now, same as the chip. */
 .ec-icon {
   flex: 0 0 auto;
   display: inline-flex;
-  color: var(--color-primary);
-}
-.ec-icon-secondary {
-  color: var(--color-secondary);
+  color: var(--color-spruce-accent);
 }
 
 /* ─── Component head row: `.ec-head` ─────────────────────────
@@ -400,13 +425,17 @@ html { scroll-behavior: smooth; }
 }
 
 /* ─── Call to action: `.ec-cta` ──────────────────────────────
-   A compact, left-aligned action card. Crimson is the action colour, so it carries a
-   quiet crimson wash and edge; the head row is icon + title, then a short note and the
-   button. Flatter and tighter than a standard module card. */
+   A compact, left-aligned action card. Fireweed is the action colour, so this is the
+   one module that wears it: a quiet wash and edge, and the icon overrides the ambient
+   green; the head row is icon + title, then a short note and the button. Flatter and
+   tighter than a standard module card. */
 .ec-cta {
   border: 1px solid color-mix(in oklab, var(--color-primary) 22%, var(--color-border-subtle));
   border-radius: 12px;
   background: color-mix(in oklab, var(--color-primary) 4%, var(--color-base-100));
+}
+.ec-cta .ec-icon {
+  color: var(--color-primary);
 }
 .ec-cta .card-body {
   padding: 1.1rem 1.3rem;
@@ -536,10 +565,10 @@ html { scroll-behavior: smooth; }
 
 /* ─── Program cards: `.ec-programs` / `.ec-program` ───────────
    Two side-by-side program offerings as calm clickable cards, on the same card
-   vocabulary as the rest of the page: a role-coloured glyph beside the name (the
-   site-wide head row), no loud top edge, a gentle hover. Crimson is the default
-   program colour; `role="secondary"` swaps the icon and hover edge to cobalt so the
-   two read as distinct. */
+   vocabulary as the rest of the page: a glyph in the working green beside the
+   name (the site-wide head row), no loud top edge, a gentle hover. The
+   `.ec-program-secondary` class in existing markup is a no-op, same as the
+   chip: both roles wear the same green. */
 .ec-programs {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -550,7 +579,7 @@ html { scroll-behavior: smooth; }
   .ec-programs { grid-template-columns: 1fr; }
 }
 .ec-program {
-  --edge: var(--color-primary);
+  --edge: var(--color-spruce-accent);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -563,14 +592,13 @@ html { scroll-behavior: smooth; }
   transition: border-color 0.18s ease, box-shadow 0.18s ease;
 }
 .ec-program:hover {
-  /* Mix in oklab, not oklch. The cobalt edge (hue 260) interpolated toward the warm
-     neutral border (hue 20) in cylindrical oklch takes the short hue arc through purple,
-     so the camp card's hover border came out magenta. oklab blends in rectangular space,
-     so the cobalt just desaturates toward the border and stays blue. */
+  /* Mix in oklab, not oklch. A role edge interpolated toward the warm neutral
+     border (hue 20) in cylindrical oklch spins through every hue between (the
+     old cobalt camp-card edge came out magenta). oklab blends in rectangular
+     space, so the edge just desaturates toward the border and keeps its hue. */
   border-color: color-mix(in oklab, var(--edge) 45%, var(--color-border));
   box-shadow: 0 2px 12px -5px color-mix(in oklab, var(--color-heading) 22%, transparent);
 }
-.ec-program-secondary { --edge: var(--color-secondary); }
 .ec-program-head {
   display: flex;
   align-items: center;
@@ -634,15 +662,14 @@ html { scroll-behavior: smooth; }
    A major section (the intro chooser, summer training, the camp) held as one
    coherent act: a strong header over a clear top boundary, with generous space
    above, so the page reads as distinct sections instead of one continuous run.
-   The header icon and eyebrow take the section's role colour (crimson default,
-   cobalt for `role="secondary"`); the body holds the section's own modules. */
+   The header icon and eyebrow wear the working green for every role; the body
+   holds the section's own modules. */
 .ec-band {
-  --band-edge: var(--color-primary);
+  --band-edge: var(--color-spruce-accent);
   margin-block-start: 4rem;
   padding-block-start: 1.9rem;
   border-block-start: 1px solid var(--color-border-subtle);
 }
-.ec-band-secondary { --band-edge: var(--color-secondary); }
 .ec-band-head { margin-block-end: 1.6rem; }
 .ec-band-eyebrow {
   display: block;
@@ -797,8 +824,11 @@ html { scroll-behavior: smooth; }
 .ec-spectrum { margin-block: 1.1rem; counter-reset: zone; }
 .ec-spectrum-bar { display: flex; block-size: 0.55rem; border-radius: 99px; overflow: hidden; }
 .ec-spectrum-bar span { flex: 1; }
-.ec-spectrum-bar span:nth-child(1) { background: color-mix(in oklch, var(--color-primary) 32%, var(--color-base-200)); }
-.ec-spectrum-bar span:nth-child(2) { background: color-mix(in oklch, var(--color-primary) 62%, transparent); }
+/* The continuum walks the brand: a quiet green start, the working green, then
+   the fireweed flash at the fast end. oklab, not oklch: the cylindrical mix
+   walks green-toward-warm-base through yellow and lands on khaki. */
+.ec-spectrum-bar span:nth-child(1) { background: color-mix(in oklab, var(--color-spruce-accent) 32%, var(--color-base-200)); }
+.ec-spectrum-bar span:nth-child(2) { background: var(--color-spruce-accent); }
 .ec-spectrum-bar span:nth-child(3) { background: var(--color-primary); }
 .ec-spectrum-zones {
   display: grid;

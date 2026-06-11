@@ -57,6 +57,6 @@
     font-family: var(--font-display);
     font-size: 0.78rem;
   }
-  .feeds a { color: var(--color-secondary); text-decoration: none; }
+  .feeds a { color: var(--color-spruce-accent); text-decoration: none; }
   .feeds a:hover { opacity: 0.75; }
 </style>

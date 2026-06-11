@@ -1,0 +1,764 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ECXC Brand Exploration · Logo + Color</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Alumni+Sans:wght@400;600;700;800;900&family=Big+Shoulders:opsz,wght@10..72,500;10..72,700;10..72,800&family=Archivo+Black&display=swap"
+  rel="stylesheet"
+/>
+<style>
+  /* ---------- page chrome ---------- */
+  @font-face {
+    font-family: 'Alegreya Sans';
+    src: url('../../static/fonts/AlegreyaSans-Regular.woff2') format('woff2');
+    font-weight: 400;
+  }
+  @font-face {
+    font-family: 'Alegreya Sans';
+    src: url('../../static/fonts/AlegreyaSans-Medium.woff2') format('woff2');
+    font-weight: 500;
+  }
+  @font-face {
+    font-family: 'Alegreya Sans';
+    src: url('../../static/fonts/AlegreyaSans-Bold.woff2') format('woff2');
+    font-weight: 700;
+  }
+
+  :root {
+    --paper: oklch(97.5% 0.007 85);
+    --paper-deep: oklch(94% 0.010 85);
+    --ink: oklch(22% 0.015 60);
+    --ink-soft: oklch(40% 0.012 60);
+    --ink-faint: oklch(58% 0.010 60);
+    --hairline: oklch(86% 0.010 75);
+    --display: 'Big Shoulders', sans-serif;
+    --body: 'Alegreya Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    background-image: radial-gradient(oklch(90% 0.012 80 / 0.55) 1px, transparent 1px);
+    background-size: 26px 26px;
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  main { max-width: 72rem; margin-inline: auto; padding: 2rem 1.5rem 6rem; }
+
+  .masthead {
+    border-bottom: 3px solid var(--ink);
+    padding: 2.5rem 0 1.5rem;
+    margin-bottom: 3rem;
+  }
+  .masthead .kicker {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .masthead h1 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(2.6rem, 6vw, 4.2rem);
+    line-height: 0.95;
+    margin: 0.4rem 0 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+  .masthead p { max-width: 46rem; margin: 0.3rem 0; color: var(--ink-soft); }
+
+  section { margin-bottom: 4.5rem; }
+
+  h2 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 1.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 0.35rem;
+    margin: 0 0 0.4rem;
+  }
+  .section-note { color: var(--ink-soft); max-width: 46rem; margin: 0 0 1.6rem; }
+
+  .fig-label {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 0.5rem;
+  }
+
+  /* ---------- avoid-zone strip ---------- */
+  .avoid-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem; }
+  .avoid-card {
+    background: white;
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .avoid-swatches { display: flex; height: 3.2rem; position: relative; }
+  .avoid-swatches > div { flex: 1; }
+  .avoid-swatches::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to top right,
+      transparent calc(50% - 1.5px), oklch(98% 0 0) calc(50% - 1.5px),
+      oklch(98% 0 0) calc(50% + 1.5px), transparent calc(50% + 1.5px));
+  }
+  .avoid-card .label { padding: 0.55rem 0.8rem 0.7rem; font-size: 0.88rem; }
+  .avoid-card .label strong { display: block; font-family: var(--display); font-size: 0.95rem; letter-spacing: 0.06em; text-transform: uppercase; }
+  .avoid-card .label span { color: var(--ink-soft); }
+
+  /* ---------- logo concepts ---------- */
+  .concept {
+    background: white;
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 1.8rem;
+    margin-bottom: 1.6rem;
+    display: grid;
+    grid-template-columns: minmax(15rem, 1.1fr) 2fr;
+    gap: 2rem;
+    align-items: start;
+  }
+  @media (max-width: 760px) { .concept { grid-template-columns: 1fr; } }
+
+  .concept-stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 16rem;
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    background:
+      linear-gradient(var(--hairline) 0 0) center/100% 1px no-repeat,
+      linear-gradient(var(--hairline) 0 0) center/1px 100% no-repeat,
+      oklch(99% 0.003 85);
+  }
+
+  .concept h3 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 1.35rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 0 0 0.2rem;
+  }
+  .concept .typeface { font-size: 0.92rem; color: var(--ink-faint); margin-bottom: 0.8rem; }
+  .concept p { margin: 0.4rem 0; color: var(--ink-soft); font-size: 0.98rem; }
+
+  .test-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.2rem; }
+  .test-chip {
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
+    padding: 0.6rem 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: oklch(99% 0.003 85);
+  }
+  .test-chip.dark { background: oklch(24% 0.015 60); border-color: oklch(32% 0.015 60); color: white; }
+  .test-chip .cap-size { font-size: 0.72rem; color: var(--ink-faint); font-family: var(--display); letter-spacing: 0.1em; }
+  .test-chip.dark .cap-size { color: oklch(70% 0.01 60); }
+
+  /* concept 1: varsity stack (HTML type) */
+  .stack {
+    display: inline-flex;
+    flex-direction: column;
+    font-family: 'Alumni Sans', sans-serif;
+    font-weight: 900;
+    line-height: 0.76;
+    color: var(--ink);
+  }
+  .stack .row { display: flex; justify-content: space-between; }
+  .stack-lg { font-size: 7.5rem; width: 9.4rem; }
+  .stack-md { font-size: 2.2rem; width: 2.6rem; }
+  .stack-sm { font-size: 1.35rem; width: 1.7rem; }
+  .stack-xs { font-size: 0.95rem; width: 1.2rem; }
+  .stack.on-dark { color: white; }
+
+  /* concept 3: trail blaze */
+  .blaze {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 5px solid currentColor;
+    border-radius: 17%;
+    color: var(--ink);
+  }
+  .blaze .stack { font-family: 'Big Shoulders', sans-serif; font-weight: 800; line-height: 0.82; }
+  .blaze-lg { width: 11rem; height: 11rem; }
+  .blaze-lg .stack { font-size: 4.4rem; width: 5.6rem; }
+  .blaze-md { width: 3.4rem; height: 3.4rem; border-width: 3px; }
+  .blaze-md .stack { font-size: 1.3rem; width: 1.7rem; }
+  .blaze-sm { width: 2.1rem; height: 2.1rem; border-width: 2px; }
+  .blaze-sm .stack { font-size: 0.8rem; width: 1.05rem; }
+  .blaze.on-dark { color: white; }
+  .blaze .acc { color: var(--blaze-acc, currentColor); }
+
+  /* ---------- palette sections ---------- */
+  .palette {
+    background: white;
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 1.8rem;
+    margin-bottom: 2rem;
+  }
+  .palette header { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.3rem; }
+  .palette h3 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .palette .tagline { color: var(--ink-faint); font-size: 0.95rem; }
+  .palette > p { color: var(--ink-soft); max-width: 44rem; margin: 0.3rem 0 1.2rem; font-size: 0.98rem; }
+
+  .swatch-row { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
+  .swatch { width: 8.6rem; border: 1px solid var(--hairline); border-radius: 9px; overflow: hidden; font-size: 0.78rem; }
+  .swatch .chip { height: 3.6rem; }
+  .swatch .meta { padding: 0.4rem 0.6rem 0.5rem; line-height: 1.3; }
+  .swatch .meta b { display: block; font-family: var(--display); letter-spacing: 0.05em; text-transform: uppercase; font-size: 0.8rem; }
+  .swatch .meta code { font-size: 0.68rem; color: var(--ink-faint); font-family: monospace; }
+
+  .palette-demo { display: grid; grid-template-columns: 1.6fr 1fr; gap: 1.4rem; align-items: stretch; }
+  @media (max-width: 860px) { .palette-demo { grid-template-columns: 1fr; } }
+
+  /* mini site mock */
+  .mock {
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--m-bg);
+    color: var(--m-ink);
+    display: flex;
+    flex-direction: column;
+  }
+  .mock-bar {
+    display: flex; align-items: center; gap: 0.45rem;
+    padding: 0.5rem 0.9rem;
+    background: oklch(92% 0.008 85);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .mock-bar i { width: 0.65rem; height: 0.65rem; border-radius: 50%; background: oklch(80% 0.01 85); }
+  .mock-nav {
+    display: flex; align-items: center; gap: 1.1rem;
+    padding: 0.7rem 1.2rem;
+    border-bottom: 2px solid var(--m-primary);
+    background: var(--m-bg);
+  }
+  .mock-nav .stack { color: var(--m-primary); }
+  .mock-nav .links { display: flex; gap: 0.9rem; margin-left: auto; }
+  .mock-nav .links span {
+    font-family: var(--display); font-weight: 700; font-size: 0.62rem;
+    letter-spacing: 0.12em; color: var(--m-muted);
+  }
+  .mock-nav .links span.active { color: var(--m-primary); }
+  .mock-body { padding: 1.2rem 1.3rem 1.5rem; }
+  .mock-body h4 {
+    font-family: var(--display); font-weight: 800; font-size: 1.45rem;
+    letter-spacing: 0.02em; margin: 0 0 0.4rem; color: var(--m-heading);
+  }
+  .mock-body p { font-size: 0.9rem; margin: 0 0 0.9rem; color: var(--m-ink); max-width: 32rem; }
+  .mock-body a { color: var(--m-primary); font-weight: 500; }
+  .mock-actions { display: flex; gap: 0.7rem; align-items: center; flex-wrap: wrap; }
+  .mock-btn {
+    font-family: var(--display); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--m-primary); color: var(--m-primary-content);
+    padding: 0.5rem 0.95rem; border-radius: 7px;
+  }
+  .mock-btn.ghost {
+    background: transparent; color: var(--m-primary);
+    border: 1.5px solid var(--m-primary);
+  }
+  .mock-tag {
+    font-size: 0.72rem; font-weight: 500;
+    color: var(--m-accent-ink);
+    background: var(--m-accent-bg);
+    padding: 0.22rem 0.6rem; border-radius: 999px;
+  }
+
+  /* cap + tee mockups */
+  .merch { display: flex; flex-direction: column; gap: 1.2rem; align-items: center; justify-content: center;
+    border: 1px solid var(--hairline); border-radius: 12px; padding: 1.4rem; background: oklch(99% 0.003 85); }
+  .cap { position: relative; width: 170px; height: 118px; }
+  .cap .crown {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 150px; height: 92px;
+    background: var(--cap-fabric);
+    border-radius: 76px 76px 10px 10px;
+    box-shadow: inset 0 -10px 18px oklch(0% 0 0 / 0.18), inset 0 6px 10px oklch(100% 0 0 / 0.10);
+  }
+  .cap .crown::before, .cap .crown::after {
+    content: ''; position: absolute; top: 6px; bottom: 4px; width: 1.5px;
+    background: oklch(0% 0 0 / 0.16);
+  }
+  .cap .crown::before { left: 33%; border-radius: 50%; }
+  .cap .crown::after { right: 33%; border-radius: 50%; }
+  .cap .button { position: absolute; top: -4px; left: 50%; transform: translateX(-50%);
+    width: 12px; height: 9px; border-radius: 50%; background: var(--cap-fabric);
+    box-shadow: inset 0 -2px 3px oklch(0% 0 0 / 0.3); }
+  .cap .brim {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 128px; height: 30px;
+    background: var(--cap-fabric);
+    border-radius: 8px 8px 110px 110px;
+    box-shadow: inset 0 7px 9px oklch(0% 0 0 / 0.28);
+  }
+  .cap .mark { position: absolute; top: 26px; left: 50%; transform: translateX(-50%); }
+  .merch .caption { font-size: 0.8rem; color: var(--ink-faint); text-align: center; }
+
+  .verdict {
+    margin-top: 1.2rem;
+    border-left: 4px solid var(--ink);
+    padding: 0.2rem 0 0.2rem 1rem;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    max-width: 44rem;
+  }
+  .verdict b { color: var(--ink); }
+
+  /* recommendation footer */
+  .reco {
+    background: var(--ink);
+    color: oklch(95% 0.01 85);
+    border-radius: 14px;
+    padding: 2rem;
+  }
+  .reco h2 { color: white; border-color: oklch(45% 0.01 60); }
+  .reco p { max-width: 46rem; color: oklch(88% 0.01 85); }
+  .reco b { color: white; }
+</style>
+</head>
+<body>
+<main>
+
+  <header class="masthead">
+    <div class="kicker">ECXC · Internal Design Doc · 2026-06-11</div>
+    <h1>Logo &amp; Color Exploration</h1>
+    <p>Two decisions on one page. A more professional cut of the EC-over-XC mark that holds up
+    on a ballcap or tee, and a color identity that no other Anchorage program owns.</p>
+    <p><b>Decided 2026-06-11 (final, after three rejected cuts):</b> the mark is the
+    <b>tile system</b>: Nunito Black letters (the site's own display face) knocked out of
+    four rounded square tiles. This is the classic solved pattern for four-letters-in-a-square
+    (Scrabble tiles, app-icon badges, heraldic quartering): square <i>containers</i> carry the
+    grid, so the letters keep their natural proportions. Three context cuts from one generator
+    (<code>build-mark.py</code>): the four-tile primary (nav, large uses), a compact
+    single-badge cut (favicon), and the crest (apparel). Rejected on the way: stretched font
+    glyphs (every square-module candidate needed 7&ndash;25% per-letter stretch; visible
+    threshold ~3%), sharp bespoke geometry (read as a computer font against the humanist
+    voice), and rounded bespoke geometry (the warmth was invisible at nav size). Palette B won, retuned after review: fireweed is a
+    true roadside pink, oklch(66% 0.21 357), and spruce is Alaskan black spruce,
+    oklch(25% 0.035 175). Because fireweed is lighter than spruce, usage inverts: spruce
+    carries the weight (the site's header and footer bands), fireweed is the flash on top,
+    like a pink mark on a dark spruce hoodie. Links and buttons on white use a deeper
+    fireweed cut, oklch(52% 0.21 357), to clear text contrast. Site fonts are unchanged;
+    the logo faces live only as converted outlines.</p>
+  </header>
+
+  <!-- ====================== AVOID ZONES ====================== -->
+  <section>
+    <h2>01 · The colors we can't use</h2>
+    <p class="section-note">Verified before designing. East High is red and blue (Wikipedia).
+    APU Nordic wears the university's blue with white. Winter Stars is red. UAA is green and
+    gold, which constrains how a green direction gets tuned. The current site is crimson plus
+    cobalt, which sits inside all three named zones, so this is a repaint rather than a nudge.</p>
+    <div class="avoid-grid">
+      <div class="avoid-card">
+        <div class="avoid-swatches"><div style="background:#c0303a"></div><div style="background:#2256a5"></div></div>
+        <div class="label"><strong>East High</strong><span>red + blue</span></div>
+      </div>
+      <div class="avoid-card">
+        <div class="avoid-swatches"><div style="background:#1d4f91"></div><div style="background:#f4f6f8"></div></div>
+        <div class="label"><strong>APU Nordic</strong><span>blue + white</span></div>
+      </div>
+      <div class="avoid-card">
+        <div class="avoid-swatches"><div style="background:#cc2231"></div><div style="background:#1c1c1e"></div></div>
+        <div class="label"><strong>Winter Stars</strong><span>red</span></div>
+      </div>
+      <div class="avoid-card">
+        <div class="avoid-swatches"><div style="background:#0c5e44"></div><div style="background:#ffc425"></div></div>
+        <div class="label"><strong>UAA (adjacent)</strong><span>kelly green + gold</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== LOGO CONCEPTS ====================== -->
+  <section>
+    <h2>02 · Three cuts of EC over XC</h2>
+    <p class="section-note">The lockup stays as conceived: EC over XC, the two C's stacked on
+    the right. What changes is the letterforms. All three concepts are shown in neutral ink;
+    any palette below can drive them. Each includes a favicon-size test and a one-color
+    inverse, since embroidery is a one-or-two-color medium.</p>
+
+    <!-- Concept 1 -->
+    <article class="concept">
+      <div class="concept-stage">
+        <div class="stack stack-lg">
+          <div class="row"><span>E</span><span>C</span></div>
+          <div class="row"><span>X</span><span>C</span></div>
+        </div>
+      </div>
+      <div>
+        <h3>Concept 1 · Varsity Stack</h3>
+        <div class="typeface">Alumni Sans Black. A typeface drawn from American varsity and
+        athletic-department lettering, which is exactly the register a school-community
+        program wants.</div>
+        <p>The bare wordmark, no container. Both rows justify to the same width so the C's
+        form a clean right rail and the negative space between rows does the work the old
+        grid gutters did. This is the closest evolution of the current mark: same idea,
+        professional letterforms.</p>
+        <p>On a cap it embroiders as four bold letters, one thread color, no fine detail to
+        fuzz. On the site it sits light in the header, like the current mark.</p>
+        <div class="test-row">
+          <div class="test-chip"><span class="cap-size">36px</span>
+            <div class="stack stack-md"><div class="row"><span>E</span><span>C</span></div><div class="row"><span>X</span><span>C</span></div></div>
+          </div>
+          <div class="test-chip"><span class="cap-size">22px</span>
+            <div class="stack stack-sm"><div class="row"><span>E</span><span>C</span></div><div class="row"><span>X</span><span>C</span></div></div>
+          </div>
+          <div class="test-chip"><span class="cap-size">16px</span>
+            <div class="stack stack-xs"><div class="row"><span>E</span><span>C</span></div><div class="row"><span>X</span><span>C</span></div></div>
+          </div>
+          <div class="test-chip dark"><span class="cap-size">1-color</span>
+            <div class="stack stack-md on-dark"><div class="row"><span>E</span><span>C</span></div><div class="row"><span>X</span><span>C</span></div></div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Concept 2 -->
+    <article class="concept">
+      <div class="concept-stage">
+        <svg width="290" height="290" viewBox="0 0 240 240" aria-label="ECXC club crest">
+          <defs>
+            <path id="arcTop" d="M 50 120 A 70 70 0 0 1 190 120" fill="none" />
+            <path id="arcBot" d="M 32 120 A 88 88 0 0 0 208 120" fill="none" />
+          </defs>
+          <circle cx="120" cy="120" r="114" fill="none" stroke="currentColor" stroke-width="6" />
+          <circle cx="120" cy="120" r="98" fill="none" stroke="currentColor" stroke-width="1.8" />
+          <circle cx="120" cy="120" r="62" fill="none" stroke="currentColor" stroke-width="1.8" />
+          <text font-family="'Alumni Sans', sans-serif" font-weight="700" font-size="21"
+            letter-spacing="4" fill="currentColor">
+            <textPath href="#arcTop" startOffset="50%" text-anchor="middle">EAST COMMUNITY</textPath>
+          </text>
+          <text font-family="'Alumni Sans', sans-serif" font-weight="700" font-size="21"
+            letter-spacing="4" fill="currentColor">
+            <textPath href="#arcBot" startOffset="50%" text-anchor="middle">CROSS COUNTRY</textPath>
+          </text>
+          <rect x="36" y="116" width="8" height="8" transform="rotate(45 40 120)" fill="currentColor" />
+          <rect x="196" y="116" width="8" height="8" transform="rotate(45 200 120)" fill="currentColor" />
+          <g font-family="'Alumni Sans', sans-serif" font-weight="900" font-size="52"
+            fill="currentColor" text-anchor="middle">
+            <text x="120" y="114">EC</text>
+            <text x="120" y="158">XC</text>
+          </g>
+        </svg>
+      </div>
+      <div>
+        <h3>Concept 2 · Club Crest</h3>
+        <div class="typeface">Alumni Sans, arc text in bold, monogram in black weight.</div>
+        <p>A roundel: program name in the ring, the stack in the center field. This is the
+        most traditional read, and the strongest on apparel. A crest on a cap front or a tee
+        chest reads instantly as a real club with a history, even a short one.</p>
+        <p>It is too detailed for a 16px favicon, so the site would pair it with Concept 1's
+        bare stack for small uses. One geometry family, two presentations, same as the
+        current nav-versus-favicon split.</p>
+        <div class="test-row">
+          <div class="test-chip"><span class="cap-size">64px patch</span>
+            <svg width="64" height="64" viewBox="0 0 240 240">
+              <circle cx="120" cy="120" r="114" fill="none" stroke="currentColor" stroke-width="9" />
+              <circle cx="120" cy="120" r="62" fill="none" stroke="currentColor" stroke-width="4" />
+              <g font-family="'Alumni Sans', sans-serif" font-weight="900" font-size="46" fill="currentColor" text-anchor="middle">
+                <text x="120" y="116">EC</text>
+                <text x="120" y="154">XC</text>
+              </g>
+            </svg>
+          </div>
+          <div class="test-chip dark"><span class="cap-size">1-color</span>
+            <svg width="48" height="48" viewBox="0 0 240 240" style="color:white">
+              <circle cx="120" cy="120" r="114" fill="none" stroke="currentColor" stroke-width="9" />
+              <circle cx="120" cy="120" r="62" fill="none" stroke="currentColor" stroke-width="4" />
+              <g font-family="'Alumni Sans', sans-serif" font-weight="900" font-size="46" fill="currentColor" text-anchor="middle">
+                <text x="120" y="116">EC</text>
+                <text x="120" y="154">XC</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Concept 3 -->
+    <article class="concept">
+      <div class="concept-stage">
+        <div class="blaze blaze-lg" style="--blaze-acc: oklch(55% 0.16 55)">
+          <div class="stack">
+            <div class="row"><span>E</span><span class="acc">C</span></div>
+            <div class="row"><span>X</span><span class="acc">C</span></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3>Concept 3 · Trail Blaze</h3>
+        <div class="typeface">Big Shoulders ExtraBold inside a rounded keyline square.</div>
+        <p>The stack set in a tall condensed face inside a keyline frame, the way a trail
+        blaze or route marker is signed. The two C's take the accent color, making the
+        shared rail the designed moment. Drop to one color and it still works.</p>
+        <p>The frame gives it presence on fabric without filling a solid block, and the
+        condensed letterforms keep it narrow enough for a beanie fold or a sleeve hit.</p>
+        <div class="test-row">
+          <div class="test-chip"><span class="cap-size">36px</span>
+            <div class="blaze blaze-md" style="--blaze-acc: oklch(55% 0.16 55)">
+              <div class="stack"><div class="row"><span>E</span><span class="acc">C</span></div><div class="row"><span>X</span><span class="acc">C</span></div></div>
+            </div>
+          </div>
+          <div class="test-chip"><span class="cap-size">22px</span>
+            <div class="blaze blaze-sm">
+              <div class="stack"><div class="row"><span>E</span><span>C</span></div><div class="row"><span>X</span><span>C</span></div></div>
+            </div>
+          </div>
+          <div class="test-chip dark"><span class="cap-size">1-color</span>
+            <div class="blaze blaze-md on-dark">
+              <div class="stack"><div class="row"><span>E</span><span>C</span></div><div class="row"><span>X</span><span>C</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ====================== COLOR DIRECTIONS ====================== -->
+  <section>
+    <h2>03 · Four color directions</h2>
+    <p class="section-note">Each direction shows its swatches, the site header and a page
+    mocked in the palette, and a cap in the team colorway. Logos in the mocks use Concept 1;
+    any concept takes any palette. All values are oklch, ready to drop into the token system.</p>
+
+    <!-- A: Spruce & Birch -->
+    <article class="palette" style="
+      --m-bg: oklch(98.5% 0.005 95); --m-ink: oklch(30% 0.015 140); --m-heading: oklch(20% 0.02 150);
+      --m-primary: oklch(38% 0.085 162); --m-primary-content: oklch(98% 0.008 120);
+      --m-muted: oklch(50% 0.02 140);
+      --m-accent-bg: oklch(92% 0.05 95); --m-accent-ink: oklch(42% 0.09 80);
+      --cap-fabric: oklch(33% 0.07 162);">
+      <header><h3>A · Spruce &amp; Birch</h3><span class="tagline">deep spruce green, birch-leaf gold, bark cream</span></header>
+      <p>The hillside above East Anchorage. Deep spruce as the identity color, birch gold as
+      the warm accent, cream standing in for bark and snow. Tuned darker and warmer than UAA's
+      kelly-and-gold so the two never read as the same kit: spruce is a forest color, UAA's is
+      a court color.</p>
+      <div class="swatch-row">
+        <div class="swatch"><div class="chip" style="background:oklch(38% 0.085 162)"></div><div class="meta"><b>Spruce</b><code>oklch(38% .085 162)</code></div></div>
+        <div class="swatch"><div class="chip" style="background:oklch(27% 0.055 168)"></div><div class="meta"><b>Timberline</b><code>oklch(27% .055 168)</code></div></div>
+        <div class="swatch"><div class="chip" style="background:oklch(74% 0.125 88)"></div><div class="meta"><b>Birch Gold</b><code>oklch(74% .125 88)</code></div></div>
+        <div class="swatch"><div class="chip" style="background:oklch(96% 0.015 95)"></div><div class="meta"><b>Bark Cream</b><code>oklch(96% .015 95)</code></div></div>
+      </div>
+      <div class="palette-demo">
+        <div class="mock">
+          <div class="mock-bar"><i></i><i></i><i></i></div>
+          <div class="mock-nav">
+            <div class="stack stack-sm"><div class="row"><span>E</span><span>C</span></div><div class="row"><span>X</span><span>C</span></div></div>
+            <div class="links"><span class="active">PROGRAM</span><span>SCHEDULE</span><span>POSTS</span><span>CONTACT</span></div>
+          </div>
+          <div class="mock-body">
+            <h4>Training that meets you where you are</h4>
+            <p>Practices run year-round at <a href="#">Russian Jack</a> and the Chugach
+            trailheads. Training is free. Show up once and see how it fits.</p>
+            <div class="mock-actions">
+              <span class="mock-btn">Join a practice</span>
+              <span class="mock-btn ghost">Read the schedule</span>
+              <span class="mock-tag">#training</span>
+            </div>
+          </div>
+        </div>
+        <div class="merch">
+          <div class="cap">
+            <div class="crown"></div><div class="button"></div><div class="brim"></div>
+            <div class="mark"><div class="stack stack-md" style="color:oklch(74% 0.125 88)"><div class="row"><span>E</span><span>C</span></div><div class="row"><span>X</span><span>C</span></div></div></div>
+          </div>
+          <div class="caption">Spruce cap, birch-gold stitch</div>
+        </div>
+      </div>
+      <div class="verdict"><b>Read:</b> classic, settled, looks like a program that has been
+      around for twenty years. The conservative pick. Watch only the UAA adjacency, handled
+      here by depth of green and warmth of gold.</div>
+    </article>
+
+    <!-- B: Fireweed & Spruce -->
+    <article class="palette" style="
+      --m-bg: oklch(98.5% 0.005 110); --m-ink: oklch(30% 0.015 150); --m-heading: oklch(20% 0.02 160);
+      --m-primary: oklch(52% 0.20 350); --m-primary-content: oklch(98.5% 0.01 350);
+      --m-muted: oklch(50% 0.02 150);
+      --m-accent-bg: oklch(94% 0.035 350); --m-accent-ink: oklch(45% 0.16 350);
+      --cap-fabric: oklch(28% 0.05 168);">
+      <header><h3>B · Fireweed &amp; Spruce</h3><span class="tagline">fireweed magenta on deep spruce</span></header>
+      <p>Fireweed lines every trail this program runs on from July to August. It is the most
+      Alaskan color there is that nobody in town is wearing: clearly not Winter Stars red,
+      clearly not East crimson, and unmistakable at 200 meters in a race pack. Spruce does the
+      grounding so the magenta stays a flash, not a flood.</p>
+      <div class="swatch-row">
+        <div class="swatch"><div class="chip" style="background:oklch(52% 0.20 350)"></div><div class="meta"><b>Fireweed</b><code>oklch(52% .20 350)</code></div></div>
+        <div class="swatch"><div class="chip" style="background:oklch(28% 0.05 168)"></div><div class="meta"><b>Spruce Ink</b><code>oklch(28% .05 168)</code></div></div>
+        <div class="swatch"><div class="chip" style="background:oklch(68% 0.16 345)"></div><div class="meta"><b>Bloom</b><code>oklch(68% .16 345)</code></div></div>
+        <div class="swatch"><div class="chip" style="background:oklch(97% 0.008 120)"></div><div class="meta"><b>Meadow White</b><code>oklch(97% .008 120)</code></div></div>
+      </div>
+      <div class="palette-demo">
+        <div class="mock">
+          <div class="mock-bar"><i></i><i></i><i></i></div>
+          <div class="mock-nav">
+            <div class="stack stack-sm"><div class="row"><span>E</span><span>C</span></div><div class="row"><span>X</span><span>C</span></div></div>
+            <div class="links"><span class="active">PROGRAM</span><span>SCHEDULE</span><span>POSTS</span><span>CONTACT</span></div>
+          </div>
+          <div class="mock-body">
+            <h4>Training that meets you where you are</h4>
+            <p>Practices run year-round at <a href="#">Russian Jack</a> and the Chugach
+            trailheads. Training is free. Show up once and see how it fits.</p>
+            <div class="mock-actions">
+              <span class="mock-btn">Join a practice</span>
+              <span class="mock-btn ghost">Read the schedule</span>
+              <span class="mock-tag">#training</span>
+            </div>
+          </div>
+        </div>
+        <div class="merch">
+          <div class="cap">
+            <div class="crown"></div><div class="button"></div><div class="brim"></div>
+            <div class="mark"><div class="stack stack-md" style="color:oklch(68% 0.16 345)"><div class="row"><span>E</span><span>C</span></div><div class="row"><span>X</span><span>C</span></div></div></div>
+          </div>
+          <div class="caption">Spruce cap, fireweed stitch</div>
+        </div>
+      </div>
+      <div class="verdict"><b>Read:</b> the ownable one. Bold without being loud, local
+      without a literal mountain, and no other club in the state is anywhere near it. Kids
+      will actually want the hat.</div>
+    </article>
+
+    <!-- C: Alpenglow -->
+    <article class="palette" style="
+      --m-bg: oklch(98.5% 0.006 75); --m-ink: oklch(30% 0.012 60); --m-heading: oklch(21% 0.015 50);
+      --m-primary: oklch(58% 0.15 55); --m-primary-content: oklch(99% 0.005 75);
+      --m-muted: oklch(50% 0.015 60);
+      --m-accent-bg: oklch(93% 0.035 70); --m-accent-ink: oklch(46% 0.11 55);
+      --cap-fabric: oklch(27% 0.018 200);">
+      <header><h3>C · Alpenglow</h3><span class="tagline">copper light on charcoal mountains</span></header>
+      <p>The color the Chugach turns at 4pm in February. Copper is held at a true orange hue
+      so it never drifts toward Winter Stars red, and the charcoal carries enough green-grey
+      to stay clear of anyone's navy. Warmest of the four directions, and the most energetic.</p>
+      <div class="swatch-row">
+        <div class="swatch"><div class="chip" style="background:oklch(58% 0.15 55)"></div><div class="meta"><b>Alpenglow</b><code>oklch(58% .15 55)</code></div></div>
+        <div class="swatch"><div class="chip" style="background:oklch(27% 0.018 200)"></div><div class="meta"><b>Basalt</b><code>oklch(27% .018 200)</code></div></div>
+        <div class="swatch"><div class="chip" style="background:oklch(72% 0.13 70)"></div><div class="meta"><b>Ember</b><code>oklch(72% .13 70)</code></div></div>
+        <div class="swatch"><div class="chip" style="background:oklch(97% 0.01 80)"></div><div class="meta"><b>Snowfield</b><code>oklch(97% .01 80)</code></div></div>
+      </div>
+      <div class="palette-demo">
+        <div class="mock">
+          <div class="mock-bar"><i></i><i></i><i></i></div>
+          <div class="mock-nav">
+            <div class="stack stack-sm"><div class="row"><span>E</span><span>C</span></div><div class="row"><span>X</span><span>C</span></div></div>
+            <div class="links"><span class="active">PROGRAM</span><span>SCHEDULE</span><span>POSTS</span><span>CONTACT</span></div>
+          </div>
+          <div class="mock-body">
+            <h4>Training that meets you where you are</h4>
+            <p>Practices run year-round at <a href="#">Russian Jack</a> and the Chugach
+            trailheads. Training is free. Show up once and see how it fits.</p>
+            <div class="mock-actions">
+              <span class="mock-btn">Join a practice</span>
+              <span class="mock-btn ghost">Read the schedule</span>
+              <span class="mock-tag">#training</span>
+            </div>
+          </div>
+        </div>
+        <div class="merch">
+          <div class="cap">
+            <div class="crown"></div><div class="button"></div><div class="brim"></div>
+            <div class="mark"><div class="stack stack-md" style="color:oklch(66% 0.15 58)"><div class="row"><span>E</span><span>C</span></div><div class="row"><span>X</span><span>C</span></div></div></div>
+          </div>
+          <div class="caption">Basalt cap, copper stitch</div>
+        </div>
+      </div>
+      <div class="verdict"><b>Read:</b> distinctive and high-visibility, with a hunting-season
+      practicality bonus on fall trail runs. The risk is that copper under bad arena lighting
+      can drift toward red in photos.</div>
+    </article>
+
+    <!-- D: Glacier -->
+    <article class="palette" style="
+      --m-bg: oklch(98.5% 0.005 190); --m-ink: oklch(30% 0.015 210); --m-heading: oklch(20% 0.02 210);
+      --m-primary: oklch(45% 0.085 200); --m-primary-content: oklch(98% 0.01 190);
+      --m-muted: oklch(50% 0.02 210);
+      --m-accent-bg: oklch(93% 0.05 150); --m-accent-ink: oklch(40% 0.09 155);
+      --cap-fabric: oklch(38% 0.07 200);">
+      <header><h3>D · Glacier</h3><span class="tagline">glacial teal, ice, aurora green</span></header>
+      <p>Compressed-ice teal with an aurora green accent. Genuinely beautiful and wintry, and
+      teal is measurably distinct from APU's royal blue. The honest caveat: at a distance, in
+      a teal-and-white kit, a parent could still file it under "the blue team." It clears the
+      letter of the constraint with less margin than the other three.</p>
+      <div class="swatch-row">
+        <div class="swatch"><div class="chip" style="background:oklch(45% 0.085 200)"></div><div class="meta"><b>Glacial Teal</b><code>oklch(45% .085 200)</code></div></div>
+        <div class="swatch"><div class="chip" style="background:oklch(30% 0.05 210)"></div><div class="meta"><b>Deep Ice</b><code>oklch(30% .05 210)</code></div></div>
+        <div class="swatch"><div class="chip" style="background:oklch(78% 0.14 155)"></div><div class="meta"><b>Aurora</b><code>oklch(78% .14 155)</code></div></div>
+        <div class="swatch"><div class="chip" style="background:oklch(96% 0.012 195)"></div><div class="meta"><b>Ice White</b><code>oklch(96% .012 195)</code></div></div>
+      </div>
+      <div class="palette-demo">
+        <div class="mock">
+          <div class="mock-bar"><i></i><i></i><i></i></div>
+          <div class="mock-nav">
+            <div class="stack stack-sm"><div class="row"><span>E</span><span>C</span></div><div class="row"><span>X</span><span>C</span></div></div>
+            <div class="links"><span class="active">PROGRAM</span><span>SCHEDULE</span><span>POSTS</span><span>CONTACT</span></div>
+          </div>
+          <div class="mock-body">
+            <h4>Training that meets you where you are</h4>
+            <p>Practices run year-round at <a href="#">Russian Jack</a> and the Chugach
+            trailheads. Training is free. Show up once and see how it fits.</p>
+            <div class="mock-actions">
+              <span class="mock-btn">Join a practice</span>
+              <span class="mock-btn ghost">Read the schedule</span>
+              <span class="mock-tag">#training</span>
+            </div>
+          </div>
+        </div>
+        <div class="merch">
+          <div class="cap">
+            <div class="crown"></div><div class="button"></div><div class="brim"></div>
+            <div class="mark"><div class="stack stack-md" style="color:oklch(94% 0.02 190)"><div class="row"><span>E</span><span>C</span></div><div class="row"><span>X</span><span>C</span></div></div></div>
+          </div>
+          <div class="caption">Teal cap, ice stitch</div>
+        </div>
+      </div>
+      <div class="verdict"><b>Read:</b> the prettiest on screen, the weakest on the
+      distinctiveness brief. Included so the teal question is answered rather than skipped.</div>
+    </article>
+  </section>
+
+  <!-- ====================== RECOMMENDATION ====================== -->
+  <section class="reco">
+    <h2>04 · Recommendation</h2>
+    <p><b>Logo: Concept 1, Varsity Stack in Alumni Sans Black</b>, with Concept 2's crest cut
+    from the same letterforms reserved for apparel and patches. The stack carries the site,
+    favicon, and cap front; the crest is the tee-chest and hoodie piece. One family, two uses.</p>
+    <p><b>Color: B, Fireweed &amp; Spruce.</b> It is the only direction no program in the
+    state can be confused with, it photographs well against snow and against summer trails,
+    and the story is already yours: the flower that grows where this team trains. Spruce &amp;
+    Birch is the strong second if you want something quieter.</p>
+  </section>
+
+</main>
+</body>
+</html>

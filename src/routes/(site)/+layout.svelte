@@ -22,7 +22,8 @@
   {@render children()}
 </main>
 
-<footer class="container mx-auto px-4 max-w-5xl py-8 mt-8 border-t border-base-200 text-center">
+<!-- Spruce band bookending the header: same surface, fireweed accent on hover. -->
+<footer class="site-footer mt-8 py-8 text-center">
   <div class="footer-links">
     <a href="/feed.xml" aria-label="RSS feed" class="footer-icon-link">
       <Icon label="RSS feed">
@@ -67,6 +68,11 @@
 </footer>
 
 <style>
+  .site-footer {
+    background: var(--color-header);
+    border-top: 2px solid var(--color-fireweed);
+  }
+
   .footer-links {
     display: flex;
     justify-content: center;
@@ -83,7 +89,7 @@
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    color: var(--color-muted);
+    color: var(--color-header-ink);
     text-decoration: none;
     transition: color 0.2s ease;
   }
@@ -97,12 +103,12 @@
   }
 
   .footer-icon-link:hover {
-    color: var(--color-body);
+    color: var(--color-fireweed);
   }
 
   .footer-name {
     font-size: 0.75rem;
-    color: var(--color-muted);
+    color: var(--color-header-ink);
     margin: 0;
   }
 </style>

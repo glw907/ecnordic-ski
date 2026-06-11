@@ -102,7 +102,7 @@
     align-items: flex-start;
     justify-content: center;
     padding: 5rem 1rem 2rem;
-    background: oklch(20% 0.008 230 / 0.25);
+    background: oklch(20% 0.012 175 / 0.25);
     backdrop-filter: blur(4px);
     animation: fade-in 0.3s ease;
   }
@@ -123,8 +123,8 @@
     border-radius: 6px;
     padding: 1.75rem 2rem 1.5rem;
     box-shadow:
-      0 4px 24px oklch(20% 0.01 230 / 0.1),
-      0 1px 3px oklch(20% 0.01 230 / 0.04);
+      0 4px 24px oklch(20% 0.012 175 / 0.1),
+      0 1px 3px oklch(20% 0.012 175 / 0.04);
   }
 
   .search-close {

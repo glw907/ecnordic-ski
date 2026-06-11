@@ -22,14 +22,20 @@ describe('brand mark', () => {
 		expect(read('src/lib/components/Nav.svelte')).toContain('aria-label="ECXC home"');
 	});
 
-	// The favicon embeds a copy of the nav glyph paths (a static asset cannot import
-	// from src/). This pins the two copies together so an edit to one flags the other.
-	it('keeps the favicon glyphs in sync with the nav mark', () => {
+	// The mark is a system of cuts from one generator (docs/design/build-mark.py):
+	// the nav carries the four-tile primary, the favicon carries the compact
+	// single-badge cut. This pins the shape of each cut and the cross-references
+	// in their comments, so an edit to one flags the other.
+	it('keeps the nav mark and favicon as the two documented cuts', () => {
 		const nav = read('src/lib/components/Nav.svelte');
-		const glyphs = read('static/favicon.svg').match(/<path d="[^"]+"/g) ?? [];
-		expect(glyphs.length).toBe(4);
-		for (const glyph of glyphs) {
-			expect(nav).toContain(glyph);
-		}
+		const navMark = nav.match(/<svg class="logo-mark"[\s\S]*?<\/svg>/)?.[0] ?? '';
+		expect(navMark.match(/<path d="[^"]+"/g) ?? []).toHaveLength(4);
+		expect(nav).toContain('build-mark.py');
+		expect(nav).toContain('favicon.svg');
+
+		const favicon = read('static/favicon.svg');
+		expect(favicon.match(/<path d="[^"]+"/g) ?? []).toHaveLength(1);
+		expect(favicon).toContain('<rect');
+		expect(favicon).toContain('Nav.svelte');
 	});
 });

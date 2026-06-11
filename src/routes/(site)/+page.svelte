@@ -170,7 +170,7 @@
     font-family: var(--font-display);
     font-size: 0.78rem;
     font-weight: 700;
-    color: var(--color-secondary);
+    color: var(--color-spruce-accent);
     text-decoration: none;
     letter-spacing: 0.02em;
     transition: opacity 0.15s ease;
@@ -181,7 +181,7 @@
   .recent-card {
     background: var(--color-base-100);
     border: 1px solid var(--color-border-subtle);
-    border-top: 3px solid var(--color-primary);
+    border-top: 3px solid var(--color-spruce-accent);
     border-radius: 12px;
     padding: 1.25rem 1.5rem 1.5rem;
     box-shadow: 0 1px 4px oklch(0% 0 0 / 0.05);
@@ -216,13 +216,15 @@
   }
   .recent-title:hover { color: var(--color-primary); }
 
+  /* Dates are metadata styled as eyebrows, so they wear the working green
+     like every other ambient accent; pink stays on the hover affordance. */
   .recent-date {
     font-family: var(--font-display);
     font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.10em;
-    color: var(--color-primary);
+    color: var(--color-spruce-accent);
     line-height: 1.3;
   }
 
@@ -237,7 +239,7 @@
     font-family: var(--font-display);
     font-size: 0.75rem;
     font-weight: 600;
-    color: var(--color-secondary);
+    color: var(--color-spruce-accent);
     text-decoration: none;
     letter-spacing: 0.02em;
     transition: opacity 0.15s ease;

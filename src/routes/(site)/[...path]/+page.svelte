@@ -112,10 +112,10 @@
        action   → DaisyUI .btn.btn-primary
        icon     → .ec-icon bare glyph (default); .ec-chip tile = one focal accent
 
-     Color encodes role, never decoration:
-       primary  (crimson) = the program and the one action
-       secondary(cobalt)  = people / community
-       warning  (amber)   = caution  ─────────────────────────────────── */
+     Color encodes salience, never decoration:
+       fireweed   = the action: links, buttons, the CTA card
+       mid spruce = ambient accents: icons, eyebrows, edges
+       amber      = caution  ─────────────────────────────────────────── */
 
   /* A decorated page orchestrates its own entrance per module (below), so the
      shared whole-page rise would double the transform, so let the cascade carry

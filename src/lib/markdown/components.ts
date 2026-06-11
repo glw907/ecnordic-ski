@@ -124,7 +124,8 @@ function childrenByClass(ctx: Ctx, cls: string): ElementContent[] {
 
 // A program offering as a calm clickable card. The head matches the site-wide row
 // (a role-coloured glyph beside the name), then a meta eyebrow, a blurb, and a "go"
-// link. `role="secondary"` recolours the icon and the hover edge from crimson to cobalt.
+// link. `role="secondary"` is a no-op since the 2026-06-11 rebrand: every program card
+// wears the working green, and fireweed stays reserved for actions.
 function buildProgram(ctx: Ctx): Element {
 	const icon = strAttr(ctx, 'icon');
 	const href = strAttr(ctx, 'href') ?? '#';
@@ -147,7 +148,8 @@ function buildProgram(ctx: Ctx): Element {
 // headings, and nested directives), so the page reads as distinct acts. The engine
 // builds the nested directives first, so they arrive in the body slot already rendered.
 // The title <h2> picks up its slug from rehypeSlug, so a program card can jump to it.
-// `role="secondary"` recolours the header icon and eyebrow from crimson to cobalt.
+// `role="secondary"` is a no-op since the 2026-06-11 rebrand: every band header wears
+// the working green, and fireweed stays reserved for actions.
 function buildSection(ctx: Ctx): Element {
 	const icon = strAttr(ctx, 'icon');
 	const role = strAttr(ctx, 'role');
