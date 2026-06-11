@@ -43,6 +43,15 @@ in content markup is a no-op kept for compat.
 Cylindrical mixes walk the hue arc: green toward a warm base lands on
 khaki; cobalt toward a warm border landed on magenta.
 
+## Elevation
+
+Shadows come from the four `--shadow-*` tokens in `@theme` (with dark
+overrides): `rest` for a card sitting on the page, `lift` for hover and
+active affordances, `float` for a layer overlapping another (hero panel,
+modals), `action` for the fireweed glow under a hovered action button.
+Never hardcode a `box-shadow` value; focus rings use
+`--color-focus-ring`, not the elevation scale.
+
 **Never use DaisyUI v4 short vars** (`--bc`, `--p`, `--b1`, etc.).
 They were renamed in v5 and silently resolve to nothing.
 

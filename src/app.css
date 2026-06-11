@@ -103,6 +103,16 @@
   /* Subtle-alert icon amber. Clear amber that holds 3:1 on the faint caution
      wash (icon only; the label is neutral). Flips brighter in dark mode. */
   --color-caution-accent: oklch(58% 0.16 72);
+
+  /* Elevation scale. Three achromatic levels plus the one branded glow;
+     components reference these and never hardcode box-shadow values.
+     rest = a card sitting on the page; lift = hover/active affordance;
+     float = a layer overlapping another (hero panel, modals).
+     action = the fireweed glow under a hovered action button. */
+  --shadow-rest: 0 1px 4px oklch(0% 0 0 / 0.05);
+  --shadow-lift: 0 2px 10px -4px oklch(0% 0 0 / 0.10);
+  --shadow-float: 0 10px 24px -16px oklch(0% 0 0 / 0.35);
+  --shadow-action: 0 6px 16px -8px color-mix(in oklab, var(--color-primary) 65%, transparent);
 }
 
 @plugin "daisyui/theme" {
@@ -183,6 +193,12 @@
   --color-error-bg: oklch(20% 0.014 30);
   --color-error-border: oklch(32% 0.020 30);
   --color-highlight: oklch(55% 0.14 357 / 0.35);
+  /* Elevation: deeper alphas (and a slightly fuller float spread) so the
+     levels still read on dark surfaces. The action glow needs no override;
+     it follows primary. */
+  --shadow-rest: 0 1px 4px oklch(0% 0 0 / 0.35);
+  --shadow-lift: 0 2px 10px -4px oklch(0% 0 0 / 0.50);
+  --shadow-float: 0 10px 24px -14px oklch(0% 0 0 / 0.70);
   /* Header band: a step lighter than spruce-black base so it separates,
      fireweed a touch brighter to match the lifted surface. */
   --color-fireweed: oklch(70% 0.19 357);
@@ -597,7 +613,7 @@ html { scroll-behavior: smooth; }
      old cobalt camp-card edge came out magenta). oklab blends in rectangular
      space, so the edge just desaturates toward the border and keeps its hue. */
   border-color: color-mix(in oklab, var(--edge) 45%, var(--color-border));
-  box-shadow: 0 2px 12px -5px color-mix(in oklab, var(--color-heading) 22%, transparent);
+  box-shadow: var(--shadow-lift);
 }
 .ec-program-head {
   display: flex;
@@ -1048,7 +1064,7 @@ html { scroll-behavior: smooth; }
   color: oklch(99% 0.003 60);
   text-decoration-color: transparent;
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px -8px color-mix(in oklab, var(--color-primary) 65%, transparent);
+  box-shadow: var(--shadow-action);
 }
 .download-link:active,
 .post-body a.download-link:active { transform: translateY(0); }

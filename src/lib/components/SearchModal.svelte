@@ -122,9 +122,7 @@
     border: 1px solid var(--color-border);
     border-radius: 6px;
     padding: 1.75rem 2rem 1.5rem;
-    box-shadow:
-      0 4px 24px oklch(20% 0.012 175 / 0.1),
-      0 1px 3px oklch(20% 0.012 175 / 0.04);
+    box-shadow: var(--shadow-float);
   }
 
   .search-close {

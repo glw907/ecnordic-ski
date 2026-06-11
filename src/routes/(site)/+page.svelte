@@ -9,13 +9,18 @@
 <!-- Hero: welcome + recent posts side by side -->
 <div class="hero-grid">
 
-  <!-- Welcome card -->
-  <div class="welcome-card">
+  <!-- Welcome hero: photo with the intro panel overlapping it, so the
+       opening reads as a designed moment rather than a story card. The
+       parenthetical ECXC takes fireweed so the abbreviation registers as
+       the brand on first contact. -->
+  <div class="welcome-hero">
     <div class="welcome-photo">
       <img src="/images/ec-xc-hero.webp" alt="ECXC athletes training" />
     </div>
-    <div class="welcome-body">
-      <h2 class="welcome-heading">Welcome</h2>
+    <div class="welcome-panel">
+      <h2 class="welcome-heading">
+        Welcome to East Community Cross&nbsp;Country <span class="welcome-abbr">(ECXC)</span>
+      </h2>
       <div class="welcome-blurb">{@html data.welcomeHtml}</div>
       <a href="/about" class="welcome-link">Learn more →</a>
     </div>
@@ -36,7 +41,7 @@
     {:else}
       <p class="no-posts">No posts yet.</p>
     {/if}
-    <a href="/archives" class="recent-more">see all posts →</a>
+    <a href="/archives" class="recent-more">see all posts <span class="recent-arr">→</span></a>
   </div>
 
 </div>
@@ -115,17 +120,18 @@
     align-items: stretch;
   }
 
-  /* ─── Welcome card ──────────────────────────────────────── */
-  .welcome-card {
-    background: var(--color-base-100);
-    border: 1px solid var(--color-border-subtle);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 1px 4px oklch(0% 0 0 / 0.05);
+  /* ─── Welcome hero ──────────────────────────────────────── */
+  /* The intro panel overlaps the photo's bottom edge, so the two read as
+     one composed layer stack instead of a stacked story card. The panel's
+     fireweed top rule is the same brand punctuation as the page-title dash. */
+  .welcome-hero {
+    display: flex;
+    flex-direction: column;
   }
 
   .welcome-photo {
     overflow: hidden;
+    border-radius: 12px;
     background: var(--color-base-200);
   }
 
@@ -135,31 +141,44 @@
     display: block;
   }
 
-  .welcome-body {
-    padding: 1.25rem 1.5rem 1.5rem;
+  /* Anchored left rather than centered: the asymmetric overlap gives the
+     composition direction and leaves photo visible on the right. */
+  .welcome-panel {
+    position: relative;
+    margin: -2.75rem 4.5rem 0 1rem;
+    padding: 1.4rem 1.5rem 1.5rem;
+    background: var(--color-base-100);
+    border: 1px solid var(--color-border-subtle);
+    border-top: 3px solid var(--color-primary);
+    border-radius: 12px;
+    box-shadow: var(--shadow-float);
   }
 
   .welcome-heading {
     font-family: var(--font-display);
-    font-size: 0.8rem;
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-    color: var(--color-muted);
-    margin: 0 0 0.7rem;
+    font-size: clamp(1.3rem, 2.6vw, 1.65rem);
+    font-weight: 800;
+    line-height: 1.18;
+    color: var(--color-heading);
+    text-wrap: balance;
+    margin: 0 0 0.75rem;
+  }
+
+  .welcome-abbr {
+    color: var(--color-primary);
+    white-space: nowrap;
   }
 
   .welcome-blurb {
     margin: 0 0 1.1rem;
   }
   /* The body is rendered from home.md, so its paragraphs come through {@html} and
-     need :global to reach. Keep the welcome card's distinct prose weight and size. */
+     need :global to reach. The heading carries the hierarchy now, so the
+     blurb reads at body weight. */
   .welcome-blurb :global(p) {
-    font-size: 1.02rem;
-    font-weight: 500;
-    line-height: 1.5;
-    color: var(--color-heading);
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: var(--color-body);
     margin: 0 0 0.7rem;
   }
   .welcome-blurb :global(p:last-child) {
@@ -178,15 +197,22 @@
   .welcome-link:hover { opacity: 0.75; }
 
   /* ─── Recent posts card ─────────────────────────────────── */
+  /* A whisper of spruce wash sets the sidebar off from the page without
+     competing with the hero; its label takes the working green to match
+     the card's top rule. */
   .recent-card {
-    background: var(--color-base-100);
+    background: color-mix(in oklab, var(--color-spruce-accent) 4%, var(--color-base-100));
     border: 1px solid var(--color-border-subtle);
     border-top: 3px solid var(--color-spruce-accent);
     border-radius: 12px;
     padding: 1.25rem 1.5rem 1.5rem;
-    box-shadow: 0 1px 4px oklch(0% 0 0 / 0.05);
+    box-shadow: var(--shadow-rest);
     display: flex;
     flex-direction: column;
+  }
+
+  .recent-card .section-label {
+    color: var(--color-spruce-accent);
   }
 
   .recent-list {
@@ -245,6 +271,14 @@
     transition: opacity 0.15s ease;
   }
   .recent-more:hover { opacity: 0.75; }
+  .recent-arr {
+    display: inline-block;
+    transition: transform 0.15s ease;
+  }
+  .recent-more:hover .recent-arr { transform: translateX(2px); }
+  @media (prefers-reduced-motion: reduce) {
+    .recent-more:hover .recent-arr { transform: none; }
+  }
 
   /* ─── News section ──────────────────────────────────────── */
   .news-label { margin-block-start: 2rem; }
@@ -261,7 +295,7 @@
     border: 1px solid var(--color-border-subtle);
     border-radius: 12px;
     padding: 1.75rem 2rem;
-    box-shadow: 0 1px 4px oklch(0% 0 0 / 0.05);
+    box-shadow: var(--shadow-rest);
   }
 
   .featured-title {
@@ -307,12 +341,12 @@
     border: 1px solid var(--color-border-subtle);
     border-radius: 10px;
     padding: 1.1rem 1.5rem;
-    box-shadow: 0 1px 3px oklch(0% 0 0 / 0.04);
+    box-shadow: var(--shadow-rest);
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
   .post-entry:hover {
     border-color: var(--color-border);
-    box-shadow: 0 2px 8px oklch(0% 0 0 / 0.08);
+    box-shadow: var(--shadow-lift);
   }
 
   .post-title {
@@ -347,10 +381,14 @@
     margin: 0.35rem 0 0;
   }
 
-  /* ─── Mobile: stack cards ───────────────────────────────── */
+  /* ─── Mobile: stack cards, shrink the panel overlap ─────── */
   @media (max-width: 600px) {
     .hero-grid {
       grid-template-columns: 1fr;
+    }
+    .welcome-panel {
+      margin: -1.5rem 1.5rem 0 0.5rem;
+      padding: 1.1rem 1.1rem 1.25rem;
     }
   }
 </style>

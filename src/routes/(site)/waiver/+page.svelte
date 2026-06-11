@@ -312,7 +312,7 @@
     padding: 0.65in 0.75in 0.6in;
     margin: 0 auto 1.5rem;
     background: white;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    box-shadow: var(--shadow-lift);
     position: relative;
     display: flex;
     flex-direction: column;
