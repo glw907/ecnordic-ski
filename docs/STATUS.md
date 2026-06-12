@@ -16,12 +16,9 @@ magic link (fresh ones in the inbox from the proof; if none arrived, Fastmail's 
 blacklisting of 2026-06-11 may still be aging out, while the binding now accepts the send) to
 confirm sign-in and exercise the publish workflow, then the old `cairn-ecnordic-auth` D1 can go.
 
-**Visual rebrand, shipped 2026-06-11.** New palette (fireweed pink for actions, mid spruce for
-ambient accents, black spruce ground; header and footer are spruce bands) and a new tile mark
-(Nunito letters knocked out of four rounded tiles, with favicon and crest cuts). Selection
-record: `docs/design/brand-exploration.html`; generator: `docs/design/build-mark.py`; binding
-usage rule: `.claude/rules/design-system.md`. Geoff's first CMS edits (about, volunteers)
-landed 2026-06-11, so the corpus harvest in the starter prompt below is now actionable.
+**Visual rebrand, shipped 2026-06-11.** Fireweed/spruce palette and the tile mark; selection
+record `docs/design/brand-exploration.html`, binding rule `.claude/rules/design-system.md`.
+Geoff's first CMS edits landed 2026-06-11, so the harvest starter below is actionable.
 
 ### Next starter prompt
 
