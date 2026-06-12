@@ -23,10 +23,11 @@ describe('brand mark', () => {
 	});
 
 	// The mark is a system of cuts from one generator (docs/design/build-mark.py):
-	// the nav carries the four-tile primary, the favicon carries the compact
-	// single-badge cut. This pins the shape of each cut and the cross-references
-	// in their comments, so an edit to one flags the other.
-	it('keeps the nav mark and favicon as the two documented cuts', () => {
+	// the nav carries the four-tile primary, and the favicon embeds the same
+	// four tile paths on a spruce field. This pins each cut's shape, the glyph
+	// sync, and the cross-references in their comments, so an edit to one
+	// flags the other.
+	it('keeps the favicon glyphs in sync with the nav mark', () => {
 		const nav = read('src/lib/components/Nav.svelte');
 		const navMark = nav.match(/<svg class="logo-mark"[\s\S]*?<\/svg>/)?.[0] ?? '';
 		expect(navMark.match(/<path d="[^"]+"/g) ?? []).toHaveLength(4);
@@ -34,7 +35,11 @@ describe('brand mark', () => {
 		expect(nav).toContain('favicon.svg');
 
 		const favicon = read('static/favicon.svg');
-		expect(favicon.match(/<path d="[^"]+"/g) ?? []).toHaveLength(1);
+		const glyphs = favicon.match(/<path d="[^"]+"/g) ?? [];
+		expect(glyphs).toHaveLength(4);
+		for (const glyph of glyphs) {
+			expect(navMark).toContain(glyph.trim());
+		}
 		expect(favicon).toContain('<rect');
 		expect(favicon).toContain('Nav.svelte');
 	});

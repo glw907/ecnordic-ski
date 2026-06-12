@@ -126,26 +126,21 @@ with open("nav-lockup.svg", "w") as f:
         f.write(f'  <path d="{d}" />\n')
     f.write("</svg>\n")
 
-# favicon: the compact cut. One spruce badge, solid fireweed letters in
-# the 2x2 arrangement: a single container survives 16px where four mini
-# tiles turn to mush. Same letterforms, same layout, third presentation.
-inner_step = 23.0
-fav_letters = []
-for ch, col, row in LAYOUT:
-    cx = 50 - inner_step / 2 + col * inner_step
-    cy = 50 - inner_step / 2 + row * inner_step
-    fav_letters.append(glyph_poly(ch, 19, cx, cy))
-fav_paths = [to_path(unary_union(fav_letters).simplify(0.05))]
+# favicon: the four-tile primary cut on a spruce field. The tile geometry
+# carries the brand at sizes where letters become texture; at 16px it
+# reads as a crisp pink tile cluster where letter-only cuts turn to mush.
+inset = 8.0
+fs = (64 - 2 * inset) / 100
 favicon = [
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">',
-    "  <!-- ECXC compact badge: Nunito ExtraBold letters, 2x2, on a spruce tile."
-    " The four-tile primary mark lives in src/lib/components/Nav.svelte;"
-    " colors mirror the header (spruce) and display fireweed tokens in"
-    " src/app.css. -->",
+    "  <!-- ECXC four-tile mark on a spruce field. Glyph paths are a copy of"
+    " the nav mark in src/lib/components/Nav.svelte; colors mirror the"
+    " header (spruce) and display fireweed tokens in src/app.css. -->",
     f'  <rect width="64" height="64" rx="14" fill="{SPRUCE}" />',
-    f'  <g transform="scale(0.64)" fill="{FIREWEED}">',
+    f'  <g transform="translate({num(inset)} {num(inset)}) scale({num(fs)})" '
+    f'fill="{FIREWEED}">',
 ]
-favicon += [f'    <path d="{d}" />' for d in fav_paths]
+favicon += [f'    <path d="{d}" />' for d in paths]
 favicon += ["  </g>", "</svg>"]
 with open("favicon.svg", "w") as f:
     f.write("\n".join(favicon) + "\n")

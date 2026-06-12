@@ -2,7 +2,9 @@
 <html lang="en" data-theme="">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="%sveltekit.assets%/favicon.svg" />
+    <!-- The ?v=2 busts browsers' separate favicon caches (the rebrand left the
+         old crimson icon stuck in Firefox); bump it when the favicon changes. -->
+    <link rel="icon" type="image/svg+xml" href="%sveltekit.assets%/favicon.svg?v=2" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script>
       (function() {
