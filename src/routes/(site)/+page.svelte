@@ -223,9 +223,10 @@
     color: var(--color-spruce-accent);
   }
 
-  /* The list fills the card's height and each row grows an equal share,
-     so leftover space becomes even breathing room between posts instead
-     of pooling at the bottom of the card. */
+  /* The list fills the card's height and rows grow an equal share of the
+     leftover, capped just above their natural height. A full card spreads
+     its rows into even rhythm; one or two posts stay top-anchored at
+     near-content height instead of drifting apart to fill the column. */
   .recent-list {
     list-style: none;
     padding: 0;
@@ -236,7 +237,8 @@
   }
 
   .recent-row {
-    flex: 1;
+    flex: 1 1 auto;
+    max-block-size: 7.75rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
