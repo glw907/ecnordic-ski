@@ -438,6 +438,9 @@
   @media (max-width: 600px) {
     .hero-grid {
       grid-template-columns: 1fr;
+      /* Tighter to the header: the desktop gap reads as dead air on a
+         phone, where the photo should arrive almost immediately. */
+      margin-block-start: 1.1rem;
     }
     .welcome-panel {
       margin: -1.5rem 1.5rem 0 0.5rem;

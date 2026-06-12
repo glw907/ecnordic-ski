@@ -251,13 +251,15 @@
     margin-inline: auto;
   }
 
+  /* Generous padding-block: each row is a thumb target, so it clears the
+     ~44px comfortable-tap bar. */
   .mobile-link {
     font-family: var(--font-display);
     font-size: 0.9rem;
     font-weight: 600;
     color: var(--color-header-ink);
     text-decoration: none;
-    padding-block: 0.65rem;
+    padding-block: 0.8rem;
     border-bottom: 1px solid color-mix(in oklab, var(--color-header-ink) 25%, transparent);
     transition: color 0.15s ease;
   }
@@ -268,5 +270,7 @@
   @media (max-width: 639px) {
     .desktop-links { display: none; }
     .mobile-right { display: flex; }
+    /* Wider hit areas where fingers replace pointers. */
+    .nav-icon, .hamburger { padding: 0.65rem; }
   }
 </style>
