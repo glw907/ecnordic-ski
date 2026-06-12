@@ -83,7 +83,9 @@ typical open is `::::grid[What to bring]{icon="backpack"}`.
 you rarely set the icon by hand. Open it with `::::alert[Heads up]{role="caution"}`.
 
 `cta` promotes a link to a primary button. Put one link in the body with `class="download-link"`, as
-in `<a class="download-link" href="/waiver">Sign the waiver</a>`.
+in `<a class="download-link" href="/waiver">Sign the waiver</a>`. If the label ends in an arrow,
+wrap it as `<span class="ec-arr">→</span>` so it picks up the site-wide hover nudge; a bare `→`
+stays static.
 
 `split` and `panel` work as a pair. A `panel` is only meaningful inside a `split`. A bare `panel`
 renders, but the side-by-side layout comes from the `split` wrapper. Mind the colon count: four

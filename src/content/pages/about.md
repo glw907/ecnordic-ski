@@ -53,5 +53,5 @@ These sports can hurt you. Kids fall, gear breaks, and Anchorage trails come wit
 ::::cta[Getting started]{icon="flag"}
 Sign up in CrewLAB; the waiver and the schedule are there once you're in. If you want to ask something first, use the [contact form](/contact).
 
-<a href="/crewlab" class="download-link">Get started on CrewLAB →</a>
+<a href="/crewlab" class="download-link">Get started on CrewLAB <span class="ec-arr">→</span></a>
 ::::

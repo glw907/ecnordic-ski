@@ -102,7 +102,7 @@ Sign the waiver in CrewLAB before you come, then just show up: East High at 10:3
 :::cta[Sign up for summer training]{icon="flag"}
 Sign-up and the liability waiver are both in [CrewLAB](cairn:pages/crewlab), and the waiver has to be on file before your first practice.
 
-<a href="https://crewlab.app.link/5g7vhhYEn3b" class="download-link" target="_blank" rel="noopener">Sign up for summer training →</a>
+<a href="https://crewlab.app.link/5g7vhhYEn3b" class="download-link" target="_blank" rel="noopener">Sign up for summer training <span class="ec-arr">→</span></a>
 
 If you'd rather ask a person something first, the [contact form](/contact) goes to a coach.
 :::

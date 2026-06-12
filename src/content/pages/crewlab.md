@@ -39,5 +39,5 @@ The parent handbook and the gear and vendor list are in the app as well, so you'
 ::::cta[Getting started]{icon="flag"}
 Install CrewLAB from the App Store or Google Play, or use app.crewlab.io in a browser, then tap the invite below and pick athlete or supporter when you sign up. Parents, link your account to your athlete's. If sign-up goes sideways, [contact us](/contact) and a volunteer will sort it out.
 
-<a href="https://crewlab.app.link/5g7vhhYEn3b" class="download-link" target="_blank" rel="noopener">Join ECXC on CrewLAB →</a>
+<a href="https://crewlab.app.link/5g7vhhYEn3b" class="download-link" target="_blank" rel="noopener">Join ECXC on CrewLAB <span class="ec-arr">→</span></a>
 ::::
