@@ -31,10 +31,18 @@
     <h2 class="section-label">Recent Posts</h2>
     {#if data.posts.length > 0}
       <ul class="recent-list">
-        {#each data.posts.slice(0, 3) as post}
+        {#each data.posts.slice(0, 5) as post}
           <li class="recent-row">
             <a href={post.permalink} class="recent-title">{post.title}</a>
-            <time class="recent-date" datetime={post.date}>{formatShortDate(post.date)}</time>
+            {#if post.description}
+              <p class="recent-teaser">{post.description}</p>
+            {/if}
+            <div class="recent-foot">
+              <time class="recent-date" datetime={post.date}>{formatShortDate(post.date)}</time>
+              <a href={post.permalink} class="recent-readmore" aria-label="Read more: {post.title}">
+                read more <span class="recent-arr">→</span>
+              </a>
+            </div>
           </li>
         {/each}
       </ul>
@@ -215,44 +223,89 @@
     color: var(--color-spruce-accent);
   }
 
+  /* The list fills the card's height and each row grows an equal share,
+     so leftover space becomes even breathing room between posts instead
+     of pooling at the bottom of the card. */
   .recent-list {
     list-style: none;
     padding: 0;
     margin: 0 0 1rem;
     flex: 1;
+    display: flex;
+    flex-direction: column;
   }
 
   .recent-row {
+    flex: 1;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 0.15rem;
     padding-block: 0.65rem;
     border-bottom: 1px solid var(--color-border-subtle);
   }
   .recent-row:last-child { border-bottom: none; }
 
+  /* Quieter than the hero on purpose: semibold body color rather than bold
+     heading black, so the welcome panel keeps the page's visual lead. */
   .recent-title {
     font-family: var(--font-display);
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--color-heading);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--color-body);
     line-height: 1.25;
     text-decoration: none;
     transition: color 0.15s ease;
   }
   .recent-title:hover { color: var(--color-primary); }
 
-  /* Dates are metadata styled as eyebrows, so they wear the working green
-     like every other ambient accent; pink stays on the hover affordance. */
+  /* The authored one-sentence description, clamped to two lines so the
+     row height stays bounded however long the sentence runs. A line count
+     beats a character count here: it adapts to the column width. */
+  .recent-teaser {
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: var(--color-muted);
+    margin: 0.15rem 0 0.25rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+  }
+
+  /* Row footer: date eyebrow left, read-more affordance right. The date sits
+     in muted gray so read-more is each row's single green accent; five green
+     eyebrows pulled the eye away from the hero. */
+  .recent-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-block-start: 0.1rem;
+  }
+
   .recent-date {
     font-family: var(--font-display);
-    font-size: 0.72rem;
-    font-weight: 700;
+    font-size: 0.7rem;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.10em;
-    color: var(--color-spruce-accent);
+    color: var(--color-muted);
     line-height: 1.3;
   }
+
+  /* The per-row read-more and the card's see-all link share the quiet
+     green treatment; they differ only in scale. */
+  .recent-readmore,
+  .recent-more {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--color-spruce-accent);
+    text-decoration: none;
+    transition: opacity 0.15s ease;
+  }
+  .recent-readmore { font-size: 0.7rem; }
 
   .no-posts {
     font-size: 0.85rem;
@@ -262,21 +315,19 @@
   }
 
   .recent-more {
-    font-family: var(--font-display);
     font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--color-spruce-accent);
-    text-decoration: none;
     letter-spacing: 0.02em;
-    transition: opacity 0.15s ease;
   }
+  .recent-readmore:hover,
   .recent-more:hover { opacity: 0.75; }
   .recent-arr {
     display: inline-block;
     transition: transform 0.15s ease;
   }
+  .recent-readmore:hover .recent-arr,
   .recent-more:hover .recent-arr { transform: translateX(2px); }
   @media (prefers-reduced-motion: reduce) {
+    .recent-readmore:hover .recent-arr,
     .recent-more:hover .recent-arr { transform: none; }
   }
 
