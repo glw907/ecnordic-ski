@@ -65,12 +65,6 @@
     animation: page-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
-  /* Intro paragraphs fill the content column, so their right edge lines up with
-     the cards below (no narrow measure leaving an off right margin). */
-  .static-page :global(.post-body > p) {
-    max-width: none;
-  }
-
   .static-page :global(.page-title) {
     position: relative;
     margin-block-end: 1.6rem;
@@ -88,15 +82,10 @@
     background: var(--color-primary);
   }
 
-  /* Lede: the first paragraph of any static page. A gentle step above the
-     standard body (set in app.css), a touch larger and a touch heavier (medium,
-     a loaded Alegreya Sans weight), same colour, so it reads as the intro
-     without shouting. Site-wide and uniform; no per-page lede sizing. */
+  /* The lede's visual rules (size, weight, the measure rules) live in app.css so the
+     editor's preview frame, which links only that sheet, renders them too. The scoped
+     half is just the entrance. */
   .static-page :global(.post-body > p:first-child) {
-    font-size: 1rem;
-    font-weight: 500;
-    line-height: 1.6;
-    margin-block-end: 1.2rem;
     animation: page-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.06s both;
   }
 
@@ -124,20 +113,18 @@
     animation: none;
   }
 
-  /* Rhythm between modules, and the staggered entrance: each module rises in on its
-     own delay so the page resolves as one top-to-bottom cascade continuing the title
-     (0s) and lede (0.06s) above it. The delay comes from the engine's data-rise ordinal
-     (mapped just below), not an inline style, so the sanitize floor can drop `style`. */
+  /* The staggered entrance: each module rises in on its own delay so the page resolves
+     as one top-to-bottom cascade continuing the title (0s) and lede (0.06s) above it.
+     The delay comes from the engine's data-rise ordinal (mapped just below), not an
+     inline style, so the sanitize floor can drop `style`. The module rhythm itself
+     (1.4rem, the band's 1.1rem tier) lives in app.css so the preview frame gets it. */
   .static-page :global(.ec-card),
   .static-page :global(.ec-passage),
   .static-page :global(.ec-alert) {
-    margin-block-start: 1.4rem;
     animation: module-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
-  /* Training's only alert sits inside a section band, which carries the entrance and
-     keeps light modules on the 1.1rem tier. Hold it there instead of the 1.4rem rule. */
+  /* Training's only alert sits inside a section band, which carries the entrance. */
   .static-page[data-page="training"] :global(.ec-band .ec-alert) {
-    margin-block-start: 1.1rem;
     animation: none;
   }
   /* A training section band is a top-level module: it carries a data-rise ordinal and

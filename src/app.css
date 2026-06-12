@@ -213,6 +213,10 @@ body {
   font-family: var(--font-body);
   font-size: 1.05rem;
   line-height: 1.62;
+  /* Stated on body, not just inherited from :root, so the editor's preview frame
+     (whose base document pins a white body the site sheet is meant to override)
+     sits on the same warm base-100 ground as the live page. */
+  background-color: var(--color-base-100);
   text-rendering: optimizeLegibility;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -249,8 +253,10 @@ html { scroll-behavior: smooth; }
 
 /* ─── Training: FAQ pointer (second lede) ──────────────────
    A short pointer to the FAQ section, lifted off the body as a quiet info-tinted
-   callout with a prominent link. The link is matched by href, so only this one. */
-.static-page[data-page="training"] .post-body p:has(> a[href="#frequently-asked-questions"]) {
+   callout with a prominent link. The link is matched by href, so only this one;
+   keying on the href (not data-page) also lets the editor's preview frame, which
+   carries no per-page attribute, render it the same way. */
+.static-page .post-body p:has(> a[href="#frequently-asked-questions"]) {
   margin-block: 0.9rem 1.5rem;
   padding: 0.7rem 1rem;
   border-radius: 10px;
@@ -1094,6 +1100,51 @@ a:hover .ec-arr-back { transform: translateX(-3px); }
    card content inherits the standard instead. Text is the same size whether or
    not it sits in a card. (Grid cells keep their own smaller supporting size.) */
 .post-body .card-body { font-size: inherit; }
+
+/* ─── Static page body (shared with the editor preview) ──────
+   Visual rules for the rendered markdown of a static page. These lived in the
+   [...path] page's scoped styles, but the editor's preview frame sees only this
+   sheet (the adapter's preview knob links it), so the visual halves live here
+   and the scoped block keeps only the entrance animations. In production the
+   chain is main > article.static-page > div.post-body; the preview frame
+   reproduces it as body.static-page > div.post-body, and these descendant
+   selectors match both the same way. */
+
+/* The page measure. In production the article carries the same cap, so this is
+   a no-op there; in the preview frame it is what sets the measure. */
+.static-page .post-body {
+  max-width: 46rem;
+}
+
+/* Intro paragraphs fill the content column, so their right edge lines up with
+   the cards below (no narrow measure leaving an off right margin). */
+.static-page .post-body > p {
+  max-width: none;
+}
+
+/* Lede: the first paragraph of any static page. A gentle step above the
+   standard body, a touch larger and a touch heavier (medium, a loaded Alegreya
+   Sans weight), same colour, so it reads as the intro without shouting.
+   Site-wide and uniform; no per-page lede sizing. */
+.static-page .post-body > p:first-child {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+  margin-block-end: 1.2rem;
+}
+
+/* Rhythm between top-level modules. */
+.static-page .ec-card,
+.static-page .ec-passage,
+.static-page .ec-alert {
+  margin-block-start: 1.4rem;
+}
+
+/* An alert inside a section band stays on the band's lighter 1.1rem tier
+   (training's only alert sits inside one). */
+.static-page .ec-band .ec-alert {
+  margin-block-start: 1.1rem;
+}
 
 /* In-page jump links (table of contents) for long content pages */
 .page-toc {
