@@ -3,8 +3,15 @@
 ## Current state (2026-06-12)
 
 The ECXC rebrand is complete (six passes; spec in `docs/superpowers/archive/specs/`), the engine
-is on cairn `^0.50.0` with the single-mount admin, and all five pages are rewritten through the
-new coach voice drafting system.
+is on cairn `^0.51.0` with the single-mount admin and the iframed editor preview, and all five
+pages are rewritten through the new coach voice drafting system.
+
+**cairn 0.51.0 bump, shipped 2026-06-12.** Pin to `^0.51.0` (commit `827bc74`) atop the held
+preview-knob wiring (`47f82dc`, the fidelity proof for the engine's iframed preview); deploy run
+`27429659432` green. `cairn-doctor --probe https://ecxc.ski` passed 11/0 on its first live run,
+verifying the sign-in envelope and the non-leak answer from the deployed site. The one skip is
+the D1 auth-store check: `wrangler.toml` carries no `account_id`, so the doctor's derivation has
+nothing to read; adding the one-line `account_id` would let it run (cheap follow-up).
 
 **cairn 0.50.0 crossing, shipped 2026-06-12.** The eighteen-file admin shim tree became the
 two-file catch-all mount plus the composer (see `docs/architecture.md`); floors raised to svelte
