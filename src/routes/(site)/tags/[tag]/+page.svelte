@@ -18,7 +18,7 @@
     <ArchiveList posts={data.posts} />
   </div>
   <footer class="tag-footer">
-    <a href="/tags/" class="back-link">← All tags</a>
+    <a href="/tags/" class="back-link"><span class="ec-arr ec-arr-back">←</span> All tags</a>
   </footer>
 </div>
 

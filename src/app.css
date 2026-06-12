@@ -668,10 +668,21 @@ html { scroll-behavior: smooth; }
   font-size: 0.88rem;
   color: var(--color-link);
 }
-.ec-program-arr { transition: transform 0.18s ease; }
-.ec-program:hover .ec-program-arr { transform: translateX(3px); }
+/* ─── Shared arrow cue: `.ec-arr` ────────────────────────────
+   Every textual arrow affordance (program "go" lines, read-more links,
+   back-links) nudges the same 3px on link hover; `.ec-arr-back` points
+   the nudge left for leading arrows. One gesture, site-wide. */
+.ec-arr {
+  display: inline-block;
+  transition: transform 0.18s ease;
+}
+a:hover .ec-arr { transform: translateX(3px); }
+a:hover .ec-arr-back { transform: translateX(-3px); }
 @media (prefers-reduced-motion: reduce) {
-  .ec-program, .ec-program-arr { transition: none; }
+  a:hover .ec-arr, a:hover .ec-arr-back { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ec-program { transition: none; }
 }
 
 /* ─── Page section band: `.ec-band` ──────────────────────────

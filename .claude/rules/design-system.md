@@ -86,7 +86,8 @@ Body and mono are self-hosted woff2 in `static/fonts/`, declared in
 
 Defined globally in `src/app.css`. Use these; don't re-declare:
 `.post-body`, `.post-date`, `.post-tags`, `.post-tag`, `.page-title`,
-`.back-link`
+`.back-link`, `.ec-arr` / `.ec-arr-back` (the shared arrow-nudge cue:
+wrap every textual arrow in it; never hand-roll an arrow animation)
 
 Everything else: scoped `<style>` per component.
 

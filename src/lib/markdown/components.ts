@@ -138,7 +138,7 @@ function buildProgram(ctx: Ctx): Element {
 	const kids: ElementContent[] = [h('div', { className: ['ec-program-head'] }, headKids)];
 	if (meta) kids.push(h('span', { className: ['ec-program-meta'] }, meta));
 	kids.push(h('div', { className: ['ec-program-blurb'] }, ctx.slot('body')));
-	if (cta) kids.push(h('span', { className: ['ec-program-go'] }, [cta, ' ', h('span', { className: ['ec-program-arr'] }, '→')]));
+	if (cta) kids.push(h('span', { className: ['ec-program-go'] }, [cta, ' ', h('span', { className: ['ec-arr'] }, '→')]));
 	const className = ['ec-program'];
 	if (role) className.push(`ec-program-${role}`);
 	return h('a', { className, href }, kids);

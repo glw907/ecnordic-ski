@@ -32,7 +32,7 @@
     </div>
   </article>
 
-  <a href="/" class="back-link">← Home</a>
+  <a href="/" class="back-link"><span class="ec-arr ec-arr-back">←</span> Home</a>
 {:else}
   <article class="static-page" data-page={data.slug}>
     <h1 class="page-title">{data.title}</h1>

@@ -22,7 +22,7 @@
         Welcome to East Community Cross&nbsp;Country <span class="welcome-abbr">(ECXC)</span>
       </h2>
       <div class="welcome-blurb">{@html data.welcomeHtml}</div>
-      <a href="/about" class="welcome-link">Learn more →</a>
+      <a href="/about" class="welcome-link">Learn more <span class="ec-arr">→</span></a>
     </div>
   </div>
 
@@ -40,7 +40,7 @@
             <div class="recent-foot">
               <time class="recent-date" datetime={post.date}>{formatShortDate(post.date)}</time>
               <a href={post.permalink} class="recent-readmore" aria-label="Read more: {post.title}">
-                read more <span class="recent-arr">→</span>
+                read more <span class="ec-arr">→</span>
               </a>
             </div>
           </li>
@@ -49,7 +49,7 @@
     {:else}
       <p class="no-posts">No posts yet.</p>
     {/if}
-    <a href="/archives" class="recent-more">see all posts <span class="recent-arr">→</span></a>
+    <a href="/archives" class="recent-more">see all posts <span class="ec-arr">→</span></a>
   </div>
 
 </div>
@@ -322,16 +322,7 @@
   }
   .recent-readmore:hover,
   .recent-more:hover { opacity: 0.75; }
-  .recent-arr {
-    display: inline-block;
-    transition: transform 0.15s ease;
-  }
-  .recent-readmore:hover .recent-arr,
-  .recent-more:hover .recent-arr { transform: translateX(2px); }
-  @media (prefers-reduced-motion: reduce) {
-    .recent-readmore:hover .recent-arr,
-    .recent-more:hover .recent-arr { transform: none; }
-  }
+  /* Arrow nudge comes from the shared .ec-arr cue in app.css. */
 
   /* ─── News section ──────────────────────────────────────── */
   .news-label { margin-block-start: 2rem; }
