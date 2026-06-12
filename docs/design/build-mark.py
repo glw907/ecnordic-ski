@@ -138,7 +138,7 @@ for ch, col, row in LAYOUT:
 fav_paths = [to_path(unary_union(fav_letters).simplify(0.05))]
 favicon = [
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">',
-    "  <!-- ECXC compact badge: Nunito Black letters, 2x2, on a spruce tile."
+    "  <!-- ECXC compact badge: Nunito ExtraBold letters, 2x2, on a spruce tile."
     " The four-tile primary mark lives in src/lib/components/Nav.svelte;"
     " colors mirror the header (spruce) and display fireweed tokens in"
     " src/app.css. -->",
