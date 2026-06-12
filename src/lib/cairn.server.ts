@@ -4,8 +4,7 @@
 // runtime's siteName and sender, which match the adapter's, so no override is passed.
 import { composeRuntime } from '@glw907/cairn-cms';
 import { createCairnAdmin } from '@glw907/cairn-cms/sveltekit';
-import { cairn } from './cairn.config.js';
-import { siteConfig } from './config.js';
+import { cairn, siteConfig } from './cairn.config.js';
 
 export const runtime = composeRuntime({ adapter: cairn, siteConfig });
 export const admin = createCairnAdmin(runtime);
