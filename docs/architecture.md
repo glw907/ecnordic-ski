@@ -337,6 +337,13 @@ destination, which is unchanged.
   and stream in `wrangler tail`. Event vocabulary: cairn's `docs/reference/log-events.md`. A
   successful magic-link send shows `auth.link.requested` then `auth.token.minted` with no
   `auth.link.send_failed`; the vocabulary has no send-success event.
+- **The admin mounts as one catch-all route (cairn `^0.50.0`, 2026-06-11).** The former
+  eighteen-file `src/routes/admin/**` shim tree is gone. `src/lib/cairn.server.ts` composes the
+  runtime once and exports `admin = createCairnAdmin(runtime)`; the `/admin/[...path]` route
+  pair re-exports `admin.load`/`admin.actions` and mounts `CairnAdmin`. Engine releases that add
+  admin actions or views no longer touch this repo. The `App.Locals.editor` declaration ships
+  from `@glw907/cairn-cms/ambient` (one import in `app.d.ts`); the site keeps its own
+  `Platform` block. Floors raised with the crossing: svelte `^5.56.3`, kit `^2.12`.
 - **Node 24** is the build runtime (`.nvmrc`, `engines.node >=22`, CI). wrangler ≥4.93
   requires Node ≥22.
 - **Vite 8 uses the Rolldown bundler**, which resolves absolute dynamic imports eagerly.
