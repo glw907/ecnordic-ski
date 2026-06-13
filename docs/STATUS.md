@@ -1,10 +1,17 @@
 # ecxc.ski: Project Status
 
-## Current state (2026-06-12)
+## Current state (2026-06-13)
 
 The ECXC rebrand is complete (six passes; spec in `docs/superpowers/archive/specs/`), the engine
-is on cairn `^0.51.0` with the single-mount admin and the iframed editor preview, and all five
-pages are rewritten through the new coach voice drafting system.
+is on cairn `^0.54.0` with the single-mount admin, the iframed editor preview, and the
+editor-takes-the-shell admin, and all five pages are rewritten through the new coach voice
+drafting system.
+
+**cairn 0.54.0 bump, shipped 2026-06-13.** Pin to `^0.54.0` (commit `9fbf868`), crossing the
+additive `0.53.0 → 0.54.0` step (the editor takes the shell: one-band edit header, receding nav,
+details slide-over, zen, the editor ergonomics; no consumer action). Gate green (check 509 0/0,
+59 tests, vite build); deploy run `27473025539` green; `cairn-doctor --probe https://ecxc.ski`
+passed 11/0/1 (the one skip stays the D1 check, no `account_id`).
 
 **cairn 0.51.0 bump, shipped 2026-06-12.** Pin to `^0.51.0` (commit `827bc74`) atop the held
 preview-knob wiring (`47f82dc`, the fidelity proof for the engine's iframed preview); deploy run
