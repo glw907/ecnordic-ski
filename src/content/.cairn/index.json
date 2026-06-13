@@ -6,6 +6,7 @@
       "concept": "pages",
       "title": "About East Community Cross Country",
       "permalink": "/about",
+      "summary": "East Community Cross Country is a free summer training group for high school cross-country runners and Nordic skiers in Anchorage. The coaches and helpers are parents, former racers, and local…",
       "draft": false,
       "links": [
         {
@@ -19,6 +20,7 @@
       "concept": "pages",
       "title": "CrewLAB",
       "permalink": "/crewlab",
+      "summary": "ECXC runs on CrewLAB, a free phone app. If you want to know when practice is or what a coach just posted, that's where you look. Athletes check it most days. Parents get the calendar and…",
       "draft": false,
       "links": []
     },
@@ -27,6 +29,7 @@
       "concept": "pages",
       "title": "Home",
       "permalink": "/home",
+      "summary": "East Community Cross Country is a free summer training group for Anchorage high school runners and Nordic skiers, coached by volunteers. We train Monday, Wednesday, and Friday mornings, June 1 to…",
       "draft": false,
       "links": []
     },
@@ -35,6 +38,7 @@
       "concept": "pages",
       "title": "Training",
       "permalink": "/training",
+      "summary": "East Community Cross Country runs two things each summer: group practice three mornings a week, June 1 to August 19, and a four-day camp near Talkeetna in late July. Both are free. Most athletes do…",
       "draft": false,
       "links": [
         {
@@ -48,6 +52,7 @@
       "concept": "pages",
       "title": "Volunteers & Coaches",
       "permalink": "/volunteers",
+      "summary": "Everybody that makes ECXC happen is a volunteer. The coaches and helpers are parents, former racers, and local athletes, and we can always use more of them! We all deeply believe that every althete…",
       "draft": false,
       "links": []
     },
@@ -57,6 +62,7 @@
       "title": "Welcome to the ECXC Website",
       "date": "2026-05-14",
       "permalink": "/2026/05/welcome",
+      "summary": "The ECXC website is live. Training updates, race results, and camp information will be posted here throughout the season.",
       "draft": false,
       "links": [
         {
